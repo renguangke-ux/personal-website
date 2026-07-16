@@ -40,9 +40,11 @@ function mdToHtml(md) {
     .replace(/^## (.+)$/gm,  '<h2>$1</h2>')
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<figure class="article-figure"><img src="$2" alt="$1" /><figcaption>$1</figcaption></figure>')
     .split(/\n\n+/)
     .map(block => {
       if (/^<h[23]>/.test(block.trim())) return block.trim();
+      if (/^<figure/.test(block.trim())) return block.trim();
       return `<p>${block.trim().replace(/\n/g, '<br/>')}</p>`;
     })
     .join('\n');
