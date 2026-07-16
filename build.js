@@ -35,6 +35,19 @@ function articleCard(a) {
       </div>`;
 }
 
+function mdToHtml(md) {
+  return md
+    .replace(/^## (.+)$/gm,  '<h2>$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .split(/\n\n+/)
+    .map(block => {
+      if (/^<h[23]>/.test(block.trim())) return block.trim();
+      return `<p>${block.trim().replace(/\n/g, '<br/>')}</p>`;
+    })
+    .join('\n');
+}
+
 function generateArticlePage(a, tpl) {
   const cat  = CAT_MAP[a.category] || { label: a.category, cls: 'cat-law' };
   const date = a.date
@@ -43,7 +56,18 @@ function generateArticlePage(a, tpl) {
   const type = (a.type || '发表论文 →').replace(' →', '');
 
   const bodyHtml = a.body
-    ? `<div class="article-body"><p>${a.body.replace(/\n\n+/g, '</p><p>').replace(/\n/g, '<br/>')}</p></div>`
+    ? `<div class="article-body">${mdToHtml(a.body)}</div>`
+    : '';
+
+  const journalBox = a.journal
+    ? `<div class="journal-box">
+        <div class="journal-icon">📄</div>
+        <div>
+          <div class="journal-label">发表于</div>
+          <div class="journal-name">${a.journal}</div>
+          <div class="journal-note">如需全文，可通过知网、万方等学术数据库获取。</div>
+        </div>
+      </div>`
     : '';
 
   const externalLink = (a.link && a.link !== '#')
@@ -57,6 +81,7 @@ function generateArticlePage(a, tpl) {
     .replace(/{{DATE}}/g,          date)
     .replace(/{{TYPE}}/g,          type)
     .replace(/{{SUMMARY}}/g,       a.summary || '')
+    .replace(/{{JOURNAL_BOX}}/g,   journalBox)
     .replace(/{{BODY}}/g,          bodyHtml)
     .replace(/{{EXTERNAL_LINK}}/g, externalLink);
 }

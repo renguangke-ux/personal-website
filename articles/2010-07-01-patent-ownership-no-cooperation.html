@@ -38,6 +38,19 @@
     }
     .article-body { line-height: 1.9; color: var(--muted); }
     .article-body p { margin-bottom: 1.2rem; }
+    .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 2rem 0 .8rem; }
+    .article-body h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 .6rem; }
+    .article-body strong { color: var(--text); }
+    .journal-box {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.4rem;
+      margin-bottom: 2rem;
+    }
+    .journal-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: .1rem; }
+    .journal-label { font-size: .78rem; color: var(--muted); margin-bottom: .3rem; }
+    .journal-name { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; }
+    .journal-note { font-size: .83rem; color: var(--muted); }
   </style>
 </head>
 <body>
@@ -72,8 +85,16 @@
       <span>发表论文</span>
     </div>
     <div class="article-page-summary">
-      <p>探讨多人在无明确合作意图的情况下共同完成发明创造时，专利权归属的认定标准与处理原则，分两期发表于《电子知识产权》。</p>
+      <p>探讨多人在无明确合作意图的情况下共同完成发明创造时，专利权归属的认定标准与处理原则。</p>
     </div>
+    <div class="journal-box">
+        <div class="journal-icon">📄</div>
+        <div>
+          <div class="journal-label">发表于</div>
+          <div class="journal-name">《电子知识产权》2010年第7、8期（上下篇）</div>
+          <div class="journal-note">如需全文，可通过知网、万方等学术数据库获取。</div>
+        </div>
+      </div>
     
     
   </div>
