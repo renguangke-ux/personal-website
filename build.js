@@ -14,8 +14,8 @@ function readDir(dir) {
   return fs.readdirSync(dir)
     .filter(f => f.endsWith('.md'))
     .map(f => {
-      const { data } = matter(fs.readFileSync(path.join(dir, f), 'utf8'));
-      return data;
+      const { data, content: body } = matter(fs.readFileSync(path.join(dir, f), 'utf8'));
+      return { ...data, body: body.trim(), slug: f.replace('.md', '') };
     })
     .filter(d => d.title)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -23,7 +23,7 @@ function readDir(dir) {
 
 function articleCard(a) {
   const cat  = CAT_MAP[a.category] || { label: a.category, cls: 'cat-law' };
-  const link = a.link || '#';
+  const link = (a.link && a.link !== '#') ? a.link : `articles/${a.slug}.html`;
   const year = a.date ? new Date(a.date).getFullYear() + '年' : '';
   const type = a.type || '查看 →';
   return `
@@ -35,11 +35,35 @@ function articleCard(a) {
       </div>`;
 }
 
+function generateArticlePage(a, tpl) {
+  const cat  = CAT_MAP[a.category] || { label: a.category, cls: 'cat-law' };
+  const date = a.date
+    ? new Date(a.date).toLocaleDateString('zh-CN', { year: 'numeric', month: 'long' })
+    : '';
+  const type = (a.type || '发表论文 →').replace(' →', '');
+
+  const bodyHtml = a.body
+    ? `<div class="article-body"><p>${a.body.replace(/\n\n+/g, '</p><p>').replace(/\n/g, '<br/>')}</p></div>`
+    : '';
+
+  const externalLink = (a.link && a.link !== '#')
+    ? `<a href="${a.link}" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:2rem;display:inline-block">查看原文 →</a>`
+    : '';
+
+  return tpl
+    .replace(/{{TITLE}}/g,         a.title)
+    .replace(/{{CAT_CLASS}}/g,     cat.cls)
+    .replace(/{{CAT_LABEL}}/g,     cat.label)
+    .replace(/{{DATE}}/g,          date)
+    .replace(/{{TYPE}}/g,          type)
+    .replace(/{{SUMMARY}}/g,       a.summary || '')
+    .replace(/{{BODY}}/g,          bodyHtml)
+    .replace(/{{EXTERNAL_LINK}}/g, externalLink);
+}
+
 function timelineItem(a) {
   const d = a.date ? new Date(a.date) : null;
-  const dateStr = d
-    ? `${d.getFullYear()}年 · ${d.getMonth() + 1}月`
-    : '';
+  const dateStr = d ? `${d.getFullYear()}年 · ${d.getMonth() + 1}月` : '';
   return `
       <div class="timeline-item">
         <div class="timeline-dot"></div>
@@ -49,10 +73,18 @@ function timelineItem(a) {
       </div>`;
 }
 
+// ── 构建 ──
 const articles   = readDir('content/articles');
 const activities = readDir('content/activities');
 
-const articlesHTML   = articles.length
+// 生成每篇文章的独立页面
+const articleTpl = fs.readFileSync('templates/article.template.html', 'utf8');
+if (!fs.existsSync('articles')) fs.mkdirSync('articles');
+articles.forEach(a => {
+  fs.writeFileSync(`articles/${a.slug}.html`, generateArticlePage(a, articleTpl));
+});
+
+const articlesHTML = articles.length
   ? articles.map(articleCard).join('\n')
   : '<p style="color:var(--muted);padding:1rem 0">暂无文章</p>';
 
@@ -66,4 +98,4 @@ tpl = tpl
   .replace('<!-- {{ACTIVITIES}} -->', activitiesHTML);
 
 fs.writeFileSync('index.html', tpl);
-console.log(`✓ 构建完成：${articles.length} 篇文章，${activities.length} 个活动`);
+console.log(`✓ 构建完成：${articles.length} 篇文章（已生成独立页面），${activities.length} 个活动`);
