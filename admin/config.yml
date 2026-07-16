@@ -9,48 +9,75 @@ public_folder: /images
 
 collections:
   - name: articles
-    label: 文章管理
-    label_singular: 文章
+    label: "文章管理"
+    label_singular: "文章"
     folder: content/articles
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     editor:
       preview: false
     fields:
-      - { label: 标题,   name: title,    widget: string }
-      - label: 发布日期
+      - label: "标题"
+        name: title
+        widget: string
+      - label: "发布日期"
         name: date
         widget: datetime
         format: "YYYY-MM-DD"
-        date_format: "YYYY年MM月DD日"
+        date_format: "YYYY-MM-DD"
         time_format: false
-      - label: 类别
+      - label: "类别"
         name: category
         widget: select
         options:
-          - { label: 法律,      value: law  }
-          - { label: AI 与法律, value: ai   }
-          - { label: 法经济学,  value: econ }
-          - { label: 读书笔记,  value: book }
-      - { label: 摘要（显示在卡片上）, name: summary, widget: text }
-      - { label: 外链（知网/微信/期刊链接，没有填 #）, name: link, widget: string, default: "#", required: false }
-      - { label: 类型标注（如"发表论文 →"），          name: type, widget: string, default: "查看 →",  required: false }
-      - { label: 正文（可选，留空也可）,               name: body, widget: markdown, required: false }
+          - label: "法律"
+            value: law
+          - label: "AI 与法律"
+            value: ai
+          - label: "法经济学"
+            value: econ
+          - label: "读书笔记"
+            value: book
+      - label: "摘要"
+        name: summary
+        widget: text
+      - label: "外链"
+        name: link
+        widget: string
+        default: "#"
+        required: false
+        hint: "知网、微信公众号、期刊链接等，没有填 #"
+      - label: "类型标注"
+        name: type
+        widget: string
+        default: "查看 →"
+        required: false
+        hint: "如：发表论文 → 或 随笔 →"
+      - label: "正文"
+        name: body
+        widget: markdown
+        required: false
+        hint: "可选，留空也可"
 
   - name: activities
-    label: 活动管理
-    label_singular: 活动
+    label: "活动管理"
+    label_singular: "活动"
     folder: content/activities
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     editor:
       preview: false
     fields:
-      - { label: 活动名称, name: title,       widget: string }
-      - label: 日期
+      - label: "活动名称"
+        name: title
+        widget: string
+      - label: "日期"
         name: date
         widget: datetime
         format: "YYYY-MM-DD"
-        date_format: "YYYY年MM月DD日"
+        date_format: "YYYY-MM-DD"
         time_format: false
-      - { label: 简介（地点、主办方、参与形式等）, name: description, widget: text }
+      - label: "简介"
+        name: description
+        widget: text
+        hint: "地点、主办方、参与形式等"
