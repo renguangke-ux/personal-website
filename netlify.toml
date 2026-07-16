@@ -1,0 +1,9 @@
+[build]
+  command   = "npm install && node build.js"
+  publish   = "."
+
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"

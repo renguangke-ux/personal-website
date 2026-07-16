@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>【您的姓名】— 文章与活动</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">【姓名】</a>
+  <ul class="nav-links">
+    <li><a href="about.html">关于</a></li>
+    <li><a href="#articles">文章</a></li>
+    <li><a href="#activities">活动</a></li>
+    <li><a href="#contact">联系</a></li>
+  </ul>
+</nav>
+
+<section id="articles">
+  <div class="section-inner">
+    <p class="section-label">写作</p>
+    <h2 class="section-title">文章与思考</h2>
+    <p class="section-desc">涵盖发表论文、读书笔记及法律、AI、法经济学等领域的随笔。</p>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">全部</button>
+      <button class="filter-btn" data-filter="law">法律</button>
+      <button class="filter-btn" data-filter="ai">AI 与法律</button>
+      <button class="filter-btn" data-filter="econ">法经济学</button>
+      <button class="filter-btn" data-filter="book">读书笔记</button>
+    </div>
+
+    <div class="articles-grid">
+      
+      <div class="article-card" data-cat="econ" onclick="location.href='#'">
+        <span class="article-cat cat-econ">法经济学</span>
+        <h3>破产待履行合同解除权的激励扭曲及其矫正</h3>
+        <p>以激励机制为分析工具，检视破产程序中合同解除权的制度设计缺陷及改进路径。</p>
+        <div class="article-meta"><span>2024年</span><span>发表论文 →</span></div>
+      </div>
+
+      <div class="article-card" data-cat="law" onclick="location.href='#'">
+        <span class="article-cat cat-law">法律</span>
+        <h3>合法知悉不能阻却不正当手段获取型侵害商业秘密罪之成立</h3>
+        <p>从刑事法角度分析合法知悉与不正当手段的关系，探讨商业秘密保护的边界与逻辑。</p>
+        <div class="article-meta"><span>2024年</span><span>发表论文 →</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="activities">
+  <div class="section-inner">
+    <p class="section-label">动态</p>
+    <h2 class="section-title">社会活动</h2>
+    <p class="section-desc">学术会议、讲座、研讨及其他社会参与记录。</p>
+
+    <div class="timeline">
+      
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2025年 · 1月</div>
+        <h3>【活动名称占位】</h3>
+        <p>【活动简介占位——地点、主办单位、参与形式（主旨演讲/与谈/主持等）。请在后台管理页面修改此条目或新建活动。】</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label">联系</p>
+    <h2 class="section-title">与我联系</h2>
+    <p class="section-desc">欢迎学术交流、约稿或合作探讨。</p>
+
+    <div class="contact-box">
+      <div class="contact-item">
+        <div class="contact-icon">✉</div>
+        <div>
+          <div class="contact-label">电子邮件</div>
+          <div class="contact-value">
+            <a href="mailto:【您的邮箱】">【您的邮箱】</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🏛</div>
+        <div>
+          <div class="contact-label">所在机构</div>
+          <div class="contact-value">【单位/学校名称】</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 【您的姓名】&nbsp;·&nbsp;保留所有权利</p>
+</footer>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.article-card');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.filter;
+      cards.forEach(card => {
+        card.classList.toggle('hidden', cat !== 'all' && card.dataset.cat !== cat);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
