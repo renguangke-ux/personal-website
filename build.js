@@ -9,6 +9,7 @@ const CAT_MAP = {
   ai:   { label: 'AI 与法律', cls: 'cat-ai'   },
   econ: { label: '法经济学',  cls: 'cat-econ' },
   book: { label: '读书笔记',  cls: 'cat-book' },
+  case: { label: '案例研究',  cls: 'cat-case' },
 };
 
 function escapeHtml(str) {

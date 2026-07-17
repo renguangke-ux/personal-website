@@ -18,6 +18,7 @@
   --tag-ai:    #1e3a2e;
   --tag-econ:  #3a2a1e;
   --tag-book:  #2e1e3a;
+  --tag-case:  #3a1e1e;
   --radius:    10px;
 }
 
@@ -246,6 +247,7 @@ section + section { border-top: 1px solid var(--border); }
 .cat-ai    { background: var(--tag-ai);   color: #7df5a0; }
 .cat-econ  { background: var(--tag-econ); color: #f5c07a; }
 .cat-book  { background: var(--tag-book); color: #c07af5; }
+.cat-case  { background: var(--tag-case); color: #f57a7a; }
 
 .article-card h3 {
   font-size: 1rem;
