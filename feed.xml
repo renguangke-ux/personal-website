@@ -6,7 +6,7 @@
     <description>任广科的个人网站 — 法律、法经济学与 AI</description>
     <language>zh-CN</language>
     <atom:link href="https://personal-website-6dn.pages.dev/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Fri, 17 Jul 2026 07:43:24 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jul 2026 07:48:02 GMT</lastBuildDate>
     <item>
       <title>法律职业与人工智能</title>
       <link>https://personal-website-6dn.pages.dev/articles/2026-07-15-法律职业与人工智能.html</link>
@@ -41,6 +41,13 @@
       <description>以三个合同纠纷案例为切入点，分析裁判者在解释合同时未充分尊重当事人签订条款的真实目的，导致合同解释违背意思自治原则的问题。</description>
       <pubDate>Wed, 01 Jan 2025 00:00:00 GMT</pubDate>
       <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2025-01-01-contract-interpretation.html</guid>
+    </item>
+    <item>
+      <title>《给精英律师的12堂经济学课》推荐及译本勘误</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2024-06-01-economics-for-lawyers-review.html</link>
+      <description>推荐《Economics for Lawyers》（理查德·伊波利托著）并整理中译本23处勘误，该书以经济学建模思维分析法律问题，对法律人的法律适用和漏洞补充极具参考价值。</description>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2024-06-01-economics-for-lawyers-review.html</guid>
     </item>
     <item>
       <title>无效宣告程序中新形成权利要求的保护起始时间</title>
