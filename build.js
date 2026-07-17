@@ -102,7 +102,7 @@ function mdToHtml(md) {
     const items = tocEntries.map(e =>
       `<li class="toc-l${e.level}"><a href="#${e.id}">${e.text}</a></li>`
     ).join('\n');
-    tocHtml = `<nav class="toc"><div class="toc-title">目录</div><ol>${items}</ol></nav>`;
+    tocHtml = `<div class="toc"><div class="toc-title">目录</div><ol>${items}</ol></div>`;
   }
 
   return { bodyHtml: blocks.join('\n'), tocHtml };
