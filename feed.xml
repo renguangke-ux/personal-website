@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>任广科</title>
+    <link>https://personal-website-6dn.pages.dev</link>
+    <description>任广科的个人网站 — 法律、法经济学与 AI</description>
+    <language>zh-CN</language>
+    <atom:link href="https://personal-website-6dn.pages.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 17 Jul 2026 05:59:32 GMT</lastBuildDate>
+    <item>
+      <title>法律职业与人工智能</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2026-07-15-法律职业与人工智能.html</link>
+      <description>人工智能凭借远超人类的学习能力与近乎零成本的复制能力，正使各类职业面临被替代的前景，法律职业因其固有的逻辑性而天然适于算法处理，难以例外。本文推演了法律职业被人工智能替代的可能路径：电子律师助理先从辅助性事务切入，随着建议质量的提升逐步获得决定权，最终与律师角色互换；其平价化又将催生面向公众的私人电子法律助理，使普通法律咨询不再依赖律师。在公证领域，区块链等存证技术可直接完成事实真实性的证明；在裁判领域，电子裁判将从琐小纠纷和当事人合意授权的商事纠纷起步，借助其公正、即时、低廉的优势与人类法官展开竞争，并可全程跟踪合同履行、即时预警和执行裁决，使进入法庭的案件大幅减少。本文认为，替代进程注定漫长，但障碍主要来自法律职业的准入保护而非技术本身；技术发展不以人的意志为转移，法律职业者应正视并思考这一趋势。</description>
+      <pubDate>Thu, 16 Jul 2026 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2026-07-15-法律职业与人工智能.html</guid>
+    </item>
+    <item>
+      <title>阿列克西&quot;不正义论据&quot;的法经济学重构与深层原因剖析</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2026-07-16-alexy-injustice-argument-law-economics.html</link>
+      <description>从法经济学视角重构阿列克西&quot;不正义论据&quot;的分析框架，运用交易成本、博弈论、公共选择理论等工具，对实证主义与非实证主义关于法概念效力的八个核心论据进行经济学深度剖析，揭示双方争论的本质是不同风险偏好下的制度成本控制策略。</description>
+      <pubDate>Thu, 16 Jul 2026 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2026-07-16-alexy-injustice-argument-law-economics.html</guid>
+    </item>
+    <item>
+      <title>药品临床试验受试者损害赔偿权利研究报告——中美两国比较</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2026-06-01-clinical-trial-compensation-comparison.html</link>
+      <description>系统梳理中美两国临床试验受试者损害赔偿的法律法规框架与典型司法判例，比较两国制度差异，对中国GCP第39条无过错补偿制度与美国过错侵权路径作出深度分析，并提供实践建议。</description>
+      <pubDate>Mon, 01 Jun 2026 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2026-06-01-clinical-trial-compensation-comparison.html</guid>
+    </item>
+    <item>
+      <title>临床试验受试者赔偿制度——中美比较的法律经济学分析</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2026-06-01-clinical-trial-compensation-econ.html</link>
+      <description>运用社会福利最大化、最优威慑与信息不对称理论，系统比较中国无过错补偿制度（GCP第39条）与美国过错侵权制度的经济逻辑优劣，提出分层责任、标准化赔偿、强制保险等最优制度设计建议。</description>
+      <pubDate>Mon, 01 Jun 2026 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2026-06-01-clinical-trial-compensation-econ.html</guid>
+    </item>
+    <item>
+      <title>无效宣告程序中新形成权利要求的保护起始时间</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2022-01-01-patent-invalidation-new-claims.html</link>
+      <description>专利无效程序中通过权利要求进一步限定形成的新技术方案，其保护期应从本专利授权日还是无效决定生效日开始？通过法律解释与成本收益分析，论证以无效决定生效日为保护起始点更符合专利法立法目的。</description>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2022-01-01-patent-invalidation-new-claims.html</guid>
+    </item>
+    <item>
+      <title>案例与论文写作</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2014-01-01-case-and-paper-writing.html</link>
+      <description>结合多年法律审判实践，就法律案例与学术论文的选题、研究方法、编写规范等进行系统梳理，为法律工作者提供实操指引。</description>
+      <pubDate>Wed, 01 Jan 2014 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2014-01-01-case-and-paper-writing.html</guid>
+    </item>
+    <item>
+      <title>知识产权冲突法的确定——以权利归属为中心</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2013-06-01-ip-conflict-law.html</link>
+      <description>以权利归属为核心议题，构建知识产权冲突法的分析框架，探讨涉外知识产权纠纷的法律适用规则。</description>
+      <pubDate>Sat, 01 Jun 2013 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2013-06-01-ip-conflict-law.html</guid>
+    </item>
+    <item>
+      <title>竞业限制合同效力分析——以法经济学为主要视角</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2012-06-01-non-compete-econ.html</link>
+      <description>以法经济学为主要分析工具，对竞业限制合同的效力认定标准进行系统梳理，通过科斯定理分析竞业限制合同中职工择业权与商业秘密保护的利益衡量。</description>
+      <pubDate>Fri, 01 Jun 2012 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2012-06-01-non-compete-econ.html</guid>
+    </item>
+    <item>
+      <title>专利等同原则中的利益衡量</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2011-06-01-patent-equivalence.html</link>
+      <description>运用利益平衡原则调节专利等同原则的适用，以取得专利权人、竞争者、消费者及社会公众之间社会整体利益的最大化。</description>
+      <pubDate>Wed, 01 Jun 2011 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2011-06-01-patent-equivalence.html</guid>
+    </item>
+    <item>
+      <title>专利发明人的确定及权利的归属——以技术特征为视角</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2011-02-01-patent-inventor.html</link>
+      <description>以技术特征为分析视角，探寻确定专利发明人的方法论，并就发明人确定后的专利权归属问题进行系统分析。</description>
+      <pubDate>Tue, 01 Feb 2011 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2011-02-01-patent-inventor.html</guid>
+    </item>
+    <item>
+      <title>无合作意图共同完成的专利权的归属</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2010-07-01-patent-ownership-no-cooperation.html</link>
+      <description>在他人商业秘密的基础上进行创造并申请专利的情形中，各发明人之间并无合作意图，参考民法添附原则并结合专利权特点，探讨专利权属的确定规则。</description>
+      <pubDate>Thu, 01 Jul 2010 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2010-07-01-patent-ownership-no-cooperation.html</guid>
+    </item>
+    <item>
+      <title>专利申请日至公开日期间生产专利产品的法律责任分析</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2009-08-01-patent-application-liability.html</link>
+      <description>论证专利申请日至公开日期间生产专利产品并不承担法律责任，这是立法者有意的沉默，并就专利授权后该期间产品的销售使用问题提出明确结论。</description>
+      <pubDate>Sat, 01 Aug 2009 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2009-08-01-patent-application-liability.html</guid>
+    </item>
+    <item>
+      <title>禁止还是允许——论专利侵权产品使用者的停止使用责任</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2009-02-02-ban-or-allow.html</link>
+      <description>论证立法中应明确规定专利侵权产品使用者并不必须承担停止使用责任，只有主观恶意时权利人才能要求其停止使用，并提出相应赔偿责任建议。</description>
+      <pubDate>Mon, 02 Feb 2009 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2009-02-02-ban-or-allow.html</guid>
+    </item>
+    <item>
+      <title>商标侵权案件销售者承担赔偿责任的条件及证明责任</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2008-08-01-trademark-seller-liability.html</link>
+      <description>系统分析只起诉销售者的商标侵权案件中，销售者承担赔偿责任的法律构成要件与各要件的证明责任分配规则。</description>
+      <pubDate>Fri, 01 Aug 2008 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2008-08-01-trademark-seller-liability.html</guid>
+    </item>
+  </channel>
+</rss>

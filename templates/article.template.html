@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{TITLE}} — 任广科</title>
+  {{OG_TAGS}}
+  <link rel="alternate" type="application/rss+xml" title="任广科" href="../feed.xml" />
   <link rel="stylesheet" href="../style.css" />
   <style>
     .article-page { padding: 60px 2rem 80px; }
@@ -36,6 +38,26 @@
       line-height: 1.8;
       margin-bottom: 2rem;
     }
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 2rem;
+      font-size: .88rem;
+    }
+    .toc-title {
+      font-size: .78rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: .7rem;
+    }
+    .toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+    .toc li { margin-bottom: .3rem; line-height: 1.5; }
+    .toc-l2 { counter-increment: toc; }
+    .toc-l2::before { content: counter(toc) ". "; color: var(--muted); font-size: .8rem; }
+    .toc-l3 { padding-left: 1.4rem; }
+    .toc-l3::before { content: "· "; color: var(--muted); }
+    .toc a { color: var(--muted); }
+    .toc a:hover { color: var(--accent); text-decoration: none; }
     .article-body { line-height: 1.9; color: var(--muted); }
     .article-body p { margin-bottom: 1.2rem; }
     .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 2rem 0 .8rem; }
@@ -44,6 +66,13 @@
     .article-figure { margin: 1.8rem 0; text-align: center; }
     .article-figure img { max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); }
     .article-figure figcaption { margin-top: .5rem; font-size: .83rem; color: var(--muted); }
+    .fn-ref a { color: var(--accent); text-decoration: none; font-size: .75em; vertical-align: super; line-height: 0; }
+    .footnotes { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--border); font-size: .83rem; color: var(--muted); }
+    .footnotes hr { display: none; }
+    .footnotes ol { padding-left: 1.4rem; margin: 0; }
+    .footnotes li { margin-bottom: .5rem; line-height: 1.7; }
+    .fn-back { color: var(--muted); margin-left: .3rem; text-decoration: none; }
+    .fn-back:hover { color: var(--accent); }
     .journal-box {
       display: flex; align-items: flex-start; gap: 1rem;
       background: var(--bg-card); border: 1px solid var(--border);
@@ -91,13 +120,14 @@
       <p>{{SUMMARY}}</p>
     </div>
     {{JOURNAL_BOX}}
+    {{TOC}}
     {{BODY}}
     {{EXTERNAL_LINK}}
   </div>
 </article>
 
 <footer>
-  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利</p>
+  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利&nbsp;·&nbsp;<a href="../feed.xml" style="color:var(--muted)">RSS</a></p>
 </footer>
 </body>
 </html>

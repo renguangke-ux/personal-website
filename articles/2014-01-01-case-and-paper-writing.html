@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>案例与论文写作 — 任广科</title>
+  
+  <meta name="description" content="结合多年法律审判实践，就法律案例与学术论文的选题、研究方法、编写规范等进行系统梳理，为法律工作者提供实操指引。" />
+  <meta property="og:title" content="案例与论文写作" />
+  <meta property="og:description" content="结合多年法律审判实践，就法律案例与学术论文的选题、研究方法、编写规范等进行系统梳理，为法律工作者提供实操指引。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://personal-website-6dn.pages.dev/articles/2014-01-01-case-and-paper-writing.html" />
+  <meta property="og:site_name" content="任广科" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="案例与论文写作" />
+  <meta name="twitter:description" content="结合多年法律审判实践，就法律案例与学术论文的选题、研究方法、编写规范等进行系统梳理，为法律工作者提供实操指引。" />
+  <link rel="alternate" type="application/rss+xml" title="任广科" href="../feed.xml" />
   <link rel="stylesheet" href="../style.css" />
   <style>
     .article-page { padding: 60px 2rem 80px; }
@@ -36,6 +47,26 @@
       line-height: 1.8;
       margin-bottom: 2rem;
     }
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 2rem;
+      font-size: .88rem;
+    }
+    .toc-title {
+      font-size: .78rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: .7rem;
+    }
+    .toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+    .toc li { margin-bottom: .3rem; line-height: 1.5; }
+    .toc-l2 { counter-increment: toc; }
+    .toc-l2::before { content: counter(toc) ". "; color: var(--muted); font-size: .8rem; }
+    .toc-l3 { padding-left: 1.4rem; }
+    .toc-l3::before { content: "· "; color: var(--muted); }
+    .toc a { color: var(--muted); }
+    .toc a:hover { color: var(--accent); text-decoration: none; }
     .article-body { line-height: 1.9; color: var(--muted); }
     .article-body p { margin-bottom: 1.2rem; }
     .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 2rem 0 .8rem; }
@@ -44,6 +75,13 @@
     .article-figure { margin: 1.8rem 0; text-align: center; }
     .article-figure img { max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); }
     .article-figure figcaption { margin-top: .5rem; font-size: .83rem; color: var(--muted); }
+    .fn-ref a { color: var(--accent); text-decoration: none; font-size: .75em; vertical-align: super; line-height: 0; }
+    .footnotes { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--border); font-size: .83rem; color: var(--muted); }
+    .footnotes hr { display: none; }
+    .footnotes ol { padding-left: 1.4rem; margin: 0; }
+    .footnotes li { margin-bottom: .5rem; line-height: 1.7; }
+    .fn-back { color: var(--muted); margin-left: .3rem; text-decoration: none; }
+    .fn-back:hover { color: var(--accent); }
     .journal-box {
       display: flex; align-items: flex-start; gap: 1rem;
       background: var(--bg-card); border: 1px solid var(--border);
@@ -91,32 +129,38 @@
       <p>结合多年法律审判实践，就法律案例与学术论文的选题、研究方法、编写规范等进行系统梳理，为法律工作者提供实操指引。</p>
     </div>
     
-    <div class="article-body"><h2>一、我们工作中不缺好的案例</h2>
+    <nav class="toc"><div class="toc-title">目录</div><ol><li class="toc-l2"><a href="#sec-1">一、我们工作中不缺好的案例</a></li>
+<li class="toc-l2"><a href="#sec-2">二、选题</a></li>
+<li class="toc-l2"><a href="#sec-3">三、选题三原则</a></li>
+<li class="toc-l2"><a href="#sec-4">四、研究</a></li>
+<li class="toc-l2"><a href="#sec-5">五、发现好案例需要平常的积累</a></li>
+<li class="toc-l2"><a href="#sec-6">六、编写案例应注意的几点问题</a></li></ol></nav>
+    <div class="article-body"><h2 id="sec-1">一、我们工作中不缺好的案例</h2>
 <p>很多人会说，我审的案子太大众化了，传统民事，家长里短的，没有好的案例，没什么可写的。我认为这既有正确的部分，也有不正确的部分。</p>
 <p>太阳底下，本无新事，我们审理的大部分案件，都不是开天辟地的。就拿知识产权来说，有意思、有新意的案件大都发生在经济、文化发达地区，即北上广，但这并不妨碍我们每年都有案例入选全省十大案例。</p>
 <p>看过王泽鉴先生《民法学说与判例研究》这八本书的，都会发现，书上很多案例我们在审判中都曾遇到过，但这并不妨碍王先生将它们写成经典。世界上没有两片完全相同的叶子，每一个案件，都有它与前例所不同的地方，每一个案件，我们可以从证据学、从事实认定、适用法律等各方面着手，来写成好案例。</p>
-<h2>二、选题</h2>
+<h2 id="sec-2">二、选题</h2>
 <p>无论写案例，还是写论文，提出问题是关键，好的开始是成功的一半。在一个案例编写中能提出一个好的问题，这个案例被采纳的可能性就会非常高。</p>
 <p>美国学者科斯是法经济学的奠基人。在经济交往中，人们为了订立合同，首先要去寻找交易对象，其次要去与交易对象讨价还价，再次要保证交易对象按合同履行，这些都需要花费成本。这是天经地义的事情，但我们所有人都忽略掉了这些问题，而科斯首先发现了交易成本这一问题，并以此为基础写了《企业的性质》和《社会成本问题》两篇论文，获得1991年诺贝尔经济学奖。</p>
 <p>在一次讲座中，有同学提出"怎么才能提出一个好问题"。科斯手指向下，指了指地面。意思是，遍地是黄金，只要你向下去看。</p>
 <p>对于我们法官，我们需要看的就是我们亲手处理的一个一个案例。在处理这些案件中，我们每个人肯定会有很多困惑，遇到很多问题，有很多思考，包括程序问题、实体问题、法律适用问题，这些困惑、问题和思考都有可能成为好的选题。我们在办案时，遇到问题，不要轻易绕过去，对别人给出的答案，要多问为什么，有什么法律依据，法理在哪里。</p>
 <p>我曾经处理一个专利案件，遭遇了专利申请日至专利公开日之间，未经专利申请人许可使用该技术是否支付费用的问题——当时查找了很多文献，发现只有一篇文章有涉及，但我不赞同其观点，所以就进行了研究，通过责任的对比、举重明轻、不当得利等各种角度，最终得出结论并发表。13年北京高院的专利侵权判定指南对此进行了规定，观点和我的相同。</p>
 <p><strong>哪些地方会找到好案例</strong>：有争议的案例才有可能成为好案例。我们通常在审理案件中会遇到三种情况：一是法律规定明确，准确适用即可；二是法律有规定，但对于法律的理解会有歧义，需要通过文义解释、法意解释、体系解释、目的解释、比较解释、合宪解释来找出正确解释；第三种是法律没有规定，存在法律漏洞，需要法官进行法律漏洞补充，通过类推适用、目的性限缩、目的性扩张、创造性补充等手段来补充法律进行裁判。</p>
-<h2>三、选题三原则</h2>
+<h2 id="sec-3">三、选题三原则</h2>
 <p>对于选题，北大老师凌斌提出了三原则，即"小清新"。</p>
 <p><strong>所谓"小"</strong>，就是我们的切入点要小。看一个人对一门法律掌握的程度，就看他分析问题时使用的概念——如果他通常使用的都是大的概念，他对法律掌握的一般就不深；如果他使用的是这个学科小的概念，他通常对这个学科掌握的就比较深入。以今年第17期《人民司法》中商事审判刊载的案例为例，分别为：1、外商投资企业股权转让预约合同无须经审批即生效；2、公证机构不予签发执行证书的救济途径；3、全体股东约定由某个股东经营公司的承包合同有效；4、变造并不导致票据无效。均是从小处着手。</p>
 <p><strong>所谓"清"</strong>，就是对于自己研究的问题，要清楚明了，要深入实质，不要遇到问题就绕开走。对文献要检索清楚，知道法学界对相关问题的研究状态。对问题要分析清楚，要将问题不断归类、细化、再分解。</p>
 <p>关于分析方法，我推荐大家仔细看一下王泽鉴先生的《民法思维——请求权基础理论体系》这本书。这本书有一段话，我在给大学本科生和研究生上课时都会讲到："应于强调的是，每一个学习法律的人，自始即应确实培养探寻请求权基础的能力。解题之际，须明确指出支持某项请求权之法律规则。在未寻获请求权基础前，尚不能开始解答。绝不能以概括笼统用语，来掩饰不清楚法律思维过程。唯有如此，始能养成严谨细密的法律思维方法，亦唯有如此，始能维护法律适用的合理性、可预见性和安定性。"</p>
 <p><strong>所谓"新"</strong>，是要求题目有新意。"新"包括很多方面：新案件，新问题，新观点，新角度，新方法。专利等同原则在专利法中并不是一个新话题，我曾经以法经济学的方法就专利等同原则写过一篇文章，由于使用的方法比较新颖，文章也发表了。</p>
-<h2>四、研究</h2>
+<h2 id="sec-4">四、研究</h2>
 <p><strong>首先要有自己的直觉</strong>。法官对一些问题，首先会有一个直觉。这一直觉可能与你的学识、掌握的知识、办案的经验有关。对于自己的直觉，要珍惜——它是你前期积累的结果，是你每年一、二百个案件审理中，困惑、探索、学习和积累得来的，所以要敢于相信自己的判断。</p>
 <p><strong>第二是，在自己有了一定的观点之后，要看看他人的观点</strong>。钱钟书先生的作品《诗可以怨》中讲了个笑话：意大利有句嘲笑人的话为"他发明了雨伞"，说的是有人发明了以棒子支撑布来遮雨的方法，跑到专利局去申请，专利局职员拿出一把雨伞让他看个仔细。所以我们有了观点，还要看自己的观点有没有新颖的地方。</p>
 <p>现在互联网很发达，有很多专业的法律文献数据库，我们要多看多了解。中国裁判文书网上的案件已经非常丰富，我的经验是，找到十篇左右相类似的案件，你就会大体知道处理这类案件需要查明哪些事实，适用哪些法律，有哪些争议焦点。</p>
-<h2>五、发现好案例需要平常的积累</h2>
+<h2 id="sec-5">五、发现好案例需要平常的积累</h2>
 <p>首先是要有积累。以我熟悉的知识产权为例，国内值得读的知识产权书不过百十本，专业期刊也就三、五家，如果踏踏实实地读、平常认识地积累，五至十年你就会成为这行业的专家。</p>
 <p>第二是要勤于思考。一个观点刚开始可能在你头脑中都是混沌地、模糊地，像隔了一层毛玻璃，让你不得其解，但你经过不断思考，可能某一天会一下子豁然开朗，这可能就是所谓的灵感了。</p>
 <p>第三，有了灵感，就要赶紧抓住，否则一转身可能就忘记了。现在可以在手机中安装"印象笔记"等APP，这样平常想到的一些新问题、新观点，就很方便地记了下来。</p>
-<h2>六、编写案例应注意的几点问题</h2>
+<h2 id="sec-6">六、编写案例应注意的几点问题</h2>
 <p><strong>一</strong>是案例有其固定格式，不同刊物要求不同。通常报送的刊物有《最高人民法院公报》、《人民法院案例选》、《中国审判案例要览》、最高法院各业务庭编写的《刑事审判参考》、《民事审判指导与参考》、《商事审判指导》、《知识产权审判指导》、《行政审判指导案例》等，《人民司法》、《法律适用》采用的案例，省法院《案例参阅与指导》采用的案例。大家在写时找本现成的刊物，按上面的案例撰写。</p>
 <p><strong>二</strong>是案例的核心在于指导性，所以选题必须要突出指导性。一个指导性案例至少要符合四个要求：（1）案件处理正确；（2）观点独到——解决疑难问题，或通常规则的例外，或涉及法律原则的运用，或内容新颖；（3）导向正确——不违背政策，社会效果正确；（4）适当的类型化。</p>
 <p><strong>三</strong>是好的案例包括两部分：案件有新意，以及评析要到位。评析部分不是对裁判理由的再重复，应当从案例的重要性、指导性、准确性、权威性角度对该案例在确立裁判规则、应用法律方法、发展裁判理论等方面的成败得失进行分析。注解应当力求通俗易懂，避免过于学术化的语言。</p>
@@ -126,7 +170,7 @@
 </article>
 
 <footer>
-  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利</p>
+  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利&nbsp;·&nbsp;<a href="../feed.xml" style="color:var(--muted)">RSS</a></p>
 </footer>
 </body>
 </html>

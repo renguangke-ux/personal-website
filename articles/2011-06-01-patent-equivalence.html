@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>专利等同原则中的利益衡量 — 任广科</title>
+  
+  <meta name="description" content="运用利益平衡原则调节专利等同原则的适用，以取得专利权人、竞争者、消费者及社会公众之间社会整体利益的最大化。" />
+  <meta property="og:title" content="专利等同原则中的利益衡量" />
+  <meta property="og:description" content="运用利益平衡原则调节专利等同原则的适用，以取得专利权人、竞争者、消费者及社会公众之间社会整体利益的最大化。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://personal-website-6dn.pages.dev/articles/2011-06-01-patent-equivalence.html" />
+  <meta property="og:site_name" content="任广科" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="专利等同原则中的利益衡量" />
+  <meta name="twitter:description" content="运用利益平衡原则调节专利等同原则的适用，以取得专利权人、竞争者、消费者及社会公众之间社会整体利益的最大化。" />
+  <link rel="alternate" type="application/rss+xml" title="任广科" href="../feed.xml" />
   <link rel="stylesheet" href="../style.css" />
   <style>
     .article-page { padding: 60px 2rem 80px; }
@@ -36,6 +47,26 @@
       line-height: 1.8;
       margin-bottom: 2rem;
     }
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 2rem;
+      font-size: .88rem;
+    }
+    .toc-title {
+      font-size: .78rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: .7rem;
+    }
+    .toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+    .toc li { margin-bottom: .3rem; line-height: 1.5; }
+    .toc-l2 { counter-increment: toc; }
+    .toc-l2::before { content: counter(toc) ". "; color: var(--muted); font-size: .8rem; }
+    .toc-l3 { padding-left: 1.4rem; }
+    .toc-l3::before { content: "· "; color: var(--muted); }
+    .toc a { color: var(--muted); }
+    .toc a:hover { color: var(--accent); text-decoration: none; }
     .article-body { line-height: 1.9; color: var(--muted); }
     .article-body p { margin-bottom: 1.2rem; }
     .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 2rem 0 .8rem; }
@@ -44,6 +75,13 @@
     .article-figure { margin: 1.8rem 0; text-align: center; }
     .article-figure img { max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); }
     .article-figure figcaption { margin-top: .5rem; font-size: .83rem; color: var(--muted); }
+    .fn-ref a { color: var(--accent); text-decoration: none; font-size: .75em; vertical-align: super; line-height: 0; }
+    .footnotes { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--border); font-size: .83rem; color: var(--muted); }
+    .footnotes hr { display: none; }
+    .footnotes ol { padding-left: 1.4rem; margin: 0; }
+    .footnotes li { margin-bottom: .5rem; line-height: 1.7; }
+    .fn-back { color: var(--muted); margin-left: .3rem; text-decoration: none; }
+    .fn-back:hover { color: var(--accent); }
     .journal-box {
       display: flex; align-items: flex-start; gap: 1rem;
       background: var(--bg-card); border: 1px solid var(--border);
@@ -98,21 +136,27 @@
           <div class="journal-note">如需全文，可通过知网、万方等学术数据库获取。</div>
         </div>
       </div>
-    <div class="article-body"><h2>一、专利法中的利益平衡</h2>
+    <nav class="toc"><div class="toc-title">目录</div><ol><li class="toc-l2"><a href="#sec-1">一、专利法中的利益平衡</a></li>
+<li class="toc-l2"><a href="#sec-2">二、等同原则的产生和发展</a></li>
+<li class="toc-l2"><a href="#sec-3">三、等同原则中的利益平衡</a></li>
+<li class="toc-l2"><a href="#sec-4">四、公共政策对等同原则适用的指引</a></li>
+<li class="toc-l2"><a href="#sec-5">五、等同原则适用中的具体衡量</a></li>
+<li class="toc-l2"><a href="#sec-6">六、结论</a></li></ol></nav>
+    <div class="article-body"><h2 id="sec-1">一、专利法中的利益平衡</h2>
 <p>专利法是在专利权人的垄断利益与社会公共利益之间进行利益衡量、选择和整合以实现一种动态平衡的制度安排。专利法调节了专利权人、专利产品的竞争者、专利产品消费者及社会公众各方的利益。</p>
 <p>专利权人获得的专利权本质上是在一定期间内对相应技术的垄断权。国家通过授予专利权人专利权，鼓励发明创造，促使专利权人公开技术，以增加社会技术的总量。但专利权如果滥用，会阻碍技术的应用和传播。</p>
 <p>专利法通过各种制度安排实现利益平衡：对未经专利权人许可实施专利的行为予以禁止；规定专利权的保护期限和强制许可；规定专利技术公开制度；通过确定专利技术范围来划分专利权人和其它社会公众的利益。</p>
-<h2>二、等同原则的产生和发展</h2>
+<h2 id="sec-2">二、等同原则的产生和发展</h2>
 <p>专利权的客体是技术信息，信息是无形的，人们无法通过视觉来感知其范围。专利权利要求通过文字的方式表述专利权人要求保护的技术方案。但用文字表述技术有其局限性，特别是对于某些开创性的发明创造，用语言文字进行描述常常陷于词汇匮乏的尴尬境地。</p>
 <p>历史上曾出现过两种解释方式：<strong>"周边限定制"</strong>（保护范围完全由权利要求文字内容确定）和<strong>"中心限定制"</strong>（法院可较为自由地对权利要求范围作出扩大解释）。"周边限定制"对专利范围的限定过严，难以防止投机取巧者通过等同替代规避专利范围。从历史发展看，大致上是从"中心限定制"转变为"周边限定制"，并通过适用等同原则对"周边限定制"进行改良。</p>
 <p>等同原则是指：即使被控侵权产品或方法没有落入权利要求字面含义的范围，但如果被控侵权物与专利中的技术特征之间的差别是非实质性的，被控侵权物仍可能被认为与发明是"相同的"，从而构成侵权。</p>
-<h2>三、等同原则中的利益平衡</h2>
+<h2 id="sec-3">三、等同原则中的利益平衡</h2>
 <p>如果专利侵权判断只采用相同侵权而不采用等同侵权，专利权人的竞争者会通过分析专利技术，采用等同技术进行生产，从而绕过专利保护范围，而这种等同技术的生产得益于专利权人的创造发明——这在经济学上属于正外部性，会导致技术供给不足。适用等同原则正是一种外部性内在化的手段。</p>
 <p>从经济学分析：如果不适用等同原则，专利权人忽略了与专利等同的技术对社会利益的贡献，技术供给不足；社会需求曲线和供给曲线相交点Q市场小于社会最适量Q最适，产生效率损失。适用等同原则可以将这种外部性内在化，矫正市场失灵。</p>
-<h2>四、公共政策对等同原则适用的指引</h2>
+<h2 id="sec-4">四、公共政策对等同原则适用的指引</h2>
 <p>法院在司法裁判中适用利益平衡时，应将公共政策作为考量的因素。等同原则的适用宽窄应与国家的科技发展水平相适应。日本法院早期消极适用等同原则，"部分是由于当时的时代背景，在技术水平总体较低的阶段，有更愿意较窄地确定专利保护范围的要求"，随着日本技术水平提高，在20世纪90年代后日本法院积极承认和适用等同原则。</p>
 <p>最高人民法院2009年明确要求，"严格等同侵权的适用条件，探索完善等同侵权的适用规则，防止不适当地扩张保护范围。"因此，在我国当前科技发展阶段，适用等同原则时应适度从紧，为我国企业的科技创新留出一定的出路。</p>
-<h2>五、等同原则适用中的具体衡量</h2>
+<h2 id="sec-5">五、等同原则适用中的具体衡量</h2>
 <p><strong>（一）技术特征的划分</strong></p>
 <p>对专利权利要求不同的划分方式会影响专利侵权与否的认定。对专利的划分要结合专利说明书，从普通技术人员的角度确定专利权人在专利申请时以该技术特征达到的功能和效果。对于开拓性发明，在划分技术特征时应给予其更宽的保护范围；对于改进性发明，则应严格限定其保护范围。</p>
 <p><strong>（二）基本相同功能、效果的认定</strong></p>
@@ -121,14 +165,14 @@
 <p>如果被控侵权技术是与现有技术相同或属于与现有技术相比没有创造性的技术，就认定现有技术抗辩成立，不必将被控侵权技术与专利技术进行对比。不应仅因被控侵权技术更接近专利技术就认定侵权，还需考量其是否是领域普通技术人员不经创造性思维就能想到的技术。</p>
 <p><strong>（四）禁止反悔原则</strong></p>
 <p>专利申请人、专利权人在专利授权或无效宣告程序中，通过对权利要求、说明书的修改或意见陈述而放弃的技术方案，不能在侵权诉讼中主张等同原则，将之再纳入专利权的保护范围。</p>
-<h2>六、结论</h2>
+<h2 id="sec-6">六、结论</h2>
 <p>用利益平衡来调节等同原则的适用，是平衡专利权人和社会公众利益的具体手段。通过在等同原则中适用利益平衡机制，综合考虑公共政策指引、技术特征划分、等同功能效果认定、现有技术抗辩和禁止反悔原则等因素，以实现社会整体利益最大化。</p></div>
     
   </div>
 </article>
 
 <footer>
-  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利</p>
+  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利&nbsp;·&nbsp;<a href="../feed.xml" style="color:var(--muted)">RSS</a></p>
 </footer>
 </body>
 </html>

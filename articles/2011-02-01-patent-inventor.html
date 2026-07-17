@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>专利发明人的确定及权利的归属——以技术特征为视角 — 任广科</title>
+  
+  <meta name="description" content="以技术特征为分析视角，探寻确定专利发明人的方法论，并就发明人确定后的专利权归属问题进行系统分析。" />
+  <meta property="og:title" content="专利发明人的确定及权利的归属——以技术特征为视角" />
+  <meta property="og:description" content="以技术特征为分析视角，探寻确定专利发明人的方法论，并就发明人确定后的专利权归属问题进行系统分析。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://personal-website-6dn.pages.dev/articles/2011-02-01-patent-inventor.html" />
+  <meta property="og:site_name" content="任广科" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="专利发明人的确定及权利的归属——以技术特征为视角" />
+  <meta name="twitter:description" content="以技术特征为分析视角，探寻确定专利发明人的方法论，并就发明人确定后的专利权归属问题进行系统分析。" />
+  <link rel="alternate" type="application/rss+xml" title="任广科" href="../feed.xml" />
   <link rel="stylesheet" href="../style.css" />
   <style>
     .article-page { padding: 60px 2rem 80px; }
@@ -36,6 +47,26 @@
       line-height: 1.8;
       margin-bottom: 2rem;
     }
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 2rem;
+      font-size: .88rem;
+    }
+    .toc-title {
+      font-size: .78rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: .7rem;
+    }
+    .toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+    .toc li { margin-bottom: .3rem; line-height: 1.5; }
+    .toc-l2 { counter-increment: toc; }
+    .toc-l2::before { content: counter(toc) ". "; color: var(--muted); font-size: .8rem; }
+    .toc-l3 { padding-left: 1.4rem; }
+    .toc-l3::before { content: "· "; color: var(--muted); }
+    .toc a { color: var(--muted); }
+    .toc a:hover { color: var(--accent); text-decoration: none; }
     .article-body { line-height: 1.9; color: var(--muted); }
     .article-body p { margin-bottom: 1.2rem; }
     .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 2rem 0 .8rem; }
@@ -44,6 +75,13 @@
     .article-figure { margin: 1.8rem 0; text-align: center; }
     .article-figure img { max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); }
     .article-figure figcaption { margin-top: .5rem; font-size: .83rem; color: var(--muted); }
+    .fn-ref a { color: var(--accent); text-decoration: none; font-size: .75em; vertical-align: super; line-height: 0; }
+    .footnotes { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--border); font-size: .83rem; color: var(--muted); }
+    .footnotes hr { display: none; }
+    .footnotes ol { padding-left: 1.4rem; margin: 0; }
+    .footnotes li { margin-bottom: .5rem; line-height: 1.7; }
+    .fn-back { color: var(--muted); margin-left: .3rem; text-decoration: none; }
+    .fn-back:hover { color: var(--accent); }
     .journal-box {
       display: flex; align-items: flex-start; gap: 1rem;
       background: var(--bg-card); border: 1px solid var(--border);
@@ -98,12 +136,16 @@
           <div class="journal-note">如需全文，可通过知网、万方等学术数据库获取。</div>
         </div>
       </div>
+    <nav class="toc"><div class="toc-title">目录</div><ol><li class="toc-l2"><a href="#sec-1">一、发明人概念的辨析</a></li>
+<li class="toc-l2"><a href="#sec-2">二、专利发明人的确定</a></li>
+<li class="toc-l2"><a href="#sec-3">三、专利权属的确定</a></li>
+<li class="toc-l2"><a href="#sec-4">四、司法实践中遇到的其他问题</a></li></ol></nav>
     <div class="article-body"><p>确定专利发明人是解决专利权属争议的基础。确定专利发明人应从发明人的定义出发，以技术特征这一角度，探寻对发明创造的实质性特点作出创造性贡献的人，进而确定发明人。</p>
-<h2>一、发明人概念的辨析</h2>
+<h2 id="sec-1">一、发明人概念的辨析</h2>
 <p>专利法对发明人的概念作出了明确规定，但现实中人们使用发明人这一概念的含义在不同语境下是不同的。专利法意义上的发明人与"最早发明者"或"独立发明者"的概念均不同——首先，它要求发明创造符合专利法要求的新颖性、创造性和实用性；其次，发明人应对发明创造的实质性特点作出创造性贡献。</p>
 <p>《专利法实施细则》第十三条规定："专利法所称发明人或者设计人，是指对发明创造的实质性特点作出创造性贡献的人。在完成发明创造过程中，只负责组织工作的人、为物质技术条件的利用提供方便的人或者从事其他辅助工作的人，不是发明人或者设计人。"</p>
 <p>确定专利发明人是确定专利权属的基础，也是通过奖金和报酬鼓励发明创造的前提。</p>
-<h2>二、专利发明人的确定</h2>
+<h2 id="sec-2">二、专利发明人的确定</h2>
 <p><strong>（一）确定专利权利要求中的每一技术特征的提出者</strong></p>
 <p>技术特征是专利权利要求中的基本组成单位。《专利法》第五十九条规定，发明或者实用新型专利权的保护范围以其权利要求的内容为准，说明书及附图可以用于解释权利要求的内容。</p>
 <p>在确定专利申请权或专利权的归属时，首先应查明每一个技术特征是谁提出的。需要注意的是，这里使用的是"提出"，而不是"创造"——因为专利权利要求中的每一技术特征并不一定都是发明人创造的，它有可能来源于已有技术。确定技术特征的提出者是一个事实问题，而不是法律问题。</p>
@@ -113,11 +155,11 @@
 <p><strong>（三）该技术特征对相应专利权利要求的实质性特点是否具有创造性贡献</strong></p>
 <p>并不是组成具备实质性特点的权利要求中的每一项技术特征都对该权利要求中的实质性特点有创造性贡献。独立权利要求的实质性特点是由其特征部分的某些技术特征所决定的；从属权利要求的实质性特点是由其限定部分的某些技术特征所决定的。</p>
 <p>判断方法：假定排除需判断的技术特征后该权利要求中所剩余的技术特征为已有技术，以该假定的已有技术与包含需判断的技术特征在内的全部技术特征进行对比，如果具有新颖性和创造性，则该技术特征具有创造性贡献；反之则无。</p>
-<h2>三、专利权属的确定</h2>
+<h2 id="sec-3">三、专利权属的确定</h2>
 <p>在确定某些技术特征是否具有创造性贡献之后，就可以确定该技术特征的提出者是否是发明人，进而确定专利权属。</p>
 <p>对于多发明人共同贡献的情形，按技术特征结合方式不同，有三种情况：<br/>- <strong>A类</strong>：两个发明人的技术特征组合在同一个权利要求的特征部分——只能以共有方式拥有专利权<br/>- <strong>B类</strong>：两个发明人的技术特征分属于不同的专利权利要求<br/>- <strong>C类</strong>：两个发明人的技术特征分属同一权利要求的引用部分和限定部分</p>
 <p>对于B、C类情形，除共有方式外，还有另一种选择：各方分别对各自有贡献的权利要求享有专利权。笔者认为后者更优，理由是：依据《专利法》第十五条的共有方式，发明人在行使权利时需更多协商，容易形成僵局；而分别享有权利时，各发明人可分别行使许可、转让等完整权利，如需实施他人权利要求，可依《专利法》第五十一条申请强制许可，更有利于专利技术的充分利用。</p>
-<h2>四、司法实践中遇到的其他问题</h2>
+<h2 id="sec-4">四、司法实践中遇到的其他问题</h2>
 <p>在确定专利发明人的诉讼中，法院有时无法回避对专利实质性特点的审查，进而无法完全回避对专利效力的认定。如果确定发明创造没有实质性特点，争议各方均不属于专利的发明人，应驳回原告诉讼请求。</p>
 <p>对于缺乏新颖性和创造性的无效专利，其技术与已有技术相同或等同，专利文件中记载的"发明人"并不是专利法意义上的发明人。</p></div>
     
@@ -125,7 +167,7 @@
 </article>
 
 <footer>
-  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利</p>
+  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利&nbsp;·&nbsp;<a href="../feed.xml" style="color:var(--muted)">RSS</a></p>
 </footer>
 </body>
 </html>
