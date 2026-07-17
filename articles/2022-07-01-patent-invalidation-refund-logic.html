@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>一个专利案件的论证逻辑问题——本案专利无效返还是否需要适用公平原则 — 任广科</title>
+  
+  <meta name="description" content="以一则专利许可费返还纠纷为例，论证《专利法》第四十七条的正确适用：已履行期限内的专利费应因合同部分溯及无效而直接返还，无需适用&quot;明显违反公平原则&quot;条款，并对判决中混淆两款适用范围的逻辑进行辨析。" />
+  <meta property="og:title" content="一个专利案件的论证逻辑问题——本案专利无效返还是否需要适用公平原则" />
+  <meta property="og:description" content="以一则专利许可费返还纠纷为例，论证《专利法》第四十七条的正确适用：已履行期限内的专利费应因合同部分溯及无效而直接返还，无需适用&quot;明显违反公平原则&quot;条款，并对判决中混淆两款适用范围的逻辑进行辨析。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://personal-website-6dn.pages.dev/articles/2022-07-01-patent-invalidation-refund-logic.html" />
+  <meta property="og:site_name" content="任广科" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="一个专利案件的论证逻辑问题——本案专利无效返还是否需要适用公平原则" />
+  <meta name="twitter:description" content="以一则专利许可费返还纠纷为例，论证《专利法》第四十七条的正确适用：已履行期限内的专利费应因合同部分溯及无效而直接返还，无需适用&quot;明显违反公平原则&quot;条款，并对判决中混淆两款适用范围的逻辑进行辨析。" />
+  <link rel="alternate" type="application/rss+xml" title="任广科" href="../feed.xml" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .article-page { padding: 60px 2rem 80px; }
+    .article-page-inner { max-width: 760px; margin: 0 auto; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      color: var(--muted); font-size: .9rem; margin-bottom: 2rem;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--text); text-decoration: none; }
+    .article-page h1 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700; line-height: 1.35;
+      margin: 1rem 0 1.2rem;
+    }
+    .article-page-meta {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      color: var(--muted); font-size: .88rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.8rem;
+    }
+    .article-page-summary {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 2rem;
+      font-size: .88rem;
+    }
+    .toc-title {
+      font-size: .78rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: .7rem;
+    }
+    .toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+    .toc li { margin-bottom: .3rem; line-height: 1.5; }
+    .toc-l2 { counter-increment: toc; }
+    .toc-l2::before { content: counter(toc) ". "; color: var(--muted); font-size: .8rem; }
+    .toc-l3 { padding-left: 1.4rem; }
+    .toc-l3::before { content: "· "; color: var(--muted); }
+    .toc a { color: var(--muted); }
+    .toc a:hover { color: var(--accent); text-decoration: none; }
+    .article-body { line-height: 1.9; color: var(--muted); }
+    .article-body p { margin-bottom: 1.2rem; }
+    .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 2rem 0 .8rem; }
+    .article-body h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 .6rem; }
+    .article-body strong { color: var(--text); }
+    .article-figure { margin: 1.8rem 0; text-align: center; }
+    .article-figure img { max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+    .article-figure figcaption { margin-top: .5rem; font-size: .83rem; color: var(--muted); }
+    .fn-ref a { color: var(--accent); text-decoration: none; font-size: .75em; vertical-align: super; line-height: 0; }
+    .footnotes { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--border); font-size: .83rem; color: var(--muted); }
+    .footnotes hr { display: none; }
+    .footnotes ol { padding-left: 1.4rem; margin: 0; }
+    .footnotes li { margin-bottom: .5rem; line-height: 1.7; }
+    .fn-back { color: var(--muted); margin-left: .3rem; text-decoration: none; }
+    .fn-back:hover { color: var(--accent); }
+    .journal-box {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.4rem;
+      margin-bottom: 2rem;
+    }
+    .journal-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: .1rem; }
+    .journal-label { font-size: .78rem; color: var(--muted); margin-bottom: .3rem; }
+    .journal-name { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; }
+    .journal-note { font-size: .83rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+      }
+    });
+  }
+</script>
+
+<nav>
+  <a href="../index.html" class="nav-logo">任广科</a>
+  <ul class="nav-links">
+    <li><a href="../about.html">关于</a></li>
+    <li><a href="../index.html#articles">文章</a></li>
+    <li><a href="../index.html#activities">活动</a></li>
+    <li><a href="../index.html#contact">联系</a></li>
+  </ul>
+</nav>
+
+<article class="article-page">
+  <div class="article-page-inner">
+    <a href="../index.html#articles" class="back-link">← 返回文章列表</a>
+    <span class="article-cat cat-case">案例研究</span>
+    <h1>一个专利案件的论证逻辑问题——本案专利无效返还是否需要适用公平原则</h1>
+    <div class="article-page-meta">
+      <span>2022年7月</span>
+      <span>案例评析</span>
+    </div>
+    <div class="article-page-summary">
+      <p>以一则专利许可费返还纠纷为例，论证《专利法》第四十七条的正确适用：已履行期限内的专利费应因合同部分溯及无效而直接返还，无需适用"明显违反公平原则"条款，并对判决中混淆两款适用范围的逻辑进行辨析。</p>
+    </div>
+    
+    <div class="toc"><div class="toc-title">目录</div><ol><li class="toc-l2"><a href="#sec-1">一、问题的提出</a></li>
+<li class="toc-l2"><a href="#sec-2">二、《专利法》第四十七条第二款的理解</a></li>
+<li class="toc-l2"><a href="#sec-3">三、公平原则在四十七条中的适用基础</a></li>
+<li class="toc-l2"><a href="#sec-4">四、余论</a></li></ol></div>
+    <div class="article-body"><h2 id="sec-1">一、问题的提出</h2>
+<p>有人问你，这棵树是苹果树还是梨树，你回答是树。你的答案是对的，但却是答非所问。</p>
+<p>甲与乙签订专利许可合同，约定甲将其专利许可给乙使用，期限为5年，许可费10万元，乙在签订合同后一次性将10万元给付甲。在履行完第2年后，甲的专利被无效。乙以专利法第四十七条第三款明显违反公平原则为由，要求甲返还专利费10万元。</p>
+<p>判决认定"当专利被宣告无效之日前已支付的专利侵权赔偿金、专利使用费、专利转让费与许可使用费总金额之比，明显高于专利被宣告无效之日前实际使用专利技术的期间与整个许可使用期限之比的，则属于该款中'明显违反公平原则'"，由此认为前两年的专利费不应返还，后三年的专利费应返还。这种判决的结果没有问题，但适用法条值得商榷。</p>
+<p>专利许可合同是继续性合同，合同内容并非一次性给付可完结，而是继续地实现合同。时间因素在合同履行中居于重要地位，总给付的内容取决于应为给付时间的长短。例如，一个租赁房屋的合同，合同期5年，租赁费总计10万元，签订合同后一次性给付。如果在第三年初房屋灭失，法官不需要诉诸"公平原则"，也会要求租赁人返还承租人后三年的租赁费。</p>
+<h2 id="sec-2">二、《专利法》第四十七条第二款的理解</h2>
+<p>《专利法》第四十七条第二款规定，宣告专利权无效的决定，对在宣告专利权无效前人民法院作出并已执行的专利侵权的判决、调解书，已经履行或者强制执行的专利侵权纠纷处理决定，以及已经履行的专利实施许可合同和专利权转让合同，不具有追溯力。</p>
+<p>该法条实质是对专利无效具有追溯力的例外规定。完整的法律应该是"一般+例外"，法条只规定例外条款，不过是为了行文简练而已，但例外一定是以一般为前提。</p>
+<p>不具有追溯力的只是<strong>已经履行的</strong>专利实施许可合同。由于甲与乙的合同后三年没有履行，后三年的专利费适用专利法第四十七条第二款就可以返还，并不需要适用第三款，不需要判断是否"明显违反公平原则"。至于头两年的专利许可费是否应返还，才有适用第四十七条第三款的余地。而判决恰恰并没有真正回答这个问题。</p>
+<h2 id="sec-3">三、公平原则在四十七条中的适用基础</h2>
+<p>根据《专利法》第四十七条的规定，适用公平原则的条件是：（1）专利权被宣告无效；（2）已履行的专利实施许可合同；（3）不返还专利使用费，明显违反公平原则。</p>
+<p>本案中有疑问的是：在专利被无效时，该合同是否属于已经履行的专利实施许可合同？至专利无效时，专利许可合同已经履行了2年，但全部专利费已经支付。不应以其中某一方当事人的义务已经履行完毕，就认定专利实施许可合同已经履行。专利实施许可合同只履行了2年，其余3年因专利无效无法履行，根据《专利法》第四十七条第二款和《民法典》合同编的规定，当事人负有返还义务。</p>
+<p>在判断公平原则是否成立时，"专利被宣告无效之日前已支付的专利许可费与许可费总金额之比，是否明显高于专利被宣告无效之日前实际使用期间与整个许可期限之比"，不是判断是否"明显违反公平原则"的依据，而是是否适用"明显违反公平原则"的<strong>前置问题</strong>。如果比例高，表明已付费用中有部分实际是支付专利无效之后期限的费用，这部分未实际履行，这部分款应予返还，这部分款的返还并不需要适用"公平原则"。只有对支付的专利无效前期限的使用费，才有适用"明显违反公平原则"的余地。</p>
+<h2 id="sec-4">四、余论</h2>
+<p>专利无效后，如果不返还专利侵权赔偿金、专利使用费、专利权转让费，在哪些情形下属于明显违反公平原则，法律并没有进行规定。笔者初步认为，相比于被许可人因实施相关专利所获得的收益，许可费较高可能是一个判断因素。例如，在无效前，因第三者未经许可实施专利，使被许可人丧失竞争优势，没有获得收益，或获得收益显著低于专利许可费，但专利后来被无效，被许可人亦无法追究第三者的侵权责任，被许可人虽支付了专利许可使用费，但并未享有垄断的利益，这种情形可以认定为明显违反公平原则。</p>
+<p>（案例进行了简化，与判决并不相同，本文仅代表作者个人观点）</p></div>
+    
+  </div>
+</article>
+
+<footer>
+  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利&nbsp;·&nbsp;<a href="../feed.xml" style="color:var(--muted)">RSS</a></p>
+</footer>
+</body>
+</html>

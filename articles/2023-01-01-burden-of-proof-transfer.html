@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>证明责任转移概念无实践意义 — 任广科</title>
+  
+  <meta name="description" content="论证主观证明责任转移概念在司法实践中的指导意义极其有限：其转移标准难以理论化，法官心证形成过程不透明，且在判决中使用该概念容易引发混淆；以（2022）最高法知民终1316号为例加以分析。" />
+  <meta property="og:title" content="证明责任转移概念无实践意义" />
+  <meta property="og:description" content="论证主观证明责任转移概念在司法实践中的指导意义极其有限：其转移标准难以理论化，法官心证形成过程不透明，且在判决中使用该概念容易引发混淆；以（2022）最高法知民终1316号为例加以分析。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://personal-website-6dn.pages.dev/articles/2023-01-01-burden-of-proof-transfer.html" />
+  <meta property="og:site_name" content="任广科" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="证明责任转移概念无实践意义" />
+  <meta name="twitter:description" content="论证主观证明责任转移概念在司法实践中的指导意义极其有限：其转移标准难以理论化，法官心证形成过程不透明，且在判决中使用该概念容易引发混淆；以（2022）最高法知民终1316号为例加以分析。" />
+  <link rel="alternate" type="application/rss+xml" title="任广科" href="../feed.xml" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .article-page { padding: 60px 2rem 80px; }
+    .article-page-inner { max-width: 760px; margin: 0 auto; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      color: var(--muted); font-size: .9rem; margin-bottom: 2rem;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--text); text-decoration: none; }
+    .article-page h1 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700; line-height: 1.35;
+      margin: 1rem 0 1.2rem;
+    }
+    .article-page-meta {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      color: var(--muted); font-size: .88rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.8rem;
+    }
+    .article-page-summary {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 2rem;
+      font-size: .88rem;
+    }
+    .toc-title {
+      font-size: .78rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: .7rem;
+    }
+    .toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+    .toc li { margin-bottom: .3rem; line-height: 1.5; }
+    .toc-l2 { counter-increment: toc; }
+    .toc-l2::before { content: counter(toc) ". "; color: var(--muted); font-size: .8rem; }
+    .toc-l3 { padding-left: 1.4rem; }
+    .toc-l3::before { content: "· "; color: var(--muted); }
+    .toc a { color: var(--muted); }
+    .toc a:hover { color: var(--accent); text-decoration: none; }
+    .article-body { line-height: 1.9; color: var(--muted); }
+    .article-body p { margin-bottom: 1.2rem; }
+    .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 2rem 0 .8rem; }
+    .article-body h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 .6rem; }
+    .article-body strong { color: var(--text); }
+    .article-figure { margin: 1.8rem 0; text-align: center; }
+    .article-figure img { max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+    .article-figure figcaption { margin-top: .5rem; font-size: .83rem; color: var(--muted); }
+    .fn-ref a { color: var(--accent); text-decoration: none; font-size: .75em; vertical-align: super; line-height: 0; }
+    .footnotes { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--border); font-size: .83rem; color: var(--muted); }
+    .footnotes hr { display: none; }
+    .footnotes ol { padding-left: 1.4rem; margin: 0; }
+    .footnotes li { margin-bottom: .5rem; line-height: 1.7; }
+    .fn-back { color: var(--muted); margin-left: .3rem; text-decoration: none; }
+    .fn-back:hover { color: var(--accent); }
+    .journal-box {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.4rem;
+      margin-bottom: 2rem;
+    }
+    .journal-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: .1rem; }
+    .journal-label { font-size: .78rem; color: var(--muted); margin-bottom: .3rem; }
+    .journal-name { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; }
+    .journal-note { font-size: .83rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+      }
+    });
+  }
+</script>
+
+<nav>
+  <a href="../index.html" class="nav-logo">任广科</a>
+  <ul class="nav-links">
+    <li><a href="../about.html">关于</a></li>
+    <li><a href="../index.html#articles">文章</a></li>
+    <li><a href="../index.html#activities">活动</a></li>
+    <li><a href="../index.html#contact">联系</a></li>
+  </ul>
+</nav>
+
+<article class="article-page">
+  <div class="article-page-inner">
+    <a href="../index.html#articles" class="back-link">← 返回文章列表</a>
+    <span class="article-cat cat-case">案例研究</span>
+    <h1>证明责任转移概念无实践意义</h1>
+    <div class="article-page-meta">
+      <span>2023年1月</span>
+      <span>案例评析</span>
+    </div>
+    <div class="article-page-summary">
+      <p>论证主观证明责任转移概念在司法实践中的指导意义极其有限：其转移标准难以理论化，法官心证形成过程不透明，且在判决中使用该概念容易引发混淆；以（2022）最高法知民终1316号为例加以分析。</p>
+    </div>
+    
+    <div class="toc"><div class="toc-title">目录</div><ol><li class="toc-l2"><a href="#sec-1">一、主观证明责任转移标准无法理论化</a></li>
+<li class="toc-l2"><a href="#sec-2">二、主观证明责任转移对司法实践指导意义有限</a></li>
+<li class="toc-l2"><a href="#sec-3">三、在司法实践中使用证明责任转移概念容易引起混淆</a></li></ol></div>
+    <div class="article-body"><p>*读（2022）最高法知民终1316号民事判决有感*</p>
+<p>当双方当事人对某一争议事实举证之后，法官对于事实真伪仍无法形成内心确认，事实处于真伪不明状态。法官在裁判时只有依据证明责任，认定负有证明责任一方无法证明其主张的事实。此种意义上的证明责任又称为<strong>客观证明责任</strong>。客观证明责任是由法律所规定，在诉讼中并不能发生证明责任转移。</p>
+<p><strong>主观证明责任</strong>是指在诉讼中，当一方当事人提供的证据让法官形成心证，认定其主张的事实成立，相对方如果要否认该事实，需提供证据动摇法官已形成的有利于对方的心证。在诉讼中，伴随法官心证的形成而发生的举证责任方的变换被称之为主观证明责任转移。</p>
+<p>证明责任转移虽有一定理论意义，但在司法实践中的指导意义极其有限。</p>
+<h2 id="sec-1">一、主观证明责任转移标准无法理论化</h2>
+<p>司法实践中，每一个案件有每一个案件的证明和待证事实，法官是否形成心证，除依赖于当事人提供的证据之外，还依赖于法官庭审中听讼形成的对双方当事人诚信与否等的内心感受、法官在社会和诉讼实践中形成的经验等。法官是否形成心证是主观证明责任转移的前提，很难形成一个确定的理论或标准来指导法官形成其心证。</p>
+<h2 id="sec-2">二、主观证明责任转移对司法实践指导意义有限</h2>
+<p>诉讼中法官心证形成会影响双方当事人的利益甚至决定诉讼的胜败，如果法官在诉讼中向当事人披露其心证，其心证必然会受到不利方的质疑。在现阶段上访压力和追错机制下，法官为避免争议，在诉讼中并不会披露其心证形成情况，所以当事人无从获知主观证明责任是否转移。</p>
+<p>法官在诉讼中如果心证已形成或发生动摇，也不会向当事人披露，只会询问双方当事人是否有新的证据提交，从而给双方当事人提供证据的机会，但并不会直接表明"其心证已形成，主观证明责任已转移，对方应提交相反证据证明，否则对方的事实主张成立"等。所以主观证明责任在诉讼中对指导当事人举证没有多少作用。主观证明责任更多的情况是在判决中作为法官推卸自己心证形成压力的借口，把心证形成责任推到一方当事人举证不足。</p>
+<h2 id="sec-3">三、在司法实践中使用证明责任转移概念容易引起混淆</h2>
+<p>在本案判决中，法院认为："江苏某管件公司在其网站发布的电子样册中公开的产品结构图所属系列号与被诉侵权产品相同，被诉侵权产品实施的技术方案与电子样册中所示相同系列产品结构图一致具有高度可能性，江苏某科技公司已完成初步举证义务，举证责任应当转移至江苏某管件公司。"</p>
+<p>但法官在此表述的"高度可能性"是否对应民事证明中要求的"高度概然性"，"初步举证义务"是否表明法官已经形成心证？判决并未给出直接结论。</p>
+<p>如果法官已形成心证，在判决书中表明举证责任转移已无必要，举证责任转移只是在诉讼中发挥指导当事人举证的作用。如果法官未形成心证，认定举证责任转移显属不当。</p>
+<p>---</p>
+<p>附：不具备勘验条件时被诉侵权技术方案的证明责任转移，见 https://mp.weixin.qq.com/s/yy5RyXuB1RWSAKFNphCT_w</p></div>
+    
+  </div>
+</article>
+
+<footer>
+  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利&nbsp;·&nbsp;<a href="../feed.xml" style="color:var(--muted)">RSS</a></p>
+</footer>
+</body>
+</html>

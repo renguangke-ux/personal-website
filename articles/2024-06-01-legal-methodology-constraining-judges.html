@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>法律方法论对裁判者的约束 — 任广科</title>
+  
+  <meta name="description" content="以债务人欺骗抵押人为旧债务提供担保为例，与钟长江法官共同探讨：当法律明文规定与个案公平相悖时，法官如何在法律解释范围内寻求公正，以及何时、如何进行正当的法续造。" />
+  <meta property="og:title" content="法律方法论对裁判者的约束" />
+  <meta property="og:description" content="以债务人欺骗抵押人为旧债务提供担保为例，与钟长江法官共同探讨：当法律明文规定与个案公平相悖时，法官如何在法律解释范围内寻求公正，以及何时、如何进行正当的法续造。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://personal-website-6dn.pages.dev/articles/2024-06-01-legal-methodology-constraining-judges.html" />
+  <meta property="og:site_name" content="任广科" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="法律方法论对裁判者的约束" />
+  <meta name="twitter:description" content="以债务人欺骗抵押人为旧债务提供担保为例，与钟长江法官共同探讨：当法律明文规定与个案公平相悖时，法官如何在法律解释范围内寻求公正，以及何时、如何进行正当的法续造。" />
+  <link rel="alternate" type="application/rss+xml" title="任广科" href="../feed.xml" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .article-page { padding: 60px 2rem 80px; }
+    .article-page-inner { max-width: 760px; margin: 0 auto; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      color: var(--muted); font-size: .9rem; margin-bottom: 2rem;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--text); text-decoration: none; }
+    .article-page h1 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700; line-height: 1.35;
+      margin: 1rem 0 1.2rem;
+    }
+    .article-page-meta {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      color: var(--muted); font-size: .88rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.8rem;
+    }
+    .article-page-summary {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 2rem;
+      font-size: .88rem;
+    }
+    .toc-title {
+      font-size: .78rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: .7rem;
+    }
+    .toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+    .toc li { margin-bottom: .3rem; line-height: 1.5; }
+    .toc-l2 { counter-increment: toc; }
+    .toc-l2::before { content: counter(toc) ". "; color: var(--muted); font-size: .8rem; }
+    .toc-l3 { padding-left: 1.4rem; }
+    .toc-l3::before { content: "· "; color: var(--muted); }
+    .toc a { color: var(--muted); }
+    .toc a:hover { color: var(--accent); text-decoration: none; }
+    .article-body { line-height: 1.9; color: var(--muted); }
+    .article-body p { margin-bottom: 1.2rem; }
+    .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 2rem 0 .8rem; }
+    .article-body h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 .6rem; }
+    .article-body strong { color: var(--text); }
+    .article-figure { margin: 1.8rem 0; text-align: center; }
+    .article-figure img { max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+    .article-figure figcaption { margin-top: .5rem; font-size: .83rem; color: var(--muted); }
+    .fn-ref a { color: var(--accent); text-decoration: none; font-size: .75em; vertical-align: super; line-height: 0; }
+    .footnotes { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--border); font-size: .83rem; color: var(--muted); }
+    .footnotes hr { display: none; }
+    .footnotes ol { padding-left: 1.4rem; margin: 0; }
+    .footnotes li { margin-bottom: .5rem; line-height: 1.7; }
+    .fn-back { color: var(--muted); margin-left: .3rem; text-decoration: none; }
+    .fn-back:hover { color: var(--accent); }
+    .journal-box {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.4rem;
+      margin-bottom: 2rem;
+    }
+    .journal-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: .1rem; }
+    .journal-label { font-size: .78rem; color: var(--muted); margin-bottom: .3rem; }
+    .journal-name { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; }
+    .journal-note { font-size: .83rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+      }
+    });
+  }
+</script>
+
+<nav>
+  <a href="../index.html" class="nav-logo">任广科</a>
+  <ul class="nav-links">
+    <li><a href="../about.html">关于</a></li>
+    <li><a href="../index.html#articles">文章</a></li>
+    <li><a href="../index.html#activities">活动</a></li>
+    <li><a href="../index.html#contact">联系</a></li>
+  </ul>
+</nav>
+
+<article class="article-page">
+  <div class="article-page-inner">
+    <a href="../index.html#articles" class="back-link">← 返回文章列表</a>
+    <span class="article-cat cat-case">案例研究</span>
+    <h1>法律方法论对裁判者的约束</h1>
+    <div class="article-page-meta">
+      <span>2024年6月</span>
+      <span>案例评析</span>
+    </div>
+    <div class="article-page-summary">
+      <p>以债务人欺骗抵押人为旧债务提供担保为例，与钟长江法官共同探讨：当法律明文规定与个案公平相悖时，法官如何在法律解释范围内寻求公正，以及何时、如何进行正当的法续造。</p>
+    </div>
+    
+    <div class="toc"><div class="toc-title">目录</div><ol><li class="toc-l2"><a href="#sec-1">一、案例</a></li>
+<li class="toc-l2"><a href="#sec-2">二、法官内心纠结</a></li>
+<li class="toc-l2"><a href="#sec-3">三、笔者观点</a></li></ol></div>
+    <div class="article-body"><p>*钟长江：四川省达州渠县法院法官；任广科：烟台知识产权协会会长*</p>
+<p>法官职业是一个纠结的职业，常常会遇到法律规定与个人内心公平不一致的情形。</p>
+<h2 id="sec-1">一、案例</h2>
+<p>债务人欺骗一个抵押人，让抵押人以房产向债权人提供了1500万的担保，抵押合同上面载明的就是已经发生的旧债务2200万。审理中，抵押人无法举证债权人是明知或应知，只能举证债务人存在欺诈行为。</p>
+<h2 id="sec-2">二、法官内心纠结</h2>
+<p>《民法典》第一百四十九条规定，第三人实施欺诈行为，使一方在违背真实意思的情况下实施的民事法律行为，对方知道或者应当知道该欺诈行为的，受欺诈方有权请求人民法院或者仲裁机构予以撤销。</p>
+<p>本案中引入担保之后，债权人与债务人之间根本就没有发生新的债务，在这种情况下还有保护债权人的必要吗？债权人没有基于新的担保增信而产生新的债务。对抵押人太不公平了。</p>
+<p>如果是基于抵押人提供担保后，债权人基于新的担保而对债务人新增债务，如查明该抵押系债务人因欺诈获得，此时有两个受害者：一是债权人新增债务回款的风险，二是抵押人被要求承担担保责任的风险。此时，按照法律规定，只要债权人对欺诈行为不知情，其作为善意的相对人，有被法律保护的必要。</p>
+<p>如果抵押人是对旧债务提供担保，抵押权人未新增债务，此时受害人只有抵押人，他可能会被要求承担抵押责任，债权人对债务人本来就是一笔没有担保的债权，债权人的地位优劣并未发生变化。此时，如再以债权人对欺诈是否知情而对债权人施以援手，似乎无必要。</p>
+<p>因此，按照这个规定，假如一个债务人去欺骗了一个抵押人提供担保，那现在债权人只要不知情，抵押人就要承担责任——这不是鼓励骗一个是一个吗？为什么选择保护债权人而不是提供担保的人，毕竟提供担保的人也是受害人。</p>
+<h2 id="sec-3">三、笔者观点</h2>
+<p><strong>一、从法律解释的角度看</strong>，现有担保的司法解释已经没有欺诈的单独规定，所以第三方欺诈的法源就只有《民法典》第一百四十九条。该条没有规定"对方不知道且不应当知道"的情形，没有规定并不属于立法者的疏漏，不属于法律漏洞，而是法律借此表明对此种情形不追求特定效果。法律沉默了，但并不允许法院在该领域内从事补充法的活动。即"对方不知道且不应当知道"的情况下，受欺诈方无权请求撤销。</p>
+<p><strong>二、在法律解释的范围内</strong>，如果想对新债务和旧债务区别对待，必须在法律上找到一个锚点——能够以"新债务和旧债务"来影响第一百四十九条撤销请求权的某个构成要件。在该条中，只有"对方知道或者应当知道"这一构成要件有可能为"新债务和旧债务"这一事实影响，但二者之间的异质性太大，这种推理成功的可能性不大。</p>
+<p><strong>三、如果在现有法律解释内无法完成</strong>，要实现内心的公平正义，法官可能只有对法律进行法续造了——即司法者在此时要作为立法者，建立新的法律。这种情况一般是现有法律适用于具体案件会产生极端的不公正。法续造首先要确定一个法目的，另外，法官要进行法续造，首先要诚实，不能把自己的法续造隐入空洞的说理中，要写明自己构建的具体法条，承认自己进行了法续造。</p>
+<p>当下很多判决都已经超越了法律，属于法续造的范畴，但法官在判决中并没有清醒的认知，让人怀疑裁判者在裁判下另有不能光明正大探讨的目的。</p>
+<p><strong>四、从法经济学角度分析</strong>，法续造的目的如果是公平，公平的内涵外延是极度不确定的。倒可以从法经济学角度分析：对于欺诈，谁更有可能防范欺诈，谁防范欺诈的成本更低，是受欺诈一方，还是对方？</p>
+<p>笔者的判断是抵押人更有可能防范欺诈，防范欺诈的成本也更低。债务人请求抵押人提供抵押，必定有一定的基础理由和承诺，这一理由和承诺存在于债务人和抵押人之间，债权人并不一定更了解。另外，抵押人也可以在提供抵押前，自愿将该基础理由和承诺向债权人披露，如果债权人当时知道此理由和承诺属于欺诈而仍接受抵押，抵押人将来更容易主张债权人"知道或应当知道"。</p></div>
+    
+  </div>
+</article>
+
+<footer>
+  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利&nbsp;·&nbsp;<a href="../feed.xml" style="color:var(--muted)">RSS</a></p>
+</footer>
+</body>
+</html>

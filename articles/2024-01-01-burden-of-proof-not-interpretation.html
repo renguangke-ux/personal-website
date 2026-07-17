@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>不是合同解释问题！是证明责任问题 — 任广科</title>
+  
+  <meta name="description" content="以一则居间费纠纷为例，指出法官将证明责任问题误作合同解释问题处理，在真伪不明状态下绕开证明责任分配而直接平衡双方利益，导致判决结果必然错误。" />
+  <meta property="og:title" content="不是合同解释问题！是证明责任问题" />
+  <meta property="og:description" content="以一则居间费纠纷为例，指出法官将证明责任问题误作合同解释问题处理，在真伪不明状态下绕开证明责任分配而直接平衡双方利益，导致判决结果必然错误。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://personal-website-6dn.pages.dev/articles/2024-01-01-burden-of-proof-not-interpretation.html" />
+  <meta property="og:site_name" content="任广科" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="不是合同解释问题！是证明责任问题" />
+  <meta name="twitter:description" content="以一则居间费纠纷为例，指出法官将证明责任问题误作合同解释问题处理，在真伪不明状态下绕开证明责任分配而直接平衡双方利益，导致判决结果必然错误。" />
+  <link rel="alternate" type="application/rss+xml" title="任广科" href="../feed.xml" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .article-page { padding: 60px 2rem 80px; }
+    .article-page-inner { max-width: 760px; margin: 0 auto; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      color: var(--muted); font-size: .9rem; margin-bottom: 2rem;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--text); text-decoration: none; }
+    .article-page h1 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700; line-height: 1.35;
+      margin: 1rem 0 1.2rem;
+    }
+    .article-page-meta {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      color: var(--muted); font-size: .88rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.8rem;
+    }
+    .article-page-summary {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 2rem;
+      font-size: .88rem;
+    }
+    .toc-title {
+      font-size: .78rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: .7rem;
+    }
+    .toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+    .toc li { margin-bottom: .3rem; line-height: 1.5; }
+    .toc-l2 { counter-increment: toc; }
+    .toc-l2::before { content: counter(toc) ". "; color: var(--muted); font-size: .8rem; }
+    .toc-l3 { padding-left: 1.4rem; }
+    .toc-l3::before { content: "· "; color: var(--muted); }
+    .toc a { color: var(--muted); }
+    .toc a:hover { color: var(--accent); text-decoration: none; }
+    .article-body { line-height: 1.9; color: var(--muted); }
+    .article-body p { margin-bottom: 1.2rem; }
+    .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 2rem 0 .8rem; }
+    .article-body h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 .6rem; }
+    .article-body strong { color: var(--text); }
+    .article-figure { margin: 1.8rem 0; text-align: center; }
+    .article-figure img { max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+    .article-figure figcaption { margin-top: .5rem; font-size: .83rem; color: var(--muted); }
+    .fn-ref a { color: var(--accent); text-decoration: none; font-size: .75em; vertical-align: super; line-height: 0; }
+    .footnotes { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--border); font-size: .83rem; color: var(--muted); }
+    .footnotes hr { display: none; }
+    .footnotes ol { padding-left: 1.4rem; margin: 0; }
+    .footnotes li { margin-bottom: .5rem; line-height: 1.7; }
+    .fn-back { color: var(--muted); margin-left: .3rem; text-decoration: none; }
+    .fn-back:hover { color: var(--accent); }
+    .journal-box {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.4rem;
+      margin-bottom: 2rem;
+    }
+    .journal-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: .1rem; }
+    .journal-label { font-size: .78rem; color: var(--muted); margin-bottom: .3rem; }
+    .journal-name { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; }
+    .journal-note { font-size: .83rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+      }
+    });
+  }
+</script>
+
+<nav>
+  <a href="../index.html" class="nav-logo">任广科</a>
+  <ul class="nav-links">
+    <li><a href="../about.html">关于</a></li>
+    <li><a href="../index.html#articles">文章</a></li>
+    <li><a href="../index.html#activities">活动</a></li>
+    <li><a href="../index.html#contact">联系</a></li>
+  </ul>
+</nav>
+
+<article class="article-page">
+  <div class="article-page-inner">
+    <a href="../index.html#articles" class="back-link">← 返回文章列表</a>
+    <span class="article-cat cat-case">案例研究</span>
+    <h1>不是合同解释问题！是证明责任问题</h1>
+    <div class="article-page-meta">
+      <span>2024年1月</span>
+      <span>案例评析</span>
+    </div>
+    <div class="article-page-summary">
+      <p>以一则居间费纠纷为例，指出法官将证明责任问题误作合同解释问题处理，在真伪不明状态下绕开证明责任分配而直接平衡双方利益，导致判决结果必然错误。</p>
+    </div>
+    
+    <div class="toc"><div class="toc-title">目录</div><ol><li class="toc-l2"><a href="#sec-1">一、只从判决书的判条看，就可以确定此案判决结果必定错误</a></li>
+<li class="toc-l2"><a href="#sec-2">二、这是证明责任问题</a></li>
+<li class="toc-l3"><a href="#sec-3">1、真伪不明的状态下，如何认定责任</a></li>
+<li class="toc-l3"><a href="#sec-4">2、甲方是否承担举证责任</a></li>
+<li class="toc-l2"><a href="#sec-5">三、裁判者是否可以在真伪不明的情况下不确定证明责任而直接平衡当事人利益</a></li></ol></div>
+    <div class="article-body"><p>在《诚信与目的解释方法在争议条款解释中的具体应用》一文中，法官显然认为本文所讨论的案件是合同条款解释的典型案例。但正如魏德士所述，"目光在事实与法律规范间'来回穿梭'是法律适用的普遍特征"，如果认定事实错误，合同条款解释的再正确，也无法改变认定错误的命运。</p>
+<h2 id="sec-1">一、只从判决书的判条看，就可以确定此案判决结果必定错误</h2>
+<p>本案的争议焦点在于根据合同条款，居间服务提供者是否应返还居间费。合同约定："乙方协助甲方与煤矿签订瓦斯发电项目投资合作协议，对甲方项目获取及履行提供协助，乙方按项目发电量提取相应报酬；甲方和煤矿承托方成功签订瓦斯发电合同当天支付给乙方居间费用40万元，煤矿一年内达不到发电条件乙方无条件退给甲方40万元居间费用（不计息）；瓦斯浓度符合发电的条件并电站手续办理齐全，如因甲方不能履行瓦斯发电合同乙方不退此费用。"</p>
+<p>返还居间费用的条款要么成立要么不成立，非此即彼，居间费用要么全部返还要么全部不返还，断不可能只返还一部分。但法院就是判决返还部分居间费用，因此这结果必定是错误的。</p>
+<h2 id="sec-2">二、这是证明责任问题</h2>
+<h3 id="sec-3">1、真伪不明的状态下，如何认定责任</h3>
+<p>在诉讼中，如果双方当事人对事实主张不一致，法院根据双方提供的证据来认定事实。但有时候，双方当事人提供的证据均不足以证明各自主张的事实，此时真伪不明，法官无法形成内心确信，无法确定事实的真相。在这种情况下，法官无权拒绝裁判，只能依据法律规定的证明责任来确定诉讼后果，即谁对该事实负证明责任，谁承担不利后果。</p>
+<p>本案的证明责任应归谁？法律规定谁主张谁举证，乙方主张"合同无法履行，煤矿一年内达到发电条件的前提已不具备"，要求退回40万元居间费用。乙方要求退回40万元居间费用，建立在其主张的事实基础上，对该事实是否存在应由乙方举证。从本案法官的分析看，法官对该事实是否为真陷入真伪不明状态，因而负有证明责任的乙方并没有证明其主张的事实。在没有证明该事实存在的情况下，不利后果应由乙方承担，因而其主张返还居间服务费不应支持。</p>
+<h3 id="sec-4">2、甲方是否承担举证责任</h3>
+<p>判决中认定"甲方也没有提供证据证明乙方在可能具备发电条件下，恶意阻止条件成就"，有依据让甲方承担该证明责任吗？</p>
+<p>在事实真伪不明的情况下，甲方没有责任提供证据来证明该事实，甚至甲方都没有必要提出该事实主张。"甲方是否恶意阻止条件成就"只有在"条件已经成就"的前提下才有意义，在该前提事实尚真伪不明的情况下，"甲方是否恶意阻止条件成就"这一事实就不应在裁判者的视野之内。</p>
+<h2 id="sec-5">三、裁判者是否可以在真伪不明的情况下不确定证明责任而直接平衡当事人利益</h2>
+<p>在事实真伪不明的状态下，本案判决"结合合同已经履行情况、当事人过错程度等，法院酌情扣除了15万元居间费，由关某返还东营某公司25万元居间费"。</p>
+<p>第一，在事实真伪不明的情况下，如何评判当事人的过错程度？</p>
+<p>第二，在事实真伪不明的情况下，应该首先依据法律规定确定证明责任，再在确定证明责任的基础下评判当事人的实体责任。如果绕开这一步骤，显然是适用法律不当。</p>
+<p>法官可能认为，在事实真伪不明的状态下，各自都承担部分损失，是公平的。但事实都没有确定、证明责任都没有分清楚的前提下，如何去谈公平？这种和稀泥式判决将损害法律的可预期和安宁性，使交易当事人在交易时无法预期后果，会阻碍交易达成的机率或增加交易的成本。</p>
+<p>假设哪一天真伪不明状态消除，例如权威专家通过研究确定该煤矿发电条件成就或不成就，无论结果如何，本案判决都是错的。如果条件成就，就不应退回部分款项；如果不成就，就应退回全部款项。无论如何退回一部分都是错的。</p>
+<p>遗憾的是，有太多的判决把事实问题的法律认定和法律问题的法律认定混在一起，没有清晰的逻辑分析，从而得出错误的结论。</p>
+<p>---</p>
+<p>附：本文所讨论案例见 https://mp.weixin.qq.com/s/efvPt6XWQztMbJZInekf6Q</p></div>
+    
+  </div>
+</article>
+
+<footer>
+  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利&nbsp;·&nbsp;<a href="../feed.xml" style="color:var(--muted)">RSS</a></p>
+</footer>
+</body>
+</html>

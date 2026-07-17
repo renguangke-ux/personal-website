@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>现值和折现率在一个房屋租赁合同案件中的应用 — 任广科</title>
+  
+  <meta name="description" content="以一则20年房屋租赁合同纠纷为案例，演示如何运用现值和折现率概念，计算合同被解除后承租方可主张的返还金额，为法律人提供法经济学工具的实务应用示范。" />
+  <meta property="og:title" content="现值和折现率在一个房屋租赁合同案件中的应用" />
+  <meta property="og:description" content="以一则20年房屋租赁合同纠纷为案例，演示如何运用现值和折现率概念，计算合同被解除后承租方可主张的返还金额，为法律人提供法经济学工具的实务应用示范。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://personal-website-6dn.pages.dev/articles/2025-04-01-present-value-lease-case.html" />
+  <meta property="og:site_name" content="任广科" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="现值和折现率在一个房屋租赁合同案件中的应用" />
+  <meta name="twitter:description" content="以一则20年房屋租赁合同纠纷为案例，演示如何运用现值和折现率概念，计算合同被解除后承租方可主张的返还金额，为法律人提供法经济学工具的实务应用示范。" />
+  <link rel="alternate" type="application/rss+xml" title="任广科" href="../feed.xml" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .article-page { padding: 60px 2rem 80px; }
+    .article-page-inner { max-width: 760px; margin: 0 auto; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      color: var(--muted); font-size: .9rem; margin-bottom: 2rem;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--text); text-decoration: none; }
+    .article-page h1 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700; line-height: 1.35;
+      margin: 1rem 0 1.2rem;
+    }
+    .article-page-meta {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      color: var(--muted); font-size: .88rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.8rem;
+    }
+    .article-page-summary {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 2rem;
+      font-size: .88rem;
+    }
+    .toc-title {
+      font-size: .78rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: .7rem;
+    }
+    .toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+    .toc li { margin-bottom: .3rem; line-height: 1.5; }
+    .toc-l2 { counter-increment: toc; }
+    .toc-l2::before { content: counter(toc) ". "; color: var(--muted); font-size: .8rem; }
+    .toc-l3 { padding-left: 1.4rem; }
+    .toc-l3::before { content: "· "; color: var(--muted); }
+    .toc a { color: var(--muted); }
+    .toc a:hover { color: var(--accent); text-decoration: none; }
+    .article-body { line-height: 1.9; color: var(--muted); }
+    .article-body p { margin-bottom: 1.2rem; }
+    .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 2rem 0 .8rem; }
+    .article-body h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 .6rem; }
+    .article-body strong { color: var(--text); }
+    .article-figure { margin: 1.8rem 0; text-align: center; }
+    .article-figure img { max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+    .article-figure figcaption { margin-top: .5rem; font-size: .83rem; color: var(--muted); }
+    .fn-ref a { color: var(--accent); text-decoration: none; font-size: .75em; vertical-align: super; line-height: 0; }
+    .footnotes { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--border); font-size: .83rem; color: var(--muted); }
+    .footnotes hr { display: none; }
+    .footnotes ol { padding-left: 1.4rem; margin: 0; }
+    .footnotes li { margin-bottom: .5rem; line-height: 1.7; }
+    .fn-back { color: var(--muted); margin-left: .3rem; text-decoration: none; }
+    .fn-back:hover { color: var(--accent); }
+    .journal-box {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.4rem;
+      margin-bottom: 2rem;
+    }
+    .journal-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: .1rem; }
+    .journal-label { font-size: .78rem; color: var(--muted); margin-bottom: .3rem; }
+    .journal-name { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; }
+    .journal-note { font-size: .83rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+      }
+    });
+  }
+</script>
+
+<nav>
+  <a href="../index.html" class="nav-logo">任广科</a>
+  <ul class="nav-links">
+    <li><a href="../about.html">关于</a></li>
+    <li><a href="../index.html#articles">文章</a></li>
+    <li><a href="../index.html#activities">活动</a></li>
+    <li><a href="../index.html#contact">联系</a></li>
+  </ul>
+</nav>
+
+<article class="article-page">
+  <div class="article-page-inner">
+    <a href="../index.html#articles" class="back-link">← 返回文章列表</a>
+    <span class="article-cat cat-case">案例研究</span>
+    <h1>现值和折现率在一个房屋租赁合同案件中的应用</h1>
+    <div class="article-page-meta">
+      <span>2025年4月</span>
+      <span>案例评析</span>
+    </div>
+    <div class="article-page-summary">
+      <p>以一则20年房屋租赁合同纠纷为案例，演示如何运用现值和折现率概念，计算合同被解除后承租方可主张的返还金额，为法律人提供法经济学工具的实务应用示范。</p>
+    </div>
+    
+    <div class="toc"><div class="toc-title">目录</div><ol><li class="toc-l2"><a href="#sec-1">一、案情简介</a></li>
+<li class="toc-l2"><a href="#sec-2">二、法院审理</a></li>
+<li class="toc-l2"><a href="#sec-3">三、分析</a></li></ol></div>
+    <div class="article-body"><h2 id="sec-1">一、案情简介</h2>
+<p>2003年4月1日，原告刘某与被告张某签订《房屋租赁合同》一份，合同约定：张某（承租方）租赁刘某（出租方）房屋及院落一处，租赁期限为20年，自2003年4月1日起至2023年4月1日止，期满后可继续使用，免收租赁费。合同签订后，张某支付20年租金共计5.3万元。</p>
+<p>2024年10月，刘某欲收回该房屋及院落，张某予以拒绝，刘某将张某诉至法院，要求解除与张某之间的合同，并要求张某返还该房屋和院落。</p>
+<h2 id="sec-2">二、法院审理</h2>
+<p>法院经审理认为，《民法典》第七百零五条规定，租赁期限不得超过二十年，超过二十年的超过部分无效。本案中，原告刘某与被告张某签订的《房屋租赁合同》约定租赁期限为二十年，符合法律规定，但同时约定"期满后可继续使用，免收租赁费"，该约定意图明显是为了规避上述法律对租赁合同最长租赁期间的限制，因而无效。</p>
+<p>由于案涉租赁合同二十年的租赁期限已经届满，原被告之间形成不定期租赁关系，原告刘某可随时解除该不定期租赁合同关系。庭审中原告未能提交其通知张某解除案涉租赁关系的证据，故法院认定双方之间租赁关系自本案起诉状副本送达被告之日，即2025年3月14日解除。</p>
+<p>法院最终判决原被告就案涉房屋形成的不定期租赁关系于2025年3月14日解除，被告张某限期返还涉案房屋及院落。一审判决后，被告张某不服提起上诉，二审法院驳回上诉，维持原判。</p>
+<h2 id="sec-3">三、分析</h2>
+<p>法院认为"期满后可继续使用，免收租赁费"该约定意图明显是为了规避法律限制。根据该分析，从双方本意看，虽然约定20年后免收租赁费，但20年后至永久的租赁费均已包含在合同约定的20年租金之内——双方约定的5.3万元租金就不只是20年的租金，而应该是<strong>永续租金的现值</strong>。</p>
+<p>现出租方没有让租赁方永续租用，那么出租方也不应收取这5.3万元中实际包含的20年后的租金。但如何分清这5.3万元中所包含的20年内的租金和之后的租金，就需要利用现值和折现率这个概念。</p>
+<p><strong>现值和折现率</strong>是经济学中的重要概念。折现率是将未来的现金流折算为当前价值所使用的比率，核心逻辑基于"货币的时间价值"——今天的1元钱比未来的1元钱更有价值。假设你现在有100元，存入银行的年利率为5%，1年后你会得到105元。反过来，1年后的105元，在今天的价值（现值）就是100元，这里的5%就是折现率。</p>
+<p>知道折现率（一般与当前的利率等值，现假设为3%），又知道永续租金的现值（5.3万元），根据永续年金现值公式：</p>
+<p>$PV = \frac{A}{r}$</p>
+<p>其中PV为现值（5.3万元），A为每年的固定现金流（年租金，待求），r为折现率（3%）。</p>
+<p>求解得：$A = 5.3 \times 0.03 = 0.159$ 万元，即<strong>年租金为1590元</strong>。</p>
+<p>对于期限为n年、每年固定现金流为A、折现率为r、且租金在期初支付的情形，其现值公式为：</p>
+<p>$PV_n = A \cdot \frac{1 - (1+r)^{-n}}{r} \cdot (1+r)$</p>
+<p>把A=0.159万元，r=0.03代入，计算20年的租金现值为<strong>2.436万元</strong>。</p>
+<p>由永续租金5.3万元，减去20年的租金现值2.436万元，剩余的<strong>2.864万元</strong>即为20年后至永续期间的租金，也就是出租方不应收取的部分。即<strong>出租方应返还承租方2.864万元</strong>。</p>
+<p>如果本案承租方律师懂点经济学概念，他就可以在租赁合同被解除后，让承租方获得2.864万元的补偿。</p>
+<p>---</p>
+<p>附：引用案例见 https://mp.weixin.qq.com/s/DA8SOU5HmBZWqaYQH1F_RA</p></div>
+    
+  </div>
+</article>
+
+<footer>
+  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利&nbsp;·&nbsp;<a href="../feed.xml" style="color:var(--muted)">RSS</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>专利权属争议期间放弃专利的责任构成要件分析 — 任广科</title>
+  
+  <meta name="description" content="通过对（2019）最高法知民终424号的反思，论证在专利权属争议期间被告故意不缴年费致专利失效，其行为实为侵犯商业秘密的延续，属于恶意占有行为，应承担无过错责任；善良管理义务仅适用于过失侵权，不能作为免责事由。" />
+  <meta property="og:title" content="专利权属争议期间放弃专利的责任构成要件分析" />
+  <meta property="og:description" content="通过对（2019）最高法知民终424号的反思，论证在专利权属争议期间被告故意不缴年费致专利失效，其行为实为侵犯商业秘密的延续，属于恶意占有行为，应承担无过错责任；善良管理义务仅适用于过失侵权，不能作为免责事由。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://personal-website-6dn.pages.dev/articles/2020-06-01-patent-abandonment-liability.html" />
+  <meta property="og:site_name" content="任广科" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="专利权属争议期间放弃专利的责任构成要件分析" />
+  <meta name="twitter:description" content="通过对（2019）最高法知民终424号的反思，论证在专利权属争议期间被告故意不缴年费致专利失效，其行为实为侵犯商业秘密的延续，属于恶意占有行为，应承担无过错责任；善良管理义务仅适用于过失侵权，不能作为免责事由。" />
+  <link rel="alternate" type="application/rss+xml" title="任广科" href="../feed.xml" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .article-page { padding: 60px 2rem 80px; }
+    .article-page-inner { max-width: 760px; margin: 0 auto; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      color: var(--muted); font-size: .9rem; margin-bottom: 2rem;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--text); text-decoration: none; }
+    .article-page h1 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700; line-height: 1.35;
+      margin: 1rem 0 1.2rem;
+    }
+    .article-page-meta {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      color: var(--muted); font-size: .88rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.8rem;
+    }
+    .article-page-summary {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 2rem;
+      font-size: .88rem;
+    }
+    .toc-title {
+      font-size: .78rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: .7rem;
+    }
+    .toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+    .toc li { margin-bottom: .3rem; line-height: 1.5; }
+    .toc-l2 { counter-increment: toc; }
+    .toc-l2::before { content: counter(toc) ". "; color: var(--muted); font-size: .8rem; }
+    .toc-l3 { padding-left: 1.4rem; }
+    .toc-l3::before { content: "· "; color: var(--muted); }
+    .toc a { color: var(--muted); }
+    .toc a:hover { color: var(--accent); text-decoration: none; }
+    .article-body { line-height: 1.9; color: var(--muted); }
+    .article-body p { margin-bottom: 1.2rem; }
+    .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 2rem 0 .8rem; }
+    .article-body h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 .6rem; }
+    .article-body strong { color: var(--text); }
+    .article-figure { margin: 1.8rem 0; text-align: center; }
+    .article-figure img { max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+    .article-figure figcaption { margin-top: .5rem; font-size: .83rem; color: var(--muted); }
+    .fn-ref a { color: var(--accent); text-decoration: none; font-size: .75em; vertical-align: super; line-height: 0; }
+    .footnotes { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--border); font-size: .83rem; color: var(--muted); }
+    .footnotes hr { display: none; }
+    .footnotes ol { padding-left: 1.4rem; margin: 0; }
+    .footnotes li { margin-bottom: .5rem; line-height: 1.7; }
+    .fn-back { color: var(--muted); margin-left: .3rem; text-decoration: none; }
+    .fn-back:hover { color: var(--accent); }
+    .journal-box {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.4rem;
+      margin-bottom: 2rem;
+    }
+    .journal-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: .1rem; }
+    .journal-label { font-size: .78rem; color: var(--muted); margin-bottom: .3rem; }
+    .journal-name { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; }
+    .journal-note { font-size: .83rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+      }
+    });
+  }
+</script>
+
+<nav>
+  <a href="../index.html" class="nav-logo">任广科</a>
+  <ul class="nav-links">
+    <li><a href="../about.html">关于</a></li>
+    <li><a href="../index.html#articles">文章</a></li>
+    <li><a href="../index.html#activities">活动</a></li>
+    <li><a href="../index.html#contact">联系</a></li>
+  </ul>
+</nav>
+
+<article class="article-page">
+  <div class="article-page-inner">
+    <a href="../index.html#articles" class="back-link">← 返回文章列表</a>
+    <span class="article-cat cat-case">案例研究</span>
+    <h1>专利权属争议期间放弃专利的责任构成要件分析</h1>
+    <div class="article-page-meta">
+      <span>2020年6月</span>
+      <span>案例评析</span>
+    </div>
+    <div class="article-page-summary">
+      <p>通过对（2019）最高法知民终424号的反思，论证在专利权属争议期间被告故意不缴年费致专利失效，其行为实为侵犯商业秘密的延续，属于恶意占有行为，应承担无过错责任；善良管理义务仅适用于过失侵权，不能作为免责事由。</p>
+    </div>
+    
+    <div class="toc"><div class="toc-title">目录</div><ol><li class="toc-l2"><a href="#sec-1">一、引言</a></li>
+<li class="toc-l2"><a href="#sec-2">二、善良管理义务</a></li>
+<li class="toc-l2"><a href="#sec-3">三、424号案是否适用善良管理义务</a></li>
+<li class="toc-l3"><a href="#sec-4">1、424号案中被告侵犯了原告何种权利</a></li>
+<li class="toc-l3"><a href="#sec-5">2、被告不交年费致专利失效的行为性质</a></li>
+<li class="toc-l3"><a href="#sec-6">3、将他人商业秘密申请专利应承担的责任</a></li>
+<li class="toc-l3"><a href="#sec-7">4、被告能否因履行了善良管理义务就不承担责任</a></li>
+<li class="toc-l3"><a href="#sec-8">5、与物权进行类比</a></li>
+<li class="toc-l2"><a href="#sec-9">四、结论</a></li></ol></div>
+    <div class="article-body"><p>*对（2019）最高法知民终424号案的反思*</p>
+<h2 id="sec-1">一、引言</h2>
+<p>甲公司的职工乙离职后加入丙公司，在丙公司从事与甲公司相同的研发工作，并于一年内将研发成果申请了专利。甲公司通过诉讼向丙公司主张专利权属，在诉讼中，丙公司通过不缴纳专利费放弃该专利，现专利已失效。甲公司起诉乙公司，主张其由于丙公司的行为致专利权失效而无法获得专利权，要求丙公司赔偿损失。</p>
+<p>最高法院在（2019）最高法知民终424号判决（以下简称424号判决）中认为："当事人无论基于何种原因对专利申请权、专利权权属发生争议时，基于诚实信用原则，登记的专利权人通常应当负有使已经获得授权的专利权维持有效的善良管理责任，包括持续交纳专利年费等，因为专利权一旦终止失效，专利技术通常情况下即会进入公有领域，从而使专利技术所有人丧失市场独占利益，损害到专利技术所有人的合法权益。登记的专利权人未尽到该善良管理责任，给专利技术所有人造成损失的，应当负有赔偿责任。"</p>
+<h2 id="sec-2">二、善良管理义务</h2>
+<p>"善良管理人的注意，乃通常合理人的注意，系一种客观化或类型化的过失标准，即行为人应具有其所属职业、某种社会活动的成员或某年龄层通常所具的智识能力。""侵权法中判断行为人是否具有一般过失，采取的是相对客观的标准，如'善良管理人'或'合理的人'。"</p>
+<p>侵权责任根据归责原则不同，可分为过错责任、无过错责任和公平责任三种类型，其中过错责任根据侵权人的主观心理状态，又分为故意、过失二种。而"善良管理人"标准是判断是否有过失的一种方法。</p>
+<p>因此，<strong>善良管理义务只适用于过错责任中的过失类型</strong>，不适用于过错责任中的故意类型，也不适用于无过错责任。</p>
+<h2 id="sec-3">三、424号案是否适用善良管理义务</h2>
+<h3 id="sec-4">1、424号案中被告侵犯了原告何种权利</h3>
+<p>技术信息根据权利类型的不同，有不同的表现形式：申请专利的技术信息在申请前属于权利人的商业秘密，在申请专利后至授权前享有的权利是专利申请权，在授权后至专利失效前享有的权利是专利权，专利失效后技术信息成为公共信息。</p>
+<p>根据424号判决的论述，姜汉平明知属于德港公司的职务发明，未经德港公司许可，仍将其披露给宇景公司，属于《反不正当竞争法》第九条第一款（三）项的行为；宇景公司明知属于德港公司的职务发明，未经德港公司许可获利该技术信息，属于《反不正当竞争法》第九条第二款的行为。所以，本案被告实质上是<strong>侵犯了原告的商业秘密</strong>。</p>
+<h3 id="sec-5">2、被告不交年费致专利失效的行为性质</h3>
+<p>被告申请专利致原告商业秘密丧失，损害了原告利益。在专利未失效时，被告通过返还原告专利权，可以使原告的利益获得全部或部分弥补；如果被告不缴纳专利费致专利失效，被告应承担原告的全部损失。被告在专利权属争议期间不交纳专利年费，致使专利权失效，只是商业秘密侵权行为的延续而已，扩大了其侵权行为的损害后果。</p>
+<h3 id="sec-6">3、将他人商业秘密申请专利应承担的责任</h3>
+<p>假设本案被告履行了善良管理义务，是否就不承担专利灭失的责任了？被告侵犯商业秘密的行为已经构成，应承担停止侵权、赔偿损失的责任。</p>
+<p>如果非法获取者将商业秘密申请了专利，商业秘密权利人可以要求非法获取者返还专利权；如果非法获取者将商业秘密申请专利后又致专利失效，被告应承担原告的全部损失。</p>
+<h3 id="sec-7">4、被告能否因履行了善良管理义务就不承担责任</h3>
+<p>可参照《民法典》第四百六十一条的规定，"恶意占有人"应承担无过错责任，即使不能返还的原因是不可抗力，也应承担赔偿损失的责任。424号案判决已认定"南海水产研究所、宇景公司对于涉案发明不归属于其自身应该是明知的"，故被控侵权人不属于涉案商业秘密和专利技术的善意占有人。</p>
+<p>对于恶意占有人，由于其承担的是无过错责任，即使不能返还的原因是不可抗力，也应承担赔偿损失的责任，其是否尽到善良管理责任与其是否承担赔偿责任无关。</p>
+<h3 id="sec-8">5、与物权进行类比</h3>
+<p>甲窃取乙的自行车，乙起诉甲要求返还，在诉讼中，甲因管理不善造成自行车消失，乙以善良管理责任起诉甲。估计所有的人第一感觉就是这个诉由很奇怪。原因在于甲无论是因管理不善造成自行车消失，还是因天灾等不可抗力造成，还是恶意造成自行车消灭，都应给予乙足额赔偿。</p>
+<p>同理，专利权在这种情况下与物权并无二致，结论也应该是一样的。</p>
+<h2 id="sec-9">四、结论</h2>
+<p>被控侵权人将权利人的商业秘密申请专利，在专利有效期内，因未交纳年费，致专利失效。被控侵权人的行为属于侵犯商业秘密的行为，致专利失效影响的只是其承担责任的后果。</p>
+<p>被控侵权人承担的是<strong>无过错责任</strong>，无论被控侵权人是否具有过错，是否尽到善良管理人职责，被控侵权人均应承担全部赔偿责任。</p></div>
+    
+  </div>
+</article>
+
+<footer>
+  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利&nbsp;·&nbsp;<a href="../feed.xml" style="color:var(--muted)">RSS</a></p>
+</footer>
+</body>
+</html>

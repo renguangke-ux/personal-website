@@ -6,7 +6,7 @@
     <description>任广科的个人网站 — 法律、法经济学与 AI</description>
     <language>zh-CN</language>
     <atom:link href="https://personal-website-6dn.pages.dev/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Fri, 17 Jul 2026 07:48:02 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jul 2026 08:09:20 GMT</lastBuildDate>
     <item>
       <title>法律职业与人工智能</title>
       <link>https://personal-website-6dn.pages.dev/articles/2026-07-15-法律职业与人工智能.html</link>
@@ -36,6 +36,13 @@
       <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2026-06-01-clinical-trial-compensation-econ.html</guid>
     </item>
     <item>
+      <title>现值和折现率在一个房屋租赁合同案件中的应用</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2025-04-01-present-value-lease-case.html</link>
+      <description>以一则20年房屋租赁合同纠纷为案例，演示如何运用现值和折现率概念，计算合同被解除后承租方可主张的返还金额，为法律人提供法经济学工具的实务应用示范。</description>
+      <pubDate>Tue, 01 Apr 2025 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2025-04-01-present-value-lease-case.html</guid>
+    </item>
+    <item>
       <title>合同条款的签订目的对合同解释的影响</title>
       <link>https://personal-website-6dn.pages.dev/articles/2025-01-01-contract-interpretation.html</link>
       <description>以三个合同纠纷案例为切入点，分析裁判者在解释合同时未充分尊重当事人签订条款的真实目的，导致合同解释违背意思自治原则的问题。</description>
@@ -50,11 +57,60 @@
       <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2024-06-01-economics-for-lawyers-review.html</guid>
     </item>
     <item>
+      <title>法律方法论对裁判者的约束</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2024-06-01-legal-methodology-constraining-judges.html</link>
+      <description>以债务人欺骗抵押人为旧债务提供担保为例，与钟长江法官共同探讨：当法律明文规定与个案公平相悖时，法官如何在法律解释范围内寻求公正，以及何时、如何进行正当的法续造。</description>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2024-06-01-legal-methodology-constraining-judges.html</guid>
+    </item>
+    <item>
+      <title>不是合同解释问题！是证明责任问题</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2024-01-01-burden-of-proof-not-interpretation.html</link>
+      <description>以一则居间费纠纷为例，指出法官将证明责任问题误作合同解释问题处理，在真伪不明状态下绕开证明责任分配而直接平衡双方利益，导致判决结果必然错误。</description>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2024-01-01-burden-of-proof-not-interpretation.html</guid>
+    </item>
+    <item>
+      <title>证明责任转移概念无实践意义</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2023-01-01-burden-of-proof-transfer.html</link>
+      <description>论证主观证明责任转移概念在司法实践中的指导意义极其有限：其转移标准难以理论化，法官心证形成过程不透明，且在判决中使用该概念容易引发混淆；以（2022）最高法知民终1316号为例加以分析。</description>
+      <pubDate>Sun, 01 Jan 2023 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2023-01-01-burden-of-proof-transfer.html</guid>
+    </item>
+    <item>
+      <title>一个专利案件的论证逻辑问题——本案专利无效返还是否需要适用公平原则</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2022-07-01-patent-invalidation-refund-logic.html</link>
+      <description>以一则专利许可费返还纠纷为例，论证《专利法》第四十七条的正确适用：已履行期限内的专利费应因合同部分溯及无效而直接返还，无需适用&quot;明显违反公平原则&quot;条款，并对判决中混淆两款适用范围的逻辑进行辨析。</description>
+      <pubDate>Fri, 01 Jul 2022 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2022-07-01-patent-invalidation-refund-logic.html</guid>
+    </item>
+    <item>
+      <title>轻微违约，就不能行使合同约定解除权吗</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2022-01-01-minor-breach-termination-right.html</link>
+      <description>通过分析一则商品房买卖合同案，论证当事人有权在合同中将轻微违约事项约定为解除条件，裁判者不应超越法律干预当事人约定；并从法律解释和经济分析角度批评了以诚实信用原则限制约定解除权的裁判思路。</description>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2022-01-01-minor-breach-termination-right.html</guid>
+    </item>
+    <item>
       <title>无效宣告程序中新形成权利要求的保护起始时间</title>
       <link>https://personal-website-6dn.pages.dev/articles/2022-01-01-patent-invalidation-new-claims.html</link>
       <description>专利无效程序中通过权利要求进一步限定形成的新技术方案，其保护期应从本专利授权日还是无效决定生效日开始？通过法律解释与成本收益分析，论证以无效决定生效日为保护起始点更符合专利法立法目的。</description>
       <pubDate>Sat, 01 Jan 2022 00:00:00 GMT</pubDate>
       <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2022-01-01-patent-invalidation-new-claims.html</guid>
+    </item>
+    <item>
+      <title>使用他人技术秘密申请专利的权利归属</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2021-01-01-patent-ownership-trade-secret.html</link>
+      <description>对最高人民法院（2020）最高法知民终871号案进行分析，论证在未经许可使用他人技术秘密申请专利的权属认定中，须审查技术秘密体现在专利文献的哪部分，以及其是否构成专利实质性特点，指出该判决认定原告为专利权人时的逻辑不周延之处。</description>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2021-01-01-patent-ownership-trade-secret.html</guid>
+    </item>
+    <item>
+      <title>专利权属争议期间放弃专利的责任构成要件分析</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2020-06-01-patent-abandonment-liability.html</link>
+      <description>通过对（2019）最高法知民终424号的反思，论证在专利权属争议期间被告故意不缴年费致专利失效，其行为实为侵犯商业秘密的延续，属于恶意占有行为，应承担无过错责任；善良管理义务仅适用于过失侵权，不能作为免责事由。</description>
+      <pubDate>Mon, 01 Jun 2020 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2020-06-01-patent-abandonment-liability.html</guid>
     </item>
     <item>
       <title>案例与论文写作</title>
