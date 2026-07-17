@@ -1,0 +1,837 @@
+<title>个人网站文章发布操作手册</title>
+<style>
+:root {
+  --bg:        #0d1117;
+  --bg-card:   #161b22;
+  --bg-code:   #0d1321;
+  --border:    #30363d;
+  --text:      #e6edf3;
+  --muted:     #8b949e;
+  --accent:    #4f8ef7;
+  --accent-dim:#1a2f5a;
+  --green:     #3fb950;
+  --green-dim: #0d2b14;
+  --orange:    #e3b341;
+  --orange-dim:#2b1f0a;
+  --radius:    8px;
+  --step-line: #4f8ef7;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg:        #f0f4f8;
+    --bg-card:   #ffffff;
+    --bg-code:   #1b2230;
+    --border:    #d0d7de;
+    --text:      #1f2937;
+    --muted:     #6a737d;
+    --accent:    #2563eb;
+    --accent-dim:#dbeafe;
+    --green:     #16a34a;
+    --green-dim: #dcfce7;
+    --orange:    #b45309;
+    --orange-dim:#fef3c7;
+    --step-line: #2563eb;
+  }
+}
+
+:root[data-theme="light"] {
+  --bg:        #f0f4f8;
+  --bg-card:   #ffffff;
+  --bg-code:   #1b2230;
+  --border:    #d0d7de;
+  --text:      #1f2937;
+  --muted:     #6a737d;
+  --accent:    #2563eb;
+  --accent-dim:#dbeafe;
+  --green:     #16a34a;
+  --green-dim: #dcfce7;
+  --orange:    #b45309;
+  --orange-dim:#fef3c7;
+  --step-line: #2563eb;
+}
+
+:root[data-theme="dark"] {
+  --bg:        #0d1117;
+  --bg-card:   #161b22;
+  --bg-code:   #0d1321;
+  --border:    #30363d;
+  --text:      #e6edf3;
+  --muted:     #8b949e;
+  --accent:    #4f8ef7;
+  --accent-dim:#1a2f5a;
+  --green:     #3fb950;
+  --green-dim: #0d2b14;
+  --orange:    #e3b341;
+  --orange-dim:#2b1f0a;
+  --step-line: #4f8ef7;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+}
+
+/* ── 顶部 ── */
+.doc-header {
+  padding: 3rem 0 2rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2.5rem;
+}
+.doc-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .6rem;
+}
+.doc-title {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-wrap: balance;
+  color: var(--text);
+  margin-bottom: .6rem;
+}
+.doc-desc {
+  color: var(--muted);
+  font-size: .9rem;
+  max-width: 54ch;
+}
+.doc-meta {
+  margin-top: 1.2rem;
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .78rem;
+  padding: .2rem .7rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.meta-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); display: inline-block; }
+
+/* ── 目录 ── */
+.toc {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.toc-label {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--muted);
+  margin-bottom: .8rem;
+}
+.toc ol {
+  list-style: none;
+  counter-reset: toc;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+.toc li { counter-increment: toc; display: flex; align-items: baseline; gap: .5rem; }
+.toc li::before {
+  content: counter(toc);
+  font-size: .72rem;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  min-width: 1.2rem;
+}
+.toc a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: .88rem;
+}
+.toc a:hover { color: var(--accent); }
+
+/* ── 章节 ── */
+.section { margin-bottom: 3rem; }
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  padding-bottom: .6rem;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+.section-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-radius: 4px;
+  font-size: .78rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 1.6rem 0 .6rem;
+}
+
+p { margin-bottom: .8rem; color: var(--text); }
+p:last-child { margin-bottom: 0; }
+
+/* ── 流程图 ── */
+.pipeline {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+.pipeline-inner {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-width: 560px;
+}
+.pipe-node {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.pipe-box {
+  width: 100%;
+  max-width: 130px;
+  padding: .7rem .5rem;
+  border-radius: 6px;
+  font-size: .8rem;
+  font-weight: 600;
+  line-height: 1.35;
+  border: 1.5px solid;
+}
+.pipe-box.blue  { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.pipe-box.green { border-color: var(--green);  color: var(--green);  background: var(--green-dim); }
+.pipe-box.org   { border-color: var(--orange); color: var(--orange); background: var(--orange-dim); }
+.pipe-label {
+  font-size: .7rem;
+  color: var(--muted);
+  margin-top: .5rem;
+  line-height: 1.4;
+}
+.pipe-arrow {
+  flex-shrink: 0;
+  width: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1.6rem;
+}
+.pipe-arrow-line {
+  width: 100%;
+  height: 1.5px;
+  background: var(--border);
+  position: relative;
+}
+.pipe-arrow-line::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: -4px;
+  border: 5px solid transparent;
+  border-left-color: var(--border);
+}
+.pipe-arrow-note {
+  font-size: .64rem;
+  color: var(--muted);
+  white-space: nowrap;
+  margin-top: .35rem;
+}
+
+/* ── 步骤卡 ── */
+.steps { display: flex; flex-direction: column; gap: .8rem; }
+.step {
+  display: flex;
+  gap: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  border-left: 3px solid var(--step-line);
+}
+.step-num {
+  flex-shrink: 0;
+  width: 1.6rem;
+  height: 1.6rem;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-top: .1rem;
+}
+.step-body { flex: 1; }
+.step-body strong { font-size: .95rem; font-weight: 600; display: block; margin-bottom: .3rem; }
+.step-body p { font-size: .88rem; color: var(--muted); margin-bottom: .5rem; }
+.step-body p:last-child { margin-bottom: 0; }
+
+/* ── 代码块 ── */
+.code-block {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  margin: .8rem 0;
+  overflow-x: auto;
+}
+.code-block code {
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, "Courier New", monospace;
+  font-size: .82rem;
+  line-height: 1.65;
+  color: #e6edf3;
+  display: block;
+  white-space: pre;
+}
+/* Keep code readable on light mode */
+:root[data-theme="light"] .code-block code,
+@media (prefers-color-scheme: light) { .code-block code { color: #e6edf3; } }
+
+.code-label {
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin-bottom: .4rem;
+}
+
+/* ── 表格 ── */
+.table-wrap { overflow-x: auto; margin: 1rem 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .85rem;
+}
+thead tr { border-bottom: 2px solid var(--border); }
+th {
+  text-align: left;
+  padding: .5rem .8rem;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--muted);
+  font-weight: 600;
+}
+td {
+  padding: .6rem .8rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.5;
+}
+tr:last-child td { border-bottom: none; }
+td code {
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: .78rem;
+  background: var(--bg-code);
+  padding: .1em .35em;
+  border-radius: 3px;
+  color: var(--orange);
+}
+
+/* ── 分类标签 ── */
+.cat-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
+.cat-tag {
+  font-size: .75rem;
+  padding: .2rem .6rem;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+.cat-law   { background: #1e3a5f; color: #7ab8f5; }
+.cat-ai    { background: #1e3a2e; color: #7df5a0; }
+.cat-econ  { background: #3a2a1e; color: #f5c07a; }
+.cat-book  { background: #2e1e3a; color: #c07af5; }
+.cat-case  { background: #1c3a2e; color: #6ee8b4; }
+
+/* ── 提示框 ── */
+.callout {
+  display: flex;
+  gap: .8rem;
+  padding: .9rem 1.1rem;
+  border-radius: var(--radius);
+  margin: 1rem 0;
+  font-size: .88rem;
+}
+.callout.tip  { background: var(--green-dim);  border: 1px solid var(--green);  color: var(--text); }
+.callout.warn { background: var(--orange-dim); border: 1px solid var(--orange); color: var(--text); }
+.callout-icon { flex-shrink: 0; font-size: 1rem; line-height: 1.6; }
+.callout p { margin: 0; color: inherit; font-size: inherit; }
+
+/* ── 分割线 ── */
+.divider { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+/* ── 部署状态示意 ── */
+.deploy-status {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+.deploy-card {
+  flex: 1;
+  min-width: 200px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+}
+.deploy-card-title {
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--muted);
+  margin-bottom: .5rem;
+}
+.deploy-card-url {
+  font-size: .82rem;
+  font-family: "Cascadia Code", Consolas, monospace;
+  color: var(--accent);
+  word-break: break-all;
+  margin-bottom: .5rem;
+}
+.deploy-card-note {
+  font-size: .78rem;
+  color: var(--muted);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  font-size: .7rem;
+  padding: .15rem .5rem;
+  border-radius: 20px;
+}
+.badge.green { background: var(--green-dim); color: var(--green); }
+.badge.blue  { background: var(--accent-dim); color: var(--accent); }
+.badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+</style>
+
+<div class="page">
+
+  <!-- 顶部 -->
+  <header class="doc-header">
+    <p class="doc-eyebrow">任广科个人网站 · 内部文档</p>
+    <h1 class="doc-title">文章发布操作手册</h1>
+    <p class="doc-desc">从撰写文章到上线发布的完整流程说明，含工作原理与常用命令参考。</p>
+    <div class="doc-meta">
+      <span class="meta-pill"><span class="dot"></span>两平台自动同步</span>
+      <span class="meta-pill">最后更新：2026年7月</span>
+      <span class="meta-pill">适用版本：当前 main 分支</span>
+    </div>
+  </header>
+
+  <!-- 目录 -->
+  <nav class="toc">
+    <p class="toc-label">目录</p>
+    <ol>
+      <li><a href="#arch">工作原理：GitHub 到双平台的自动发布机制</a></li>
+      <li><a href="#sites">两个发布站点说明</a></li>
+      <li><a href="#publish">发布新文章：操作步骤</a></li>
+      <li><a href="#frontmatter">Frontmatter 字段说明</a></li>
+      <li><a href="#categories">文章分类参考</a></li>
+      <li><a href="#markdown">正文写作说明</a></li>
+      <li><a href="#commands">常用命令速查</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1. 工作原理 -->
+  <section class="section" id="arch">
+    <h2 class="section-title"><span class="section-num">1</span>工作原理：GitHub 到双平台的自动发布机制</h2>
+
+    <p>网站使用<strong>纯静态生成</strong>方案，无需服务器，整个发布链路如下：</p>
+
+    <div class="pipeline">
+      <div class="pipeline-inner">
+        <div class="pipe-node">
+          <div class="pipe-box blue">本地写作<br>Markdown 文件</div>
+          <div class="pipe-label">content/articles/<br>*.md</div>
+        </div>
+        <div class="pipe-arrow">
+          <div class="pipe-arrow-line"></div>
+          <div class="pipe-arrow-note">git push</div>
+        </div>
+        <div class="pipe-node">
+          <div class="pipe-box blue">GitHub 仓库<br>renguangke-ux/<br>personal-website</div>
+          <div class="pipe-label">main 分支<br>触发 Webhook</div>
+        </div>
+        <div class="pipe-arrow">
+          <div class="pipe-arrow-line"></div>
+          <div class="pipe-arrow-note">自动触发</div>
+        </div>
+        <div class="pipe-node">
+          <div class="pipe-box org">构建服务器<br>npm run build</div>
+          <div class="pipe-label">build.js 生成<br>HTML / RSS</div>
+        </div>
+        <div class="pipe-arrow">
+          <div class="pipe-arrow-line"></div>
+          <div class="pipe-arrow-note">构建完成后</div>
+        </div>
+        <div class="pipe-node">
+          <div class="pipe-box green">双平台上线<br>Netlify<br>Cloudflare Pages</div>
+          <div class="pipe-label">通常 1–3 分钟<br>全球 CDN 生效</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>各环节详解</h3>
+
+    <p><strong>① 本地写作</strong>：复制项目根目录的 <code style="font-family:monospace;font-size:.85em;background:var(--bg-code);padding:.1em .35em;border-radius:3px;color:var(--orange)">article-template.md</code> 模板到 <code style="font-family:monospace;font-size:.85em;background:var(--bg-code);padding:.1em .35em;border-radius:3px;color:var(--orange)">content/articles/</code> 目录，重命名后填写文章内容。</p>
+
+    <p><strong>② Git 推送</strong>：在终端执行 <code style="font-family:monospace;font-size:.85em;background:var(--bg-code);padding:.1em .35em;border-radius:3px;color:var(--orange)">git push</code>，将修改上传到 GitHub 远程仓库。推送一完成，GitHub 立即向 Netlify 和 Cloudflare Pages 发送 Webhook 通知。</p>
+
+    <p><strong>③ 自动构建</strong>：两个平台分别拉取最新代码，在各自服务器上执行 <code style="font-family:monospace;font-size:.85em;background:var(--bg-code);padding:.1em .35em;border-radius:3px;color:var(--orange)">npm run build</code>。构建脚本 build.js 会：</p>
+    <ul style="padding-left:1.4rem;margin:.5rem 0;font-size:.9rem;display:flex;flex-direction:column;gap:.3rem;">
+      <li>读取所有 .md 文章文件，提取 frontmatter 信息</li>
+      <li>将 Markdown 正文转换为 HTML 页面</li>
+      <li>生成首页文章列表（index.html）和各文章独立页面</li>
+      <li>生成 RSS 订阅文件（feed.xml）</li>
+    </ul>
+
+    <p><strong>④ 全球上线</strong>：构建产物部署到各平台的 CDN 节点，通常 1–3 分钟内全球访客即可看到最新内容。两个平台<strong>完全独立构建</strong>，互不影响。</p>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <p>一次 <strong>git push</strong> 自动触发两个平台同步更新，无需分别操作。</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 2. 两个站点 -->
+  <section class="section" id="sites">
+    <h2 class="section-title"><span class="section-num">2</span>两个发布站点说明</h2>
+
+    <div class="deploy-status">
+      <div class="deploy-card">
+        <div class="deploy-card-title">Cloudflare Pages <span class="badge green">主站</span></div>
+        <div class="deploy-card-url">personal-website-6dn.pages.dev</div>
+        <div class="deploy-card-note">对外展示站点，访问速度快，覆盖全球节点。文章阅读及对外分享均使用此地址。</div>
+      </div>
+      <div class="deploy-card">
+        <div class="deploy-card-title">Netlify <span class="badge blue">备份 / CMS</span></div>
+        <div class="deploy-card-url">（Netlify 分配的 xxx.netlify.app）</div>
+        <div class="deploy-card-note">保留 CMS 后台（/admin 路径），可通过浏览器界面管理文章，但正常发布流程无需使用。</div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span class="callout-icon">⚠</span>
+      <p>Netlify 的 /admin 管理界面使用 Netlify Identity 认证，只能在 Netlify 自己的域名下登录。在 Cloudflare Pages 的域名下打开 /admin 将无法登录，属正常现象。</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 3. 发布步骤 -->
+  <section class="section" id="publish">
+    <h2 class="section-title"><span class="section-num">3</span>发布新文章：操作步骤</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>复制文章模板并重命名</strong>
+          <p>项目根目录中有现成的模板文件，直接复制到文章目录并重命名：</p>
+          <div class="code-label">模板文件位置</div>
+          <div class="code-block"><code>D:\AIWorkplace\claude\personal-website\article-template.md</code></div>
+          <div class="code-label">复制到文章目录，按以下格式重命名</div>
+          <div class="code-block"><code>D:\AIWorkplace\claude\personal-website\content\articles\YYYY-MM-DD-英文简称.md</code></div>
+          <p>命名示例：<code style="font-family:monospace;background:var(--bg-code);padding:.1em .35em;border-radius:3px;color:var(--orange)">2025-08-01-patent-license-analysis.md</code></p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>填写文章头信息（Frontmatter）</strong>
+          <p>模板顶部已预置 frontmatter 结构，修改各字段内容即可：</p>
+          <div class="code-label">模板预置内容</div>
+          <div class="code-block"><code>---
+title: 文章标题
+date: 2025-01-01
+category: case
+summary: 在此填写首页卡片摘要，建议 50–120 字，概括文章核心观点。
+link: "#"
+type: 案例评析
+---</code></div>
+          <p>各字段含义见第 4 节说明。</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>撰写文章正文</strong>
+          <p>在 frontmatter 后面写正文内容，使用 Markdown 语法。用 <code style="font-family:monospace;background:var(--bg-code);padding:.1em .35em;border-radius:3px;color:var(--orange)">##</code> 写一级章节标题，<code style="font-family:monospace;background:var(--bg-code);padding:.1em .35em;border-radius:3px;color:var(--orange)">###</code> 写二级标题，<code style="font-family:monospace;background:var(--bg-code);padding:.1em .35em;border-radius:3px;color:var(--orange)">**文字**</code> 加粗。详见第 6 节。</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>本地构建（可选，用于预览）</strong>
+          <p>打开终端，进入项目目录，执行构建命令预览效果：</p>
+          <div class="code-block"><code>cd D:\AIWorkplace\claude\personal-website
+npm run build</code></div>
+          <p>构建成功会提示"✓ 构建完成：XX 篇文章"。用浏览器打开 index.html 即可本地预览。</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>提交并推送到 GitHub</strong>
+          <p>执行以下命令，文章将在 1–3 分钟内自动上线两个平台：</p>
+          <div class="code-block"><code>git add content/articles/你的文件名.md
+git commit -m "添加新文章：文章标题"
+git push origin main</code></div>
+          <div class="callout tip" style="margin-top:.8rem;">
+            <span class="callout-icon">💡</span>
+            <p>推送后无需任何额外操作，两个平台会自动完成构建和发布。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <strong>验证上线</strong>
+          <p>等待约 2–3 分钟后，打开 <span style="color:var(--accent);font-family:monospace;font-size:.85em">https://personal-website-6dn.pages.dev</span> 确认新文章已出现在首页列表中，点击进入文章页面验证内容正确。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 4. Frontmatter -->
+  <section class="section" id="frontmatter">
+    <h2 class="section-title"><span class="section-num">4</span>Frontmatter 字段说明</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>字段</th>
+            <th>必填</th>
+            <th>说明</th>
+            <th>示例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>title</code></td>
+            <td>✓</td>
+            <td>文章标题，显示在卡片和文章页标题栏</td>
+            <td><code>专利权属争议期间放弃专利的责任</code></td>
+          </tr>
+          <tr>
+            <td><code>date</code></td>
+            <td>✓</td>
+            <td>发布日期，格式 YYYY-MM-DD。首页文章列表按此日期倒序排列（最新在前）</td>
+            <td><code>2025-08-01</code></td>
+          </tr>
+          <tr>
+            <td><code>category</code></td>
+            <td>✓</td>
+            <td>文章分类，决定标签颜色和筛选按钮归属。可选值见第 5 节</td>
+            <td><code>case</code></td>
+          </tr>
+          <tr>
+            <td><code>summary</code></td>
+            <td>✓</td>
+            <td>首页卡片上显示的摘要文字，建议 50–120 字，清晰概括核心观点</td>
+            <td><code>以三个合同纠纷案例为切入点……</code></td>
+          </tr>
+          <tr>
+            <td><code>link</code></td>
+            <td>✓</td>
+            <td>外部链接。如有原文 URL（如微信公众号）填入；无则填 <code>#</code></td>
+            <td><code>#</code> 或 <code>https://mp.weixin.qq.com/…</code></td>
+          </tr>
+          <tr>
+            <td><code>type</code></td>
+            <td>✓</td>
+            <td>文章类型标注，显示在卡片右下角。自由填写</td>
+            <td><code>案例评析</code> / <code>工作论文</code> / <code>发表论文</code> / <code>读书笔记</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <span class="callout-icon">⚠</span>
+      <p>frontmatter 必须以 <code style="font-family:monospace">---</code> 开头和结尾，字段名与值之间用英文冒号加空格 <code style="font-family:monospace">: </code> 分隔。格式错误会导致文章无法正确解析。</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 5. 分类 -->
+  <section class="section" id="categories">
+    <h2 class="section-title"><span class="section-num">5</span>文章分类参考</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>category 值</th>
+            <th>显示名称</th>
+            <th>标签样式</th>
+            <th>适用内容</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>law</code></td>
+            <td>法律</td>
+            <td><span class="cat-tag cat-law">法律</span></td>
+            <td>专利法、合同法、商标法等法律问题研究与发表论文</td>
+          </tr>
+          <tr>
+            <td><code>ai</code></td>
+            <td>AI 与法律</td>
+            <td><span class="cat-tag cat-ai">AI 与法律</span></td>
+            <td>人工智能对法律职业影响、AI 法律适用等前沿话题</td>
+          </tr>
+          <tr>
+            <td><code>econ</code></td>
+            <td>法经济学</td>
+            <td><span class="cat-tag cat-econ">法经济学</span></td>
+            <td>运用经济学工具分析法律问题的文章</td>
+          </tr>
+          <tr>
+            <td><code>book</code></td>
+            <td>读书笔记</td>
+            <td><span class="cat-tag cat-book">读书笔记</span></td>
+            <td>书评、阅读心得与勘误整理</td>
+          </tr>
+          <tr>
+            <td><code>case</code></td>
+            <td>案例研究</td>
+            <td><span class="cat-tag cat-case">案例研究</span></td>
+            <td>具体案件评析、对裁判文书的反思与评论</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 6. Markdown -->
+  <section class="section" id="markdown">
+    <h2 class="section-title"><span class="section-num">6</span>正文写作说明</h2>
+
+    <h3>标题层级</h3>
+    <div class="code-block"><code>## 一、第一节标题       ← 一级章节（生成目录锚点）
+### 1、子节标题         ← 二级小节
+#### 更细的层级        ← 三级（少用）</code></div>
+
+    <h3>常用格式</h3>
+    <div class="code-block"><code>**加粗文字**                    ← 重要概念或结论
+*斜体文字*                     ← 引用或强调
+
+- 无序列表项一
+- 无序列表项二
+
+1. 有序列表项一
+2. 有序列表项二
+
+> 引用块：适合引用法条原文或判决原文
+
+`行内代码`                      ← 法条编号、案件编号等</code></div>
+
+    <h3>脚注</h3>
+    <div class="code-block"><code>正文中引用处[^1]，另在结尾添加：
+
+[^1]: 脚注内容，如：《民法典》第五百六十二条。</code></div>
+
+    <h3>注意事项</h3>
+    <ul style="padding-left:1.4rem;font-size:.9rem;display:flex;flex-direction:column;gap:.4rem;margin-top:.5rem;">
+      <li>段落之间需要<strong>空一行</strong>，否则会被识别为同一段。</li>
+      <li>中文标点（，。""）可直接使用，无需转义。</li>
+      <li>法条引用建议用<code style="font-family:monospace;background:var(--bg-code);padding:.1em .35em;border-radius:3px;color:var(--orange)">**《民法典》第X条**</code>加粗，提升可读性。</li>
+      <li>如文章引自微信公众号，可在结尾加"附：原文链接 URL"。</li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 7. 常用命令 -->
+  <section class="section" id="commands">
+    <h2 class="section-title"><span class="section-num">7</span>常用命令速查</h2>
+
+    <h3>进入项目目录</h3>
+    <div class="code-block"><code>cd D:\AIWorkplace\claude\personal-website</code></div>
+
+    <h3>本地构建预览</h3>
+    <div class="code-label">执行构建（生成 HTML 文件）</div>
+    <div class="code-block"><code>npm run build</code></div>
+
+    <h3>发布到 GitHub（触发两平台自动部署）</h3>
+    <div class="code-label">发布单篇新文章</div>
+    <div class="code-block"><code>git add content/articles/文件名.md
+git commit -m "添加新文章：文章标题"
+git push origin main</code></div>
+
+    <div class="code-label">发布多个改动（如修改了 CSS、模板或多篇文章）</div>
+    <div class="code-block"><code>git add -A
+git status          ← 确认暂存的文件清单
+git commit -m "更新说明"
+git push origin main</code></div>
+
+    <h3>修改已有文章</h3>
+    <div class="code-block"><code>← 直接编辑对应的 .md 文件，然后：
+git add content/articles/对应文件名.md
+git commit -m "修改：文章标题（说明修改内容）"
+git push origin main</code></div>
+
+    <h3>查看当前状态</h3>
+    <div class="code-block"><code>git status           ← 查看有哪些文件被修改或新增
+git log --oneline -5 ← 查看最近 5 次提交记录</code></div>
+
+    <div class="callout tip" style="margin-top:1.5rem;">
+      <span class="callout-icon">💡</span>
+      <p>推送后可在 Cloudflare Pages 后台（dash.cloudflare.com → Workers &amp; Pages → personal-website → Deployments）查看构建进度，通常 1–2 分钟完成。</p>
+    </div>
+  </section>
+
+</div>
