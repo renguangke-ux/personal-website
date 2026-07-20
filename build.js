@@ -83,8 +83,7 @@ function mdToHtml(md) {
   const blocks = md.split(/\n\n+/).map(block => {
     const t = block.trim();
     if (!t) return '';
-    if (/^<h[23]/.test(t)) return t;
-    if (/^<figure/.test(t)) return t;
+    if (/^</.test(t)) return t;
     return `<p>${t.replace(/\n/g, '<br/>')}</p>`;
   }).filter(Boolean);
 

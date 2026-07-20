@@ -75,6 +75,12 @@
     .article-figure { margin: 1.8rem 0; text-align: center; }
     .article-figure img { max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); }
     .article-figure figcaption { margin-top: .5rem; font-size: .83rem; color: var(--muted); }
+    .data-table { width: 100%; border-collapse: collapse; margin: 1.8rem 0; font-size: .9rem; overflow-x: auto; display: block; }
+    .data-table caption { caption-side: top; text-align: left; font-size: .83rem; color: var(--muted); margin-bottom: .6rem; }
+    .data-table th, .data-table td { padding: .55rem .9rem; border: 1px solid var(--border); text-align: center; }
+    .data-table th { background: var(--bg-card); color: var(--text); font-weight: 600; }
+    .data-table td { color: var(--muted); }
+    .data-table tr:hover td { background: var(--bg-hover); }
     .fn-ref a { color: var(--accent); text-decoration: none; font-size: .75em; vertical-align: super; line-height: 0; }
     .footnotes { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--border); font-size: .83rem; color: var(--muted); }
     .footnotes hr { display: none; }
@@ -142,7 +148,7 @@
 <h2 id="sec-3">三、分析</h2>
 <p>法院认为"期满后可继续使用，免收租赁费"该约定意图明显是为了规避法律限制。根据该分析，从双方本意看，虽然约定20年后免收租赁费，但20年后至永久的租赁费均已包含在合同约定的20年租金之内——双方约定的5.3万元租金就不只是20年的租金，而应该是<strong>永续租金的现值</strong>。</p>
 <p>现出租方没有让租赁方永续租用，那么出租方也不应收取这5.3万元中实际包含的20年后的租金。但如何分清这5.3万元中所包含的20年内的租金和之后的租金，就需要利用现值和折现率这个概念。</p>
-<p><strong>现值和折现率</strong>是经济学中的重要概念。折现率是将未来的现金流折算为当前价值所使用的比率，核心逻辑基于"货币的时间价值"——今天的1元钱比未来的1元钱更有价值。假设你现在有100元，存入银行的年利率为5%，1年后你会得到105元。反过来，1年后的105元，在今天的价值（现值）就是100元，这里的5%就是折现率。</p>
+<strong>现值和折现率</strong>是经济学中的重要概念。折现率是将未来的现金流折算为当前价值所使用的比率，核心逻辑基于"货币的时间价值"——今天的1元钱比未来的1元钱更有价值。假设你现在有100元，存入银行的年利率为5%，1年后你会得到105元。反过来，1年后的105元，在今天的价值（现值）就是100元，这里的5%就是折现率。
 <p>知道折现率（一般与当前的利率等值，现假设为3%），又知道永续租金的现值（5.3万元），根据永续年金现值公式：</p>
 <p>$PV = \frac{A}{r}$</p>
 <p>其中PV为现值（5.3万元），A为每年的固定现金流（年租金，待求），r为折现率（3%）。</p>

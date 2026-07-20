@@ -6,7 +6,7 @@
     <description>任广科的个人网站 — 法律、法经济学与 AI</description>
     <language>zh-CN</language>
     <atom:link href="https://personal-website-6dn.pages.dev/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Mon, 20 Jul 2026 02:51:32 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 20 Jul 2026 04:02:46 GMT</lastBuildDate>
     <item>
       <title>法律职业与人工智能</title>
       <link>https://personal-website-6dn.pages.dev/articles/2026-07-15-法律职业与人工智能.html</link>
@@ -69,6 +69,13 @@
       <description>以债务人欺骗抵押人为旧债务提供担保为例，与钟长江法官共同探讨：当法律明文规定与个案公平相悖时，法官如何在法律解释范围内寻求公正，以及何时、如何进行正当的法续造。</description>
       <pubDate>Sat, 01 Jun 2024 00:00:00 GMT</pubDate>
       <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2024-06-01-legal-methodology-constraining-judges.html</guid>
+    </item>
+    <item>
+      <title>商业秘密管理体系建立的原则</title>
+      <link>https://personal-website-6dn.pages.dev/articles/2024-06-01-trade-secret-management-principles.html</link>
+      <description>商业秘密保护的目标不是百分百杜绝泄露，而是在投入与产出之间寻求动态最优平衡。本文以边际成本收益分析为基础，提出商业秘密管理体系建立应遵循的四项原则：动态平衡、最高层意志坚定、迭代与全局。</description>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://personal-website-6dn.pages.dev/articles/2024-06-01-trade-secret-management-principles.html</guid>
     </item>
     <item>
       <title>不是合同解释问题！是证明责任问题</title>
