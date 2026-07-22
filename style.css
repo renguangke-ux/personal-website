@@ -321,6 +321,27 @@ section + section { border-top: 1px solid var(--border); }
   color: var(--muted);
 }
 
+.timeline-photos {
+  display: flex;
+  gap: .75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+.timeline-photos img {
+  flex: 1 1 calc(50% - .375rem);
+  min-width: 160px;
+  max-height: 220px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.timeline-photos.single img {
+  flex: none;
+  width: min(100%, 420px);
+  max-height: 260px;
+}
+
 /* ---- 联系 ---- */
 #contact { background: var(--bg-card); }
 
