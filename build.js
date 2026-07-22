@@ -187,13 +187,21 @@ function generateRSS(articles) {
 
 function timelineItem(a) {
   const d = a.date ? new Date(a.date) : null;
-  const dateStr = d ? `${d.getFullYear()}年 · ${d.getMonth() + 1}月` : '';
+  const dateStr = d
+    ? `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日${a.location ? ' · ' + a.location : ''}`
+    : (a.location || '');
+  const photos = a.photos ? a.photos.split(',').map(s => s.trim()).filter(Boolean) : [];
+  const photosHTML = photos.length
+    ? `\n        <div class="timeline-photos${photos.length === 1 ? ' single' : ''}">\n` +
+      photos.map(p => `          <img src="${p}" alt="${a.title}" />`).join('\n') +
+      `\n        </div>`
+    : '';
   return `
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <div class="timeline-date">${dateStr}</div>
         <h3>${a.title}</h3>
-        <p>${a.description || ''}</p>
+        <p>${a.description || ''}</p>${photosHTML}
       </div>`;
 }
 
