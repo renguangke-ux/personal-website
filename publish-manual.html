@@ -466,7 +466,7 @@ td code {
       <li><a href="#publish">发布新文章：操作步骤</a></li>
       <li><a href="#frontmatter">Frontmatter 字段说明</a></li>
       <li><a href="#categories">文章分类参考</a></li>
-      <li><a href="#markdown">正文写作说明</a></li>
+      <li><a href="#markdown">正文写作说明（含图片与表格）</a></li>
       <li><a href="#commands">常用命令速查</a></li>
     </ol>
   </nav>
@@ -783,6 +783,28 @@ git push origin main</code></div>
     <div class="code-block"><code>正文中引用处[^1]，另在结尾添加：
 
 [^1]: 脚注内容，如：《民法典》第五百六十二条。</code></div>
+
+    <h3>嵌入图片</h3>
+    <p>将图片文件放入项目根目录的 <code style="font-family:monospace;background:var(--bg-code);padding:.1em .35em;border-radius:3px;color:var(--orange)">images/</code> 文件夹，然后在正文中用以下语法引用：</p>
+    <div class="code-block"><code>![图片说明文字](../images/文件名.png)</code></div>
+    <p>图片会自动渲染为带说明文字的居中图（<code style="font-family:monospace;background:var(--bg-code);padding:.1em .35em;border-radius:3px;color:var(--orange)">&lt;figure&gt;</code> 结构）。发布时需将图片文件一并 git add 提交。</p>
+    <div class="code-block"><code>git add images/文件名.png content/articles/文件名.md</code></div>
+
+    <h3>插入表格</h3>
+    <p>正文中可直接写 HTML 表格，构建系统会原样保留并应用预置样式：</p>
+    <div class="code-block"><code>&lt;table class="data-table"&gt;
+  &lt;caption&gt;表格标题&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;列一&lt;/th&gt;&lt;th&gt;列二&lt;/th&gt;&lt;th&gt;列三&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;数据&lt;/td&gt;&lt;td&gt;数据&lt;/td&gt;&lt;td&gt;数据&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></div>
+    <div class="callout tip" style="margin-top:.8rem;">
+      <span class="callout-icon">💡</span>
+      <p>HTML 块（表格、SVG、div 等）与前后段落之间须各空一行，否则会被误判为普通段落文字。</p>
+    </div>
 
     <h3>注意事项</h3>
     <ul style="padding-left:1.4rem;font-size:.9rem;display:flex;flex-direction:column;gap:.4rem;margin-top:.5rem;">
