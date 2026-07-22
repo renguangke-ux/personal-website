@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>社会活动 — 任广科</title>
+  <meta name="description" content="任广科的社会活动记录：学术会议、讲座、研讨及其他社会参与。" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+      }
+    });
+  }
+</script>
+
+<nav>
+  <a href="index.html" class="nav-logo">任广科</a>
+  <ul class="nav-links">
+    <li><a href="about.html">关于</a></li>
+    <li><a href="index.html#articles">文章</a></li>
+    <li><a href="activities.html" style="color:var(--text)">活动</a></li>
+    <li><a href="index.html#contact">联系</a></li>
+  </ul>
+</nav>
+
+<section id="activities" style="padding-top:60px">
+  <div class="section-inner">
+    <p class="section-label">动态</p>
+    <h2 class="section-title">社会活动</h2>
+    <p class="section-desc">学术会议、讲座、研讨及其他社会参与记录。</p>
+
+    <div class="timeline" style="margin-top:2.5rem">
+      <!-- {{ACTIVITIES}} -->
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利</p>
+</footer>
+</body>
+</html>

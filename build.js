@@ -190,64 +190,39 @@ function timelineItem(a) {
   const dateStr = d
     ? `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日${a.location ? ' · ' + a.location : ''}`
     : (a.location || '');
-  const link = `activities/${a.slug}.html`;
+  const photos = a.photos ? a.photos.split(',').map(s => s.trim()).filter(Boolean) : [];
+  const photosHTML = photos.length
+    ? `\n        <div class="timeline-photos${photos.length === 1 ? ' single' : ''}">\n` +
+      photos.map(p => `          <img src="${p}" alt="${a.title}" />`).join('\n') +
+      `\n        </div>`
+    : '';
+  const bodyText = a.body || '';
+  const bodyHTML = bodyText
+    .split(/\n\n+/)
+    .map(s => s.trim())
+    .filter(Boolean)
+    .map(s => `        <p>${s.replace(/\n/g, '<br/>')}</p>`)
+    .join('\n');
   return `
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <div class="timeline-date">${dateStr}</div>
-        <h3><a href="${link}" style="color:inherit;text-decoration:none">${a.title}</a></h3>
-        <p>${a.description || ''}</p>
-        <a href="${link}" style="display:inline-block;margin-top:.6rem;font-size:.85rem;color:var(--accent)">查看详情 →</a>
+        <h3>${a.title}</h3>${photosHTML}
+${bodyHTML}
       </div>`;
-}
-
-function generateActivityPage(a, tpl) {
-  const d = a.date ? new Date(a.date) : null;
-  const dateStr = d
-    ? d.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })
-    : '';
-  const locationSpan = a.location
-    ? `<span>📍 ${a.location}</span>`
-    : '';
-  const photos = a.photos ? a.photos.split(',').map(s => s.trim()).filter(Boolean) : [];
-  const cols = photos.length === 1 ? 'cols-1' : 'cols-2';
-  const photosGrid = photos.length
-    ? `<div class="activity-photos-grid ${cols}">\n` +
-      photos.map(p => `  <img src="../${p}" alt="${a.title}" />`).join('\n') +
-      `\n</div>`
-    : '';
-  const bodyHtml = (a.body || a.description || '')
-    .split(/\n\n+/)
-    .map(s => s.trim())
-    .filter(Boolean)
-    .map(s => `<p>${s.replace(/\n/g, '<br/>')}</p>`)
-    .join('\n');
-
-  return tpl
-    .replace(/{{TITLE}}/g,         a.title)
-    .replace(/{{DESCRIPTION}}/g,   a.description || '')
-    .replace(/{{DATE}}/g,          dateStr)
-    .replace(/{{LOCATION_SPAN}}/g, locationSpan)
-    .replace(/{{PHOTOS_GRID}}/g,   photosGrid)
-    .replace(/{{BODY}}/g,          bodyHtml);
 }
 
 // ── 构建 ──
 const articles   = readDir('content/articles');
 const activities = readDir('content/activities');
 
-const articleTpl  = fs.readFileSync('templates/article.template.html', 'utf8');
-const activityTpl = fs.readFileSync('templates/activity.template.html', 'utf8');
+const articleTpl     = fs.readFileSync('templates/article.template.html', 'utf8');
+const activitiesTpl  = fs.readFileSync('templates/activities.template.html', 'utf8');
 
-if (!fs.existsSync('articles'))   fs.mkdirSync('articles');
-if (!fs.existsSync('activities')) fs.mkdirSync('activities');
+if (!fs.existsSync('articles')) fs.mkdirSync('articles');
 
 articles.forEach(a => {
   fs.writeFileSync(`articles/${a.slug}.html`, generateArticlePage(a, articleTpl));
-});
-
-activities.forEach(a => {
-  fs.writeFileSync(`activities/${a.slug}.html`, generateActivityPage(a, activityTpl));
 });
 
 fs.writeFileSync('feed.xml', generateRSS(articles));
@@ -261,9 +236,10 @@ const activitiesHTML = activities.length
   : '<p style="color:var(--muted);padding:1rem 0">暂无活动记录</p>';
 
 let tpl = fs.readFileSync('templates/index.template.html', 'utf8');
-tpl = tpl
-  .replace('<!-- {{ARTICLES}} -->', articlesHTML)
-  .replace('<!-- {{ACTIVITIES}} -->', activitiesHTML);
-
+tpl = tpl.replace('<!-- {{ARTICLES}} -->', articlesHTML);
 fs.writeFileSync('index.html', tpl);
+
+const actTpl = activitiesTpl.replace('<!-- {{ACTIVITIES}} -->', activitiesHTML);
+fs.writeFileSync('activities.html', actTpl);
+
 console.log(`✓ 构建完成：${articles.length} 篇文章，${activities.length} 个活动，feed.xml 已生成`);
