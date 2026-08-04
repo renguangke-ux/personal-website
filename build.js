@@ -2,7 +2,7 @@ const fs   = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
 
-const SITE_URL = 'https://personal-website-6dn.pages.dev';
+const SITE_URL = 'https://renguangke.com';
 
 const CAT_MAP = {
   law:  { label: '法律',      cls: 'cat-law'  },
