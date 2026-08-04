@@ -2,7 +2,7 @@
 
 个人学术网站，展示法律研究文章与社会活动记录。基于 Node.js 静态站点生成器构建，自动部署至 Netlify 和 Cloudflare Pages。
 
-**在线地址：** https://personal-website-6dn.pages.dev
+**在线地址：** https://renguangke.com
 
 ---
 
