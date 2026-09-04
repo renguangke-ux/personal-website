@@ -10,6 +10,7 @@ const CAT_MAP = {
   econ: { label: '法经济学',  cls: 'cat-econ' },
   book: { label: '读书笔记',  cls: 'cat-book' },
   case: { label: '案例研究',  cls: 'cat-case' },
+  teaching: { label: '教学案例', cls: 'cat-teaching' },
 };
 
 function escapeHtml(str) {
@@ -43,6 +44,17 @@ function articleCard(a) {
         <h3>${a.title}</h3>
         <p>${a.summary || ''}</p>
         <div class="article-meta"><span>${year}</span><span>${type}</span></div>
+      </div>`;
+}
+
+function teachingCard(a) {
+  const year = a.date ? new Date(a.date).getFullYear() + '年' : '';
+  return `
+      <div class="article-card" onclick="location.href='teaching/${a.slug}.html'">
+        <span class="article-cat cat-teaching">教学案例</span>
+        <h3>${a.title}</h3>
+        <p>${a.summary || ''}</p>
+        <div class="article-meta"><span>${year}</span><span>${a.type || '案例材料'}</span></div>
       </div>`;
 }
 
@@ -215,14 +227,22 @@ ${bodyHTML}
 // ── 构建 ──
 const articles   = readDir('content/articles');
 const activities = readDir('content/activities');
+const teaching   = readDir('content/teaching');
 
 const articleTpl     = fs.readFileSync('templates/article.template.html', 'utf8');
 const activitiesTpl  = fs.readFileSync('templates/activities.template.html', 'utf8');
+const teachingTpl    = fs.readFileSync('templates/teaching.template.html', 'utf8');
+const teachingArticleTpl = fs.readFileSync('templates/teaching-article.template.html', 'utf8');
 
 if (!fs.existsSync('articles')) fs.mkdirSync('articles');
+if (!fs.existsSync('teaching')) fs.mkdirSync('teaching');
 
 articles.forEach(a => {
   fs.writeFileSync(`articles/${a.slug}.html`, generateArticlePage(a, articleTpl));
+});
+
+teaching.forEach(a => {
+  fs.writeFileSync(`teaching/${a.slug}.html`, generateArticlePage(a, teachingArticleTpl));
 });
 
 fs.writeFileSync('feed.xml', generateRSS(articles));
@@ -242,4 +262,9 @@ fs.writeFileSync('index.html', tpl);
 const actTpl = activitiesTpl.replace('<!-- {{ACTIVITIES}} -->', activitiesHTML);
 fs.writeFileSync('activities.html', actTpl);
 
-console.log(`✓ 构建完成：${articles.length} 篇文章，${activities.length} 个活动，feed.xml 已生成`);
+const teachingHTML = teaching.length
+  ? teaching.map(teachingCard).join('\n')
+  : '<p style="color:var(--muted);padding:1rem 0">暂无教学材料</p>';
+fs.writeFileSync('teaching.html', teachingTpl.replace('<!-- {{TEACHING}} -->', teachingHTML));
+
+console.log(`✓ 构建完成：${articles.length} 篇文章，${teaching.length} 份教学材料，${activities.length} 个活动，feed.xml 已生成`);

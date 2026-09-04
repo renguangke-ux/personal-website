@@ -38,6 +38,8 @@ collections:
             value: econ
           - label: "读书笔记"
             value: book
+          - label: "案例研究"
+            value: case
       - label: "摘要"
         name: summary
         widget: text
@@ -58,6 +60,39 @@ collections:
         widget: markdown
         required: false
         hint: "可选，留空也可"
+
+  - name: teaching
+    label: "教学管理"
+    label_singular: "教学材料"
+    folder: content/teaching
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - label: "标题"
+        name: title
+        widget: string
+      - label: "日期"
+        name: date
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+      - label: "类别"
+        name: category
+        widget: hidden
+        default: teaching
+      - label: "摘要"
+        name: summary
+        widget: text
+      - label: "类型标注"
+        name: type
+        widget: string
+        default: "教学案例"
+      - label: "正文"
+        name: body
+        widget: markdown
 
   - name: activities
     label: "活动管理"

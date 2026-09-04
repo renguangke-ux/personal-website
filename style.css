@@ -19,6 +19,7 @@
   --tag-econ:  #3a2a1e;
   --tag-book:  #2e1e3a;
   --tag-case:  #1c3a2e;
+  --tag-teaching: #342d19;
   --radius:    10px;
 }
 
@@ -248,6 +249,34 @@ section + section { border-top: 1px solid var(--border); }
 .cat-econ  { background: var(--tag-econ); color: #f5c07a; }
 .cat-book  { background: var(--tag-book); color: #c07af5; }
 .cat-case  { background: var(--tag-case); color: #6ee8b4; }
+.cat-teaching { background: var(--tag-teaching); color: #f2cf72; }
+
+/* ---- 教学与 Agent Skills ---- */
+.page-intro { padding-bottom: 34px; }
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+.skill-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1.45rem;
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+}
+.skill-card h3 { font-size: 1.05rem; line-height: 1.4; }
+.skill-card p { color: var(--muted); font-size: .9rem; flex: 1; }
+.skill-card .github-link { width: fit-content; font-weight: 600; font-size: .88rem; }
+
+@media (max-width: 760px) {
+  nav { padding: 0 1rem; }
+  .nav-links { gap: 1rem; overflow-x: auto; white-space: nowrap; padding-left: 1rem; }
+  .nav-links a { font-size: .86rem; }
+}
 
 .article-card h3 {
   font-size: 1rem;
