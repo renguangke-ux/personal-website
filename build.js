@@ -49,8 +49,9 @@ function articleCard(a) {
 
 function teachingCard(a) {
   const year = a.date ? new Date(a.date).getFullYear() + '年' : '';
+  const link = a.source || `teaching/${a.slug}.html`;
   return `
-      <div class="article-card" onclick="location.href='teaching/${a.slug}.html'">
+      <div class="article-card" onclick="location.href='${link}'">
         <span class="article-cat cat-teaching">教学案例</span>
         <h3>${a.title}</h3>
         <p>${a.summary || ''}</p>
@@ -242,6 +243,7 @@ articles.forEach(a => {
 });
 
 teaching.forEach(a => {
+  if (a.source) return;
   fs.writeFileSync(`teaching/${a.slug}.html`, generateArticlePage(a, teachingArticleTpl));
 });
 

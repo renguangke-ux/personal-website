@@ -90,9 +90,15 @@ collections:
         name: type
         widget: string
         default: "教学案例"
+      - label: "独立页面"
+        name: source
+        widget: string
+        required: false
+        hint: "仅当教学内容使用独立 HTML 页面时填写，普通教学材料请留空"
       - label: "正文"
         name: body
         widget: markdown
+        required: false
 
   - name: activities
     label: "活动管理"
