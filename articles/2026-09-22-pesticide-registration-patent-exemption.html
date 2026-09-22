@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>农药登记试验的专利侵权豁免：科研例外的适用边界与解释方法检讨 — 任广科</title>
+  
+  <meta name="description" content="以农药登记试验的专利侵权豁免争议为切入点，比较科研例外与Bolar例外的规范目的，并从历史解释、体系解释和目的解释检讨司法解释的边界。" />
+  <meta property="og:title" content="农药登记试验的专利侵权豁免：科研例外的适用边界与解释方法检讨" />
+  <meta property="og:description" content="以农药登记试验的专利侵权豁免争议为切入点，比较科研例外与Bolar例外的规范目的，并从历史解释、体系解释和目的解释检讨司法解释的边界。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://renguangke.com/articles/2026-09-22-pesticide-registration-patent-exemption.html" />
+  <meta property="og:site_name" content="任广科" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="农药登记试验的专利侵权豁免：科研例外的适用边界与解释方法检讨" />
+  <meta name="twitter:description" content="以农药登记试验的专利侵权豁免争议为切入点，比较科研例外与Bolar例外的规范目的，并从历史解释、体系解释和目的解释检讨司法解释的边界。" />
+  <link rel="alternate" type="application/rss+xml" title="任广科" href="../feed.xml" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .article-page { padding: 60px 2rem 80px; }
+    .article-page-inner { max-width: 760px; margin: 0 auto; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      color: var(--muted); font-size: .9rem; margin-bottom: 2rem;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--text); text-decoration: none; }
+    .article-page h1 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700; line-height: 1.35;
+      margin: 1rem 0 1.2rem;
+    }
+    .article-page-meta {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      color: var(--muted); font-size: .88rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.8rem;
+    }
+    .article-page-summary {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 2rem;
+      font-size: .88rem;
+    }
+    .toc-title {
+      font-size: .78rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: .7rem;
+    }
+    .toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+    .toc li { margin-bottom: .3rem; line-height: 1.5; }
+    .toc-l2 { counter-increment: toc; }
+    .toc-l2::before { content: counter(toc) ". "; color: var(--muted); font-size: .8rem; }
+    .toc-l3 { padding-left: 1.4rem; }
+    .toc-l3::before { content: "· "; color: var(--muted); }
+    .toc a { color: var(--muted); }
+    .toc a:hover { color: var(--accent); text-decoration: none; }
+    .article-body { line-height: 1.9; color: var(--muted); }
+    .article-body p { margin-bottom: 1.2rem; }
+    .article-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 2rem 0 .8rem; }
+    .article-body h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 .6rem; }
+    .article-body strong { color: var(--text); }
+    .article-figure { margin: 1.8rem 0; text-align: center; }
+    .article-figure img { max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+    .article-figure figcaption { margin-top: .5rem; font-size: .83rem; color: var(--muted); }
+    .data-table { width: 100%; border-collapse: collapse; margin: 1.8rem 0; font-size: .9rem; overflow-x: auto; display: block; }
+    .data-table caption { caption-side: top; text-align: left; font-size: .83rem; color: var(--muted); margin-bottom: .6rem; }
+    .data-table th, .data-table td { padding: .55rem .9rem; border: 1px solid var(--border); text-align: center; }
+    .data-table th { background: var(--bg-card); color: var(--text); font-weight: 600; }
+    .data-table td { color: var(--muted); }
+    .data-table tr:hover td { background: var(--bg-hover); }
+    .fn-ref a { color: var(--accent); text-decoration: none; font-size: .75em; vertical-align: super; line-height: 0; }
+    .footnotes { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--border); font-size: .83rem; color: var(--muted); }
+    .footnotes hr { display: none; }
+    .footnotes ol { padding-left: 1.4rem; margin: 0; }
+    .footnotes li { margin-bottom: .5rem; line-height: 1.7; }
+    .fn-back { color: var(--muted); margin-left: .3rem; text-decoration: none; }
+    .fn-back:hover { color: var(--accent); }
+    .journal-box {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.4rem;
+      margin-bottom: 2rem;
+    }
+    .journal-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: .1rem; }
+    .journal-label { font-size: .78rem; color: var(--muted); margin-bottom: .3rem; }
+    .journal-name { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; }
+    .journal-note { font-size: .83rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+      }
+    });
+  }
+</script>
+
+<nav>
+  <a href="../index.html" class="nav-logo">任广科</a>
+  <ul class="nav-links">
+    <li><a href="../about.html">关于</a></li>
+    <li><a href="../index.html#articles">文章</a></li>
+    <li><a href="../teaching.html">教学</a></li>
+    <li><a href="../agent-skills.html">Agent Skills</a></li>
+    <li><a href="../activities.html">活动</a></li>
+    <li><a href="../index.html#contact">联系</a></li>
+  </ul>
+</nav>
+
+<article class="article-page">
+  <div class="article-page-inner">
+    <a href="../index.html#articles" class="back-link">← 返回文章列表</a>
+    <span class="article-cat cat-law">法律</span>
+    <h1>农药登记试验的专利侵权豁免：科研例外的适用边界与解释方法检讨</h1>
+    <div class="article-page-meta">
+      <span>2026年9月</span>
+      <span>工作论文</span>
+    </div>
+    <div class="article-page-summary">
+      <p>以农药登记试验的专利侵权豁免争议为切入点，比较科研例外与Bolar例外的规范目的，并从历史解释、体系解释和目的解释检讨司法解释的边界。</p>
+    </div>
+    
+    <div class="toc"><div class="toc-title">目录</div><ol><li class="toc-l2"><a href="#sec-1">一、问题的提出</a></li>
+<li class="toc-l2"><a href="#sec-2">二、从制度的起源探求Bolar例外与科研例外的关系</a></li>
+<li class="toc-l3"><a href="#sec-3">1、美国：科研例外的商业目的壁垒迫使立法介入</a></li>
+<li class="toc-l3"><a href="#sec-4">2、欧盟：科研例外的解释分歧促使统一立法</a></li>
+<li class="toc-l3"><a href="#sec-5">（二）两项例外之间的关联与差异</a></li>
+<li class="toc-l2"><a href="#sec-6">三、以历史解释探寻立法者的本意</a></li>
+<li class="toc-l3"><a href="#sec-7">1、美国做法</a></li>
+<li class="toc-l3"><a href="#sec-8">2、加拿大做法</a></li>
+<li class="toc-l3"><a href="#sec-9">3、澳大利亚做法</a></li>
+<li class="toc-l2"><a href="#sec-10">四、以体系解释和目的解释确定司法解释的边界</a></li>
+<li class="toc-l3"><a href="#sec-11">1、第（五）项的存在构成对第（四）项扩张的限制</a></li>
+<li class="toc-l3"><a href="#sec-12">2、把农药登记试验纳入科研例外会冲击科研例外的适用边界</a></li>
+<li class="toc-l3"><a href="#sec-13">3、以专利期延长制度为视角</a></li>
+<li class="toc-l3"><a href="#sec-14">4、目的解释层面：两项规范目的的根本差异</a></li>
+<li class="toc-l2"><a href="#sec-15">五、是否可以类推适用第（五）项Bolar例外</a></li>
+<li class="toc-l2"><a href="#sec-16">五、结语</a></li></ol></div>
+    <div class="article-body"><p>任广科<br/>摘要：对于农药登记试验行为是否构成专利侵权，列入《全国法院知识产权案件法律适用问题年度报告（2025）》的（2023）最高法知民终1511号案，援引《专利法》第七十五条第（四）项“专为科学研究和实验而使用有关专利”（科研例外），认定农药登记试验不视为侵权。然而，2008年《专利法》修订时已专门增设第（五）项Bolar例外，将因行政审批需要而制造、使用专利药品或医疗器械的行为纳入不侵权情形。以历史解释视角考察，立法者在借鉴美国、加拿大、澳大利亚等国做法时，明确将Bolar例外的适用范围限定于药品和医疗器械，是对农药等其他产品保持"有意的沉默"，而非立法疏漏。从体系解释角度，第（五）项的设立本身即表明行政审批目的下的专利实施行为不属于"专为科学研究和实验"的范畴，若允许以第（四）项涵盖农药登记试验，将使第（五）项形同虚设，有违立法体系的内在逻辑。从目的解释来看，第（四）项旨在保护以专利技术为对象的知识生产行为，第（五）项则针对行政审批制度对专利期的实质侵蚀，二者规范目的根本不同。此外，农药领域缺乏与Bolar例外配套的专利期延长制度，原研农药企业因此处于更为不公平的竞争地位。农药登记试验亦不具备类推适用Bolar例外的前提，立法者有意不将农药纳入第（五）项，排除了认定为法律漏洞的空间。裁判结论的合理性与裁判路径的正当性应予区分，正确的解释方法论是约束司法恣意的基础。<br/><br/>关键词：农药登记试验；科研例外；Bolar例外；法律解释方法<br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-01.webp" alt="图1：论证示意图" /><figcaption>图1：论证示意图</figcaption></figure><br/><br/><h2 id="sec-1">一、问题的提出</h2><br/><br/>未经专利权人许可，因申请农药登记而进行的试验如果实施了专利，是否侵犯了专利权？最高人民法院在两个案件中均作出了“不视为侵犯专利权”的决定，援引的法条也均为“专为科学研究和实验而使用有关专利”（以下简称“科研例外”）。然而，两案之间专利法历经两次修订，其中在2008年修订时新增了Bolar例外，即 “为提供行政审批所需要的信息，制造、使用、进口专利药品或者专利医疗器械的，以及专门为其制造、进口专利药品或者专利医疗器械的”。在此背景下，后案仍援引科研例外作为不侵权依据，其适用的正当性便值得深入探讨。<br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-02.webp" alt="图2：论证示意图" /><figcaption>图2：论证示意图</figcaption></figure><br/><br/>在新增Bolar例外法条之后，后一判决仍将农药登记试验行为纳入第七十五条第（四）项的科研例外，而非类推第（五）项的Bolar例外，由此引发一个法律解释方法论问题，即在2008年《专利法》第三次修订已增设第（五）项Bolar例外的立法背景下，以第（四）项涵盖农药行政审批试验，在体系解释层面是否仍具正当性？立法者在2008年增加Bolar例外立法时，未将其它因行政审批影响上市时间的产品纳入之内，是“是有意的沉默”还是“无意的疏忽”？根据这一判决，相对于“药品和医疗器械”的专利期延长制度，农药专利权人一方面无法获得专利期延长，另一方面要忍受仿制药提前竞争，相对是否公平？<br/><br/>本文将从法律解释的角度，以历史解释、体系解释和目的解释等视角，对上述问题进行梳理，反思在司法中援引科研例外以认定申请农药登记所进行的试验不侵犯专利权，是否正确？<br/><br/><h2 id="sec-2">二、从制度的起源探求Bolar例外与科研例外的关系</h2><br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-03.webp" alt="图3：论证示意图" /><figcaption>图3：论证示意图</figcaption></figure><br/><br/>既然"专为科学研究和实验而使用有关专利"的行为已被排除于侵权之外，仿制药企在专利期内进行生物等效性试验、临床试验等活动，何以不能径直援引科研例外，而需要另行建立Bolar例外制度？这一问题的答案，隐藏在各主要法域建立Bolar例外的历史脉络之中。<br/><br/><h3 id="sec-3">1、美国：科研例外的商业目的壁垒迫使立法介入</h3><br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-04.webp" alt="图4：论证示意图" /><figcaption>图4：论证示意图</figcaption></figure><br/><br/>美国的科研例外抗辩最早由约瑟夫·斯托里（Joseph Story）法官在1813年的判例中提出。其核心逻辑在于，只有对专利技术的使用仅仅是为了满足“求知欲”或进行“纯粹的娱乐、消遣”，且不具有任何商业目的，才不构成侵权。普通法上的实验性使用抗辩被司法机关缩限得极窄，仅限于非商业性、科学探究性质的极少数情形，任何带有微弱潜在商业利益或与实体日常运行相关的科研行为都极难主张该抗辩。联邦巡回上诉法院在Roche Products, Inc. 诉Bolar Pharmaceutical Co.案中明确裁定：不得将试验性使用规则作宽泛解读，使其能够掩护以"科学探究"为名、实则具有"确定的、可认知的、非微不足道的商业目的"的专利法违反行为。法院还指出，这类政策决定属于国会的立法事务，不应由法院自行创设新的例外。联邦巡回上诉法院在该案中还强调，即便是旨在获得监管批准的行为，只要具有商业目的，就不符合试验性使用例外的适用条件。为获得FDA批准而进行的试验，其本质是在推进商业议程的生意目的，因此不受试验性使用例外的保护。从该裁判的逻辑可知，美国普通法上的科研例外，其保护范围限于"为消遣、满足闲散的好奇心或纯粹的哲学性探究"而实施的行为，凡带有商业目的的使用，即落入侵权。仿制药企进行生物等效性测试，其终极目标是在专利届满后进入市场，这一目的的存在，从根本上将其排斥于科研例外的保护范围之外。<br/><br/>在Roche v. Bolar案认定为审批而进行的试验不符合试验性例外之后。国会通过了Hatch-Waxman法案，建立Bolar例外制度，其本质是在科研例外制度的基础上，填补了一个科研例外无法覆盖的制度空白。即允许竞争者在专利仍有效期间使用专利技术以启动监管审批程序，并在专利届满后立即进入市场。这一"市场进入准备"目的，与科研例外所保护的"知识生产"目的，在规范性质上是截然不同的两类行为。<br/><br/><h3 id="sec-4">2、欧盟：科研例外的解释分歧促使统一立法</h3><br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-05.webp" alt="图5：论证示意图" /><figcaption>图5：论证示意图</figcaption></figure><br/><br/>许多欧盟成员国均设有"试验性使用例外"，但各成员国对这一条款的解释存在很大差异。在德国，司法实践将试验性使用例外解释为涵盖一切旨在获取知识的试验使用；而在英国，该例外则被解释得更为狭窄。为协调欧洲各国的立场并加速仿制药在专利届满后进入市场，欧盟引入了Bolar例外，将获得上市许可所必需的试验从专利侵权中排除。 这揭示了欧盟引入Bolar例外的直接背景：并非科研例外完全无用，而是各成员国对科研例外的解释宽严不一，造成仿制药企面临的法律风险在不同国家之间存在重大差异。Bolar例外的引入，提供了一个最低标准的统一保障——无论各成员国的科研例外解释得多窄，监管审批活动至少受到Bolar条款的明文保护。<br/><br/>德国科研例外的适用条件是"acts done for experimental purposes relating to the subject-matter of the patented invention"——实验目的须针对专利技术方案本身。Klinische Versuche I（1995年）和Klinische Versuche II（1997年）案中，德国联邦最高法院虽然采取了比英美更为宽泛的解释，认为即便实验带有商业目的，只要研究意图独立存在，即可适用科研例外。但德国的司法扩张始终停留于"研究专利技术方案本身"的框架之内，并未将所有以行政审批为目的的制造、使用行为一概纳入。在2005年新引入的Bolar条款（第11条第2b款）允许对药品进行以营利目的（上市销售）为导向的试验性使用，明确扩充了传统意义上"试验"的含义。试验行为不仅包括非营利目的的试验行为，也包括以营利为目的的试验行为。<br/><br/>德国专利法同时设有第11条第2款（科研例外）和第11条第2b款（Bolar例外），两者并行适用，相互之间并不具有涵盖关系。科研例外的正当性来源于行为不具有商业目的（或即便有商业目的，研究意图也是独立的），Bolar例外的正当性则来源于行为对公共利益（药品可及性）的贡献，两者的规范目的不同。<br/><br/><h3 id="sec-5">（二）两项例外之间的关联与差异</h3><br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-06.webp" alt="图6：论证示意图" /><figcaption>图6：论证示意图</figcaption></figure><br/><br/>从立法发展脉络看，Bolar例外在科研例外既已存在的情况下被独立设立，本身即表明两者性质不同。<br/><br/>科研例外的正当性基础是“非商业性知识生产”，行为目的在于扩展知识边界，不威胁专利权人的市场利益。Bolar例外的正当性基础是“公共利益导向的市场准入准备”，其目的不是生产知识，而是纠正行政审批制度对专利期的实质侵蚀，确保专利届满时仿制药可及。<br/><br/>区别的核心在于商业目的。科研例外在几乎所有法域均要求行为不具商业目的。美国联邦巡回法院明确，只要使用具有"确定的、可认知的、非微不足道的商业目的"，即不受科研例外保护。仿制药企进行生物等效性测试的商业意图显而易见。科研例外无论解释得多宽泛，将此类行为纳入保护都将解构其自身的理论基础。Bolar例外恰恰承认了具有商业目的的行为在特定条件下可以豁免，这一承认对科研例外而言在逻辑上构成自我否定。<br/><br/>Bolar例外针对的是行政审批制度与专利制度之间的制度性冲突：前者要求上市前完成漫长审批，后者在审批期间仍然有效。科研例外从未被设计为解决这一冲突的工具。将其扩张以弥补行政审批延迟，即便出于公平考量，也是以错误的工具解决正确的问题。<br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-07.webp" alt="图7：论证示意图" /><figcaption>图7：论证示意图</figcaption></figure><br/><br/><h2 id="sec-6">三、以历史解释探寻立法者的本意</h2><br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-08.webp" alt="图8：论证示意图" /><figcaption>图8：论证示意图</figcaption></figure><br/><br/>立法者在2008年专利法中增加Bolar例外立法时，未将其它因行政审批影响上市时间的产品纳入之内，是“有意的沉默”还是“无意的疏忽”？如果是“有意的沉默”，表明立法者不希望其它需审批的产品亦存在这种法效果。如果是“无意的疏忽”，则表明存在法律漏洞，司法者有义务进行法律漏洞补充。具体是哪种情形，可以通过探求如下问题来确定，即立法时立法者否意识到行政审批导致的专利期变相延长问题并非药品和医疗器械所独有？<br/><br/>国务院向全国人大常委会提交的《关于〈中华人民共和国专利法修正案（草案）〉的说明》中，关于Bolar例外的官方阐述为：“借鉴美国、加拿大、澳大利亚等国的做法，草案在不视为侵权的情形中增加一项：为提供行政审批所需要的信息，拟制造药品或者医疗器械的单位或者个人制造专利药品或者专利医疗器械的。”为探求立法者的本意，有必要审视立法者在立法时借鉴的美国、加拿大、澳大利亚的具体做法。<br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-09.webp" alt="图9：论证示意图" /><figcaption>图9：论证示意图</figcaption></figure><br/><br/><h3 id="sec-7">1、美国做法</h3><br/><br/>《美国法典》第35编第271条第(e)款第(1)项规定：在美国境内制造、使用、要约销售、销售，或向美国进口专利发明，如该行为仅用于合理关联于依据联邦法律（该联邦法律规范药品或兽用生物制品的制造、使用或销售）开发和提交信息的用途，则不构成专利侵权。但以下发明除外：主要通过重组DNA、重组RNA、杂交瘤技术或其他涉及位点特异性基因操控技术制造的新兽药或兽用生物制品（该等术语依照《联邦食品、药品及化妆品法》及1913年3月4日法案的含义）。<br/><br/>由此可知，美国Bolar例外覆盖的客体包含药品及兽用生物制品。<br/><br/><h3 id="sec-8">2、加拿大做法</h3><br/><br/>加拿大《专利法》第55.2条规定：任何人仅为合理关联于开发和提交依据加拿大联邦法律、省法律或外国法律（该等法律规范任何产品的制造、建造、使用或销售）所要求之信息的用途，制造、建造、使用或销售专利发明的，不构成专利侵权。<br/><br/>加拿大Bolar例外覆盖的客体为任何产品，不限于药品或医疗器械，范围最广。<br/><br/><h3 id="sec-9">3、澳大利亚做法</h3><br/><br/>澳大利亚《专利法》第119A条：如对专利发明的实施仅用于下列目的，则医药专利权利人的权利不受侵犯： (a) 与将以下商品纳入澳大利亚治疗商品登记册相关的目的，该商品须： (i) 用于治疗目的；且 (ii) 非依据《1989年治疗商品法》定义的医疗器械或治疗装置；或 (b) 与依据外国或外国某地区法律获得类似监管审批相关的目的。<br/><br/>澳大利亚Bolar例外覆盖的客体仅限医药专利，明确排除医疗器械和治疗装置。<br/><br/>美国、加拿大和澳大利亚的Bolar例外覆盖的客体并不相同，加拿大的最宽泛，美国包含了兽用生物制品，澳大利亚仅限于医药。中国立法过程中在参考三国做法时，选择了药品或医疗器械，这是对客体进行限定的有意识的立法选择。由此可知，将Bolar例外聚焦于"药品或医疗器械"领域，对其它需要审批事项不予规定，是“有意的沉默”，而非“无意的疏忽”。从能查询到的当时的立法文献看，立法者在制度设计时虽并未对Bolar例外的规范目的作充分的文本阐述，但从专著和学者概括的立法目的看，2008年修订《专利法》，增加第（五）项Bolar例外是基于我国公共健康的需要，平衡专利权人利益与社会公共利益，防止专利权的过度扩张，期望实现的社会效果即在药品专利期满后，价格低廉的仿制药能够立即上市。立法者在明知借鉴的其它国家的Bolar例外并不只限于药品和医疗器械，而在立法中限定于此，表明农药的行政审批显然不在当时立法者的规范视野之内。<br/><br/><h2 id="sec-10">四、以体系解释和目的解释确定司法解释的边界</h2><br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-10.webp" alt="图10：论证示意图" /><figcaption>图10：论证示意图</figcaption></figure><br/><br/><h3 id="sec-11">1、第（五）项的存在构成对第（四）项扩张的限制</h3><br/><br/>“法律的每一个字、每一条款都应当被赋予规范效力，不应轻易将某一条款解释为对另一条款的无谓重复（redundant or superfluous）”。“在解释一个法条时，不应将另一个法条的适用范围完全包括进来。解释的结果不应导致立法冗余”。在解释法律时，立法者应被推定为理性的，同一法律内各条款应各具独立的规范意义，不存在实质性重叠或多余。据此，后设条款相对于既有条款，必然承载独立的规范目的。<br/><br/>第（四）项与第（五）项的关系，正是检验这一原理的典型场合。2008年《专利法》第三次修订之前，专利法中不存在行政审批例外条款。彼时司法实践将药品或农药登记试验行为纳入第（四）项调整，是在法律空白下以目的解释填补漏洞的临时做法，在解释论上尚有一定空间。然而，2008年修法明确增设第（五）项后，立法者已就行政审批例外作出了专门的、有意识的制度安排，覆盖范围限于"药品和医疗器械"，行为类型限于"制造、使用、进口"。这一立法设计本身即表明，立法者将行政审批例外与第（四）项的科研例外视为两种性质不同的制度，并有意为前者划定了明确边界。“专利药品或者专利医疗器材的仿制者在专利权的保护期限内为提供行政审批所需要的信息而进行的研究试验行为难以被认定为本条第（四）项所规定的研究实验行为。正因为如此，需要在本条中引入第（五）项的规定。如果结论相反，则没有必要专门设立本条第（五）项的规定，因为后者已经被前者所涵盖”。<br/><br/>由此可知，第（五）项的存在，本身即是对第（四）项范围的一种限制性宣示。它表明立法者认为，行政审批目的下的实施行为并不当然落入"专为科学研究和实验"的射程，而需要单独设定例外。在这一背景下，最高法在2020年修正的《专利法》框架下仍以第（四）项科研例外涵盖农药登记试验，实质上是以判例否定了立法者关于“行政审批例外有其边界”的明示判断，以解释论替代了本应属于立法者的政策选择。若第（四）项可以覆盖"为行政审批提供数据而制造、使用专利产品"的行为，则凡是进行登记试验，均可同时援引第（四）项，第（五）项所设的主体限制、行为类型限制等边界将形同虚设。这显然违背了体系解释要求各条款各司其职的基本要求，亦使第（五）项失去独立存在的价值。<br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-11.webp" alt="图11：论证示意图" /><figcaption>图11：论证示意图</figcaption></figure><br/><br/><h3 id="sec-12">2、把农药登记试验纳入科研例外会冲击科研例外的适用边界</h3><br/><br/>除了药品、药疗器材和农药之外，法律法规要求产品在上市销售、使用或进口之前，须经法定行政机关审评并取得批准文号、注册证、登记证和实验验证等要求的有很多。（2023）最高法知民终1511号判决把农药可以纳入第（四）项的规范之下的理由主要有两点，一是农药实行登记制度。二是依照相关法律规定以及农药的行业特点，为了获得农药登记而进行的试验以及农药行政主管部门的审评审批均需要一定时间。但根据现有的法律法规和行政规章的规定，特殊化妆品、化妆品新原料、兽药、饲料添加剂、保健食品亦实行登记制度，依照法律规定和行业特点，试验和审评审批亦需要一定时间，特殊化妆品、化妆品新原料、兽药、饲料添加剂、保健食品与农药并无实质不同，根据“实质相同的案件相同处理，实质不同的案件不同处理”的原则，亦应纳入第（四）项的规范之下。<br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-12.webp" alt="图12：论证示意图" /><figcaption>图12：论证示意图</figcaption></figure><br/><br/><h3 id="sec-13">3、以专利期延长制度为视角</h3><br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-13.webp" alt="图13：论证示意图" /><figcaption>图13：论证示意图</figcaption></figure><br/><br/>《专利法》第四十二条第三款规定："为补偿新药上市审评审批占用的时间，对在中国获得上市许可的新药相关发明专利，国务院专利行政部门应专利权人的请求给予专利权期限补偿。补偿期限不超过五年，新药批准上市后总有效专利权期限不超过十四年。"<br/><br/>该条款是Bolar例外的配套设计，共同构成仿制药/创新药利益平衡机制的制度框架，Bolar例外允许仿制企业提前实施，专利期延长补偿创新企业的审批损耗，二者共同实现相关利益主体的利益平衡。原研农药企业专利产品上市与仿制企业一样亦需要试验和审评审批，这同样属于对专利期的占用，如果现在通过科研例外给予农药登记试验专利侵权豁免，但没有相对应的专利期延长制度，原研农药企业就承受了与药品企业相同的"提前竞争"损耗，却无法获得任何制度层面的补偿，无疑会打破专利权人、仿制者和公众的利益平衡。<br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-14.webp" alt="图14：论证示意图" /><figcaption>图14：论证示意图</figcaption></figure><br/><br/><h3 id="sec-14">4、目的解释层面：两项规范目的的根本差异</h3><br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-15.webp" alt="图15：论证示意图" /><figcaption>图15：论证示意图</figcaption></figure><br/><br/>扩张解释的正当性边界，取决于扩张后的适用结果是否符合被适用条款自身的规范目的。从这一标准审视，以第（四）项覆盖农药登记试验存在明显的目的错配。<br/><br/>第（四）项的规范目的，在于保护以专利技术方案本身为对象的科学研究自由，促进知识积累与技术进步。其核心逻辑是：针对专利技术本身进行研究、验证、改进的行为，不会不合理地损害专利权人的市场利益，因为此类行为并非以进入市场为直接目的。正因如此，通说要求以专利技术为研究对象，而非把专利技术作为研究工具、针对实施专利技术的其他方面进行研究实验或对实施该专利技术的商业前景进行研究实验。<br/><br/>第（五）项的规范目的，则在于克服行政审批制度导致的专利期变相延长，促进仿制药品及医疗器械的市场可及性。其核心逻辑是，允许仿制企业在专利保护期内提前完成申报所需的试验，确保专利届满之日即为仿制产品可上市之日，以此恢复被行政审批制度人为缩短的竞争窗口。<br/><br/>农药登记试验的真实属性，显然属于后者而非前者。农药企业制造、使用氯虫苯甲酰胺的根本动因，并非研究该化合物的科学原理或改进其技术方案，而是在专利届满后能够立即合法进入市场。该行为的目的指向是市场准入，而非知识生产。以第（四）项的"知识生产"目的论框架来容纳这类"市场准入准备"行为，明显违背了第（四）项的规范目的，不符合扩张解释的基本要求。<br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-16.webp" alt="图16：论证示意图" /><figcaption>图16：论证示意图</figcaption></figure><br/><br/><h2 id="sec-15">五、是否可以类推适用第（五）项Bolar例外</h2><br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-17.webp" alt="图17：论证示意图" /><figcaption>图17：论证示意图</figcaption></figure><br/><br/>裁判者在裁判时不可避免会受到前见的影响，在承认农药登记试验不受第（五）项的文义覆盖的前提下，裁判者如果仍认为该行为确实不应构成侵权，则可以尝试类推适用第（五）项。问题在于本案是否存在类推适用的可能。<br/><br/>类推适用的前提有二：存在法律漏洞（即法律对某一事项未作规定，但该事项在评价上与法律已规定的事项具有相同性）；“相同事物应相同处理”的正义要求。<br/><br/>如前所述，《专利法》第（五）项规定了药品和医疗器械的行政审批例外，但未规定农药的审批例外。农药的上市审批制度与药品审批制度在结构上确实存在相似性，即均由行政机关主导、均有法定审批周期、均会导致专利到期后的"延迟上市"效应。但立法者在制定第（五）项时针对药品解决的问题（行政审批导致专利期变相延长）时，通过借鉴他国立法例，已经预测到存在其它与药品相类似的审批延迟情形。立法未将农药纳入，是一种“有意的沉默”而非“无意的疏忽”。因此不存在类推适用的前提“存在法律漏洞”，农药登记试验不能类推适用第（五）项Bolar例外。<br/><br/>《专利法》第（五）项将Bolar例外限定于药品和医疗器械、未涵盖农药，这一立法选择是明确的。即便存在政策层面的不完善，亦远未达到拉德布鲁赫公式所要求的"极端难以忍受"或"有意否认正义本身"的门槛。农药仿制企业所受影响不过是商业利益的延迟实现。司法机关不能以政策考量取代立法者在第（五）项中所作的明确选择，裁判者才没有绕过它的正当依据，这一决策权应归属于立法机关。<br/><br/><h2 id="sec-16">五、结语</h2><br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-18.webp" alt="图18：论证示意图" /><figcaption>图18：论证示意图</figcaption></figure><br/><br/>就裁判结论而言，农药登记试验获得侵权豁免或许具有相当的正当性。然而，问题的关键不在于结论本身，而在于达致该结论所采用的解释路径。如前所述，援引第（四）项在历史解释、体系解释与目的解释三个维度上均难以成立。法律解释方法的意义，恰在于约束裁判者以"内心正义"为名的恣意。一旦允许裁判者为追求其所认定的正当结果而突破解释方法的边界，则当裁判者怀有私利时，同样的突破便无从阻止，恣意裁判仅有一步之遥。<br/><br/><figure class="article-figure"><img src="../images/pesticide-registration/figure-19.webp" alt="图19：论证示意图" /><figcaption>图19：论证示意图</figcaption></figure><br/><br/>Patent Infringement Exemption for Pesticide Registration Trials: The Boundaries of the Research Exception and a Critique of Its Interpretive Methodology<br/><br/>Abstract: Whether patent acts conducted during pesticide registration trials constitute patent infringement remains contested in Chinese judicial practice. In case (2023) Zui Gao Fa Zhi Min Zhong No. 1511, the Supreme People's Court applied the "research and experimentation exception" under Article 75(4) of the Patent Law to exempt such trials from infringement liability. This interpretive choice is questionable given that the 2008 amendment introduced a dedicated Bolar exception under Article 75(5), expressly covering the manufacture, use, and importation of patented pharmaceuticals and medical devices for regulatory approval purposes. Historical analysis shows that legislators deliberately confined the Bolar exception to pharmaceuticals and medical devices after reviewing U.S., Canadian, and Australian models — the exclusion of pesticides was intentional, not inadvertent. Systematically, the existence of Article 75(5) signals that regulatory-approval-driven acts do not self-evidently fall within Article 75(4); extending the research exception to pesticide trials renders Article 75(5) superfluous. Teleologically, Article 75(4) protects knowledge-generating activity aimed at the patented invention itself, while Article 75(5) addresses the de facto erosion of patent terms by mandatory approval processes; pesticide registration is oriented toward market entry, not knowledge production. The absence of a patent term extension mechanism for agrochemicals further disadvantages originator pesticide companies relative to pharmaceutical counterparts. Analogical application of Article 75(5) to pesticides is impermissible, as the legislative omission was deliberate. The legitimacy of a judicial outcome must be distinguished from the legitimacy of the interpretive path taken to reach it.<br/><br/>Keywords: Pesticide Registration Trials; Research and Experimentation Exception; Bolar Exception; Legal Interpretation Methodology</p></div>
+    
+  </div>
+</article>
+
+<footer>
+  <p>© 2025 任广科&nbsp;·&nbsp;保留所有权利&nbsp;·&nbsp;<a href="../feed.xml" style="color:var(--muted)">RSS</a></p>
+</footer>
+</body>
+</html>
