@@ -54,10 +54,26 @@ nav {
 }
 
 .nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  flex-shrink: 0;
+  white-space: nowrap;
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--text);
   letter-spacing: .04em;
+}
+.nav-logo img { display: block; width: 32px; height: 32px; object-fit: contain; }
+.nav-logo:hover { text-decoration: none; }
+.brand-story { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 3rem; align-items: start; }
+.brand-story > img { width: 180px; height: auto; }
+.brand-story h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+.brand-story p { color: var(--muted); line-height: 1.9; margin-bottom: 1rem; }
+.brand-story strong { color: var(--text); font-weight: 600; }
+@media (max-width: 680px) {
+  .brand-story { grid-template-columns: 1fr; gap: 1.5rem; }
+  .brand-story > img { width: 120px; }
 }
 
 .nav-links {
