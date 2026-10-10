@@ -1,0 +1,77 @@
+/* Shared palette, loaded after page-specific styles. First visit is light. */
+:root, :root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --bg-card: #f5f7fa;
+  --bg-hover: #edf2f8;
+  --border: #d7dfe8;
+  --text: #17212b;
+  --muted: #526171;
+  --accent: #245fc1;
+  --accent-dim: #e9f0fc;
+  --nav-bg: rgba(255,255,255,.96);
+  --tag-law: #e6effb; --ink-law: #24578b;
+  --tag-ai: #e5f3ea; --ink-ai: #21633a;
+  --tag-econ: #fff0dc; --ink-econ: #875114;
+  --tag-book: #f0e8fa; --ink-book: #72409b;
+  --tag-case: #e1f5eb; --ink-case: #216348;
+  --tag-teaching: #fff3d4; --ink-teaching: #7a590a;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0d1117; --bg-card: #161b22; --bg-hover: #1c2230;
+  --border: #303d4c; --text: #e6edf3; --muted: #a4afbc;
+  --accent: #78aaff; --accent-dim: #1a2f5a;
+  --nav-bg: rgba(13,17,23,.96);
+  --tag-law: #1e3a5f; --ink-law: #7ab8f5;
+  --tag-ai: #1e3a2e; --ink-ai: #7df5a0;
+  --tag-econ: #3a2a1e; --ink-econ: #f5c07a;
+  --tag-book: #2e1e3a; --ink-book: #d3a3f9;
+  --tag-case: #1c3a2e; --ink-case: #6ee8b4;
+  --tag-teaching: #342d19; --ink-teaching: #f2cf72;
+}
+html body { background: var(--bg); color: var(--text); }
+body > nav { background: var(--nav-bg); gap: 1rem; }
+.nav-links { margin-left: auto; min-width: 0; }
+.theme-toggle {
+  flex-shrink: 0; min-height: 40px; padding: .35rem .7rem;
+  border: 1px solid var(--border); border-radius: 6px;
+  background: var(--bg-card); color: var(--text);
+  font: 500 .85rem/1.4 "Microsoft YaHei", sans-serif; cursor: pointer;
+}
+.theme-toggle:hover { background: var(--bg-hover); border-color: var(--accent); }
+:is(a, button):focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.cat-law { color: var(--ink-law); }
+.cat-ai { color: var(--ink-ai); }
+.cat-econ { color: var(--ink-econ); }
+.cat-book { color: var(--ink-book); }
+.cat-case { color: var(--ink-case); }
+.cat-teaching { color: var(--ink-teaching); }
+.btn-primary, .filter-btn.active, .filter-btn:hover { background: #245fc1; color: #fff; }
+html .lesson-kicker { color: var(--ink-teaching); }
+html .lesson-summary { border-left-color: var(--ink-teaching); }
+html .lesson-content p { color: var(--text); }
+html main { background: var(--bg); }
+html main :is(h2, h3) { color: var(--text); }
+html main :is(.part-subtitle, .anatomy-arrow, .integration-arrow, .logic-link) { color: var(--muted); }
+html main :is(.chapter-title, .anatomy-node strong, .proof-chain .chain, .case-party h3, .integration-node strong, .logic-node strong, .concept-box h3, .result-line) { color: var(--accent); }
+html main :is(.norm-card, .anatomy-node, .integration-node, .logic-node, .concept-box, .syllogism-row .meaning, .result-line) { background: var(--bg); }
+html main :is(.part-divider, .lead-box, .proof-chain, .method-note, .review-flow div, .case-step, .case-party, .reasoning-chain div, .result-ladder, .statute-text, .syllogism-row .symbol) { background: var(--bg-card); color: var(--text); }
+html main :is(td, th, .norm-card, .case-party, .proof-chain, .method-note, .result-ladder, .syllogism, .syllogism-row) { border-color: var(--border); }
+html main .diagram > tbody > tr:nth-child(2) > td,
+html main .diagram > tbody > tr:nth-child(3) > td,
+html main .nested tr:nth-child(even) td,
+html main .compare tr:nth-child(odd):not(:first-child) td { background: var(--bg-card); color: var(--text); }
+/* Diagrams and photographs keep their original colours and readable canvas. */
+html main .article-structure-figure svg { background: #f7fafc; color-scheme: light; }
+[id] { scroll-margin-top: 80px; }
+@media (max-width: 760px) {
+  body > nav { gap: .55rem; padding: 0 .75rem; }
+  .nav-links { padding-left: 0; }
+  .theme-toggle { padding: .35rem .5rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+@media print {
+  :root[data-theme] { --bg: #fff; --bg-card: #f5f5f5; --text: #111; --muted: #444; --border: #bbb; --accent: #245fc1; }
+  .theme-toggle { display: none; }
+}
