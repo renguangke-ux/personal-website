@@ -11,6 +11,7 @@ const CAT_MAP = {
   book: { label: '读书笔记',  cls: 'cat-book' },
   case: { label: '案例研究',  cls: 'cat-case' },
   teaching: { label: '教学案例', cls: 'cat-teaching' },
+  media: { label: '媒体报道', cls: 'cat-law' },
 };
 
 function escapeHtml(str) {
@@ -121,11 +122,11 @@ function mdToHtml(md) {
   return { bodyHtml: blocks.join('\n'), tocHtml };
 }
 
-function generateArticlePage(a, tpl) {
+function generateArticlePage(a, tpl, section = 'articles') {
   const cat  = CAT_MAP[a.category] || { label: a.category, cls: 'cat-law' };
-  const date = a.date
+  const date = a.displayDate || (a.date
     ? new Date(a.date).toLocaleDateString('zh-CN', { year: 'numeric', month: 'long' })
-    : '';
+    : '');
   const type = (a.type || '发表论文 →').replace(' →', '');
 
   const { bodyHtml, tocHtml } = a.body ? mdToHtml(a.body) : { bodyHtml: '', tocHtml: '' };
@@ -151,7 +152,7 @@ function generateArticlePage(a, tpl) {
   <meta property="og:title" content="${escapeHtml(a.title)}" />
   <meta property="og:description" content="${escapeHtml(a.summary || '')}" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="${SITE_URL}/articles/${a.slug}.html" />
+  <meta property="og:url" content="${SITE_URL}/${section}/${a.slug}.html" />
   <meta property="og:site_name" content="任广科" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="${escapeHtml(a.title)}" />
@@ -229,6 +230,7 @@ ${bodyHTML}
 const articles   = readDir('content/articles');
 const activities = readDir('content/activities');
 const teaching   = readDir('content/teaching');
+const media      = readDir('content/media');
 
 const articleTpl     = fs.readFileSync('templates/article.template.html', 'utf8');
 const activitiesTpl  = fs.readFileSync('templates/activities.template.html', 'utf8');
@@ -237,6 +239,15 @@ const teachingArticleTpl = fs.readFileSync('templates/teaching-article.template.
 
 if (!fs.existsSync('articles')) fs.mkdirSync('articles');
 if (!fs.existsSync('teaching')) fs.mkdirSync('teaching');
+if (!fs.existsSync('media')) fs.mkdirSync('media');
+
+const mediaTpl = articleTpl.replace(
+  '<a href="../index.html#articles" class="back-link">← 返回文章列表</a>',
+  '<a href="../about.html#media" class="back-link">← 返回关于 · 媒体报道</a>'
+);
+media.forEach(a => {
+  fs.writeFileSync(`media/${a.slug}.html`, generateArticlePage(a, mediaTpl, 'media').replace(/[ \t]+$/gm, ''));
+});
 
 articles.forEach(a => {
   fs.writeFileSync(`articles/${a.slug}.html`, generateArticlePage(a, articleTpl));
