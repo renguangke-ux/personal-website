@@ -1,0 +1,1923 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第二编 法律解释 — 任广科</title>
+<meta name="description" content="法律解释教学讲义：法律解释综述、文义解释、历史解释、体系解释与目的解释，附案例、操作清单、索引与参考文献。">
+<link rel="icon" href="../favicon.ico">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#F4F5F2; --surface:#FFFFFF; --surface-2:#EBEEE9; --surface-3:#E3E7E0;
+  --ink:#14181B; --ink-2:#39413D; --muted:#5F6A64;
+  --rule:#D4D9D2; --rule-strong:#B3BCB4;
+  --accent:#2E6A5C; --accent-soft:#DCE8E3; --accent-ink:#1E4A40;
+  --warn:#7A3B4A; --warn-soft:#F1E3E5; --warn-ink:#5E2B37;
+  --gold:#846A26;
+  --serif:"Noto Serif SC",Songti SC,SimSun,Georgia,serif;
+  --sans:"IBM Plex Sans","Noto Serif SC",Helvetica Neue,Arial,sans-serif;
+  --mono:"IBM Plex Mono",SFMono-Regular,Consolas,monospace;
+  --measure:40.5em;
+  --rn-gutter:3.4rem;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1311; --surface:#161B18; --surface-2:#1D2320; --surface-3:#242B27;
+    --ink:#E7EBE6; --ink-2:#C4CCC6; --muted:#96A19B;
+    --rule:#29312D; --rule-strong:#3A443E;
+    --accent:#7CBEAA; --accent-soft:#1A2C26; --accent-ink:#A3D6C5;
+    --warn:#D5939E; --warn-soft:#2C1F23; --warn-ink:#E2AEB7;
+    --gold:#C4A75E;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1311; --surface:#161B18; --surface-2:#1D2320; --surface-3:#242B27;
+  --ink:#E7EBE6; --ink-2:#C4CCC6; --muted:#96A19B;
+  --rule:#29312D; --rule-strong:#3A443E;
+  --accent:#7CBEAA; --accent-soft:#1A2C26; --accent-ink:#A3D6C5;
+  --warn:#D5939E; --warn-soft:#2C1F23; --warn-ink:#E2AEB7;
+  --gold:#C4A75E;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--serif); font-size:17px; line-height:1.92;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+::selection{background:var(--accent-soft); color:var(--accent-ink)}
+a{color:var(--accent-ink); text-decoration:none; border-bottom:1px solid var(--accent-soft)}
+a:hover{border-bottom-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px}
+
+/* ───────── shell ───────── */
+.shell{display:grid; grid-template-columns:16.5rem minmax(0,1fr); gap:0; max-width:82rem; margin:0 auto}
+.rail{
+  position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto;
+  border-right:1px solid var(--rule); padding-block:2.2rem 3rem; padding-inline:1.6rem 1.2rem;
+  font-family:var(--sans); font-size:.8rem; line-height:1.55;
+}
+.rail-brand{font-family:var(--serif); font-weight:700; font-size:1.02rem; letter-spacing:.04em; margin:0 0 .15rem}
+.rail-sub{color:var(--muted); font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; margin:0 0 1.6rem}
+.rail nav ol{list-style:none; margin:0; padding:0}
+.rail .ch{margin-bottom:1.15rem}
+.rail .ch > a{
+  display:flex; gap:.55rem; align-items:baseline; font-weight:600; color:var(--ink);
+  border:0; padding:.1rem 0; font-size:.85rem;
+}
+.rail .ch > a .num{font-family:var(--mono); font-size:.7rem; color:var(--accent); flex:none; padding-top:.15rem}
+.rail .ch ol{margin:.3rem 0 0 1.75rem; display:grid; gap:.15rem}
+.rail .ch ol a{display:block; color:var(--muted); border:0; padding:.1rem 0}
+.rail .ch ol a:hover,.rail .ch > a:hover{color:var(--accent-ink)}
+.rail a.on{color:var(--accent-ink); font-weight:600}
+.rail-foot{margin-top:2rem; padding-top:1rem; border-top:1px solid var(--rule); color:var(--muted); font-size:.7rem; line-height:1.7}
+.theme-btn{
+  margin-top:1rem; font-family:var(--sans); font-size:.7rem; letter-spacing:.1em;
+  background:transparent; color:var(--muted); border:1px solid var(--rule); border-radius:999px;
+  padding:.3rem .8rem; cursor:pointer;
+}
+.theme-btn:hover{border-color:var(--accent); color:var(--accent-ink)}
+
+main{padding-block:0 6rem; padding-inline:clamp(1rem,4vw,4.5rem); min-width:0}
+.wrap{max-width:calc(var(--measure) + var(--rn-gutter))}
+
+/* ───────── hero ───────── */
+.hero{padding-block:3.4rem 2.2rem; border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--sans); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-ink); margin:0 0 1.1rem}
+h1.title{font-size:clamp(2.1rem,5.2vw,3.1rem); line-height:1.22; font-weight:700; letter-spacing:.02em; margin:0 0 .7rem; text-wrap:balance}
+.subtitle{font-size:1.02rem; color:var(--ink-2); margin:0 0 1.6rem; max-width:34em}
+.hero-meta{display:flex; flex-wrap:wrap; gap:.4rem 1.4rem; font-family:var(--sans); font-size:.74rem; letter-spacing:.06em; color:var(--muted)}
+.hero-meta b{color:var(--ink); font-weight:600}
+
+/* ───────── chapter openers ───────── */
+.ch-open{
+  display:grid; grid-template-columns:auto 1fr; gap:1.5rem; align-items:end;
+  margin-top:4.6rem; padding-bottom:1rem; border-bottom:1px solid var(--rule-strong);
+}
+.ch-open .fig{
+  font-family:var(--serif); font-size:3.1rem; line-height:.92; font-weight:700;
+  color:var(--accent); letter-spacing:.02em;
+}
+.ch-open h2{margin:0; font-size:1.72rem; line-height:1.3; font-weight:700; letter-spacing:.02em}
+.ch-open .kicker{font-family:var(--sans); font-size:.72rem; letter-spacing:.13em; text-transform:uppercase; color:var(--muted); margin:0 0 .3rem}
+.lede{font-size:1.02rem; color:var(--ink-2); margin:1.5rem 0 0; max-width:36em}
+
+h3.sec{
+  font-size:1.16rem; font-weight:600; letter-spacing:.02em; margin:3.1rem 0 .2rem;
+  padding-left:var(--rn-gutter);
+}
+h3.sec .s{font-family:var(--mono); font-size:.8rem; color:var(--accent); margin-right:.6rem; font-weight:400}
+h4{font-size:1rem; font-weight:600; margin:2rem 0 .2rem; padding-left:var(--rn-gutter); color:var(--ink)}
+h4 .m{color:var(--muted); font-weight:400; font-family:var(--sans); font-size:.78rem; margin-left:.5rem}
+
+/* ───────── marginal numbers (Randnummern) ───────── */
+.body{counter-reset:rn}
+.body p,.body .plain{margin:1.05rem 0; padding-left:var(--rn-gutter); position:relative}
+.body p.rn{counter-increment:rn}
+.body p.rn::before{
+  content:counter(rn); position:absolute; left:0; top:.42em; width:2.4rem; text-align:right;
+  font-family:var(--mono); font-size:.68rem; color:var(--accent); opacity:.85;
+  font-variant-numeric:tabular-nums;
+}
+.body ul,.body ol.list{margin:1.05rem 0; padding-left:calc(var(--rn-gutter) + 1.2rem)}
+.body li{margin:.4rem 0}
+.body ul{list-style:none}
+.body ul > li::before{content:"—"; color:var(--accent); margin-right:.55rem; margin-left:-1.3rem}
+
+strong{font-weight:600}
+em{font-style:normal; border-bottom:1px dotted var(--accent); padding-bottom:1px}
+.de{font-family:var(--sans); font-style:italic; font-size:.92em; color:var(--muted)}
+.term{font-weight:600; color:var(--accent-ink)}
+code,.art{font-family:var(--mono); font-size:.86em; background:var(--surface-2); padding:.08em .34em; border-radius:3px}
+
+/* ───────── blocks ───────── */
+.block{margin:1.9rem 0 1.9rem var(--rn-gutter); background:var(--surface); border:1px solid var(--rule)}
+.block > .hd{
+  display:flex; flex-wrap:wrap; gap:.3rem .8rem; align-items:baseline;
+  padding:.7rem 1.1rem; border-bottom:1px solid var(--rule); background:var(--surface-2);
+  font-family:var(--sans); font-size:.74rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
+}
+.block > .hd .tag{color:var(--accent-ink); font-weight:600}
+.block > .hd .name{text-transform:none; letter-spacing:.01em; font-size:.88rem; font-family:var(--serif); color:var(--ink); font-weight:600}
+.block > .bd{padding:.35rem 1.1rem 1rem}
+.block > .bd p{padding-left:0; margin:.85rem 0; font-size:.96rem}
+
+/* case */
+.case{border-left:3px solid var(--accent)}
+.case dl{margin:.6rem 0 0; display:grid; grid-template-columns:auto 1fr; gap:.1rem 1rem; font-size:.96rem}
+.case dt{
+  font-family:var(--sans); font-size:.72rem; letter-spacing:.1em; color:var(--accent-ink);
+  font-weight:600; padding-top:.55em; white-space:nowrap;
+}
+.case dd{margin:0; padding:.28rem 0}
+.case .src{margin-top:.9rem; padding-top:.7rem; border-top:1px dotted var(--rule-strong); font-family:var(--sans); font-size:.74rem; color:var(--muted); line-height:1.65}
+.case .src a{font-size:.95em}
+
+/* statute */
+.statute{border-left:3px solid var(--gold); background:var(--surface-2)}
+.statute > .hd{background:transparent; border-bottom:1px dotted var(--rule-strong)}
+.statute > .hd .tag{color:var(--gold)}
+.statute .txt{font-size:.95rem; color:var(--ink-2)}
+.statute .txt p{margin:.6rem 0}
+
+/* warning */
+.caution{border-left:3px solid var(--warn); background:var(--warn-soft)}
+.caution > .hd{background:transparent; border-bottom:1px dotted var(--warn); color:var(--warn-ink)}
+.caution > .hd .tag{color:var(--warn)}
+.caution > .bd{color:var(--warn-ink)}
+
+/* pull quote */
+blockquote{
+  margin:2rem 0 2rem var(--rn-gutter); padding:0 0 0 1.3rem; border-left:2px solid var(--rule-strong);
+  font-size:1.07rem; line-height:1.8; color:var(--ink-2);
+}
+blockquote p{padding-left:0 !important; margin:.5rem 0}
+blockquote cite{display:block; margin-top:.7rem; font-family:var(--sans); font-style:normal; font-size:.74rem; letter-spacing:.06em; color:var(--muted)}
+
+/* table */
+.tw{margin:1.9rem 0 1.9rem var(--rn-gutter); overflow-x:auto; border:1px solid var(--rule); background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:.9rem; min-width:30rem}
+th,td{text-align:left; padding:.62rem .9rem; border-bottom:1px solid var(--rule); vertical-align:top}
+thead th{
+  font-family:var(--sans); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--muted); background:var(--surface-2); font-weight:600;
+}
+tbody tr:last-child td{border-bottom:0}
+td.k{font-weight:600; color:var(--ink); white-space:nowrap}
+.tw figcaption{padding:.55rem .9rem; border-top:1px solid var(--rule); font-family:var(--sans); font-size:.72rem; color:var(--muted); background:var(--surface-2)}
+
+/* figure / svg */
+.fig-wrap{margin:2.2rem 0 2.2rem var(--rn-gutter); border:1px solid var(--rule); background:var(--surface); padding:1.2rem 1.1rem .8rem}
+.fig-wrap svg{display:block; width:100%; height:auto; max-width:100%}
+.fig-wrap figcaption{margin-top:.7rem; font-family:var(--sans); font-size:.74rem; line-height:1.6; color:var(--muted)}
+
+/* checklist */
+.checklist{margin:1.9rem 0 1.9rem var(--rn-gutter); display:grid; gap:.55rem}
+.checklist > div{display:grid; grid-template-columns:auto 1fr; gap:.85rem; align-items:start; padding:.7rem .95rem; background:var(--surface); border:1px solid var(--rule)}
+.checklist .n{font-family:var(--mono); font-size:.72rem; color:var(--accent); padding-top:.35em}
+.checklist p{margin:0 !important; padding:0 !important; font-size:.95rem}
+.checklist .q{font-weight:600}
+
+/* index */
+.idx{margin-left:var(--rn-gutter); display:grid; gap:.1rem}
+.idx div{display:grid; grid-template-columns:1fr auto; gap:1rem; align-items:baseline; padding:.4rem 0; border-bottom:1px dotted var(--rule)}
+.idx .where{font-family:var(--sans); font-size:.74rem; color:var(--muted); white-space:nowrap}
+
+.refs{margin-left:var(--rn-gutter); font-size:.92rem; line-height:1.75}
+.refs li{margin:.55rem 0}
+
+.end{margin:4.5rem 0 0 var(--rn-gutter); padding-top:1.3rem; border-top:2px solid var(--ink); font-family:var(--sans); font-size:.76rem; color:var(--muted); line-height:1.8}
+
+.mob-toc{display:none}
+
+@media (max-width:960px){
+  .shell{grid-template-columns:1fr}
+  .rail{display:none}
+  main{padding-inline:clamp(1rem,5vw,2rem)}
+  .mob-toc{display:block; margin:1.6rem 0 0; border:1px solid var(--rule); background:var(--surface)}
+  .mob-toc summary{padding:.7rem 1rem; font-family:var(--sans); font-size:.8rem; letter-spacing:.1em; cursor:pointer; color:var(--accent-ink)}
+  .mob-toc ol{margin:0; padding:0 1rem 1rem 2.2rem; font-family:var(--sans); font-size:.82rem; line-height:1.9}
+  .mob-toc a{color:var(--ink-2); border:0}
+}
+@media (max-width:560px){
+  body{font-size:16px; line-height:1.85}
+  :root{--rn-gutter:2.5rem}
+  .body p.rn::before{width:1.7rem; font-size:.62rem}
+  .ch-open{grid-template-columns:1fr; gap:.4rem; align-items:start}
+  .ch-open .fig{font-size:2rem}
+  .case dl{grid-template-columns:1fr; gap:0}
+  .case dt{padding-top:.7rem}
+  .block,.tw,.fig-wrap,blockquote,.checklist{margin-left:0}
+  h3.sec,h4{padding-left:0}
+  .body p,.body .plain{padding-left:var(--rn-gutter)}
+  .idx,.refs,.end{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important}}
+</style>
+
+<div class="shell">
+<aside class="rail">
+  <p class="rail-brand">第二编 法律解释</p>
+  <p class="rail-sub">Gesetzesauslegung</p>
+  <nav aria-label="目录">
+    <ol>
+      <li class="ch"><a href="#c1"><span class="num">一</span><span>法律解释综述</span></a>
+        <ol>
+          <li><a href="#s1-1">§1 从涵摄说起</a></li>
+          <li><a href="#s1-2">§2 解释的六个特征</a></li>
+          <li><a href="#s1-3">§3 标的与目标</a></li>
+          <li><a href="#s1-4">§4 萨维尼四要素</a></li>
+          <li><a href="#s1-5">§5 因素的位阶与协力</a></li>
+          <li><a href="#s1-6">§6 解释的疆界</a></li>
+          <li><a href="#s1-7">§7 中国法上的解释体制</a></li>
+        </ol>
+      </li>
+      <li class="ch"><a href="#c2"><span class="num">二</span><span>文义解释</span></a>
+        <ol>
+          <li><a href="#s2-1">§8 出发点与界限</a></li>
+          <li><a href="#s2-2">§9 三级语言习惯</a></li>
+          <li><a href="#s2-3">§10 立法定义、推定与拟制</a></li>
+          <li><a href="#s2-4">§11 概念核心与外围</a></li>
+          <li><a href="#s2-5">§12 文义明确性规则之破</a></li>
+          <li><a href="#s2-6">§13 文义射程与类推禁止</a></li>
+          <li><a href="#s2-7">§14 扩张与限缩</a></li>
+        </ol>
+      </li>
+      <li class="ch"><a href="#c3"><span class="num">三</span><span>历史解释</span></a>
+        <ol>
+          <li><a href="#s3-1">§15 广义、狭义与谱系</a></li>
+          <li><a href="#s3-2">§16 前身规范与连续性</a></li>
+          <li><a href="#s3-3">§17 立法材料的取舍</a></li>
+          <li><a href="#s3-4">§18 沉默的证明力</a></li>
+          <li><a href="#s3-5">§19 编写疏漏</a></li>
+          <li><a href="#s3-6">§20 主客观理论之争</a></li>
+        </ol>
+      </li>
+      <li class="ch"><a href="#c4"><span class="num">四</span><span>体系解释</span></a>
+        <ol>
+          <li><a href="#s4-1">§21 无矛盾法秩序</a></li>
+          <li><a href="#s4-2">§22 外部体系</a></li>
+          <li><a href="#s4-3">§23 同类解释规则</a></li>
+          <li><a href="#s4-4">§24 例外不得扩张</a></li>
+          <li><a href="#s4-5">§25 统一与相对性</a></li>
+          <li><a href="#s4-6">§26 冲突规则</a></li>
+          <li><a href="#s4-7">§27 合宪性解释</a></li>
+        </ol>
+      </li>
+      <li class="ch"><a href="#c5"><span class="num">五</span><span>目的解释</span></a>
+        <ol>
+          <li><a href="#s5-1">§28 法内在的理性</a></li>
+          <li><a href="#s5-2">§29 目的的查明</a></li>
+          <li><a href="#s5-3">§30 利益法学与价值法学</a></li>
+          <li><a href="#s5-4">§31 逻辑论证模型</a></li>
+          <li><a href="#s5-5">§32 结果取向的解释</a></li>
+          <li><a href="#s5-6">§33 法的经济分析</a></li>
+          <li><a href="#s5-7">§34 对形式论据的修正</a></li>
+          <li><a href="#s5-8">§35 论证负担与证明责任</a></li>
+        </ol>
+      </li>
+      <li class="ch"><a href="#app"><span class="num">附</span><span>操作清单・索引・文献</span></a></li>
+    </ol>
+  </nav>
+  <div class="rail-foot">
+    边码置于左侧，正文引用请注明「边码××」；框内内容引作「案例 7·解读」「沿革 1·新法」「附一 09」。<br>
+    本讲义止于可能文义的射程；法续造与漏洞补充另册。
+    <button class="theme-btn" id="themeBtn" type="button">切换明暗</button>
+  </div>
+</aside>
+
+<main>
+<header class="hero wrap">
+  <p><a href="../teaching.html">← 返回教学栏目</a> · <a href="../index.html">任广科网站首页</a></p>
+  <p class="eyebrow">法学方法论 · 教学本</p>
+  <h1 class="title">第二编 法律解释</h1>
+  <p class="subtitle">文义、历史、体系、目的——四个坐标如何把一个含义不清的法条，压缩成一个可被检验的判断。</p>
+  <div class="hero-meta">
+    <span><b>五章三十五节</b></span>
+    <span><b>二十九则案例</b>　两组法条沿革　中德对照</span>
+    <span>止于<b>可能文义的射程</b></span>
+  </div>
+  <details class="mob-toc">
+    <summary>目录</summary>
+    <ol>
+      <li><a href="#c1">第一章　法律解释综述</a></li>
+      <li><a href="#c2">第二章　文义解释</a></li>
+      <li><a href="#c3">第三章　历史解释</a></li>
+      <li><a href="#c4">第四章　体系解释</a></li>
+      <li><a href="#c5">第五章　目的解释</a></li>
+      <li><a href="#app">附录</a></li>
+    </ol>
+  </details>
+</header>
+
+<div class="wrap body">
+
+<!-- ══════════════ 导读 ══════════════ -->
+<section id="intro">
+  <div class="block statute" style="margin-top:2.4rem">
+    <div class="hd"><span class="tag">读法</span><span class="name">本书的六种版式</span></div>
+    <div class="bd txt">
+      <p><strong>边码</strong>——正文左侧的细小数字，是德国教科书的旧规矩。课堂上说「请看边码四十七」，比说「第几页第几行」精确得多。</p>
+      <p><strong>案例框</strong>（绿色竖线）——每则案例都按「案情—争点—裁判—方法论解读」四段拆开；需先交代规范状态者，于案情之前增设「背景」；两审分歧要紧者，「裁判」一栏分列「一审」「二审」；以立法解释终局者，该栏径标「立法解释」。必要时另附「后续」（本案之后的规范变动）、「延伸」（方法论上的引申）或「练习」。法条的意思从来不是在真空中被追问的，而是在某个具体的人、某件具体的事面前被逼出来的。</p>
+      <p><strong>沿革框</strong>（绿色竖线，标「沿革」）——两组法条新旧对照，按「旧法—新法—方法论解读」三段拆开，必要时另附「练习」。它们不是裁判案例，故与案例分别编号。</p>
+      <p><strong>条文框</strong>（金色竖线）——法条原文。解释的对象是条文，不是条文背后的观念；一切论证最终都要回到这里来交代。</p>
+      <p><strong>警示框</strong>（暗红竖线）——初学者最容易在此处滑倒的地方，多半是把一个形式论据当成了实质理由。</p>
+      <p><strong>条号</strong>——案例标题与案例索引用阿拉伯数字，正文与法条索引一律用汉字数字；德国法条号从德文惯例，一律用阿拉伯数字。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 第一章 ══════════════ -->
+<section id="c1">
+<div class="ch-open">
+  <div class="fig">一</div>
+  <div>
+    <p class="kicker">第一章 · Kapitel 1</p>
+    <h2>法律解释综述</h2>
+  </div>
+</div>
+<p class="lede">法律条文是一句用日常语言写成的命令。命令要落到具体的人头上，就必须先弄清它说的究竟是什么。这件看似不言自明的工作，构成了法律人全部技艺的底座。</p>
+
+<h3 class="sec" id="s1-1"><span class="s">§1</span>从涵摄说起：解释为何不可避免</h3>
+
+<p class="rn">法规范的标准形状，是一个由<span class="term">构成要件</span>、连结词与<span class="term">法效果</span>组成的命令式：凡具备甲、乙、丙者，即发生丁之后果。适用法律因而表现为一个演绎推论：法条是大前提，案件事实中的关键信息是小前提，判决是结论。把特殊归入一般的这一步，叫作<span class="term">涵摄</span>（<span class="de">Subsumtion</span>），它所回答的问题只有一个——手上这件事，是否符合规范的构成要件。</p>
+
+<p class="rn">教科书上的三段论干净利落，实务中却几乎从不如此顺畅。原因在于，大前提往往并非现成可用。法条里写着「凶器」「公共场所」「重大损失」「危险方法」，这些词在字典上有含义，在案卷面前却未必有答案。于是法律人必须先做一件中间工作：把构成要件要素<span class="term">具体化</span>，发展出一个能与事实对接的定义，涵摄才有可能进行。</p>
+
+<p class="rn">这就是拉伦茨与恩吉施反复申说的<span class="term">目光在事实与规范之间往返流转</span>。它不是文学性的修辞，而是对工作程序的写实：从案卷里初步挑出可能相关的事实，据此猜测可能适用的法条；再回到法条，看它究竟要求什么；带着这个要求重新审视案卷，剔除无关的、补上遗漏的。一来一回，事实被裁剪成「终局的案件事实」，规范被磨削成「本案适用的规范」。</p>
+
+<blockquote>
+  <p>大意是：制定法适用是一种对向的程序——须结合可能适用的法条，从未经加工的案件事实中形成以陈述形式呈现的终局案件事实；同时也须反过来在对案件事实的考量下，尽可能将应被适用的规范的内容精确化。</p>
+  <cite>据拉伦茨《法学方法论》相关论述整理</cite>
+</blockquote>
+
+<p class="rn">需要立刻说明的是：往返流转只对那些「不能很清楚地查明是否与事实相匹配」的构成要件要素才有意义。「年满十八周岁」无须往返，出生日期一查便知。法律人真正的工作，是从那些非经解释与具体化便无法判断的要素开始的。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 1</span><span class="name">窃电案</span><span>德国帝国法院 · 1899</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>为市政电厂装设过线路的工人 P，在窗框上钻孔，将导线接入街面电缆，为自己租住的房间照明；同住的 C 随后一并使用这股偷来的电。检察官以盗窃起诉：被告窃取了「他人的动产」。</dd>
+      <dt>争点</dt><dd>《德国刑法》第 242 条盗窃罪的对象是「他人的动产」（<span class="de">fremde bewegliche Sache</span>）。电流，是不是「物」？</dd>
+      <dt>裁判</dt><dd>帝国法院 1899 年 5 月 1 日撤销原判、宣告无罪（RGSt 32, 165）。第 242 条所称之物必须是<span class="de">körperliche Sache</span>——有体物；判断标准在于「空间上的可支配性与物的独立性」。电只是自然界的能量形式，并不占据空间，故不属于物。判决写下一句后来被无数教科书引用的话：<span class="de">Insolange nicht die Gesetzgebung ergänzend eingreift, hat der Strafrichter jene Grenze einzuhalten</span>——立法者不出手补充，刑事法官就得守住那条界线。</dd>
+      <dt>方法论解读</dt><dd>这是法律解释学少有的、把三件事一次讲清的开场案例。其一，字面含义（「物」）并非自明，需经解释始能确定；其二，文义的射程构成刑法上不可逾越的界限，纵使处罚在政策上多么必要，法官也不得以「电与物功能相同」为由入罪——那已是类推；其三，法官守界的代价由立法者承担，这正是权力分立在方法论上的落脚点。</dd>
+      <dt>后续</dt><dd>次年，帝国议会即通过《关于处罚窃取电能的法律》，此即今日《德国刑法》第 248c 条的前身。</dd>
+    </dl>
+    <div class="src">出处：RG, 01.05.1899 – Rep. 739/99, RGSt 32, 165。参见 <a href="https://www.ferner-alsdorf.de/rgst-32-165-stromdiebstahlsfall/" target="_blank" rel="noopener">RGSt 32, 165 – Stromdiebstahlsfall</a>。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s1-2"><span class="s">§2</span>解释的六个特征</h3>
+
+<p class="rn">要给「法律解释」下一个能用的定义，不如先描出它的特征。这些特征有三个来源：一组出自解释所承担的<strong>任务</strong>，一组出自<strong>诠释学</strong>，一组出自<strong>宪政体制</strong>。三组各出两项，共六项。下文依此顺序排列；排列本身也有用处——它预告了 §4 将要给出的那张功能分工表。</p>
+
+<h4>一、个案关联性 <span class="m">Fallbezogenheit</span></h4>
+<p class="rn">法条对解释者构成疑难，从来不是抽象地构成疑难，而是在它被考虑适用于某一特定事实时才发生。反过来说：对法条而言，只有与本案有关的部分才是重要的；对本案而言，只有与法条有关的部分才是重要的。脱离案件去追问「本条的完整含义」，是学术上的奢侈，实务上的浪费。</p>
+
+<h4>二、价值取向性 <span class="m">Wertbezogenheit</span></h4>
+<p class="rn">解释所要探求的是法律的意旨，而法律意旨在于规范生活关系。人类不为规范而规范；规范只是手段，其后站着被选定的目的，目的之后又站着基本的价值决定。因此，任何一次稍具难度的解释，最终都会把解释者推到价值判断面前。方法论的意义不在于免除这一判断，而在于迫使解释者把它摆到桌面上并为之说理。</p>
+
+<h4>三、文义的范围性 <span class="m">Wortlautgrenze</span></h4>
+<p class="rn">法律解释必须在文义所及的范围内为之。这是解释与法续造的分水岭，也是本讲义自我设限之所在：一旦结论溢出了「可能文义的射程」，所做的便不再是解释，而是漏洞填补、类推适用或目的性限缩。须补一句：任何文本解释都受文字牵制，这一点是诠释学的；但在制定法解释中，这条牵制被硬化为一道刚性界限，其理由是权力分立——文本是权限的边界所在（§3、§6、§35）。法律行为的解释没有同等刚性的文义界限，分野正在此处。</p>
+
+<h4>四、诠释的循环性 <span class="m">hermeneutischer Zirkel</span></h4>
+<p class="rn">每一个用语、条文、规定都必须在整个法体系中被理解；而整个法体系又必须借它所包含的个别用语、条文、规定而被理解。部分与全体互相说明、互相制约。这个循环并非逻辑上的恶性循环，而是理解得以展开的方式——正是它，为体系解释提供了正当性。</p>
+
+<h4>五、（主观）历史性 <span class="m">historische Gebundenheit</span></h4>
+<p class="rn">前四项特征出自任务与诠释学，是任何文本解释都具备的。后两项则专属于<em>法律</em>解释，其来源是宪政体制。两者中的第一项是历史性：法律由立法者制定，而立法者是一个在特定时间、依特定程序作出决定的机关。解释者之所以必须回头去问立法者当时想做什么，不是出于考古的兴趣，而是因为宪法把创制规范的权力交给了那个机关而不是他自己。民主原则与权力分立在方法论上的第一个落点，就在这里。</p>
+<p class="rn">这一特征同时解释了历史解释何以具有<em>约束力</em>而非仅具参考价值，也解释了它何以可被修正——立法者的权威及于他所决定的事项，不及于他未曾预见的情形。主客观理论之争（§20）就发生在这条缝隙里。</p>
+
+<h4>六、合宪性 <span class="m">Verfassungsmäßigkeit</span></h4>
+<p class="rn">第二项是合宪性：法秩序有位阶，宪法居于顶端，故解释的结果不得逸出宪法所宣示的基本价值决定之外。它与前五项的区别在于作用的方向——前五项告诉解释者含义从哪里来，合宪性只告诉他哪一种含义不能要。它不生产含义，它淘汰含义（§27）。</p>
+<p class="rn">把六项合观，可以得到一个对「法律解释」的工作定义：<strong>法律解释，是解释者为裁判某一具体案件，在可能文义的范围内、循部分与全体的往返、受立法者历史决定的约束并受宪法价值决定的控制，对法律条文所作的、必然包含价值判断的意旨阐明。</strong>定义里的每一个限定都对应上面的一项特征；把哪一项抽掉，剩下的就不再是法律解释。</p>
+
+<div class="block caution">
+  <div class="hd"><span class="tag">警示</span><span class="name">「文义清楚才不必解释」是一句自相矛盾的话</span></div>
+  <div class="bd">
+    <p>「认定某一用语是单义的」，或「认定某一规定是例外规定」，这件事本身已经是解释的结果。因此那种「只有在法律文字有疑义时才需要解释」的看法不能成立——不解释，你根本不知道它有没有疑义。</p>
+  </div>
+</div>
+
+<h3 class="sec" id="s1-3"><span class="s">§3</span>解释的标的与目标</h3>
+
+<p class="rn"><strong>标的</strong>是法律规定的条文及其附随情况。法律意旨是解释的目标与结果，而非其标的——这一区分看似烦琐，实则要紧：解释者只能就文本说话，不能在文本之外添加或删减什么。把目标误认作标的，解释就会从「这句话说了什么」滑向「这件事应当怎样」，而后者不是解释所能回答的问题。</p>
+
+<h4>两类标的：制定法与法律行为</h4>
+<p class="rn">须立刻分出两类标的，否则后文的许多规则会被错置。<span class="term">制定法解释</span>的标的是立法者面向不特定多数人颁布的一般规范；<span class="term">法律行为解释</span>的标的是当事人为自己设定权利义务所作的意思表示。两者同为文本解释，共享「部分与全体往返」「文义是出发点」这类诠释学共通规则，但在三个关键处分道扬镳。</p>
+<div class="tw">
+<table>
+  <thead><tr><th></th><th>制定法解释</th><th>法律行为解释</th></tr></thead>
+  <tbody>
+    <tr><td class="k">标的</td><td>一般规范，面向不特定多数人</td><td>意思表示，面向特定相对人</td></tr>
+    <tr><td class="k">受众</td><td>全体法适用者；故须以一般语言用法为准，个别人的理解不算数</td><td>特定相对人；故以相对人可理解的含义为准（受领人视角）</td></tr>
+    <tr><td class="k">目标</td><td>规范在今日法秩序中的标准意义（§20 折中说）</td><td>表意人的真意，但受相对人信赖保护的限制</td></tr>
+    <tr><td class="k">界限</td><td>可能文义的射程；越界即法续造（§6）</td><td>无同等刚性的文义界限；误言无害真意，双方一致理解优先于文字</td></tr>
+    <tr><td class="k">补充</td><td>漏洞填补须论证计划违反性</td><td>补充性解释依假设的当事人意思，门槛低得多</td></tr>
+  </tbody>
+</table>
+<figcaption>两类解释标的的对照。最要紧的是末两行：文义在制定法解释中是界限，在法律行为解释中不是。</figcaption>
+</div>
+
+<p class="rn">差别的根源在于<strong>谁为这段文字负责、谁有理由信赖它</strong>。法律行为的文字出自当事人自己之手，若双方事实上理解一致，纵使用词错误亦无妨（<span class="de">falsa demonstratio non nocet</span>）；制定法的文字出自立法者，而信赖它的是无从参与其拟定的全体公民，故文字必须被当真，刑法上尤其如此（§13）。本讲义以制定法解释为限，法律行为解释另册讨论（附六）；此处划清界限，是为了在后文遇到两者交界时不致误推。</p>
+
+<div class="block caution">
+  <div class="hd"><span class="tag">警示</span><span class="name">当事人的命名不拘束法律上的定性</span></div>
+  <div class="bd">
+    <p>交界处最常见的误推是：从「当事人约定它是 A」直接得出「它在法律上就是 A」。这是把法律行为解释的结论当成了制定法概念涵摄的结论。两者的提问根本不同——前者问「这段话说了什么」，后者问「法律为什么要设这个概念，本案事实是否落入其射程」。</p>
+    <p>案例 5（涉老年人彩礼案）就是标本：双方白纸黑字签了《赠与协议》，法院仍认定该笔款项属于彩礼。法院并未否定意思表示的效力，它只是指出，《赠与协议》说了什么是一回事，这笔钱是否落入法释〔2024〕1 号第三条的「彩礼」是另一回事。合同的名称、当事人的自我定性、交易的外观，在制定法涵摄中都只是<em>征表</em>，不是结论。</p>
+  </div>
+</div>
+
+<p class="rn"><strong>目标</strong>之争则贯穿整个二十世纪。<span class="term">主观理论</span>主张：起决定作用的是历史上立法者的意图。其根据是民主原则与权力分立——漠视立法者意图，等于把议会的权力让渡给司法。<span class="term">客观理论</span>主张：法律一经公布即与立法者相分离，解释的目标是「法律的意图」而非制定者的意图；法典总会成为明日黄花，故有「法律可能比它的制定者更聪明——甚至必须更聪明」之说。</p>
+
+<p class="rn">两说各有其真理，今日通行的<span class="term">折中说</span>把它们组织成一个两段程序：第一步以历史上立法者的意图为重心，第二步在必要时依法秩序的价值安排加以修正。其具体操作与论证负担的分配，留待 §20 展开；此处只需记住一点：解释的目标之争，最终会落成一项关于<strong>谁承担论证负担</strong>的规则。</p>
+
+<h3 class="sec" id="s1-4"><span class="s">§4</span>萨维尼四要素及其当代补充</h3>
+
+<p class="rn">萨维尼在《当代罗马法体系》中把解释的要素固定为四个：<span class="term">语法</span>、<span class="term">逻辑</span>、<span class="term">历史</span>、<span class="term">体系</span>。今日通行的「文义—历史—体系—目的」四分，是后世改造的结果：逻辑要素被吸收进体系要素，而萨维尼本人明确排除在外的<span class="term">目的</span>，则经由耶林以下的利益法学与价值法学被补入，并最终升格为权重最高的一项。这套分类经两百年淘洗仍是欧陆各国与欧盟法院的共同语法，其生命力在于：它把一个含混的「理解」过程，拆成了四个可以分别被质疑、分别被反驳的论证环节。</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>要素</th><th>所问何事</th><th>典型论据形态</th><th>主要功能</th></tr></thead>
+  <tbody>
+    <tr><td class="k">文义</td><td>这个词在立法者、法学界、日常语言中怎么用？</td><td>立法定义、专业用语、辞典与语感</td><td>出发点＋外部界限</td></tr>
+    <tr><td class="k">历史</td><td>前身规范怎么写？立法过程中说了什么？</td><td>旧法条文、草案、审议记录、立法理由</td><td>划定范围＋提示内容</td></tr>
+    <tr><td class="k">体系</td><td>它与相邻条文、本法结构、整个法秩序是否一致？</td><td>规范位置、同类解释、冲突规则</td><td>内容的发现与协调</td></tr>
+    <tr><td class="k">目的</td><td>这条规范要解决什么问题、保护什么利益？</td><td>立法目的条款、利益衡量、结果考量</td><td>内容的最终决定</td></tr>
+    <tr><td class="k">上位法</td><td>有无一种解释能使本条合于宪法？</td><td>合宪性解释、基本权利的辐射</td><td>结果的控制</td></tr>
+  </tbody>
+</table>
+<figcaption>四要素，加上二十世纪宪法国家添入的第五个控制性要素。</figcaption>
+</div>
+
+<p class="rn">还有一点常被忽略，却是萨维尼本人最在意的：他称这四者为<em>要素</em>（<span class="de">Elemente</span>）而非<em>方法</em>，并明言它们不是四种可供挑选的解释，而是必须共同发挥作用的四个方面——「为了解释成功，必须使它们共同作用」。后世把 Elemente 译作、读作「方法」，于是生出「择一而用」的误解；§5 要纠正的正是这个误解。两百年来方法论的主要进展，与其说是增加了新的方法，不如说是一再回到萨维尼的这句提醒。</p>
+
+<p class="rn">当代方法论在四要素之外增加了三组工具：<strong>上位法（合宪性）解释</strong>，作为结果的控制；<strong>结果取向的解释</strong>，对判决的后果作预估、评价与调控；<strong>法的经济分析</strong>，把效率与防范成本纳入目的的衡量。后两者并非独立的第五、第六种方法，而是目的解释的展开形态——下文第五章将说明这一点。</p>
+
+<h3 class="sec" id="s1-5"><span class="s">§5</span>因素的位阶与协力</h3>
+
+<p class="rn">学说习惯上把四要素称为「四种解释方法」，这个叫法有害。称之为方法，容易使人以为可以孤立地择一而用，甚至挑一个最能得出自己想要结论的来用。实情恰恰相反。</p>
+
+<blockquote>
+  <p>这些标准并非毫无关联，它们绝不是独立的解释方法。相反，它们从不同的视角审视法律，并共同且交互地用于确定法律的含义。当然，它们具有不同的权重：文义和体系性构成一个基本框架，可能的解释结果必须在其范围之内。通常，规范目的起决定性作用。</p>
+  <cite>博克《民法总论》第 4 版，谢远扬、郝丽燕译，北京大学出版社 2024 年，第 64 页</cite>
+</blockquote>
+
+<p class="rn">黄茂荣的三分法最便于记诵：按各因素在解释中的主要功能，可分为<span class="term">范围性因素</span>（文义、历史）、<span class="term">内容性因素</span>（体系、目的）与<span class="term">控制性因素</span>（合宪性）。其操作顺序是：文义先划出活动的最大范围；历史因素对此范围再作调整界定，同时对内容有所提示；体系与目的随后在该范围内发现并确定规范意旨；合宪性因素参与其中，并于最后复核结果是否逸出宪法所宣示的基本价值决定之外。</p>
+
+<div class="fig-wrap">
+<svg viewBox="0 0 640 250" role="img" aria-labelledby="figA">
+  <title id="figA">解释因素的功能分工示意</title>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,1 L9,5 L0,9 z" fill="var(--warn)"></path>
+    </marker>
+  </defs>
+  <g fill="none" stroke="currentColor" color="var(--rule-strong)">
+    <rect x="30" y="58" width="580" height="104" stroke-width="1.2" fill="var(--surface-2)"></rect>
+  </g>
+  <g stroke="var(--accent)" stroke-width="2.2" fill="none">
+    <path d="M30 58 L30 162"></path><path d="M610 58 L610 162"></path>
+  </g>
+  <g font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="var(--muted)">
+    <text x="30" y="30" fill="var(--accent-ink)" font-weight="600">文义 ＋ 历史</text>
+    <text x="30" y="46">范围性因素 · 划定可能文义的射程</text>
+    <text x="320" y="100" text-anchor="middle" fill="var(--ink)" font-size="14" font-weight="600">体系 ＋ 目的</text>
+    <text x="320" y="122" text-anchor="middle">内容性因素 · 在射程之内确定规范意旨</text>
+    <text x="320" y="196" text-anchor="middle" fill="var(--warn)" font-weight="600">合宪性</text>
+    <text x="320" y="216" text-anchor="middle">控制性因素 · 复核结果是否逸出宪法的价值决定</text>
+    <text x="16" y="182" fill="var(--accent)" font-size="11">界限</text>
+    <text x="596" y="182" fill="var(--accent)" font-size="11">界限</text>
+  </g>
+  <g stroke="var(--warn)" stroke-width="1.4" fill="none" marker-end="url(#ar)" color="var(--warn)">
+    <path d="M320 172 L320 182"></path>
+  </g>
+</svg>
+<figcaption>图 1　三类因素的分工。射程之外的结论不再是解释；射程之内仍可能有多种结论，此时目的起决定作用；最后由合宪性把关。</figcaption>
+</div>
+
+<p class="rn">还须记住一条实务纪律：解释者被要求考虑各种不同的解释观点，并说明他为什么选择某一观点作为决定性标准。只有当他穷尽了所有能获得方法论上可靠结论的可能性之后，法官才能做出自己独立负责的决定。方法论不生产答案，它生产<em>论证负担</em>。</p>
+
+<h3 class="sec" id="s1-6"><span class="s">§6</span>解释的疆界：可能文义的射程</h3>
+
+<p class="rn">解释与法续造之间只有一条界线可用：<span class="term">语言上可能的文义</span>。至今尚未找到第二条。越出这条界线的方式有两种，方向相反：把概念周边以外的事实纳入规范，是<strong>由外突破</strong>，即为<span class="term">类推</span>；把明确处于概念核心之内的事实排除出去，是<strong>由内突破</strong>，即为<span class="term">目的性限缩</span>。两者都不再是对既有文义的确定，而是对语义核心的修正，故均属法续造，都需要更高的论证负担，也都在本讲义范围之外。</p>
+
+<p class="rn">须诚实承认：这条线在质上很难划得绝对分明。解释本身已含创造成分——文本的含义并非不言自明，而是通过适用者的理解才被传达出来的。故在临界区域，解释与法续造之间往往只有程度之别。真正有约束力的规则因此不是「不许越界」，而是：<strong>造法成分越多，论证负担越重</strong>。这条量度将在 §34 展开为一道阶梯（图 3）。</p>
+
+<p class="rn">这条界线承担三项不同的功能，混为一谈即生误解。<strong>其一，分类功能</strong>：它区分解释与法续造，从而决定一项论证该用哪一套格式——解释只需说明含义，法续造还须论证漏洞的存在及其可填补性。<strong>其二，分配功能</strong>：越界者须承担更重的论证负担，这一点适用于一切法领域。<strong>其三，禁止功能</strong>：唯在刑法上，且唯在不利于行为人的方向上，越界不只是负担加重，而是根本不被允许（§13）。民法上没有第三项功能，这正是窃电案（案例 1）的结论不能移用于民事案件的原因。</p>
+
+<p class="rn">界线既由语言划定，就必须追问是<strong>谁的语言、何时的语言</strong>。谁的语言：原则上是法学专业用语优先于日常用语，但在刑法上不利于行为人的方向上，日常语言习惯反过来成为外限（§9）。何时的语言：若系法学专业术语且立法者以当时理解使用之，应以该术语立法当时的意义为出发点；若立法当时并未赋予某一术语以特定意义，而结合规范目的或基本思想采用今日的可能文义能获得更好的解释，则以今日的语言理解划定界限。这两个追问不是学究式的，它们决定射程的宽窄，因而往往决定胜负。</p>
+
+<h3 class="sec" id="s1-7"><span class="s">§7</span>中国法上的解释体制</h3>
+
+<p class="rn">中国法的特色，在于把「有权解释」制度化到相当高的密度：立法解释、司法解释与个案中的法官解释三层并存。学习方法论时若不先辨明这三层的效力与分工，讨论便容易悬空。</p>
+
+<div class="block statute">
+  <div class="hd"><span class="tag">条文</span><span class="name">《立法法》（2023年修正）第四十八条</span></div>
+  <div class="bd txt">
+    <p>法律解释权属于全国人民代表大会常务委员会。法律有以下情况之一的，由全国人民代表大会常务委员会解释：（一）法律的规定需要进一步明确具体含义的；（二）法律制定后出现新的情况，需要明确适用法律依据的。</p>
+    <p class="plain" style="padding-left:0; font-size:.85rem; color:var(--muted)">同法第四十九条规定提请解释的主体；第五十条至第五十三条规定解释程序，并明定全国人民代表大会常务委员会的法律解释同法律具有同等效力。</p>
+  </div>
+</div>
+
+<p class="rn">留意第四十八条列举的两种情形，恰好对应了主观理论与客观理论各自的用武之地：第（一）项是「把原本含义讲清楚」，第（二）项是「法律制定后出现新的情况」——后者已经不是在追问立法者当年想了什么，而是在为一部老法律寻找它在今日法秩序中的标准含义。立法解释既与法律同等效力，其本身自然也成为下一轮解释的对象。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 2</span><span class="name">「黑社会性质组织」的四个特征</span><span>立法解释覆盖司法解释</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>2000 年最高人民法院《关于审理黑社会性质组织犯罪的案件具体应用法律若干问题的解释》（法释〔2000〕42 号）第一条列举四项特征，其第（三）项「通过贿赂、威胁等手段，引诱、逼迫国家工作人员参加黑社会性质组织活动，或者为其提供非法保护」是一项独立的「非法保护特征」，与组织、经济、危害三项并列，列为必备一环。实务上由此形成「无保护伞即不成立黑社会性质组织」的办案习惯，大量案件因查不出公职人员而降格处理。</dd>
+      <dt>争点</dt><dd>国家工作人员的包庇或纵容，是黑社会性质组织的必备要件，还是形成非法控制的替代路径之一？</dd>
+      <dt>立法解释</dt><dd>全国人民代表大会常务委员会 2002 年 4 月 28 日作出《关于〈中华人民共和国刑法〉第二百九十四条第一款的解释》，明定四项特征：组织、经济、行为、危害。其中危害特征表述为「通过实施违法犯罪活动，<strong>或者</strong>利用国家工作人员的包庇或者纵容，称霸一方，在一定区域或者行业内，形成非法控制或者重大影响，严重破坏经济、社会生活秩序」。一个「或者」，把必备要件改成了择一路径。此后《刑法修正案（八）》将四特征写入刑法本条。</dd>
+      <dt>方法论解读</dt><dd>三重启示。第一，从体系上看，立法解释与法律同等效力，位阶高于司法解释，故足以将后者排除。第二，从历史解释上看，此后再解释本条，2002 年立法解释即成为不可绕过的「规范前身」，而 2000 年司法解释的立场已被明示放弃——这是典型的<em>非连续性</em>，连续性推定在此不再适用。第三，从文义上看，「或者」这个连结词承载的规范信息，往往比整段构成要件描述更重；读法条先读连结词，是一项值得养成的习惯。</dd>
+    </dl>
+    <div class="src">出处：<a href="https://www.gov.cn/gongbao/content/2002/content_61492.htm" target="_blank" rel="noopener">全国人大常委会关于《中华人民共和国刑法》第二百九十四条第一款的解释</a>（2002年4月28日）；<a href="https://www.sohu.com/a/314225905_766039" target="_blank" rel="noopener">黑社会性质组织犯罪「四个特征」认定问题综述</a>。</div>
+  </div>
+</div>
+
+<p class="rn">在评价司法解释之前，先把它的实证坐标摆正。其权限依据是《人民法院组织法》第十八条：「最高人民法院可以对属于审判工作中具体应用法律的问题进行解释。最高人民法院可以发布指导性案例。」——同一条同时授权了司法解释与指导性案例，这一点常被忽略，却正是二者方法论身份相近的制度根源。其界限则由《立法法》第一百一十九条明文写出：司法解释「应当主要针对具体的法律条文，并符合立法的目的、原则和原意」；遇有第四十八条第二款所列情形，应当提请全国人民代表大会常务委员会作法律解释或者提出制定、修改法律的议案（这条出口不是纸面的：案例 12「北雁云依」案中，法院为此中止审理五年，以待立法解释作出）；并应当自公布之日起三十日内报全国人民代表大会常务委员会备案。最高人民法院、最高人民检察院以外的审判、检察机关不得作出此类解释。</p>
+
+<p class="rn">这一条的分量远超其条文位置，可读出三层。第一，它把「符合立法的目的、原则和原意」定为司法解释的<strong>合法性条件</strong>，等于在实证法上承认：司法解释只能解释，不能续造；遇到需要续造的情形，法定出口是提请立法解释或者提出修法议案，而不是自行扩张。第二，它使司法解释成为可被解释、也可被审查的对象：既然必须合于法律的目的与原意，援引者就始终可以追问「这一条是否仍在其所解释的法条的可能文义之内」，而备案审查程序为这一追问提供了体制内的出口（参 §27 警示框）。第三，据此可以为我国的解释体制排出一张完整的位阶表：<strong>法律与立法解释</strong>（同等效力，有权移动语义核心）→ <strong>司法解释</strong>（只有具体化权，须合于法律的目的与原意，并受备案审查）→ <strong>指导性案例</strong>（应当参照，但不得作为裁判依据援引，其裁判要点自身仍需解释）。三者共同的方法论身份是：它们都是解释的<em>结果</em>，因而也都可以、并且都必须重新成为解释的<em>对象</em>。</p>
+
+<p class="rn">司法解释的性质在方法论上颇为尴尬：它以类似法条的形式出现，却是从个案中凝练出来的。拉伦茨对德国联邦最高法院把法条式「指导意见」置于裁判之前的做法早有告诫——这些意见不过是裁判理由中结晶出来的东西，与案件事实密切相关，其自身在很大程度上仍需解释；一旦采用法条式表述，就会给人一种可以独立于被裁判事实而普遍适用的错觉。与立法者不同，法官首先考虑的是他手上这个案件，很少能预见他的指导意见未来可能适用的情形。这段话，用来读我国的司法解释与裁判要点，句句适用。</p>
+
+<p class="rn">这一危险有一个现成的实证。某文化公司诉某网络科技公司侵害作品信息网络传播权案（即「RAG 搜索引擎案」，上海市徐汇区人民法院 2025 年 7 月 1 日一审、上海知识产权法院 2025 年 12 月 25 日二审），同一个判决被两级法院系统分别选作典型案例发布，而两份通稿从中提炼出的规则并不相同：最高人民法院版强调搜索引擎服务提供者「应当依法承担与其算法、数据优势程度相匹配的注意义务，对检索增强生成技术的算法合规负有更重的证明责任」；上海高院版则侧重「技术中立」侵权豁免的动态要件。两版并读可知：<strong>裁判要点不是判决的摘要，而是对判决的一次解释</strong>——提炼者取舍材料、调整措辞，规则在再发布中被加码或减码。因此援引裁判要点时，第一步永远是回到被裁判的那个案件事实，而不是把要点当法条抄。</p>
+
+<p class="rn">还有一层不能不提的准规范材料：<strong>指导性案例</strong>。依《最高人民法院关于案例指导工作的规定》第七条，各级人民法院审判类似案件时「应当参照」最高人民法院发布的指导性案例；但依《最高人民法院关于裁判文书引用法律、法规等规范性法律文件的规定》，它不属于可作为裁判依据直接援引的规范性法律文件，通常只在裁判理由中援引。这一「应当参照而不得作为依据」的双重身份，使指导性案例的方法论位置与上段所述者完全相同，无须重复。要补的是「参照」二字的操作含义：参照的对象是<strong>案件类型</strong>而不是文句。故援引指导性案例的第一步，是把待决案件与指导性案例的事实构造并列比较，指出何处同、何处异，并说明所异之处是否落在裁判要点所依赖的那些要素上；跳过这一步而直接摘抄裁判要点，与把司法解释当法条抄，是同一个错误的两种写法。</p>
+
+</section>
+
+<!-- ══════════════ 第二章 ══════════════ -->
+<section id="c2">
+<div class="ch-open">
+  <div class="fig">二</div>
+  <div>
+    <p class="kicker">第二章 · Kapitel 2</p>
+    <h2>文义解释</h2>
+  </div>
+</div>
+<p class="lede">一切解释始于文字，也终止于文字所能承载的极限。文义给出第一个方向标，也筑起最后一道围墙。</p>
+
+<h3 class="sec" id="s2-1"><span class="s">§8</span>出发点与界限的双重功能</h3>
+
+<p class="rn">文义解释，又称文法解释、语法解释，指对构成要件要素之文义的解释。之所以从语言用法着手，理由朴素得近乎常识：想说点什么的人，通常都会用能让别人听懂的方式说话。立法者是想说点什么的人，因此可以推定他按通行语义行文。</p>
+
+<p class="rn">但语词本身并不传达含义。语词的意义在于它在语言中的<em>使用</em>；使用总在语境之中，语境又随时代迁移。因此没有纯粹的文义解释：脱离语境的含义无处可寻。真正可行的是，以文义为起点，立刻把历史、体系与目的的视角一并拉进来。</p>
+
+<p class="rn">正因如此，这一标准在实务中基本上发挥的是<strong>限制性功能</strong>：规范的意义很少能直接从文字里读出来，但与文字含义明显不符的解释必须被排除。「文义没有给出答案」是常态，「文义排除了某个答案」才是文义解释最经常兑现的贡献。</p>
+
+<p class="rn">文义解释是三项作业，不是一项。<strong>第一项是语词。</strong>确定争议语词在相关语言用法中的含义，这是通常所说的文义解释，下文 §9 至 §12 讲的都是它。<strong>第二项是语句结构。</strong>确定条文中各成分的语法关系：定语修饰哪一个词、「的」字结构的管辖范围到哪里、并列项是择一还是并存。<strong>第三项是指示对象。</strong>确定条文中的指示词、引致语所指为何：「前款」「本法」「上述情形」「依照前条的规定」。三项作业中，第一项最常被讨论，后两项最常被跳过，而实务上出错的多半是后两项。</p>
+
+<p class="rn">连结词尤其要当真。「和」与「或者」决定构成要件是累积还是择一；「但是」引出的是例外还是限制；「并」与「可以」区分强制与裁量；「以上」「以下」依《刑法》第九十九条包括本数，而当事人另有约定的「二分之一以上」则未必（案例 22 中各方一致认可不含本数，这一点决定了股东会机制是否失灵）。案例 2 中，全国人大常委会 2002 年立法解释以一个「<strong>或者</strong>」把必备要件改成了择一路径，一个连结词改变了整个罪名的成立范围（§7）。</p>
+
+<p class="rn">还有一项作业不属于文义解释、却常被误当作文义解释：<strong>确定该条文是否是完全性法条</strong>。许多条文本身并不含完整的构成要件与法效果，而须与其他条文合并才能适用（§22 的砌造技术与引致链条）。在这种条文上追问「它的文义是什么」，往往问错了对象——该问的是它与哪些条文合成一个规范。</p>
+
+<h3 class="sec" id="s2-2"><span class="s">§9</span>三级语言习惯：探明文义的次序</h3>
+
+<p class="rn">确定一个法概念的文义，有一个稳定的三步次序：<strong>先看立法者自己确定的用法，再看法学专业的用法，最后才看日常语言习惯</strong>。立法者的明确规定优于法学专业概念，后者又优于普通语言习惯。</p>
+
+<p class="rn">这一次序并非随意约定。立法定义优先，是因为立法者有权为自己的法律规定术语；法学用语优先于日常用语，是因为法律语言本就是一般语言的特殊运用，「抵销」「解除」「善意」在法学中的含义与街头说法相去甚远。但须注意两点保留：其一，立法定义也可能因其他解释因素的考量而被放弃，故日常语言习惯始终保有一种潜在的、最后的范围功能；其二，纵有立法定义，也不能盲目地从法律文本认识其含义，而应从语境出发作目的性的解释。</p>
+
+<p class="rn">三级次序是照着民法写的。在刑法上真正争夺定义权的，还有立法解释、司法解释与行政管理标准，必须把阶梯补全，否则遇到新问题无从推演。</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>用法的来源</th><th>例</th><th>在刑法中的地位</th></tr></thead>
+  <tbody>
+    <tr><td class="k">法律中的立法定义</td><td>《道路交通安全法》第一百一十九条第一项「道路」</td><td>有定义权，可移动语义核心；借入刑法时须先审查价值平等性（§25）</td></tr>
+    <tr><td class="k">立法解释</td><td>2002 年关于第二百九十四条第一款的解释</td><td>与法律同等效力，地位同上（§7、案例 2）</td></tr>
+    <tr><td class="k">司法解释</td><td>法释〔2022〕12 号</td><td>只有具体化权，没有定义权；须在可能文义之内，不得为不利于行为人而扩张（§7）</td></tr>
+    <tr><td class="k">行政管理标准</td><td>公安部枪支鉴定的 1.8 焦耳门槛</td><td>不是一种「法律上的用法」，只是事实认定的辅助工具；不得径行填充构成要件</td></tr>
+    <tr><td class="k">法学专业用语</td><td>抵销、善意、占有、销售</td><td>民法上优先于日常用语；刑法上只在有利于行为人的方向上优先</td></tr>
+    <tr><td class="k">日常语言习惯</td><td>野生、道路、暴力、销售</td><td>不利于行为人的方向上是外限；有利于行为人的方向上不构成界限</td></tr>
+  </tbody>
+</table>
+<figcaption>刑法上语言用法的六个来源及其效力。表的读法：位阶决定谁有权说话，方向决定这句话能走多远。</figcaption>
+</div>
+
+<p class="rn">由此可以把规则压成两句，这两句合起来才是本节的结论。第一句关于<strong>位阶</strong>：只有法律（含与法律同等效力的立法解释）才有权为刑法概念下定义并因此移动语义核心；司法解释与行政标准都只能在既有语义之内作具体化，它们越出可能文义时，越出的部分不因来源权威而取得效力。第二句关于<strong>方向</strong>：上述界限只在不利于行为人的方向上生效；凡结论有利于行为人，专业用语可以窄于日常用语，解释可以窄于立法定义，其唯一的约束是不得把规范限缩至零（§31）。</p>
+
+<div class="block caution">
+  <div class="hd"><span class="tag">警示</span><span class="name">刑法中的次序没有被颠倒，只是被加了方向阀</span></div>
+  <div class="bd">
+    <p>在刑法领域，由于类推禁止的适用，<strong>日常语言习惯在不利于行为人的方向上反过来构成解释的界限</strong>。理由是罪刑法定的具体化要求：民众必须能够预见其行为「入罪的可能性」，一个只有法学家才能读懂的扩张性专业用法无法承担这种预见功能。但须把方向记准：这是一道<strong>单向</strong>的墙。有利于行为人的限缩不受它阻挡（§12、§14），否则「专业用语优先」反而会成为入罪的通道。三级次序在刑法中因此不是被颠倒，而是被加上了一个方向阀。</p>
+  </div>
+</div>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 3</span><span class="name">深圳「鹦鹉案」</span><span>人工繁育个体是否「野生」</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>王某向他人出售人工繁育的绿颊锥尾鹦鹉（俗称小太阳）2 只，另有 45 只鹦鹉在其住处待售时被查获。深圳市宝安区人民法院一审以非法出售珍贵、濒危野生动物罪判处有期徒刑五年，并处罚金三千元。</dd>
+      <dt>争点</dt><dd>刑法第三百四十一条所称「珍贵、濒危野生动物」，是否包括人工驯养繁殖的个体？「野生」二字，在日常语言中显然指野外生长；在保护法规范中却指列入名录的物种。</dd>
+      <dt>裁判</dt><dd>深圳市中级人民法院 2018 年 3 月 30 日二审改判有期徒刑二年，并处罚金三千元；因低于法定最低刑，依《刑法》第六十三条第二款报请最高人民法院核准并获核准。理由是：依当时有效的 2000 年最高人民法院关于破坏野生动物资源刑事案件的司法解释第一条，人工驯养繁殖的珍贵、濒危物种属于刑法所指的珍贵、濒危野生动物，故构成犯罪；但涉案鹦鹉系人工繁育，社会危害性相对小于野外种群，量刑可从宽。</dd>
+      <dt>方法论解读</dt><dd>此案暴露了三级次序与刑法界限之间的真实张力，值得与下节案例 4 对读。一方面，司法解释是有权解释，其位阶显然高于赵春华案中的公安部鉴定标准，法院无权径行不予适用；另一方面，「野生」在日常语言中指野外生长，把人工繁育个体纳入其中是不利于行为人的扩张——依本节警示框所示，这已经触到日常语言习惯所划的界限。法院的处理方式是：在定罪上服从有权解释，在量刑上公开说出价值判断，并报请核准在法定刑以下判处。这是一个在现行体制内可辩护的选择，但不能因此认为问题已被解决：<strong>有权解释本身也要受可能文义的约束，而这一约束在我国缺少可由法院启动的审查通道</strong>——本案律师转而向全国人大常委会申请审查该司法解释，正说明出口在体制之外。批评者主张「人工繁育不应等同野外种群」，因此既是对司法解释妥当性的质疑，也是一项正当的解释论主张；把它一概推给立法论，等于放弃了文义界限对有权解释的约束力。</dd>
+      <dt>后续</dt><dd>本案裁判所依据的 2000 年司法解释，已被法释〔2022〕12 号《关于办理破坏野生动物资源刑事案件适用法律若干问题的解释》取代（2022 年 4 月 9 日施行，该解释第二十条同时废止法释〔2000〕37 号）。新解释第十三条第二款规定：涉案动物系人工繁育，「（一）列入人工繁育国家重点保护野生动物名录的；（二）人工繁育技术成熟、已成规模，作为宠物买卖、运输的」，对所涉案件一般不作为犯罪处理，需要追究刑事责任的应当依法从宽。本案的绿颊锥尾鹦鹉正落在第二项之内。换言之，当年被本讲义归入「立法论」的批评，后来是由有权解释自己兑现的。这提示一条方法论纪律：判断某一主张究竟是解释论还是立法论，取决于当下的规范状态，而规范状态会变；断言「这只能留给立法者」时，应当说明自己是在何时点上作此判断。</dd>
+    </dl>
+    <div class="src">出处：<a href="https://www.thepaper.cn/newsDetail_forward_2108942" target="_blank" rel="noopener">法官谈深圳「鹦鹉案」改判：出售驯养繁殖的野生动物可从宽处罚</a>（澎湃新闻）。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s2-3"><span class="s">§10</span>立法定义、推定与拟制</h3>
+
+<p class="rn">立法者对语言的干预有三种强度递增的形态，务必分辨清楚。</p>
+
+<p class="rn"><strong>立法定义</strong>——立法者为法概念规定了具有约束力的内容。例如《道路交通安全法》第一百一十九条第一项对「道路」的定义：公路、城市道路和虽在单位管辖范围但允许社会机动车通行的地方，包括广场、公共停车场等用于公众通行的场所。危险驾驶罪的成立范围，一大半是被这个定义决定的：封闭小区内部道路是否「允许社会机动车通行」，成为醉驾案件里真正的争点，而这个争点纯粹是文义解释的产物。</p>
+
+<p class="rn">此处有一处结构上的相似须留意：《刑法》本身并未定义「道路」，上述做法是把行政法上的立法定义借入刑法构成要件。它与本节案例 4 所批评的「以部门鉴定标准填充刑法概念」形态相同，区别在于位阶——《道路交通安全法》的定义出自法律，符合《立法法》第十一条第四项的保留要求；公安部的鉴定标准不是。但位阶合格不等于价值平等（参 §25）：借入之后仍须追问，道路交通管理的秩序目的与危险驾驶罪的处罚目的是否一致；若不一致，「道路」一词在两部法律中本可作不同解释。</p>
+
+<p class="rn"><strong>推定</strong>——分可推翻与不可推翻两类。可推翻的推定，是推定符合请求权构成要件的事实成立，从而将本应由原告承担的证明义务移转给被告；被告若不能反证，即在诉讼上处于不利地位。不可推翻的推定则排除一切免责可能，不问事实是否相符。</p>
+
+<p class="rn"><strong>拟制</strong>——立法者规定了强制性的法效果，且不许证明相反情况。其与不可推翻的推定共此特征，区别在于：推定之下，被推定的事实有可能是存在的；拟制之下，立法者则径自假设了一种与实际并不相符的情况。中文法典的标志性用语是<span class="art">视为</span>。读到「视为」二字，就该意识到此处不存在反证空间，因而也不存在事实认定的争点——只剩下拟制射程的解释争点。</p>
+
+<p class="rn">与拟制形似而实异的是<span class="term">注意规定</span>。拟制把本不符合构成要件的事实赋予同一法效果，因而<em>创设</em>了规范内容；注意规定只是提示某一事实本已落入既有规范之内，因而<em>不改变</em>任何内容。中文法典里两者常共用「依照……定罪处罚」「以……论」的句式，只能靠内容分辨：《刑法》第二百六十七条第二款「携带凶器抢夺，依照本法第二百六十三条的规定定罪处罚」是拟制——抢夺本不符合抢劫罪「以暴力、胁迫或者其他方法」的要件；《刑法》第二百八十七条「利用计算机实施金融诈骗……依照本法有关规定定罪处罚」是注意规定——利用计算机实施的诈骗本来就是诈骗。</p>
+
+<p class="rn">这一区分直接决定解释的宽严。注意规定可以被一般化、甚至可以类推适用，因为它所说的事无论有无该条都成立；拟制则必须<strong>严格限于其明文射程</strong>，不得类推扩张，因为它的全部规范力都来自那一句明文——扩张一个拟制，等于替立法者再造一次拟制。读到「视为」「以……论」时，第一个要问的问题因此不是「它是什么意思」，而是「它是拟制还是注意规定」；问错了顺序，后面的解释再精细也是在错误的射程里打转。</p>
+
+<h4>规范性概念与描述性概念</h4>
+<p class="rn"><span class="term">规范性概念</span>涉及价值判断或其他抽象事物，与现实层面并无必然关联，通常异于日常语言习惯而仅承载于法律自身：抵销、解除、善意、重大过失。<span class="term">描述性概念</span>指向某种实在事实，描述真实的或类真实的、原则上可为人感知的客观事物，其含义体现于概念本身：人、死亡、黑暗、速度。</p>
+
+<p class="rn">这一区分有用，但不可当真到底。即使对于描述性概念，法学语境也举足轻重——「死亡」在刑法、民法与器官移植法中并非一回事。夸张地说，任何构成要件要素都是「规范性」的。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 4</span><span class="name">赵春华气球射击摊案</span><span>天津 · 2016—2017</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>赵春华在天津街头摆设射击气球摊，以塑料弹为子弹。2016 年 10 月被查获枪形物九支，其中六支经鉴定为「以压缩气体为动力、能正常发射的枪支」。</dd>
+      <dt>争点</dt><dd>《枪支管理法》第四十六条将枪支界定为「足以致人伤亡或丧失知觉」的器械；公安部 2010 年鉴定标准则将枪口比动能门槛降至 1.8 焦耳／平方厘米。行政管理标准能否直接充当刑法上「枪支」概念的内容？</dd>
+      <dt>裁判</dt><dd>天津市河北区人民法院一审认定非法持有枪支罪，判处有期徒刑三年六个月；天津市第一中级人民法院（2017）津 01 刑终 41 号刑事判决（2017 年 1 月 26 日）改判有期徒刑三年，缓刑三年。两审均认定构成犯罪，二审以「刚刚达到认定标准」「具有一定致伤力但不足以致人死亡」为由从宽量刑。</dd>
+      <dt>方法论解读</dt><dd>本案是文义解释与体系解释交火的教科书样本。就文义言，1.8 焦耳的门槛只对人体最薄弱的眼睛具有致伤力，与《枪支管理法》所要求的「足以致人伤亡」并不相符；以行政标准填充刑法概念，是把依《立法法》第十一条第四项只能由法律作出的入罪决定，实际交给了部门规章，与明确性要求的第一层含义相冲突。就体系言，此处正是「法秩序统一」与「法概念相对性」的对决：行政管制的价值取向是严格化与预防，刑事处罚的价值取向是谴责与最后手段，二者缺乏<em>价值平等性</em>，故同一「枪支」一词本可、甚至本应在两个部门法中作不同解释（参 §25）。陈兴良据此提出「依法入罪，以理出罪」——入罪须有明确法律根据，出罪则可经限缩而实现，不以法律明文为前提。</dd>
+      <dt>练习</dt><dd>假设公安机关其后将枪支鉴定的枪口比动能门槛由 1.8 焦耳提高到 16 焦耳，而本案判决已生效。请判断：该门槛的变动能否成为申诉的理由？提示：它既不是法律的变更（《刑法》第十二条第一款），也不是司法解释的变更（法释〔2001〕5 号第三条），而是一项行政管理标准的变更——请先说明这一性质认定为何决定了答案，再说明主张「应当同样从旧兼从轻」的一方须承担哪些论证负担（参 §9 的六级表与 §25）。</dd>
+    </dl>
+    <div class="src">出处：<a href="https://www.chinanews.com.cn/m/sh/2017/01-26/8136377.shtml" target="_blank" rel="noopener">赵春华案二审宣判：判处有期徒刑三年，缓刑三年</a>（中新网，2017年1月26日）；<a href="https://www.aisixiang.com/data/107030.html" target="_blank" rel="noopener">陈兴良：赵春华非法持有枪支案的教义学分析</a>。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s2-4"><span class="s">§11</span>概念核心与概念外围</h3>
+
+<p class="rn">处理文义的两个模型值得画在纸上。</p>
+
+<p class="rn"><strong>概念核心与概念外围</strong>：若案件事实毫无歧义地可归于构成要件要素，则它处在概念核心之中；若可归可不归，则处在概念外围。<strong>三领域模型</strong>：有些情形一看就是（积极领域），有些一看就不是（消极领域），中性领域则在语言上两边都靠不上——解释的全部战场就在中性领域。</p>
+
+<div class="fig-wrap">
+<svg viewBox="0 0 700 210" role="img" aria-labelledby="figB">
+  <title id="figB">概念核心、概念外围与文义射程</title>
+  <ellipse cx="320" cy="100" rx="290" ry="82" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="6 4"></ellipse>
+  <ellipse cx="320" cy="100" rx="150" ry="54" fill="var(--surface-3)" stroke="var(--accent)" stroke-width="1.8"></ellipse>
+  <g font-family="IBM Plex Sans, sans-serif" font-size="13">
+    <text x="320" y="96" text-anchor="middle" fill="var(--ink)" font-weight="600">概念核心</text>
+    <text x="320" y="116" text-anchor="middle" fill="var(--muted)" font-size="11.5">无歧义地肯定</text>
+    <text x="320" y="38" text-anchor="middle" fill="var(--accent-ink)" font-weight="600">概念外围（中性领域）</text>
+    <text x="320" y="200" text-anchor="middle" fill="var(--muted)" font-size="11.5">虚线＝可能文义的射程：越过即为类推；把核心内的事实排除出去即为目的性限缩</text>
+  </g>
+  <g stroke="var(--warn)" stroke-width="1.6" fill="none">
+    <path d="M604 100 L636 100"></path><path d="M630 94 L636 100 L630 106"></path>
+  </g>
+  <text x="642" y="104" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="var(--warn)">越线＝类推</text>
+</svg>
+<figcaption>图 2　射程的两种突破方向。由外突破：把概念周边之外的事实纳入规范，即类推。由内突破：把概念核心之内的事实排除出去，即目的性限缩。两者都已越出解释的范围——注意分界线的位置不同，向外画在周边，向内画在核心；排除概念周边之内的事实仍是正当的限缩解释（§14）。</figcaption>
+</div>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 5</span><span class="name">涉老年人彩礼纠纷案</span><span>（2024）渝 0104 民初 3037 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>2021 年，张某洪（男，时年 65 岁，肢体残疾）与经某梅（女，时年 51 岁）在棋牌室相识并发展为恋爱关系，经某梅对张某洪多有生活照料。2023 年 1 月两人共同居住并商讨结婚，张某洪将拆迁款中的 141 万余元转入经某梅账户，经某梅以其中 47 万余元购房并登记在两人名下。同年 2 月，双方就其中 70 万元签订《赠与协议》，载明「为了经某梅晚年生活更有保障，特无条件赠与」。一个月后双方因婚后居住地点生隙，未办理结婚登记。</dd>
+      <dt>争点</dt><dd>法释〔2024〕1 号第三条第一款规定，认定彩礼范围「可以根据一方给付财物的目的，综合考虑双方当地习俗、给付的时间和方式、财物价值、给付人及接收人等事实」；第二款反面列举三类不属于彩礼的财物。本案既无订婚仪式，又有白纸黑字的《赠与协议》，这 141 万元是不是「彩礼」？</dd>
+      <dt>裁判</dt><dd>重庆市大渡口区人民法院 2024 年 9 月 2 日判决认定系彩礼，判令返还 75 万元并将房屋变更登记至张某洪名下。理由：给付目的是促成缔结婚姻，给付时机在商讨结婚事宜期间，金额远高于一般性节日礼金或日常消费支出；审查涉老年人彩礼纠纷应重点审查给付是否以结婚为目的，并充分考量双方年龄、给付时机、给付金额、婚恋观念，<strong>不宜仅因双方未举办特定仪式或者签订有书面赠与协议即否认款项属于彩礼</strong>。该案 2026 年 9 月入人民法院案例库。</dd>
+      <dt>方法论解读</dt><dd>三领域模型在此看得最清楚。送彩礼之后办了婚礼、双方都称之为彩礼——无歧义地肯定，属<strong>积极领域</strong>；生日送的一束花——无歧义地否定，属<strong>消极领域</strong>；本案这 141 万元则落在<strong>中性领域</strong>：它既有彩礼的功能（以缔结婚姻为目的的给付），又披着赠与的外衣，且缺少传统彩礼的仪式外观。解释的全部战场就在这里。法院的办法是把判准从<em>形式</em>移到<em>目的与情境</em>：仪式和协议只是征表，给付目的才是构成要件的核心；征表缺失不等于要件不成立。</dd>
+      <dt>延伸</dt><dd>本案另有一层值得单独记下：<strong>当事人给自己行为贴的标签，不拘束法律上的定性。</strong>双方白纸黑字写了「无条件赠与」，法院仍认定为彩礼。这不是否定意思表示的效力，而是分清两件事——《赠与协议》的解释（意思表示说了什么）属法律行为解释，这笔款是否落入「彩礼」属制定法概念的涵摄，两者的标的与标准都不相同（参 §3 的对照表）。这正是 §3 警示框所讲的那个误推在裁判上的正面答复——标签是征表，不是结论。</dd>
+    </dl>
+    <div class="src">出处：人民法院案例库入库编号 2026-07-2-012-001「张某洪诉经某梅婚约财产纠纷案——涉老年人彩礼纠纷的处理规则」，重庆市大渡口区人民法院（2024）渝 0104 民初 3037 号民事判决；相关法条：法释〔2024〕1 号第三条、第六条，法释〔2020〕22 号第五条。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s2-5"><span class="s">§12</span>「文义明确性规则」及其破解</h3>
+
+<p class="rn"><span class="term">文义明确性规则</span>（<span class="de">sens-clair-Regel</span>）主张：若文义明确，则其他解释方法一概不予考虑；概念的本来含义原则上具有优先地位，明确之情形无须再作进一步检验。</p>
+
+<p class="rn">这条规则应予摒斥，至少应降格为一项可被推翻的推定，理由有四。</p>
+
+<ul>
+  <li><strong>循环论证。</strong>要判断什么是「明确」的，终归要以解释为前提。主张「仅在有歧义时才解释」，建基于一种不正当的乞题。</li>
+  <li><strong>隔离体系。</strong>若严守此规则，立法定义可能在不考虑是否适合新语境的情况下，径自被隔离于法律体系之外。</li>
+  <li><strong>语词的不完整性。</strong>即使文义没有语言上的歧义，也应衡诸法律精神与目的予以解释；因为语词往往只是对主要思想的不完整表达。</li>
+  <li><strong>逃避说理。</strong>这条规则常常不过是一种让人逃避实质说理的、讨巧的形式论据。</li>
+</ul>
+
+<p class="rn">结论：文义即使被假定为明确，其也可以被其他解释步骤所修正。但此处有一个不可逾越的保留——在刑法领域，修正只能往有利于行为人的方向走。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 6</span><span class="name">垄断协议参与者索赔案</span><span>（2025）黔 01 民初 1331 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>桐梓县四家机动车检测机构签订《联营合作协议》，约定「收费标准由四家检测机构共同商量决定」，并约定丙方、丁方停业、撤出的设备不得售至桐梓境内、四家整合为两家甚至一家经营。其后一方起诉另两方，请求依协议支付所得利益 161928 元及违约金。</dd>
+      <dt>争点</dt><dd>《反垄断法》第六十条第一款规定：「经营者实施垄断行为，给<strong>他人</strong>造成损失的，依法承担民事责任。」「他人」二字，字面上就是「别人」，文义似无歧义。横向垄断协议的一方，算不算另一方的「他人」？</dd>
+      <dt>裁判</dt><dd>贵阳市中级人民法院 2026 年 5 月 11 日判决驳回诉讼请求（各方未上诉，已生效）。法院先认定涉案协议构成固定价格的横向垄断协议并整体无效，继而指出：「根据该条文义，其中规定的『他人』系指实施垄断行为的经营者之外的遭受垄断损害的其他人，而实施垄断行为的经营者本人，包括垄断协议的各方当事人并不在该条规定保护的主体范围之列。」并补以目的论证：该款的立法目的在于为垄断行为的受损害人提供救济，而不为实施垄断行为的经营者提供不当获利的机会；协议一方据协议向另一方索取利益，「实质上是要求瓜分垄断利益」。本案系最高人民法院 2026 年人民法院反垄断典型案例之三。</dd>
+      <dt>方法论解读</dt><dd>本案是「文义明确性规则」失灵的教科书式演示。若按该规则，「他人」在语言上毫无歧义——自然人与法人以外的一切主体皆为他人，协议相对方当然在内——解释到此即可结束。法院没有停在这里，而是追问该款为谁而设，由此把「他人」从「任何别人」收缩为「垄断行为之外的受损害人」。<strong>而判断什么叫「明确」，本身已经是解释的结果。</strong></dd>
+      <dt>延伸</dt><dd>两点补充。其一，法院称之为「根据该条文义」，措辞上是文义解释，实质上是目的在先、文义在后——真正支撑结论的是后半段关于立法目的的那句话。这种把目的论证包装成文义论证的写法在判决书中极常见，读判决时应当把它拆开（§28、§34）。其二，本案与最高人民法院指导案例 221 号「砖瓦协会」垄断纠纷案同向：后者以「任何人均不能因其违法行为而获益」这一法谚为据，拒绝参与横向垄断协议的经营者向其他参与者索赔。法谚不是法条，其分量取决于它是否为现行法的价值安排所承载；本案把这一法谚落回到第六十条第一款的规范目的上，比径引法谚更为稳妥。</dd>
+    </dl>
+    <div class="src">出处：贵州省贵阳市中级人民法院（2025）黔 01 民初 1331 号民事判决（2026 年 5 月 11 日），最高人民法院 2026 年人民法院反垄断典型案例之三；相关法条：《反垄断法》第一条、第十六条、第十七条第一项、第二十条、第六十条第一款。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s2-6"><span class="s">§13</span>文义射程与类推禁止</h3>
+
+<p class="rn">罪刑法定原则对法院与立法者分别提出要求：对法院，是<strong>类推禁止</strong>与<strong>习惯法适用禁止</strong>；对立法者，是<strong>明确性原则</strong>与<strong>禁止溯及既往</strong>。在德国，四者同受《基本法》第 103 条第 2 款保障，故文义射程在刑法中具有宪法位阶。我国《宪法》未设罪刑法定条款，其实证依据是《刑法》第三条（「法律没有明文规定为犯罪行为的，不得定罪处刑」）与《立法法》第十一条第四项（犯罪和刑罚只能制定法律）；《立法法》第一百零四条并确立了不溯及既往及其有利溯及的例外。位阶虽有不同，四项要求的方法论功能是一样的：它们把「可能文义」由一条学理界线变成一条有实证依据的界线。</p>
+
+<p class="rn">明确性要求有两层含义。一方面，独自确立入罪与否的本质条件，乃全国人民代表大会及其常务委员会专有之职责——《立法法》第十一条第四项明定犯罪和刑罚只能制定法律；关于罪名及刑罚的这一基础性决定，不得委任于行政及司法，后者的职责仅限于法律之适用。另一方面，立法者必须把可入罪的行为写得足够精确。此外还有两条附属规则：<span class="term">相关性法则</span>——可能被处罚的刑罚越重，对法律确定性的要求就越严格；<span class="term">禁止消融</span>（<span class="de">Verschleifungsverbot</span>）——不得以对某一构成要件要素的解释，使另一要素被吸收而失去独立的限定功能。凡解释之后某个要素只要前一要素成立即自动成立，该解释即属违反明确性要求。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 7</span><span class="name">坐地示威案（Sitzblockaden Ⅱ）</span><span>德国联邦宪法法院 · 1995</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>反核与和平运动的示威者坐在军事设施与道路入口，以身体阻挡车辆通行。检察机关依《德国刑法》第 240 条强制罪起诉：被告以「暴力」（<span class="de">Gewalt</span>）迫使他人为一定行为。</dd>
+      <dt>争点</dt><dd>「暴力」是否包括仅以身体在场造成的心理性妨碍？德国法院此前经由「精神化的暴力概念」把它纳入其中。</dd>
+      <dt>裁判</dt><dd>联邦宪法法院 1995 年 1 月 10 日以五比三认定，这种扩张的解释违反《基本法》第 103 条第 2 款（BVerfGE 92, 1）。判决写道：<span class="de">Der mögliche Wortsinn des Gesetzes markiert die äußerste Grenze zulässiger richterlicher Interpretation</span>——法律可能的文义标示着容许的法官解释之最外界限；并且，<span class="de">Ausgeschlossen ist vielmehr jede Rechtsanwendung, die über den Inhalt einer gesetzlichen Sanktionsnorm hinausgeht</span>——凡超出法定制裁规范内容的法律适用，一概被排除。</dd>
+      <dt>方法论解读</dt><dd>本案是「文义射程」从方法论命题上升为宪法命题的标志。两点值得记住：其一，法院的扩张并非恣意，「精神化暴力」在语义上不无支点，但当扩张使构成要件失去可预见性时，宪法即出面制止——明确性原则与类推禁止在此接合。其二，被宣告违宪的不是刑法第 240 条本身，而是<em>一种解释</em>。解释可以违宪，这一点在合宪性解释一节还会回来（见 §27）。</dd>
+    </dl>
+    <div class="src">出处：BVerfG, Beschluss v. 10.01.1995, BVerfGE 92, 1 – Sitzblockaden Ⅱ。参见 <a href="https://www.fallrecht.de/bv092001.html" target="_blank" rel="noopener">DFR – BVerfGE 92, 1</a>。</div>
+  </div>
+</div>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 8</span><span class="name">陈某某、刘某某故意伤害、虐待案</span><span>指导案例 226 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>刘某某离婚后独自抚养女儿童某某（2014 年出生）。2019 年 11 月刘某某与陈某某恋爱同居，2020 年 3 月起三人共同生活。其间陈某某经常以管教为名对童某某拳打脚踢、以洗衣板殴打、烟头烫，并以长时间跪洗衣板、吞烟头、冻饿、凌辱等方式体罚；2020 年 5 月为其洗澡时，将水温反复调至最高与最低档浇淋，致全身烧烫伤达重伤二级。刘某某未予阻止，放任并时而参与。</dd>
+      <dt>争点</dt><dd>陈某某与被害人之母系同居关系，与被害人之间无婚姻、无血缘、无收养。刑法第二百六十条虐待罪的对象限于「家庭成员」。未婚同居者与对方的未成年子女，是否「家庭成员」？</dd>
+      <dt>裁判</dt><dd>辽宁省抚顺市新抚区人民法院 2021 年 10 月 13 日判决，以故意伤害罪与虐待罪数罪并罚，陈某某执行有期徒刑十六年、刘某某三年。最高人民法院 2024 年 5 月 30 日将本案发布为指导案例 226 号，裁判要点第一项：与父（母）的未婚同居者处于较为稳定的共同生活状态的未成年人，应当认定为刑法第二百六十条规定的「家庭成员」。裁判理由的落点是二人「已形成事实上的家庭关系」。</dd>
+      <dt>方法论解读</dt><dd>本案是文义射程在<strong>入罪方向</strong>上的一次扩张，必须逐步检验它是否仍然属于解释。第一步问语义核心：「家庭」在日常语言中并不以婚姻或血缘为唯一纽带，共同生活与相互扶养本就是它的常义之一，故本案事实落在概念外围而非周边之外（§11）。第二步问规范目的：虐待罪之所以独立成罪，是因为家庭内部持续性的支配与依赖关系使被害人难以自救——这一特征在稳定的同居共同生活中同样具备，目的解释与文义解释在此同向而非相逆。第三步问可预见性：一个与他人及其未成年子女长期共同生活的人，能否预见长期摧残该子女可能被当作虐待「家庭成员」？答案是肯定的。三步俱过，扩张才告成立。</dd>
+      <dt>延伸</dt><dd>请与案例 7 对照：「精神化的暴力」之所以被宣告违宪，不在于它扩张，而在于扩张之后构成要件失去了可预见性。类推禁止真正守护的是可预见性，「扩张」本身从来不是罪名（§13、§14）。<br>另有一层张力值得课堂上争一争。《反家庭暴力法》第三十七条规定：「家庭成员以外共同生活的人之间实施的暴力行为，参照本法规定执行。」就形式论据而言，该条把共同生活的人明确置于「家庭成员以外」，依反面解释，刑法上的「家庭成员」似亦不应包含同居者（§23）；但该条的处理是<em>参照执行</em>，即在价值上同等对待。于是两个论据各执一端：法概念的相对性允许同一语词在前置法与刑法中作不同解释（§25），而价值平等性又支持同等处理。本案选择了后者。选择本身可以商榷，但不能跳过——凡主张刑法概念应从前置法的用语者，须先证明两部法律的价值取向一致。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院指导案例 226 号「陈某某、刘某某故意伤害、虐待案」（2024 年 5 月 30 日发布，第 40 批）；相关法条：《中华人民共和国刑法》第二百三十四条、第二百六十条。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s2-7"><span class="s">§14</span>扩张解释、限缩解释及其与类推的分界</h3>
+
+<p class="rn">构成要件要素既可作狭义（限缩）解释，亦可作广义（扩张）解释。术语上须精确：<strong>狭义</strong>通常与概念核心重叠，即该术语首先意指的范围；<strong>广义</strong>则或多或少将覆盖范围延及边缘部位的现象，这些现象仅仅是一般语言用法偶尔会意指的。</p>
+
+<p class="rn">分界线由此而生：若超越了尽可能广义理解的边缘区域之极限，就已不再是解释，而是<em>类推</em>；反之，若将确凿无疑属于核心区域的现象排除于外，也不再是解释，而是<em>目的性限缩</em>。「限缩解释」与「目的性限缩」的差别就在这里——前者仍在文义界限之内缩小适用范围，后者已越界。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 9</span><span class="name">陆勇案</span><span>沅江市人民检察院 · 2015</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>慢性粒细胞白血病患者陆勇，为自己及病友从印度购入低价抗癌仿制药，并向病友提供三个用于付款的银行账号。公安机关以销售假药罪、妨害信用卡管理罪移送起诉。</dd>
+      <dt>争点</dt><dd>陆勇提供账号、代为联络的行为，是否构成刑法上的「销售」？</dd>
+      <dt>裁判</dt><dd>沅江市人民检察院 2015 年 2 月 26 日决定不起诉，并公开释法说理书。其论证由「销售」一词的语义切入：「所谓销售即卖出（商品）。在经济学上，销售是以货币为媒介的商品交换过程中卖方的业务活动，是卖出商品的行为，卖方寻求的是商品的价值，而买方寻求的则是商品的使用价值。」继而认定，陆勇与病友同为印度公司药品的<strong>买方</strong>；设置账号「是作为白血病患者的求药群体购买药品行为整体中的组成行为」。要成立共同犯罪，须是「陆勇基于帮助印度公司销售假药而为其提供账号」，而本案中陆勇代表的是买方而不是卖方。</dd>
+      <dt>方法论解读</dt><dd>这是文义解释的一次漂亮运用，其力量恰恰来自它的<em>克制</em>。检察机关没有诉诸「情理难容」「法不容情但法外有情」一类的结果考量作为定罪理由的对立面，而是回到「销售」的语义核心：销售是卖方业务活动。买方的集体采购行为，纵使在物理上包含了收款账号的设置，也不能被涵摄于「销售」之下——这不是把处罚范围限缩到零，而是它本来就不在文义射程之内。应当把这一路径与「虽然构成销售但情节轻微不予起诉」的路径严格区分：后者承认了构成要件的成就，前者否认之。两条路径的论证负担完全不同。</dd>
+      <dt>后续</dt><dd>本案的法律基础其后已变：2019 年《药品管理法》修订删去了「未经批准进口的药品按假药论处」的拟制，《刑法修正案（十一）》相应调整了第一百四十一条对「假药」的界定。本案的方法论价值——买方行为不落入「销售」的语义核心——不因此改变，但援引它讨论具体入罪结论时，应当先交代规范状态。</dd>
+    </dl>
+    <div class="src">出处：<a href="https://www.hn.jcy.gov.cn/xwfb/qwfb/gg/201502/1464909172041580547.html" target="_blank" rel="noopener">对陆勇决定不起诉的释法说理书</a>（湖南省人民检察院门户网站）。</div>
+  </div>
+</div>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 10</span><span class="name">支某1等诉北京市永定河管理处生命权纠纷案</span><span>指导案例 141 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>2017 年 1 月 16 日，支某3 外出遛狗未归，当晚在永定河拦河闸自西向东第二闸门前消力池内被发现溺亡。消力池系卢沟桥分洪枢纽水利工程的组成部分，周边安装防护栏杆、多处醒目位置设有警示标牌，日常管理、维护与运行由北京市永定河管理处负责。死者近亲属诉请该处承担赔偿责任。</dd>
+      <dt>争点</dt><dd>消力池是否属于《侵权责任法》第三十七条第一款所称「公共场所」，从而使其管理人负有安全保障义务？</dd>
+      <dt>裁判</dt><dd>北京市丰台区人民法院（2018）京 0106 民初 2975 号判决驳回全部诉讼请求；北京市第二中级人民法院（2019）京 02 民终 4755 号判决驳回上诉、维持原判。最高人民法院 2020 年 10 月 9 日发布为指导案例 141 号。裁判理由从三个方面否定其「公共场所」属性：性质上系水利工程设施而非对外开放的冰场；位置上处于拦河闸下方永定河河道中间；抵达路径上须自沿河河堤下楼梯进入河道、再步行至闸下方能到达。</dd>
+      <dt>方法论解读</dt><dd>这是<strong>限缩解释</strong>的标准样本，不是目的性限缩，二者的分界恰好可以在本案上看清。「公共场所」的语义核心是对公众开放、供不特定人出入的场所；消力池是禁止公众进入的工程设施，本来就不在核心之内。法院所做的是在文义界限之内缩小适用范围，而非把核心之内的事实排除出去（§14）。检验办法很简单：若判决的论证须以「虽然属于公共场所，但依规范目的不应适用本条」为前提，那就是目的性限缩，已入法续造；本案的论证恰恰是「难以认定消力池属于公共场所」——前提不同，论证负担也就不同。</dd>
+      <dt>延伸</dt><dd>法院同时交代了安全保障义务的规范根据：该义务所保护的人与义务人之间通常存在缔约磋商、合同等较为紧密的关系。这是以制度的内部体系反推概念外延（§21）——「公共场所」不是一个孤立的词，它由它所触发的那套义务结构定义。判决末段「不能以情感或结果责任主义为导向将损失交由不构成侵权的他方承担」，则是结果取向解释的反向运用：拒绝让同情替代构成要件（参案例 26 的一审错误）。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院指导案例 141 号「支某1 等诉北京市永定河管理处生命权、健康权、身体权纠纷案」（2020 年 10 月 9 日发布，第 25 批）；相关法条：《中华人民共和国侵权责任法》第三十七条第一款（现为《民法典》第一千一百九十八条）。</div>
+  </div>
+</div>
+
+<div class="block caution">
+  <div class="hd"><span class="tag">警示</span><span class="name">刑法上类推禁止的四条细则</span></div>
+  <div class="bd">
+    <p>其一，若无法律基础，不得对行为人课以刑罚。其二，具体化的标准是：民众必须能够预见其行为「入罪的可能性」。其三，实体刑法上<strong>有利于</strong>行为人的类推是被允许的；程序刑法上不利于行为人的类推亦有容许空间。其四，法治国原则上禁止进行针对具体个案的类推。</p>
+  </div>
+</div>
+
+</section>
+
+<!-- ══════════════ 第三章 ══════════════ -->
+<section id="c3">
+<div class="ch-open">
+  <div class="fig">三</div>
+  <div>
+    <p class="kicker">第三章 · Kapitel 3</p>
+    <h2>历史解释</h2>
+  </div>
+</div>
+<p class="lede">法律是人为人而创设的，它承载着立法者的意志。历史解释的任务，是把这份意志从旧条文与立法档案中读出来，然后老实交代：它今天还算不算数。</p>
+
+<h3 class="sec" id="s3-1"><span class="s">§15</span>广义、狭义与谱系解释</h3>
+
+<p class="rn">历史解释的内部分工须先划清，否则讨论必乱。</p>
+
+<ul>
+  <li><span class="term">狭义的历史解释</span>——研究<strong>规范前身</strong>，即已然失效的旧条文。它与体系解释一样涉及不同规范的对比，区别在于所参考者是历史文本。</li>
+  <li><span class="term">谱系解释</span>（<span class="de">genetische Auslegung</span>）——参考一部法律的<strong>立法历程</strong>，根据立法材料探究立法者制定规范之初的意图。</li>
+  <li><span class="term">宪法传统</span>——追溯某一制度在历次宪法文本中的沿革，属狭义历史解释的特殊形态。</li>
+</ul>
+
+<p class="rn">在动用任何具体模型之前，还有两个前置问题必须表态。第一：立法者<em>当时</em>的意图与<em>当前</em>的意图，何者更为重要？前者为主观解释，后者为客观解释——这一争论留待 §20。第二：究竟哪些材料允许被使用？这决定了谱系解释能否被检验，见 §17。</p>
+
+<p class="rn">历史解释在我国有一个常被低估的实证依据。《立法法》第一百一十九条要求司法解释「符合立法的目的、原则和<strong>原意</strong>」——「原意」二字把历史解释从一项学理技术抬升为司法解释的合法性条件：一份偏离立法原意的司法解释，不只是解释得不好，而是逾越了权限（§7）。与之呼应的是《立法法》第四十八条第二款第一项「法律的规定需要进一步明确具体含义的」，其默认预设同样是存在一个有待明确的原初含义。换言之，我国实证法在制度上押注于主观理论，而第四十八条第二款第二项「法律制定后出现新的情况」又为客观理论留了门——折中说在我国不是学说的调和，是法条的安排（§20）。</p>
+
+<p class="rn">材料方面，我国与德国的结构相近而名目不同：<strong>法律草案的说明</strong>（提案人向常委会所作，相当于德国的立法理由）、<strong>审议结果报告</strong>（宪法和法律委员会提出）、<strong>修改情况的汇报</strong>、<strong>公开征求意见的草案文本</strong>，以及常委会会议的<strong>审议记录</strong>。这些都载于全国人大常委会公报或中国人大网，公开可查，符合「立法程序中生成、官方公布、可为公众获取」三项要求（§17）。须与之区别的是法律施行后出版的各类释义书——它们是起草参与者的事后说明，不是立法材料，详见 §17 的辨析。</p>
+
+<p class="rn">历史解释的功能有二，混淆则生错。<strong>范围功能</strong>：在文义所划出的最大范围之内，对该范围再作调整界定（§5）——界线本身只有一条，即可能文义的射程（§6），历史因素是在这条界线之内收放，不与之并列。<strong>内容提示功能</strong>：在该范围之内，为规范意旨提供线索。前者具有约束力，后者只具推定效力——这是 §20 折中说得以成立的技术基础，也是本章全部讨论的分际所在。</p>
+
+<h3 class="sec" id="s3-2"><span class="s">§16</span>前身规范与连续性／非连续性</h3>
+
+<p class="rn">要查明现行法与旧法文本的关联，通常须先提示其间是连续性还是非连续性。这一步是历史解释中最容易被跳过、也最容易出错的一步。</p>
+
+<p class="rn"><strong>连续性</strong>：立法者将旧的规范文本未作改动地吸收，也就因此承认了之前所主张的内容。法院在解释新规范时，亦须保障法结构的连续性。此时旧法上的学说与判例仍可沿用，援引它们不需要额外的论证负担。</p>
+
+<p class="rn"><strong>非连续性</strong>：若立法者变更了规范内容，则连续性规则不再有效，此时恰应作相反之解释——这一变更将导致全新的规范解读方式。继续沿用旧法学说者，须自行承担论证负担。本讲义的例证是案例 2（见 §7）：2002 年立法解释以一个「或者」放弃了 2000 年司法解释的立场，此后凡解释刑法第二百九十四条第一款，该立法解释即成为不可绕过的规范前身，而旧司法解释的立场已被明示放弃——这正是非连续性的标准形态，连续性推定在此不再适用。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">沿革 1</span><span class="name">侵犯商业秘密罪的门槛之变</span><span>刑法第 219 条 · 1997 → 2020</span></div>
+  <div class="bd">
+    <dl>
+      <dt>旧法</dt><dd>1997 年刑法第二百一十九条：以不正当手段获取、披露、使用或允许他人使用商业秘密，「<strong>给商业秘密的权利人造成重大损失</strong>」的，处三年以下有期徒刑或者拘役，并处或者单处罚金；造成特别严重后果的，处三年以上七年以下有期徒刑，并处罚金。</dd>
+      <dt>新法</dt><dd>《刑法修正案（十一）》（2020 年 12 月 26 日通过，2021 年 3 月 1 日施行）将入罪门槛改为「<strong>情节严重</strong>」，加重情形改为「情节特别严重」，并将加重法定刑由三年以上七年以下提高到三年以上十年以下；在不正当手段中增列「<strong>电子侵入</strong>」；将「违反约定或者违反权利人有关保守商业秘密的要求」整合为「违反保密义务」；并增设第二百一十九条之一为境外窃取商业秘密罪。</dd>
+      <dt>方法论解读</dt><dd>这是一处典型的<em>非连续性</em>，且其非连续性发生在最敏感的位置——罪量要素。三点后果。第一，旧法时代围绕「重大损失」形成的全部计算规则与辩护策略，不能不经论证地移用于「情节严重」：损失数额至多是判断情节的一项因素，而非唯一因素。第二，「电子侵入」的增列，反过来对旧法上「不正当手段」的解释产生回溯性的提示——若旧法的「其他不正当手段」本已涵盖电子侵入，则新增即属赘余；立法者不制定多余无用之法（禁止赘余，见 §31），故更可信的解读是旧法此处存在覆盖不足。第三，配套的数额标准先行下调（两高法释〔2020〕10 号《关于办理侵犯知识产权刑事案件具体适用法律若干问题的解释（三）》2020 年 9 月施行，将损失或违法所得门槛由五十万元调整为三十万元），三个月后《刑法修正案（十一）》才把罪量要素由「重大损失」改为「情节严重」。司法解释先动、立法后动，这一先后顺序本身就是史料：它提示解释者，构成要件的沿革须与司法解释的沿革合并观察，二者常是同一次政策转向的两个侧面，而谁先谁后往往决定了新旧标准的衔接方式。</dd>
+      <dt>练习</dt><dd>《刑法修正案（十一）》把「重大损失」改为「情节严重」之后，行为发生于 2020 年 10 月、审理于 2022 年的案件应如何适用？请依次回答：(1) 依《刑法》第十二条第一款，应适用哪一版本的第二百一十九条？(2) 若旧法下损失为二十八万元（不足三十万元），而新法下仍可能被认定为「情节严重」，结论是否改变，为什么？(3) 法释〔2020〕10 号的门槛下调属于法律变更还是司法解释变更，各依何规则处理时际问题（参 §19）？</dd>
+    </dl>
+    <div class="src">出处：<a href="https://www.lifanglaw.com/cn/cnzyjjs/663.html" target="_blank" rel="noopener">如何看待《刑法修正案（十一）》后「侵犯商业秘密罪」的立案追诉标准</a>。</div>
+  </div>
+</div>
+
+<div class="block case">
+  <div class="hd"><span class="tag">沿革 2</span><span class="name">继承权丧失与「宽恕」的插入</span><span>继承法第 7 条 → 民法典第 1125 条</span></div>
+  <div class="bd">
+    <dl>
+      <dt>旧法</dt><dd>《继承法》第七条列举四种丧失继承权的情形，一经发生即绝对丧失，法律未设回转之门。</dd>
+      <dt>新法</dt><dd>《民法典》第一千一百二十五条第一款在保留列举之外增列第（五）项「以欺诈、胁迫手段迫使或者妨碍被继承人设立、变更或者撤回遗嘱，情节严重」，并于第（四）项增列「隐藏」遗嘱；同条第二款新增宽恕制度：「继承人有前款第三项至第五项行为，确有悔改表现，<strong>被继承人表示宽恕或者事后在遗嘱中将其列为继承人的，该继承人不丧失继承权</strong>。」即：遗弃或虐待（第三项）、伪造篡改隐藏销毁遗嘱（第四项）、以欺诈胁迫干预遗嘱（第五项）三项可回转，前两项（故意杀害被继承人、为争夺遗产杀害其他继承人）绝对丧失，不适用宽恕。</dd>
+      <dt>方法论解读</dt><dd>宽恕制度的插入，把「丧失继承权」从一项客观制裁改造成一项可由被继承人处分的效果，其背后是从「维护家庭伦理秩序」向「尊重被继承人意思自治」的价值重心偏移。解释上的直接后果是：凡涉及第一千一百二十五条的争议，旧法时代「丧失即绝对」的判例不得沿用；而「确有悔改表现」「宽恕」两个新增的不确定概念，必须由法院经具体化而填充——具体化所仰赖的，正是新法这一价值转向。历史解释在此不是考古，而是为新规范定音。</dd>
+    </dl>
+    <div class="src">出处：《中华人民共和国民法典》第一千一百二十五条；《中华人民共和国继承法》（已废止）第七条。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s3-3"><span class="s">§17</span>立法材料的取舍</h3>
+
+<p class="rn">所谓<span class="term">立法材料</span>，系指立法程序中所积累的、官方公布并可为公众所获取的文件。这个定义中的每个限定语都在排除某些东西。</p>
+
+<p class="rn"><strong>法律内含的材料</strong>——法律自身之中即已具备的谱系材料：序言，以及表述为目标规范的「方针式规定」（例如各法第一条的立法目的条款）。它们与条文同时通过、同时公布，效力最强，也最常被忽视。</p>
+
+<p class="rn"><strong>立法程序中的官方材料</strong>——分两类：在议会立法程序开展之前已然生成者（各种咨询程序中的意见、部门送审稿及其说明），以及生成于程序实际进行过程之中者（不同版本的草案、审议记录、草案的理由说明、专门委员会的报告）。我国法上可归入此类者，是提案人向常委会作的<strong>法律草案说明</strong>、宪法和法律委员会的<strong>审议结果报告</strong>、法工委关于草案主要问题的<strong>修改情况汇报</strong>，以及公开征求意见的<strong>草案文本</strong>——它们都载于全国人大常委会公报或官方网站，生成于立法程序之中。实务中被大量援引的「全国人大法工委释义」<strong>不属于立法材料</strong>：它由常委会工作机构在法律施行后编写出版，既非立法程序中生成，亦未经表决；依下文的规则，它只是起草参与者的规范立场，可以因内容有说服力而被采纳，但不因来源而具有约束力。援引它时应当标明这一性质，不得与草案说明等量齐观。</p>
+
+<p class="rn"><strong>不属于立法材料者</strong>——第三方在立法程序中发表的意见。学者建议稿、行业协会意见、媒体评论，纵使实际上影响了立法，也不具备立法材料的地位。理由是它们不曾获得立法机关的采纳表决。</p>
+
+<div class="block caution">
+  <div class="hd"><span class="tag">警示</span><span class="name">多数人意图，而非个人意图</span></div>
+  <div class="bd">
+    <p>必须将立法者的意图等同于立法机构中<strong>多数人</strong>——也即参与撰写被公布的法律草案者——的意图。原则上不应考虑个人的意见。一位起草组成员在会议上的发言、一位部门负责人在答问中的表述，都不能径自充作「立法者意图」。可以引用的，只能是显而易见的立法者根本意图，以及在立法团队或其委员会讨论中曾经被提出且没有异议的观点。</p>
+    <p>还有一条与此配套的效力规则：制定法起草准备工作参与者的规范立场，<strong>不具有约束力</strong>。它们可以发挥补充作用，有时甚至获得决定性的意义，但那是因为其内容有说服力，而不是因为其来源有权威。</p>
+  </div>
+</div>
+
+<p class="rn">材料的叠加是提高说服力的常规手段：立法动机与审议记录两种材料应当被结合起来援引，因为「两个证据总比一个证据更具说服力」。但须明白，无论叠加多少，立法者意图只能被赋予一种<strong>推定效力</strong>——人们必须参考立法意图，若不愿遵循，原则上也都可以推翻之。论证负担的大小，则视具体案件中立法者意图的明显程度而定。</p>
+
+<h3 class="sec" id="s3-4"><span class="s">§18</span>沉默的证明力：漏洞论据与默证</h3>
+
+<p class="rn">历史解释最危险的地带，是立法者什么都没说的地方。</p>
+
+<p class="rn"><strong>主观理论一方的构造</strong>是「有意识的漏洞」：待裁判的案件不在规范范围之内，乃是规范的计划使然，此即「合法漏洞」。立法者没有提及某项法律制度或法律后果，可能是因为他本欲禁止之；这被称作「有意义的沉默」或「非真正漏洞」。此时即被认为缺乏类推适用所必要的漏洞之「计划违反性」。</p>
+
+<p class="rn"><strong>批评</strong>则切中要害：这种论证模型通常只有纯粹形式论据的论证能力，换言之，它仅仅属于未被证明的前提。它构成一种<span class="term">默证</span>（<span class="de">argumentum e silentio</span>）——从「无有」或「沉默」当中得出结论。在立法者沉默或无所作为时，人们所得知的无非是一种「假设的意图」；它可能令人迷惑，甚或自相矛盾。在个别情况下，立法者可能是有意留下漏洞，从而完全将漏洞的填补寄托于司法。</p>
+
+<p class="rn">同样的考虑适用于所谓「立法者的默示许可」：立法者的无作为既不能表明其同意某种法律适用实践，亦不能表明它赋予了法官造法之权。结论是一条实务纪律——<strong>除非前提得到进一步的论证，那种从沉默当中得出结论的论证模型不再可靠</strong>。从立法者对特定问题的沉默本身得不出什么；唯有立法材料中较为具体的说明才应被考量在内。</p>
+
+<p class="rn">与默证并列的还有一个<span class="term">不确定性论据</span>：立法者历史意图的意义常常有其局限。若立法者在立法之初根本没有考虑到相关问题，或其意图自相矛盾以至令人迷惑，则历史解释交不出答案。此时应当追问的不是「被解释出来的历史意图」，而是规范在当下语境中的<span class="term">规范意图</span>。§8 说过的那一点在此兑现：语词的意义在于它在语言中的使用，而语境始终处于变迁。历史解释的贡献因此有上限——它能告诉你当年怎么用，不能替你决定今天怎么用。</p>
+
+<h3 class="sec" id="s3-5"><span class="s">§19</span>编写疏漏</h3>
+
+<p class="rn"><span class="term">编写疏漏</span>（<span class="de">Redaktionsfehler</span>）指立法者在表达其意志时，因对内容或表达产生误解，导致法律意图与法律文义不相一致。依「误言无害真意」（<span class="de">falsa demonstratio non nocet</span>）原则，起决定作用的在于<em>意思</em>。</p>
+
+<p class="rn">然而这条原则用起来有一个苛刻的前提：文义固然无关紧要，但人们仍须事后通过解释来确定立法者的明确意图；如果历史意图无法被查明，这条路就走不通。若解释明白无误地表明文义并未反映意图，有三种出路：其一，基于「法明确」之要求，立法者在之后的立法程序中自行修改其错误；其二，由立法程序中的主管部门进行修改；其三，迟迟未见前两者时，由法院通过解释「修正」文义。</p>
+
+<p class="rn">刑法上有一条重要的例外：如果编写疏漏使法律的严苛程度<strong>降低</strong>，则不得以「立法者本意更严」为由通过解释加以修正。其根据不是轻罚优先，而是类推禁止本身——文本已划定的处罚边界，不能由解释者依据未见于文本的意图向外推移。与此并列的是<span class="term">轻罚优先</span>规则，它处理的是另一个问题即法律变更：我国《刑法》第十二条第一款确立「从旧兼从轻」：原则上适用行为时的法律，新法不认为是犯罪或处刑较轻时适用新法。严格按文义，该款只处理「中华人民共和国成立以后本法施行以前的行为」，即 1997 年刑法的新旧衔接；把它适用于其后各次刑法修正案，本身已是一次超出文义的类推。之所以无人以类推禁止相责，理由正是 §14 所讲的那条细则：有利于行为人的类推在实体刑法上是被允许的。这是全书少有的、能让读者亲眼看见「禁止类推」与「允许有利类推」同时运作的一处实例。《立法法》第一百零四条亦为「更好地保护公民、法人和其他组织的权利和利益」的规定留出了有利溯及的空间。其共同的保护思想是：究竟适用哪一个法律，不能取决于具有偶然性的裁判时间点。</p>
+
+<p class="rn">与法律变更并列的还有<strong>司法解释的变更</strong>，它在我国发生得远比法律变更频繁，却常被漏掉。规则见《最高人民法院、最高人民检察院关于适用刑事司法解释时间效力问题的规定》（法释〔2001〕5 号）：司法解释的效力适用于所解释之法律的施行期间（第一条）；行为时没有相关解释的，依新解释办理（第二条）；行为时已有相关解释的，原则上依行为时的解释办理，但<strong>适用新的司法解释对犯罪嫌疑人、被告人有利的，适用新的司法解释</strong>（第三条）。即：司法解释的变更被套上了与《刑法》第十二条第一款相同的从旧兼从轻结构。</p>
+
+<p class="rn">把这条规则回接到鹦鹉案，方法论上的收获是双重的。其一，2022 年新解释对人工繁育个体的从宽立场，依第三条对此前的同类行为亦可适用，故当年那场「解释论还是立法论」之争并非纯粹的学术后见之明——它有一条实证的溯及通道。其二，一个不能被溯及适用于不利方向的东西，其性质更接近于对法律的具体化，而不是对法律的补充立法；司法解释虽在位阶上高于法官，在时间上却与法律一样受有利溯及的约束。这从反面支持了 §7 对司法解释性质的判断。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 11</span><span class="name">药品专利链接「过渡期」案</span><span>（2023）最高法知民终 4 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>背景</dt><dd>2020 年修正的《专利法》第七十六条新设药品专利纠纷早期解决机制（俗称「药品专利链接」）：仿制药申请人与原研药专利权人就申请注册的药品是否落入专利权保护范围发生纠纷的，可以向人民法院起诉；同条第三款授权国务院药品监督管理部门会同专利行政部门制定具体衔接办法。专利法自 2021 年 6 月 1 日施行，而《药品专利纠纷早期解决机制实施办法》自同年 7 月 4 日施行，中间留下一个月余的空窗。</dd>
+      <dt>案情</dt><dd>某制药株式会社于 2021 年 6 月 21 日在中国上市药品专利信息登记平台登记涉案专利，平台于 6 月 28 日首次公开该信息。国家药品监督管理局于 6 月 23 日收到、6 月 30 日受理某药业有限公司的仿制药注册申请。因衔接办法尚未施行，该仿制药申请人未作出、也无从作出专利声明。专利权人起诉请求确认涉案仿制药技术方案落入专利权保护范围。</dd>
+      <dt>争点</dt><dd>仿制药申请人抗辩：衔接办法施行前提出的注册申请，依法不溯及既往不应适用该机制；且其客观上不可能作出「四类声明」，故起诉不符合条件。真正的问题是——<strong>第七十六条第一款的施行，是否以第三款所指的衔接办法已经施行为前提？</strong></dd>
+      <dt>裁判</dt><dd>一审判决确认落入保护范围；最高人民法院 2023 年 3 月 14 日以（2023）最高法知民终 4 号判决驳回上诉、维持原判。理由三层：第一，第七十六条中并未特别规定第一款的施行应以第三款的衔接办法已经实施为前提，「在没有特别规定的情况下，应以法律的施行时间作为具体条款的施行时间」；第二，第一款已赋予当事人诉权，第三款针对的是行政审批与纠纷解决的程序衔接，两程序间的衔接办法是否制定并施行，不应影响当事人的诉权；第三，相关制度是否完善并不影响法律生效后的施行，「原则上不应以此为由事实上改变法律的施行时间」。至于衔接办法未施行致当事人客观上无法提交相应材料者，其诉权不应受影响，判断起诉条件时亦不宜引入「四类声明」的概念。</dd>
+      <dt>方法论解读</dt><dd>这是时际问题上一个干净的样本，三条本书的规则在此同时兑现。其一，<strong>拒绝默证</strong>（§18）：从「衔接办法尚未施行」推不出「第一款尚未施行」——沉默只是沉默；法院把举证方向倒转过来，要求主张「以配套为前提」的一方找出特别规定，找不到即不成立。其二，<strong>款与款的体系关系</strong>（§23）：第三款是授权条款而非生效条件，二者在规范构造上不同层；把授权条款读成生效条件，是对条文内部安排的误读。其三，<strong>禁止赘余的反向运用</strong>（§31）：若以配套未备为由推迟施行，等于使一部已生效的法律在一段时间内不生效，立法者确定的施行日就被虚置了。</dd>
+      <dt>延伸</dt><dd>须辨明本案与真正的溯及既往问题的分界。上诉人援引的「法不溯及既往」，指向的是行为时的法律状态；而本案所争的并非新法能否适用于旧行为，而是<em>新法何时开始适用</em>。两者常被混为一谈：前者是《立法法》第一百零四条的问题，后者只是施行日的确定。把施行日之争包装成溯及既往之争，是时际问题上最常见的一种偷换（参案例 21 中被告的同类抗辩）。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院知识产权法庭（2023）最高法知民终 4 号，裁判要旨「因『过渡期』内申请注册药品产生的药品专利链接诉讼的受理；药品专利链接诉讼的起诉条件」。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s3-6"><span class="s">§20</span>主客观理论之争与折中说</h3>
+
+<p class="rn">在解释法规范时有两个时间点可能至关重要：规范诞生之时，即立法者公布法律的时间；以及规范被适用的具体时间。两个时间点之间可能相隔很久，其间社会的关键要素可能已发生根本变化。法律究竟应依其公布时的主流理解作主观解释，还是应依后来适用者的角度作客观适用——这是法学方法论上聚讼最久的问题之一。</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th></th><th>主观理论</th><th>客观理论</th></tr></thead>
+  <tbody>
+    <tr><td class="k">决定性者</td><td>立法者在其历史语境下的动机与意图</td><td>「法律的意图」，即规范在今日法秩序中的标准含义</td></tr>
+    <tr><td class="k">正当性根据</td><td>民主原则与权力分立：漠视立法者意图等于剥夺议会控制制定法内容的权限，使议会权力让渡于司法</td><td>法律一经公布即与立法者相分离，并发展出自身特有的实效性；法典总会成为明日黄花</td></tr>
+    <tr><td class="k">对法续造的态度</td><td>严格：凡忽略明确文义、在法律中得不到印证、立法者未明示或默示同意者，皆不正当</td><td>宽松：规范目的的实现应优于其他所有解释模型；「法律可能比它的制定者更聪明」</td></tr>
+    <tr><td class="k">主要弱点</td><td>文义极少真正「清楚」，故难免循环论证；「有意义的沉默」多半是默证</td><td>不可证伪；法官可能在其掩蔽下求助空白公式，违背「方法论上的诚实」；且其所为通常已非解释而是法续造</td></tr>
+  </tbody>
+</table>
+<figcaption>两种理论各自的真理与各自的破口。拉伦茨的评断最为平允：主观理论的真理性在于法律由人为人而创造；客观理论的真理性在于制定法一旦开始适用，就会发展出超越立法者当初意志的实效性。</figcaption>
+</div>
+
+<p class="rn"><strong>折中说</strong>是今日的通行立场，其操作分两段：第一步以立法者意图为重心，它构成一项推定规则，对之只有参考义务而无遵从义务；第二步，若当下对规范的理解与历史意图相矛盾，则借助法的价值安排对第一步进行调整——而法律适用者必须公开他的价值判断，并为之提供说理。此说的好处是把两个对立观点的论据都纳入考量，等于在方法论中贯彻了「听取他方陈述」的原则，与「诉诸程序而实现正义」的思想异曲同工。</p>
+
+<p class="rn">与此相一致，「命题」和「论据」之间必须作严格的区分。主张「法典已经过时」「规范目的已经改变」「此处存在漏洞」，这些都只是<em>命题</em>，是有待论证的前提，而不是论据本身。把命题当论据用，是方法论上最常见的失手。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 12</span><span class="name">「北雁云依」案</span><span>指导案例 89 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>2009 年 1 月，吕晓峰与张瑞峥之女出生。夫妇二人取自四首古典诗词，为女儿取名「北雁云依」——「北雁」为姓，「云依」为名——并以此办理了出生证明。同年 2 月向济南市公安局历下区分局燕山派出所申请户口登记，民警告知姓氏须随父姓「吕」或母姓「张」，遂作出拒绝登记的行政行为。</dd>
+      <dt>争点</dt><dd>《民法通则》第九十九条第一款规定公民享有姓名权，《婚姻法》第二十二条规定子女可以随父姓、可以随母姓。父母能否在父姓母姓之外自创姓氏？两个条文本身都没有回答。被告的抗辩是：法律没有规定可以随第三姓，行政机关与当事人均无权对法律作扩大化解释。</dd>
+      <dt>裁判</dt><dd>本案于 2010 年 3 月 11 日裁定中止审理，理由是「案件涉及法律适用问题，需送请有权机关作出解释或者确认」。2014 年 11 月 1 日，全国人民代表大会常务委员会通过《关于〈中华人民共和国民法通则〉第九十九条第一款、〈中华人民共和国婚姻法〉第二十二条的解释》，规定公民原则上应当随父姓或者母姓，并列举三种可在父姓母姓之外选取姓氏的情形：（一）选取其他直系长辈血亲的姓氏；（二）因由法定扶养人以外的人抚养而选取抚养人姓氏；（三）有不违反公序良俗的其他正当理由。中止事由消除后，本案于 2015 年 4 月 21 日恢复审理，济南市历下区人民法院同月 25 日以（2010）历行初字第 4 号判决驳回诉讼请求：仅凭个人喜好和愿望创设姓氏，不属于立法解释第二款第三项的「其他正当理由」。最高人民法院 2017 年 11 月 15 日发布为指导案例 89 号。</dd>
+      <dt>方法论解读</dt><dd>这是主客观之争在中国法上的制度性答案，也是全书唯一一个法院把解释权交还给立法者的例子。其一，法院停审五年以待立法解释，正是《立法法》第一百一十九条所设出口的现实形态：遇有需要进一步明确具体含义或者法律制定后出现新情况者，应当提请全国人民代表大会常务委员会作法律解释或者提出修法议案，而不是自行扩张（§7）。其二，立法解释一经作出即与法律同等效力，解释的目标之争在本案中因此不再是主观与客观的对立，而转化为一个新的文义解释问题——什么是「其他正当理由」；折中说关于推定规则与论证负担的分配（§20），于是落到这个新设的不确定概念上。其三，立法解释第二款第三项是一个经由示例具体化的一般条款，其解释受同类解释规则的约束（§23）：前两项示例共有的特征是姓氏来源于客观上的承袭或者抚养关系，而个人喜好与此不同类。判决的实质论证正是沿这条线展开的。</dd>
+      <dt>延伸</dt><dd>本案还示范了「有意义的沉默」何以不可靠（§18）。被告主张「法律没有规定可以随第三姓」，故行政机关不得为之——这是一个标准的默证：从立法者的不作为中读出禁止。真正解决问题的不是沉默，而是立法者后来说出的那句话。顺带可见客观理论的用武之地：立法解释自身承认法律「制定后出现新的情况」，这正是《立法法》第四十八条第二项所预设的、以当下标准含义取代原初理解的通道。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院指导案例 89 号「『北雁云依』诉济南市公安局历下区分局燕山派出所公安行政登记案」（2017 年 11 月 15 日发布，第 17 批）；《全国人民代表大会常务委员会关于〈中华人民共和国民法通则〉第九十九条第一款、〈中华人民共和国婚姻法〉第二十二条的解释》（2014 年 11 月 1 日通过）。</div>
+  </div>
+</div>
+
+</section>
+
+<!-- ══════════════ 第四章 ══════════════ -->
+<section id="c4">
+<div class="ch-open">
+  <div class="fig">四</div>
+  <div>
+    <p class="kicker">第四章 · Kapitel 4</p>
+    <h2>体系解释</h2>
+  </div>
+</div>
+<p class="lede">没有一个法条是孤岛。体系解释基于这样一项基本认识：具体的法规范不能孤立解释，而必须置于法律的整个上下关联当中去理解。</p>
+
+<h3 class="sec" id="s4-1"><span class="s">§21</span>无矛盾法秩序的理想模型</h3>
+
+<p class="rn">体系解释的目的，是依据争议概念在体系中的位置及上下关联来揭示其含义；为此，应当避免出现价值冲突及相互矛盾的解释。其所仰赖的假定是：立法者规定这种实质上的关联，本来就是为了让整个规范表达出连贯、易于理解的含义。</p>
+
+<p class="rn">文义解释与体系解释的分野由此而明：<strong>体系解释则要到别的规范那里取证：它问本条与整个体系对不对得上。</strong>因此，「法秩序的统一」以及「例外当严格解释」等规则均属体系解释的范畴。</p>
+
+<p class="rn">体系有内外之分，此分别贯穿本章。<span class="term">外部体系</span>所关涉的乃是法律的形式构造、结构以及制度性概念的形成；<span class="term">内部体系</span>则指逻辑上没有冲突、目的论上协调一致，其所关涉的乃是一个关于价值判断的连贯体系。两者的权重差别甚大：以外部体系位置为据得出的结论，通常要让位于目的论的考量；唯有追溯到内部体系——制定法的目的、其赖以为基础的决定性价值决定以及原则构成的体系——才能全面理解制定法的意义脉络。</p>
+
+<blockquote>
+  <p>大意是：意义脉络问题本身已经引出目的标准。不宜将「传统的解释规则」看成各自为战的孤立「方法」；它们在具体化的过程中不仅相互补充、支撑，甚至从一开始就水乳交融在一起。主张解释者有权在不同方法之间自由选择的人，应当慎重考虑这一点。</p>
+  <cite>据拉伦茨《法学方法论》相关论述整理</cite>
+</blockquote>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 13</span><span class="name">无人继承遗产与酌给制度的协调</span><span>（2023）京 0114 民初 22038 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>赵某 2022 年去世，无配偶、子女、兄弟姐妹，父母先于其死亡，生前独自居住。其叔姑与舅姨共九人均主张对赵某尽了扶养义务，就房屋、存款、两份保险合同发生争议。其中赵某和系出租车司机，住处距赵某较近，曾多次开车送其就医并在节日带其出境旅游，帮扶相对更多；其余各人亦有一定帮扶。</dd>
+      <dt>争点</dt><dd>《民法典》第一千一百六十条规定：「无人继承又无人受遗赠的遗产，归国家所有，用于公益事业。」第一千一百三十一条规定：「对继承人以外的依靠被继承人扶养的人，或者继承人以外的对被继承人扶养较多的人，可以分给适当的遗产。」两条同时指向这笔遗产，一条说归国家，一条说可分给扶养较多的人。何者优先？</dd>
+      <dt>裁判</dt><dd>北京市昌平区人民法院 2024 年 11 月 29 日判决：主要遗产即案涉房屋归国家所有，由昌平区民政局管理；保险合同权利义务与银行存款在九人之间按扶养程度分配，赵某和分得较高比例。理由是：第一千一百六十条的适用应当结合第一千一百三十一条的遗产酌给制度，遵循与所提供的扶养相一致的原则；被继承人生前独自居住，并未达到主要依靠扶养人支持的程度的，应当认定主要遗产归国家所有，其余遗产则可分给对被继承人扶养较多的人。该案 2026 年 9 月入人民法院案例库。</dd>
+      <dt>方法论解读</dt><dd>两条规范同时适用于同一笔遗产，若各自为政便会相互排斥：依第一千一百六十条，应全归国家；依第一千一百三十一条，应全由扶养人分得。法院所做的不是在二者间择一，而是<strong>规范调适</strong>——把第一千一百三十一条读作第一千一百六十条的前置扣减，先依扶养程度酌给，余额归国家。这种处理之所以成立，是因为它使两条规范各自保有适用领域而无一被虚置（禁止赘余，§31）：若径归国家，第一千一百三十一条在无继承人的场合永无用武之地；若全由扶养人分得，第一千一百六十条便成具文。</dd>
+      <dt>延伸</dt><dd>请注意法院用以分配两者比例的那把尺子：「与所提供的扶养相一致」。它不是从任何一个条文的文字中读出来的，而是从两条规范共同的价值安排中提炼的——遗产酌给制度所奖酬的是实际的扶养付出，故扶养的程度决定分得的份额，扶养未达主要依靠的程度，主要遗产即不归扶养人。这就是本节所说的<em>内部体系</em>：规范之间的协调，最终要靠它们所服务的那套价值判断来完成，而不是靠条文的先后或位置（§22）。</dd>
+    </dl>
+    <div class="src">出处：人民法院案例库入库编号 2026-07-2-517-001「赵某和等诉米某明等继承纠纷案——无人继承又无人受遗赠的遗产的处理」，北京市昌平区人民法院（2023）京 0114 民初 22038 号民事判决；相关法条：《民法典》第一千一百三十一条、第一千一百六十条。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s4-2"><span class="s">§22</span>外部体系：概念金字塔、砌造技术与引致链条</h3>
+
+<p class="rn">法规范由一系列概念组成；只有结合许多不特定的法规则，才能形成一个完整的法规范。这种结合方式被称为<span class="term">砌造技术</span>，在民法中常常形成某种<span class="term">引致链条</span>。</p>
+
+<p class="rn">引致的优势在于避免重复，同时也能揭示法条间的关联性。代价则有两项：一是牺牲可读性；二是精确性受损——因为总是需要判断，此处存在的究竟是对<em>法根据</em>的引致，还是对<em>法效果</em>的引致。法根据的引致针对的是被引用规范的条件；而在法效果引致之情形，则只能适用被引致规范所规定的法效果。此外，也可能发生跨越不同法律的引致。</p>
+
+<p class="rn">《民法典》大量使用「参照适用」「适用……的规定」，正是引致技术的中文形态。以第四百六十七条第一款为例：本法或者其他法律没有明文规定的合同，适用本编通则的规定，并可以参照适用本编或者其他法律最相类似的合同的规定。这一条同时包含了法效果引致与一项概括性的参照指令，读它就是读整部合同编的结构。</p>
+
+<p class="rn">「参照适用」须单独立一条规则，因为它是本讲义范围内唯一一种<strong>由立法者下令进行的类推</strong>。一般的类推是解释者自己跨越文义射程，故属法续造；「参照适用」则是立法者已在文本中授权跨越，因而仍在制定法解释之内。但授权只解决了「可不可以」，没有解决「怎么做」，解释者仍须完成两项判断：其一，<strong>类似性</strong>——被参照规范所处理的利益冲突，与本案的利益冲突是否同型；其二，<strong>相容性</strong>——被参照规范中的哪些要素因本类型的特殊性而不得移入。「参照适用」与「适用」的分别正在这里：后者照搬，前者须逐个要素筛选，并为每一次取舍说理。凡判决只写「参照适用」或「不予参照」而不写筛选过程的，即是把一道指令当成了一个结论。读判决时还须留意一件事：<strong>法院自称的「参照」，未必是立法者下的指令。</strong>某银行南郑区支行诉李某、汉中广某房地产公司借款合同纠纷案（陕西省汉中市南郑区人民法院〔2022〕陕 0703 民初 1683 号，入人民法院案例库）中，法院先依《民法典》第四百零六条确认抵押权具有追及效力，继而写道「<em>参照该规定</em>」，认定商品房买卖合同与预购房屋抵押合同解除后，预告抵押登记的效力不消灭、义务主体由买受人变更为房企。此处的「参照」并无任何条文授权——第四百零六条说的是抵押财产的转让，本案是合同解除后的返还，法院是在自行跨越文义。这仍可能是正当的，但它是<strong>自主类推</strong>而非参照适用，论证负担按法续造的标准计算（§6、§34）。区分的办法只有一个：去找那道授权条文；找不到，「参照」二字就只是一个委婉语。指导案例 244 号「胡某波申请再审无罪、人身自由损害刑事赔偿案」是一次完成了筛选的参照：原判数罪中部分罪名经再审不成立，致实际服刑超出再审判决确定的刑期，法院参照适用两高刑事赔偿解释第六条关于「数罪并罚的案件经再审改判部分罪名不成立，监禁期限超出再审判决确定的刑期」的规定予以赔偿——该条文义覆盖的是「部分<em>罪名</em>不成立」，而本案中诈骗罪的罪名仍然成立，只是其大部分犯罪事实经再审被撤销、量刑随之变更；此一情形不在该条文义之内，而两者的利益冲突同型（超期监禁应予填补），故可移入。</p>
+
+<p class="rn">《民法典》第六百四十六条把这一问题摆到了本章案例 14 的正前方：「法律对其他有偿合同有规定的，依照其规定；没有规定的，参照适用买卖合同的有关规定。」股权转让是有偿合同，故在民法典之下，指导案例 67 号所拒绝的不再是一次自由的类比，而是一道法定的参照指令。这不改变该案的结论，但改变了它的论证格式：法院此时须说明的不是「股权转让不是买卖」——第六百四十六条已经使这一点变得无关紧要——而是「第六百三十四条所安排的价值，因股权转让的类型特殊性而不得移入」。这恰好就是该案方法论解读所提示的那个理由；换言之，民法典的这一条把该案说理次序的颠倒，从一项批评变成了一项强制。</p>
+
+<p class="rn">若概念之上还存在上位概念，即形成<span class="term">概念金字塔</span>：每一个引出的下位概念都包含上位概念的全部特征，并至少拥有一项新的特征。「法律行为—合同—买卖合同—分期付款买卖合同」便是一条完整的金字塔。金字塔的实务价值在于：它告诉你某一规则的<em>适用层级</em>，从而回答「这条规则能不能用在那个概念上」。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 14</span><span class="name">汤长龙诉周士海股权转让纠纷案</span><span>最高人民法院指导案例 67 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>双方约定分期支付股权转让款。受让人一期款项迟延，出让人主张依《合同法》第一百六十七条第一款（现为《民法典》第六百三十四条）解除合同：分期付款买卖合同中买受人未支付到期价款达全部价款五分之一，出卖人可要求支付全部价款或解除合同。</dd>
+      <dt>争点</dt><dd>分期付款买卖合同的法定解除规则，能否适用于分期付款的股权转让合同？换言之，「买卖合同」这一上位概念之下的特殊解除权，射程能否延伸至股权转让？</dd>
+      <dt>裁判</dt><dd>最高人民法院于 2016 年 9 月 19 日将本案发布为指导案例 67 号，拒绝参照适用第一百六十七条。理由约有四项：标的物有体物与无体物之别；分期付款买卖规则多发、常见于经营者与消费者之间，而股权交易属商事合同；依诚信原则出让人应先请求支付全部价款而非径行解除；解除对交易安全有不利影响。</dd>
+      <dt>方法论解读</dt><dd>结论可从，理由有欠。这正是体系解释与目的解释分工的示范题。仅以「标的物性质不同」「交易主体不同」立论，走的是<em>外部体系</em>的路子——比较构成要件要素的重要性，属于概念层面的对比；这种论证很容易被反驳，因为股权转让确实可以被涵摄于广义的买卖之下。更有力的理由应当取自<em>内部体系</em>：第一百六十七条的规范目的在于保护分期付款交易中处于价款回收风险的出卖人，同时抑制消费者信贷的滥用；而处理分期付款股权转让所应具备的价值取向，是维护交易安全与有限责任公司的人合性。两套价值安排并不平行，故缺乏可类比性。换言之，拒绝适用的根据在于<strong>价值判断的不可类比</strong>，而非<strong>概念特征的差异</strong>。记住这一区别，可以避免大量似是而非的体系论证。</dd>
+      <dt>后续</dt><dd>立法沿革上的一处变化恰好回照本案的说理质量：《民法典》第六百三十四条在承继该规则时，增设了「经催告后在合理期限内仍未支付到期价款」的要件。指导案例 67 号的第三项理由——依诚信原则出让人应先请求支付全部价款而非径行解除——因此被立法者吸收为构成要件。这说明本案的结论确有其实质根据，只是判决当时把它摆在了外部体系的论证之后，说理的次序颠倒了。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院指导案例 67 号（2016年9月19日发布）；评析参见 <a href="https://law.uibe.edu.cn/docs/2021-09/569d30371e554921becf212b390485d6.pdf" target="_blank" rel="noopener">《分期付款股权转让合同解除制度之漏洞填补》</a>。</div>
+  </div>
+</div>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 15</span><span class="name">药品专利链接诉讼参照适用「先行裁驳、另行起诉」</span><span>（2022）最高法知民终 2177 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>某制药会社系原研药「盐酸鲁拉西酮片」相关发明专利的专利权人，并已在登记平台完成登记。浙江某药业公司申请仿制药上市许可后，专利权人依《专利法》第七十六条提起确认是否落入专利权保护范围之诉。诉讼期间，国家知识产权局宣告涉案专利权全部无效，该审查决定尚未确定发生法律效力。</dd>
+      <dt>争点</dt><dd>《最高人民法院关于审理侵犯专利权纠纷案件应用法律若干问题的解释（二）》第二条就<strong>侵害专利权纠纷</strong>规定了「先行裁驳、另行起诉」：主张的权利要求被宣告无效的，法院可以裁定驳回起诉；无效决定嗣后被生效行政判决撤销的，可以另行起诉。该条能否参照适用于<strong>确认是否落入专利权保护范围纠纷</strong>这一新类型之诉？</dd>
+      <dt>裁判</dt><dd>北京知识产权法院参照适用该条裁定驳回起诉；最高人民法院 2022 年 12 月 13 日以（2022）最高法知民终 2177 号裁定驳回上诉、维持原裁定。</dd>
+      <dt>方法论解读</dt><dd>本案把 §22 所讲的两步判断做得一目了然，恰可与案例 14 的反面结论对读。<strong>第一步，类似性。</strong>法院指出：两类诉讼中当事人「与案件的直接利害关系均在于权利人拥有合法有效的专利权」；对于已被宣告无效而决定尚未生效的专利权，「其在两类诉讼中应具有相同的地位，即对起诉条件的影响应当相同」。利益冲突同型，类似性因此成立——注意法院比较的是<em>被参照规范所处理的利益冲突</em>，而不是两种诉讼的名称或标的。<strong>第二步，相容性。</strong>法院逐一检验移入后是否与新类型的制度定位相容：早期解决机制的作用在于把上市后可能发生的侵权纠纷提前到审评审批阶段解决，若以状态极不稳定的专利权为基础作出落入与否的认定，反而「无法实际达到早期解决药品专利纠纷的效果」；且先行裁驳不致利益失衡，因为该机制并非解决药品专利纠纷的唯一途径，无效决定日后被撤销的，权利人仍可另行提起侵权之诉。两步俱过，参照方告完成。</dd>
+      <dt>延伸</dt><dd>与案例 14 对照即可看出「参照」的真实分量。指导案例 67 号拒绝把分期付款买卖的解除规则移入股权转让，本案准许把「先行裁驳」移入药品专利链接——两案的分歧不在于被参照规范的条文有多近，而在于价值安排能否移入。参照是一道指令，不是一个结论；准许与拒绝，都要把筛选过程写出来。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院知识产权法庭（2022）最高法知民终 2177 号，裁判要旨「药品专利链接诉讼参照适用『先行裁驳、另行起诉』」。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s4-3"><span class="s">§23</span>相邻概念、规范位置与同类解释规则</h3>
+
+<p class="rn">体系解释的第一组具体模型，是从规范的<strong>邻居</strong>与<strong>座位</strong>中读取信息。</p>
+
+<p class="rn">相邻的概念可能有助于解释待澄清的构成要件要素；依据构成要件要素在体系中所处的位置，亦可探得其意义。这不仅指相邻条文，也包括规范内部的安排——款、句、数字项及字母项的划分，都会对理解产生助益。要完全理解规范背后立法者的意图，通常必须先理解规范之间的相互关系。</p>
+
+<p class="rn">英美法上的<span class="term">同类解释规则</span>（<span class="de">ejusdem generis</span>）给出了一条硬规则：一般条款若经由示例规定具体化，则其解释即不能超越所列出示例的范围。与之配套的还有<span class="term">明示其一即排除其他</span>（<span class="de">expressio unius est exclusio alterius</span>）。这两条规则在中国刑法的「其他」条款上有极其重要的用武之地。</p>
+
+<h4>当然解释与反面解释</h4>
+<p class="rn">与同类解释规则同族而方向不同的，是两组在中国裁判文书里出现频率极高、却极少被点名的推论。<span class="term">当然解释</span>：从规范对某一情形的评价，推出它对另一情形「更应如此」的评价，其两个形态是<strong>举重以明轻</strong>（重者既被允许或不罚，轻者当然如此）与<strong>举轻以明重</strong>（轻者既被禁止或处罚，重者当然如此）。<span class="term">反面解释</span>（<span class="de">argumentum e contrario</span>）：从规范只对甲作了规定，推出它对非甲应作相反处理；上文的「明示其一即排除其他」就是它的一个成文形态。</p>
+
+<p class="rn">三者的使用条件极不对称，务必分开记：</p>
+<ul>
+  <li><strong>举重以明轻</strong>在刑法上可用，因为它的方向是出罪或减轻，落在有利于行为人的一侧；陈兴良「依法入罪，以理出罪」所依靠的正是这一推论。</li>
+  <li><strong>举轻以明重</strong>在刑法上<strong>不可用</strong>。它以「事理当然」代替文义，结构与类推完全相同，只是把类推的评价改写成了感叹的语气。窃电案中检方的论据——电与物功能相同、甚至更便于取用，故「当然」是物——即为其标本；帝国法院所拒绝的不是这个论据的说服力，而是它的<em>身份</em>。在民法上它可用，但仍须证明「重」与「轻」的排序取自规范目的，而不是取自解释者的直观。</li>
+  <li><strong>反面解释</strong>的前提，是证明该列举是<em>穷尽的</em>；而这一前提本身不能从沉默推出，否则即为默证（§18）。它在中国法上最干净的一次运用是指导案例 24 号「荣宝英诉王阳、永诚财产保险江阴支公司案」：受害人无过错时，其体质状况对损害后果的影响「不属于可以减轻侵权人责任的法定情形」——法定减责事由是一张穷尽的清单，清单之外不得增补，故反面解释在此成立。农药登记试验一案的延伸恰是一次失败的反面解释：立法者只为药品与医疗器械明文设例外，并不意味着农药登记试验被排除——第五项是对特定行业的明确化，而非对第四项固有射程的限缩。</li>
+</ul>
+
+<p class="rn">一条便于课堂记诵的对照：同类解释规则收缩兜底项，反面解释收缩列举之外的空间，当然解释扩张规范的评价射程。前两者的负担在于证明「同类」与「穷尽」，后者的负担在于证明「更应如此」的排序来自法律而不是来自论者。三者都只是形式论据：同类解释规则的修正见 §34 修正表与 §35 第六行；反面解释须先过「有意义的沉默」那一关（§34 末行、§18）；当然解释的「更应如此」排序须取自规范目的，而非论者的直观（§29）。</p>
+
+<p class="rn">兜底项还有第三种构造，既非列举之后的收口，也非清单之外的推论，而是与若干类型<em>并列</em>的一项概括表述。《反垄断法》把垄断协议界定为「排除、限制竞争的协议、决定或者<strong>其他协同行为</strong>」即属此类。（2022）最高法知行终 29 号案中，十九家混凝土企业建立微信群并通过聚餐就涨价进行意思联络，此后各自不同幅度地上调价格。最高人民法院认定构成「其他协同行为」，其标准是：具有竞争关系的经营者之间存在<strong>一致性市场行为</strong>与相关<strong>意思联络、信息交流或传递</strong>的，可以初步认定存在协同行为；同时还须考察经营者能否对一致性行为作出合理解释，以排除其根据市场和竞争状况独立作出相同决定的可能。此处的同质性不是从前项示例中归纳出来的，而是从「协议」「决定」二者共有的本质——<em>意思的协调</em>——中提炼出来的：微信群内「心照不宣的默契」之所以够格，正因为它替代了独立决策。并列式兜底的解释方法由此可以记住一句：向左右两边看，不是向前面看。</p>
+
+<div class="block statute">
+  <div class="hd"><span class="tag">条文</span><span class="name">《刑法》第二百二十五条（非法经营罪）</span></div>
+  <div class="bd txt">
+    <p>违反国家规定，有下列非法经营行为之一，扰乱市场秩序，情节严重的，处五年以下有期徒刑或者拘役……<br>（一）未经许可经营法律、行政法规规定的专营、专卖物品或者其他限制买卖的物品的；<br>（二）买卖进出口许可证、进出口原产地证明以及其他法律、行政法规规定的经营许可证或者批准文件的；<br>（三）未经国家有关主管部门批准非法经营证券、期货、保险业务的，或者非法从事资金支付结算业务的；<br>（四）<strong>其他严重扰乱市场秩序的非法经营行为</strong>。</p>
+  </div>
+</div>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 16</span><span class="name">王力军非法经营再审改判无罪案</span><span>最高人民法院指导案例 97 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>2014 年 11 月至 2015 年 1 月，农民王力军未取得粮食收购许可证及工商营业执照，从周边农户收购玉米再售予粮库，收购金额二十一万八千余元，获利约六千元。</dd>
+      <dt>争点</dt><dd>无证收购玉米转售粮库，能否被涵摄于第二百二十五条第（四）项「其他严重扰乱市场秩序的非法经营行为」之下？换言之，兜底项的射程，是否受前三项示例的约束？</dd>
+      <dt>裁判</dt><dd>巴彦淖尔市临河区人民法院（2016）内 0802 刑初 54 号刑事判决（2016 年 4 月 15 日）认定非法经营罪，判处有期徒刑一年、缓刑二年，并处罚金二千元。巴彦淖尔市中级人民法院（2017）内 08 刑再 1 号刑事判决（2017 年 2 月 14 日）撤销原判，改判无罪。最高人民法院将本案发布为指导案例 97 号（2018 年 12 月 19 日，第十九批），裁判要点为：对刑法第二百二十五条第四项「其他严重扰乱市场秩序的非法经营行为」的适用，<strong>应当根据相关行为是否具有与该条前三项规定的非法经营行为相当的社会危害性、刑事违法性和刑事处罚必要性进行判断</strong>；虽违反行政管理有关规定，但尚未严重扰乱市场秩序的经营行为，不应当认定为非法经营罪。</dd>
+      <dt>方法论解读</dt><dd>这是同类解释规则在中国刑法上一次完整的落地。第（四）项是一个兜底的一般条款，前三项是示例；依同类解释规则，兜底项的解释不能超越示例所标示的范围与强度。最高人民法院所谓「相当的社会危害性」，实质上就是在为兜底项寻找与示例之间的<em>同质性</em>。</dd>
+      <dt>延伸</dt><dd>请注意此处体系论证与目的论证的接合点：为什么「相当」是正确的标准？因为前三项所共有的，是对特定市场准入秩序的实质破坏；这一共性不是从条文位置读出来的，而是从规范目的中提炼出来的。所以严格说来，同类解释规则虽形式上属体系解释之范畴，细究起来实为目的论的产物——唯有先行确定规范之目的，才能判断何谓「同类」。刑法第一百一十四条「其他危险方法」的限缩，用的是同一副药方：必须与放火、决水、爆炸、投放危险物质具有相当的、一次性危及公共安全的危险性。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院指导案例 97 号「王力军非法经营再审改判无罪案」。参见 <a href="https://ssfb86.com/index/News/detail/newsid/9188.html" target="_blank" rel="noopener">指导案例 97 号全文</a>；<a href="http://news.cnr.cn/native/gd/20170220/t20170220_523609514_1.shtml" target="_blank" rel="noopener">王力军获判无罪，最高法：非法经营罪适用应谨慎</a>。</div>
+  </div>
+</div>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 17</span><span class="name">阳光一佰生产、销售有毒、有害食品案</span><span>指导案例 70 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>阳光一佰公司在其辅助降血糖的保健食品「山芪参胶囊」中添加盐酸丁二胍，2012 年 5 月至 9 月间经多地检出并被告知后仍继续生产、销售，涉案金额八百余万元。盐酸丁二胍未获药品监督管理部门批准生产或进口，不得作为药品在我国生产、销售、使用，亦非食品添加剂；它不在国务院有关部门公布的《食品中可能违法添加的非食用物质名单》《保健食品中可能非法添加的物质名单》之列。</dd>
+      <dt>争点</dt><dd>刑法第一百四十四条的「有毒、有害的非食品原料」，由两高《关于办理危害食品安全刑事案件适用法律若干问题的解释》第二十条以四项具体化：前三项为列举，第四项为「其他危害人体健康的物质」。名单之外的物质能否落入第四项？</dd>
+      <dt>裁判</dt><dd>江苏省扬州市广陵区人民法院（2013）扬广刑初字第 0330 号判决有罪，扬州市中级人民法院（2014）扬刑二终字第 0032 号裁定驳回上诉、维持原判。最高人民法院 2016 年 12 月 28 日发布为指导案例 70 号。裁判理由认定：盐酸丁二胍与名单中的其他降糖类西药（盐酸二甲双胍、盐酸苯乙双胍）「具有同等属性和同等危害」，依该解释第二十条第四项、第二十一条，应当认定为刑法第一百四十四条规定的「有毒、有害的非食品原料」。</dd>
+      <dt>方法论解读</dt><dd>本案与案例 16 是同类解释规则的一体两面，须对照着读。两案都在为兜底项寻找它与示例之间的同质性，差别只在方向：王力军案用它<em>出罪</em>，本案用它<em>入罪</em>。方向一旦相反，论证负担即不对称。出罪方向上，同质性不足就足以否定构成要件，无须额外论证；入罪方向上，同质性必须被正面证成，且证成的强度要足以支撑「民众能够预见其行为入罪的可能性」（§13）。本案的做法因此值得留意：法院没有停在「同样有害」这个结果判断上，而是先指出盐酸丁二胍与名单内两种物质同属双胍类降糖药，再以专家意见与鉴定意见证明其同等危害——<strong>「同等属性」在前，「同等危害」在后</strong>。属性先于危害，正是同质性要求的内容；若只论危害不论属性，兜底项就退化为一个纯粹的结果条款，而那已经不是解释。</dd>
+      <dt>延伸</dt><dd>还有一层位阶问题。此处具体化「有毒、有害的非食品原料」的是司法解释，而司法解释只有具体化权、没有定义权（§9）。因此真正的检验不是「盐酸丁二胍是否落入解释第二十条第四项」，而是「解释第二十条第四项连同本案的适用，是否仍在刑法第一百四十四条『有毒、有害的非食品原料』的可能文义之内」。本案的答案是肯定的——一种未获批准、长期服用可能危及生命的化学物质，在日常语言中就是有毒、有害的。但提问的顺序不能颠倒：把司法解释当作法条直接涵摄，是实务中最常见的一种省略（§7）。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院指导案例 70 号「北京阳光一佰生物技术开发有限公司、习文有等生产、销售有毒、有害食品案」（2016 年 12 月 28 日发布，第 15 批）；相关法条：《中华人民共和国刑法》第一百四十四条。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s4-4"><span class="s">§24</span>例外不得扩张——以及这条规则的相对化</h3>
+
+<p class="rn">所谓<span class="term">例外规则</span>，指的是突破成文或不成文原则（它们针对的系常规案例）的法律规则。「例外不得扩张」乃一项著名原则，即例外必须被严格解释。</p>
+
+<p class="rn">然而这条规则的分量必须被压低。它只不过是法发现过程中的诸多步骤之一；目的性的考量可作为补充，并在必要时对其加以修正。例外性的规则也可以从宽解释，甚或类推适用。理由有三层。</p>
+
+<ul>
+  <li><strong>原则与例外的身份并不稳定。</strong>何者为原则、何者为例外，本身就要靠判断。立法者所规定的「例外」，可能在实践中已成通行的「原则」。</li>
+  <li><strong>例外之例外又变回规则。</strong>此时反倒应当从宽解释。</li>
+  <li><strong>它是概念法学的遗留。</strong>把它当硬规则来用，正是概念法学的做法。它只是形式论据，地位弱于目的性考量；一旦有更强的实质理由，它就该让位。</li>
+</ul>
+
+<p class="rn">正确的用法是给它加一个限制：若将这一法构造限于<em>内部体系</em>，从而确保其符合目的性，那么在具体情况下强调「例外不得被一般化」即属正当之举。符合此一限制时，人们可以在说理论证中诉诸它。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 18</span><span class="name">江苏省纺织集团六公司实质合并破产重整案</span><span>指导案例 163 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>省纺织进出口公司及其五家子公司先后进入重整程序后，管理人以六家公司人格高度混同为由，申请实质合并重整。六家公司人员任职高度交叉、共用财务及审批人员、业务高度混同，相互间存在大量关联债务与担保，收益与债权债务难以区分。</dd>
+      <dt>争点</dt><dd>《企业破产法》并未规定关联企业的实质合并破产。能否，以及在何种条件下，突破法人人格独立这一原则而合并审理？</dd>
+      <dt>裁判</dt><dd>南京市中级人民法院（2017）苏 01 破 1、6、7、8、9、10 号裁定准许六公司合并重整，其后批准重整计划。最高人民法院 2021 年 9 月 18 日发布为指导案例 163 号，裁判要点第一项：关联企业成员的破产应当以适用单个破产程序为原则，在关联企业成员之间出现法人人格高度混同、区分各成员财产成本过高、严重损害债权人公平清偿利益的情况下，可以依申请例外适用实质合并方式；人民法院应当对合并破产的必要性、正当性进行审查。</dd>
+      <dt>方法论解读</dt><dd>本案把「例外不得扩张」这条规则的真实运作方式摆了出来。其一，例外的身份是被论证出来的，不是被宣告的：法院先确立「公司人格独立是公司制度的基石，关联企业成员的破产亦应以适用单个破产程序为原则」，再逐项检验三个累积条件，最后才落到例外。其二，例外的射程由条件锁定，而不是由「例外应严格解释」这句话锁定——三个条件缺一则例外不适用，这比一句形式论据有用得多（§24）。</dd>
+      <dt>延伸</dt><dd>须诚实指出本案所处的位置。实质合并破产在《企业破产法》中并无明文，法院所援引的第一条、第二条分别是立法宗旨条款与破产原因条款；换言之，这一例外本身不是从条文的可能文义中读出来的，而是从内部体系与规范目的中建构出来的。按本讲义的划界，它已越出解释而进入法续造，不在本书的论证格式之内。把它放在此处，是为了展示那条量度：造法成分越多，论证负担越重（§6、§34 图 3）。本案裁判理由之所以用整段篇幅论证「分别重整将使利益实质输入企业的普通债权人获得额外清偿，而利益输出企业的普通债权人遭受损失」，正是这一负担的兑现——法院知道自己不能只说「例外成立」。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院指导案例 163 号「江苏省纺织工业（集团）进出口有限公司及其五家子公司实质合并破产重整案」（2021 年 9 月 18 日发布，第 29 批）；相关法条：《中华人民共和国企业破产法》第一条、第二条。</div>
+  </div>
+</div>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 19</span><span class="name">许诺销售不属于药品行政审批例外</span><span>（2021）最高法知行终 451 号、702 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>背景</dt><dd>《专利法》第七十五条第五项规定，「为提供行政审批所需要的信息，制造、使用、进口专利药品或者专利医疗器械的，以及专门为其制造、进口专利药品或者专利医疗器械的」，不视为侵犯专利权。此即 Bolar 例外，2008 年第三次修正时增设，目的是使仿制药企业得在专利期内完成审批所需的准备，以免专利权的保护期被变相延长。</dd>
+      <dt>案情</dt><dd>恒生公司、生命能公司在其官网及「第十八届世界制药原料药中国展」上展示落入拜耳公司专利权保护范围的「利伐沙班片」「利伐沙班原料药」，配有包装盒、包装瓶并印有自己的注册商标。专利行政裁决认定构成许诺销售侵权并责令停止，两公司不服提起行政诉讼。</dd>
+      <dt>争点</dt><dd>两公司抗辩：展示系针对计划开发仿制药的企业的定向投送，未标价格与供货量，不构成许诺销售；纵然构成，亦属 Bolar 例外。核心问题是——第七十五条第五项所列的「制造、使用、进口」是一张<strong>封闭的清单</strong>，还是一个可依目的扩充的例示？</dd>
+      <dt>裁判</dt><dd>最高人民法院二审维持原判。关于许诺销售：针对特定对象作出销售意思表示的定向投送亦属许诺销售；既可以是要约，也可以是要约邀请；意思表示内容明确具体即可认定，缺少价格、供货量、产品批号等合同成立条款并不影响认定。关于例外的射程：该条调整的行为是为自己申请行政审批而实施的「制造、使用、进口」，以及专门为前一主体申请行政审批而实施的「制造、进口」，<strong>均不包括许诺销售</strong>；且抗辩主体须以存在实际的行政审批申请人为前提。法院并明确宣示：「专利法对于合法的权利保护是原则，法定不侵权的规定是例外，例外必须严格解释。」</dd>
+      <dt>方法论解读</dt><dd>本案与案例 24（农药登记试验案）必须并置着读，它们是本书对「例外不得扩张」这条规则最有力的一次检验。两案同为专利法上的不视为侵权条款，一则严格、一则宽缓，结论相反而方法一致；<strong>决定松紧的不是「例外」这个身份，而是例外条款本身的构造</strong>。第七十五条第五项把允许的行为逐一列举为「制造、使用、进口」，这是一份<em>封闭的清单</em>，其射程由反面解释锁定（§23）——明示其一即排除其他，许诺销售既未列入，便在外。第七十五条第四项的「专为科学研究和实验而使用」则是一个<em>评价性的一般表述</em>，没有可供反面解释的清单，其射程只能由规范目的界定，故登记试验得以纳入。于是可以得出一条比「例外应严格解释」有用得多的规则：<strong>列举式例外受反面解释约束，评价式例外由目的决定；援引「例外从严」之前，先看那个例外是怎么写的。</strong></dd>
+      <dt>延伸</dt><dd>法院的目的论证同样值得记下：不适用例外的实质理由，是未经许可的许诺销售「可能导致不特定对象推迟向专利权人购买专利产品」，从而在专利期内即削弱权利人的市场利益。这与案例 24 中「避免专利保护期被变相延长」是同一利益天平的两端。两案合观，Bolar 例外的边界其实是一句话：准备可以，抢市场不行。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院知识产权法庭（2021）最高法知行终 451 号、（2021）最高法知行终 702 号，裁判要旨「许诺销售不属于专利法规定的药品和医疗器械行政审批例外范围」。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s4-5"><span class="s">§25</span>法秩序的统一与法概念的相对性</h3>
+
+<p class="rn"><span class="term">法秩序的统一</span>，是指同一概念在不同法律中应作同一解释；各法各解，法秩序便无所谓统一。其根据是「同一性」的逻辑法则：任何对象须与其自身保持同一。</p>
+
+<p class="rn">但这条原则有一个前提：存在所谓<span class="term">价值平等性</span>——不同法律或法规范所赖以为基础的价值必须是一致的。若前提不成立，这一形式论据便不再具有说服力，此时应当承认<span class="term">法概念的相对性</span>。一个值得追问的题目：「难以弥补的损害」这一表述，同时出现在《民法典》第九百九十七条的人格权侵害禁令、《民事诉讼法》的行为保全与《反家庭暴力法》的人身安全保护令之中。李某申请人格权侵害禁令案（吉林省长春新区人民法院，最高人民法院 2026 年人民法院网络法治典型案例之一）就网络暴力情形给出了三组考量因素——侵权行为方式与信息传播速度范围（紧迫性）、人格权类型与事后赔偿能否充分弥补（不可弥补性）、损害范围与程度（措施的必要限度）。这套标准能否径行移用于行为保全与人身安全保护令？答案取决于三项制度的价值取向是否一致，而不取决于它们用了同一个词。</p>
+
+<p class="rn">法概念的相对性可以展开到相当精细的程度：</p>
+
+<ul>
+  <li>不同法律、更不用说不同法领域，有时蕴含着相互迥异的价值安排。</li>
+  <li>即便对于立法定义，也不能盲目地从法律文本中认识其含义，而应从其语境出发作目的性解释。</li>
+  <li>即使在同一部法律当中，概念也可能需要作不同之解释。</li>
+  <li>甚至可能出现这样的情况：同一条法律规范当中的同一概念，在不同情况下也会作出不同的解释。当某一规范兼具私法及公法、或兼具私法及刑法之属性时，即需如此为之——此即<span class="term">区分解释</span>：规范适用于私主体之间的关系时，从私法角度解释之；若应由行政机关或检察官负责查明，则从公法或刑法的角度解释之。</li>
+</ul>
+
+<div class="block caution">
+  <div class="hd"><span class="tag">警示</span><span class="name">谁主张相对性，谁承担论证负担</span></div>
+  <div class="bd">
+    <p>「法秩序的统一」与「法概念的相对性」乃是在逻辑上具有等同权重的两个法构造，必须与目的性的考量相结合，方能体现各自的说服力。二者的关系是：统一性所确立的<strong>规则</strong>，能够为相对性所<strong>反驳</strong>；因此主张法概念相对性的人，必须承担相应的论证负担。</p>
+    <p>回看案例 4（赵春华案）：行政法上「枪支」的 1.8 焦耳标准能否直接移入刑法，正是这一对构造的正面交锋。主张相对性者必须说清：《枪支管理法》的管制目的与刑法的处罚目的在何处分道扬镳，以及为什么「足以致人伤亡」这一法定要素不容被部门标准置换。这个负担是可以扛起来的——但它必须被扛起来，而不是以「刑法自有其独立性」一语带过。</p>
+  </div>
+</div>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 20</span><span class="name">捆绑搭赠构成专利法上的「销售」</span><span>（2024）最高法知民终 1286 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>嘉某公司招标采购钢筋加工设备，维某公司中标，签订总金额 209.6 万元的采购合同，合同对其中的缠丝机未单独列项计价。天某公司作为「一种缠丝机」发明专利的独占被许可人起诉侵权。二审中维某公司主张：缠丝机系滚焊机订单的配套赠品，未单独计价，故不存在销售行为；嘉某公司亦确认缠丝机属赠品。</dd>
+      <dt>争点</dt><dd>《专利法》第十一条第一款禁止未经许可「为生产经营目的制造、使用、许诺销售、<strong>销售</strong>、进口其专利产品」。白送的赠品，算不算「销售」？</dd>
+      <dt>裁判</dt><dd>最高人民法院 2025 年 12 月 30 日以（2024）最高法知民终 1286 号判决认定构成销售。理由：「依据商业惯例及交易实质，赠品属于销售者为达成主商品交易的一种促销手段，其价值已经隐含在付费主商品的利润中，消费者一旦完成主商品的购买，实质上已为赠品支付了相应对价，故商品交易中赠与赠品行为应当视为整体销售行为的一部分。」本案中给付赠品以买方支付滚焊机对价为前提，获利已隐含于滚焊机的销售利润之中，故即便属于赠品，亦属销售行为。</dd>
+      <dt>方法论解读</dt><dd>请把本案与案例 9（陆勇案）并排放：同一个「销售」，一个在刑法第一百四十一条里被读窄，一个在专利法第十一条里被读宽，看上去正是「法概念的相对性」的现成例证。但这个结论下得太快。两案所用的判准其实完全相同——<strong>谁居于卖方地位、谁为之支付了对价</strong>。陆勇代表的是买方的集体采购，对价是病友付给印度公司的，故不落入「销售」；维某公司是卖方，赠品的对价已隐含在主商品价款中，故仍是「销售」。方法一致，事实不同，结论自然不同。这恰恰说明<strong>法秩序的统一在此是成立的</strong>：两部法律对「销售」的语义核心共享同一套价值——以对价换取商品的卖方行为。</dd>
+      <dt>延伸</dt><dd>由此可得一条检验法概念相对性的纪律：<strong>结论不同不等于概念不同。</strong>主张某一语词在甲法与乙法中含义有别的人，必须指出两部法律在此处的价值取向何以不一致（价值平等性的缺失），而不能仅以两案结论相反相责。本节警示框所说的「谁主张相对性，谁承担论证负担」，首先要排除的就是这种把事实差异误认为概念差异的捷径。对照案例 4（赵春华案）：那里「枪支」在行政法与刑法中确有相对化的余地，理由是管制目的与处罚目的分殊；此处没有这样的分殊，故不生相对化问题。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院知识产权法庭（2024）最高法知民终 1286 号民事判决（2025 年 12 月 30 日），裁判要旨「捆绑搭赠被诉侵权产品构成专利法意义上的销售」；一审江苏省南京市中级人民法院（2024）苏 01 民初 1160 号。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s4-6"><span class="s">§26</span>冲突规则</h3>
+
+<p class="rn">法秩序统一的思想不仅关乎具体概念，亦关乎规范之整体。若两个规范同时适用于特定案件事实，则需借助冲突规范回答何者优先。</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>规则</th><th>内容</th><th>中国法上的实证依据</th><th>相对化</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="k">上位法优于下位法</td>
+      <td>宪法具有最高效力；法律高于行政法规，行政法规高于地方性法规、规章</td>
+      <td>《立法法》第九十八条至第一百条</td>
+      <td>例外由法律明定：依第一百零一条，自治条例、单行条例依法所作的变通规定在本自治地方优先适用，经授权所作的经济特区法规变通规定在本经济特区优先适用。除此之外，高位阶法律排除低位阶法律，纵使后者颁行日期更近</td>
+    </tr>
+    <tr>
+      <td class="k">特别法优于一般法</td>
+      <td>同一机关制定的特别规定与一般规定不一致时，适用特别规定</td>
+      <td>《立法法》第一百零三条</td>
+      <td>若为某一请求权的产生规定了更多限制、更为不利的条件，则应肯定特别法优先</td>
+    </tr>
+    <tr>
+      <td class="k">新法优于旧法</td>
+      <td>同一机关制定的新的规定与旧的规定不一致时，适用新的规定</td>
+      <td>《立法法》第一百零三条</td>
+      <td>其思想是：较新颁行的法反映当前立法者意图，可认为立法者已预先考虑了规范冲突</td>
+    </tr>
+    <tr>
+      <td class="k">新一般 vs 旧特别</td>
+      <td>法律之间新的一般规定与旧的特别规定不一致，不能确定如何适用时，由全国人民代表大会常务委员会裁决</td>
+      <td>《立法法》第一百零五条（法律之间由全国人大常委会裁决，行政法规之间由国务院裁决）；地方性法规、规章之间依第一百零六条第一项由制定机关裁决</td>
+      <td>立法者自认这是一个方法论解决不了的问题，故留给政治程序。依第一百零二条，部门规章之间、部门规章与地方政府规章之间具有同等效力，故此类冲突根本不适用上位法规则，而依第一百零六条第三项由国务院裁决——这是「位阶」与「裁决」两种解决方式的分工</td>
+    </tr>
+  </tbody>
+</table>
+<figcaption>四条冲突规则及其实证依据。第四行值得玩味：它表明冲突规则之间本身也会冲突，且不存在更高一级的冲突规则可供援引。</figcaption>
+</div>
+
+<p class="rn">「新法优于旧法」最须批判性地评价：原来的新法经常免不了变成旧法；旧法是「特别法」而新法是「普通法」的情形，就与其他冲突规则相矛盾。这一原则的适用总是有其局限性，需借助目的性考量加以修正。</p>
+
+<p class="rn">还有一类比冲突规则更精细的工作，叫作<span class="term">规范调适</span>。比如针对某一限制性规范又设有限制规定，若按前一规范的读法会使该限制规定变得空洞无物、立法目的落空，这即是规范冲突之表现。法律之解释应当尽可能地没有冲突，此乃一项重要原则；其结果便是，某一规范可能因此被认定为特别法规范。规范调适的成败，取决于目的是否已被查明：没有目的，就无从判断哪一种读法会使限制规定落空。这也是体系论据在本章反复把决定权交还给第五章的原因。其基础则在于「同等事物必须被同等对待」。指导案例 139 号「上海鑫晶山建材开发有限公司诉上海市金山区环境保护局案」可为一例：堆放、处理固体废物所产生的臭气浓度超过大气污染物排放标准，环保部门依处罚较重的《大气污染防治法》处罚，当事人主张应适用《固体废物污染环境防治法》，法院不予支持。两法的调整对象在此处交叠，决定取舍的不是条文的新旧或位阶，而是被规制的那一个具体危害——污染物以何种形态进入何种环境介质。竞合的选择最终仍是目的的选择。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 21</span><span class="name">鲁潍盐业公司诉苏州市盐务管理局案</span><span>指导案例 5 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>2007 年 11 月，鲁潍（福建）盐业进出口有限公司苏州分公司从江西等地购进工业盐 360 吨，未办理《江苏省〈盐业管理条例〉实施办法》所规定的工业盐准运证。苏州市盐务管理局依该办法作出没收并罚款十二万余元的处罚决定，苏州市人民政府复议维持。</dd>
+      <dt>争点</dt><dd>法律与国务院《盐业管理条例》均未设定工业盐准运证这一许可，亦未对盐业公司之外的企业经营盐批发业务设定处罚。地方政府规章能否设定？法院应否适用？</dd>
+      <dt>裁判</dt><dd>江苏省苏州市金阊区人民法院（2009）金行初字第 0027 号判决撤销该处罚决定。最高人民法院 2012 年 4 月 9 日发布为指导案例 5 号。裁判理由三层：《立法法》第七十九条（现第九十九条）规定法律的效力高于行政法规、地方性法规、规章；在已有法律、行政法规的情况下，地方政府规章只能在既定的许可事项，以及既定的处罚行为、种类、幅度范围内作具体规定，不能设定新的许可与处罚；人民法院审理行政案件依据法律、行政法规、地方性法规，<em>参照</em>规章，故对违法设定许可、处罚的地方政府规章不予适用。</dd>
+      <dt>方法论解读</dt><dd>这是「上位法优于下位法」在中国法上的完整演示，三点值得留意。其一，位阶冲突的处理不是解释问题而是效力问题：法院不是把地方规章解释得窄一些，而是径行不予适用。解释与效力审查的分工，在这里一目了然（§26、§27）。其二，「依据法律、行政法规、地方性法规，参照规章」中的「参照」二字，正是 §22 所讲的那道筛选指令——参照不是照搬，法院有权也有责任审查被参照的规范本身是否合法。其三，被告曾以法不溯及既往抗辩，主张《行政许可法》《行政处罚法》的施行晚于该实施办法；法院指出两法各设清理条款，不符合者自施行之日起停止执行、应于 1997 年底前修订完毕——这不是溯及既往，而是立法者对旧规范存续所作的明文安排。把「旧法在先」读成「新法不适用」，是时际问题上最常见的误解（§19）。</dd>
+      <dt>延伸</dt><dd>本案的条号本身是一则小小的历史解释练习：裁判援引的是 2000 年《立法法》第七十九条，该条经 2015 年修正为第八十八条、2023 年修正为第九十九条，内容未变（第九十八条是宪法最高效力条，§27 引的是它，不要混）。援引旧判例时先核对条号的沿革，是连续性论据能否成立的前提（§16）。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院指导案例 5 号「鲁潍（福建）盐业进出口有限公司苏州分公司诉江苏省苏州市盐务管理局盐业行政处罚案」（2012 年 4 月 9 日发布，第 2 批）；相关法条：《行政许可法》第十五条第一款、第十六条第三款，《行政处罚法》第十三条，《立法法》第七十九条（现第九十八条）。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s4-7"><span class="s">§27</span>上位法解释与合宪性解释</h3>
+
+<p class="rn">上位法方法论的基本思想是：在存在疑义时，立法者会考虑遵守更高级别法律的规定，并希望对法规的理解与更高级别法律相一致。其最重要的形态是<span class="term">合宪性解释</span>。</p>
+
+<p class="rn">在引领解释方向的法伦理原则中，被提升到宪法位阶的原则的重要性尤为突出，特别是基本权利部分的原则和价值决定。人们普遍承认，即使在单纯的制定法解释中、在概括条款的具体化时，也必须注意这些原则；因为在位阶上宪法规范高于其他法规范。因此，<strong>在多种按照通行解释标准可以得出的可能解释中，应始终优先选取最符合宪法原则的解释</strong>。</p>
+
+<div class="block caution">
+  <div class="hd"><span class="tag">警示</span><span class="name">合宪性解释不是违宪审查的替代品</span></div>
+  <div class="bd">
+    <p>合宪性解释不是为了「修正」违宪的法律而使用的工具。它不是用来纠正造成违宪结果的解释，而是作为法律解释过程中的一个因素。其适用前提是：需要解释的规定<strong>允许多种解释</strong>，其中至少有一种会得出符合宪法的结论。</p>
+    <p>如果从规定的词句或立法者明确意图中可以清楚地得出只有一种解释可能，而该解释却导致违宪的结果，那么就不能适用合宪性解释：一个与文字不再一致的理解，无论其是与宪法相符的解释，还是与立法者明确意图相矛盾的解释，都是无法适用的。此时合宪性解释即已用尽，问题转为规范本身的合宪性。中德体制在此有别：在德国，法院可将此问题提交联邦宪法法院（具体规范审查），由后者宣告规范无效。我国法院既不能宣告法律无效，也不能将宪法作为裁判依据直接援引；法律、法规的合宪性由全国人民代表大会常务委员会经备案审查、撤销程序处理，当事人与法院只能通过提出审查建议参与其中。因此在我国，「合宪性解释的界限」实际上同时意味着司法救济的界限——这使得在界限之内诚实地用尽解释可能，比在德国更为要紧，也使得法官把「宪法要求如此」当成省略说理的口令更加危险。</p>
+    <p>换言之：合宪性解释若要维持其<em>解释</em>的品格，就不能超越制定法文义以及其意义脉络所划定的界限。</p>
+  </div>
+</div>
+
+<p class="rn">案例 7（坐地示威案）从反面印证了这一点：被宣告违反《基本法》第 103 条第 2 款的，不是刑法第 240 条，而是法院对「暴力」的一种扩张解释。宪法在此扮演的正是<strong>控制性因素</strong>的角色——它不生产含义，它淘汰含义。</p>
+
+<h4>三个容易混淆的概念</h4>
+<p class="rn">讨论中国路径之前须先分清三件事，它们在中文里常被统称为「合宪性」而实则各异。</p>
+<ul>
+  <li><span class="term">合宪性解释</span>（<span class="de">verfassungskonforme Auslegung</span>）——在一个条文的数种可能解释中，选取最符合宪法者。标的是<strong>法律</strong>，作业是<strong>解释</strong>，结果是确定该法律的含义。</li>
+  <li><span class="term">合法律解释</span>——依上位法解释下位法。标的是<strong>法规、规章、司法解释</strong>等下位规范，作业同样是解释。我国法院日常所做的绝大多数「上位法解释」属于此类，而非严格意义的合宪性解释。</li>
+  <li><span class="term">合宪性审查</span>——判断规范本身是否抵触宪法。这<strong>不是解释</strong>，而是效力审查；其结果不是确定含义，而是宣告或撤销。</li>
+</ul>
+<p class="rn">三者的实证依据分别是：《立法法》第九十八条（「宪法具有最高的法律效力，一切法律、行政法规、地方性法规、自治条例和单行条例、规章都不得同宪法相抵触」）为前两者提供位阶前提；第九十九条、第一百条确立法律—行政法规—地方性法规—规章的效力序列（§26）；第一百一十九条要求司法解释符合立法的目的、原则和原意，是合法律解释在司法解释上的落点（§7）。</p>
+
+<h4>宪法进入个案的三条通道</h4>
+<p class="rn"><strong>第一条通道：备案审查。</strong>依《立法法》第一百一十条，国务院、中央军事委员会、国家监察委员会、最高人民法院、最高人民检察院和各省级人大常委会，可以向全国人民代表大会常务委员会书面提出审查<em>要求</em>；其他国家机关、社会团体、企业事业组织以及公民，认为行政法规、地方性法规、自治条例和单行条例同宪法或者法律相抵触的，可以书面提出审查<em>建议</em>，由常务委员会工作机构进行审查。这是我国宪法进入具体争议的主渠道——不是经由法院，而是经由审查建议。案例 3（鹦鹉案）的律师在穷尽审判程序后转向全国人大常委会申请审查该司法解释，走的正是这条路。</p>
+
+<p class="rn"><strong>第二条通道：宪法价值的法律化。</strong>《民法典》第一条开宗明义「根据宪法，制定本法」；人格权编将宪法上的人格尊严条款具体化为可直接适用的民事规范。法院适用这些条款时，形式上援引的是民法典条文，实质上落实的是宪法的价值决定。德国法上称之为基本权利的<em>间接第三人效力</em>；在我国，它是宪法影响私法关系的常规形态。因此「法院不能用宪法」与「宪法对私法无影响」是两回事，不可混为一谈。</p>
+
+<p class="rn"><strong>第三条通道：说理。</strong>依《最高人民法院关于裁判文书引用法律、法规等规范性法律文件的规定》，可作为裁判依据引用的是法律、法律解释、司法解释及行政法规等，宪法不在其列；《人民法院民事裁判文书制作规范》（2016 年）更明文规定：「裁判文书不得引用宪法……作为裁判依据，<strong>但其体现的原则和精神可以在说理部分予以阐述</strong>。」这一「不引为依据、可用于说理」的安排，恰好就是合宪性解释在我国的操作形态——在数种可能解释中选取最合于宪法价值决定者，并在说理部分讲明这一取向，而不在裁判依据栏列出宪法条文。</p>
+
+<div class="block caution">
+  <div class="hd"><span class="tag">警示</span><span class="name">说理部分的宪法不是免费的</span></div>
+  <div class="bd">
+    <p>「可以在说理部分阐述」极易被读成「可以随手一提」。方法论上恰恰相反：正因为宪法在此不是裁判依据，援引它就不能省略中间步骤。一份合格的合宪性解释说理至少须交代三件事——(1) 待解释条文确实存在<strong>两种以上</strong>可能解释（这是适用前提，无此前提即越界）；(2) 所涉宪法原则或基本权利具体是哪一项，它在本案中指向什么；(3) 为什么所选的那一种解释比另一种更合于该项原则。三者缺一，「宪法要求如此」就只是一句口令。</p>
+    <p>这是论证跳跃（§31）在宪法层面的变体：动辄援引基本权利而不作必要的具体化，康德早已指出其为非法的跳跃。宪法条文的抽象程度最高，因而也最适合用来掩盖说理的空缺；越是援引它，越要把梯子一级一级搭出来。</p>
+  </div>
+</div>
+
+</section>
+
+<!-- ══════════════ 第五章 ══════════════ -->
+<section id="c5">
+<div class="ch-open">
+  <div class="fig">五</div>
+  <div>
+    <p class="kicker">第五章 · Kapitel 5</p>
+    <h2>目的解释</h2>
+  </div>
+</div>
+<p class="lede">目的解释追问的是规范的精神与目的。它是四要素之一，但另外三者都为它供料——修正它们的权力由此而来，全书最重的论证负担也由此而来。</p>
+
+<h3 class="sec" id="s5-1"><span class="s">§28</span>法内在的理性</h3>
+
+<p class="rn">法律规范乃为实现特定目的或目标而创设，因此是一种<strong>目的性设定的诫命</strong>（<span class="de">final überlegtes Gebot</span>）——「诫命」指出它的规范形式，「目的性设定」指出它的形成方式。通过设定某一构成要件并将其与法效果联结，立法者所表达的是其对如何规制社会特定环节的构想。此时立法者实施了一种<span class="term">规制裁量</span>：一方面确定所要追求的目的及其界限；另一方面确定为实现这一目标而采取的法律手段是否具有适当性及均衡性。目的解释所要探究的，就是这种<span class="term">法内在的理性</span>（<span class="de">ratio legis</span>）。</p>
+
+<h4>「目的解释是赘余的吗」</h4>
+<p class="rn">有一种颇具分量的反对意见：目的性的论证方法是循环论证，故实属多余——「不存在目的解释这样的事物，因为规范的目的本来就是任何解释方法的目标。其本身因而并不构成解释之方法。」</p>
+
+<p class="rn">这一批评点到了要害，但结论下得太快。它准确地指出了目的解释与前三者的结构差异：文义、体系、历史都直接从规范及法律本身着手，各有其原始的出发点；目的解释却没有这样的出发点，它只追问「精神上为规范目的所给定的疆域」。因此目的解释实为<strong>两步法</strong>：首先须指明前提，即何为论据所要辩护的目的性命题；然后才形成解释的结论。对目的的追寻只是一种前提，或者说仍是需要借助其他论证模型予以加强的「解释目的」。</p>
+
+<p class="rn">但这并不使它成为赘余。若承认规范不过是实现目的的手段，那就必须依循该目的来探究规范的意义。而且，单就结论而言并不存在所谓循环论证之问题，因为其并非简单地提出命题再加以证明，而是进行包含了命题、前提及论据的完整论证。真正的危险在别处——</p>
+
+<div class="block caution">
+  <div class="hd"><span class="tag">警示</span><span class="name">不得「发明」规范目的</span></div>
+  <div class="bd">
+    <p>规范的规制目标鲜有昭然于世者。目的之确定总带有一定的主观性，法律适用者对此有着较高程度的自由，因而也最容易被滥用。三条禁令：解释者不得「发明」规则的目的；不得以自己的前见取代立法者的意图；不得从客观解释的角度创制一种超然的规则目的。</p>
+    <p>就此而言，必须警惕诸如「事物本质」「公正」「社会需要」之类的<strong>文字游戏</strong>——它们看似给出了目的，实则只是把待证明的命题换了一个庄严的说法。</p>
+  </div>
+</div>
+
+<h4>「立法目的」与「规范目的」不是一回事</h4>
+<p class="rn">中文里这两个词常被混用，混用处多半出错。<span class="term">立法目的</span>是<em>立法者</em>制定该法时所追求的目标，属历史事实，证据是立法材料（§17）；<span class="term">规范目的</span>是<em>该条规范</em>在现行法秩序中所承担的功能，属评价判断，依据是规范在体系中的位置与它所服务的价值安排。两者多数时候重合，但三种情形下会分离。</p>
+<ul>
+  <li><strong>立法者未曾预见。</strong>规范被用于立法时根本不存在的情形，此时只有规范目的可用，立法目的沉默（§18 的默证警告在此适用）。</li>
+  <li><strong>规范语境已变。</strong>条文未改而周边法秩序大改，规范在新语境中承担的功能已不同于当初（§20 客观理论的用武之地）。</li>
+  <li><strong>一条规范服务多个目的。</strong>立法目的通常以整部法律为单位陈述，规范目的则落在具体条文上；前者往往过于笼统，不足以决定个案。援引第一条的目的条款去解决第几十条的争议，常常就是这种以大充小。</li>
+</ul>
+<p class="rn">实务上的分辨办法很简单：问一句「这个目的，立法者说过吗」。说过，是立法目的，证据在材料里；没说过而由解释者从体系中推出，是规范目的，证据在论证里。两者的论证负担不同，混称则两头落空——以规范目的冒充立法目的，是伪造史料；以立法目的搪塞规范目的，是答非所问。</p>
+
+<h3 class="sec" id="s5-2"><span class="s">§29</span>目的的查明</h3>
+
+<p class="rn"><strong>明示的规范目的。</strong>立法者可能在法律条文中明示规范之目的，这在近年颁行的法律中多体现于序言部分或为首的几个条款。我国法律通例是第一条：「为了……，制定本法。」这类目的条款是法律内含的谱系材料，与条文同时表决通过，援引它不需要额外论证其可用性。</p>
+
+<p class="rn"><strong>推断的规范目的。</strong>不明文规定法律目的乃是立法者更为惯常的做法。此时须先从法律内部的脉络中以推断的方法解释法律目的。从多个规范中提炼出一般性的法原则，需要相当的技艺——而这也正是论证最容易失守之处。</p>
+
+<p class="rn">强制性规定的射程尤其须靠目的来划。新疆某建筑公司诉某煤业集团建设工程分包合同纠纷案（新疆生产建设兵团第九师中级人民法院〔2024〕兵 09 民终 8 号，入人民法院案例库）中，发包方以分包未经招投标为由主张分包合同无效。法院依部门规章确定：只有以暂估价形式包含在总承包范围内、且属依法必须招标并达到规模标准的分包，才须另行招标；本案总承包合同所附暂估价明细表完全空白，故不属此列。决定性的一句是：不经招投标程序「<strong>并不影响招投标法有关确保国有资金合法使用等立法目的的实现</strong>」，故相关法律法规并不要求其必须招标。这就是从立法目的反推强制性规定射程的标准动作——某项程序要求是否强制到足以使合同无效，取决于省略它是否真的挫败了该法所要保护的那个东西。</p>
+
+<p class="rn"><strong>立法理由。</strong>立法理由实为规范文本的补充，可用以将规范文本及立法目的精确化。它属于历史解释的材料（§17），但其功能是为目的解释供料。历史与目的两个要素在此处交汇：立法者的调整意图以及基于此意图明确追求的价值决定，对法官而言仍然是具有约束力的准则。</p>
+
+<p class="rn"><strong>疑义时的辅助规则。</strong>「有疑义时唯利自由」「有疑义时唯利消费者」「有疑义时唯利劳动者」这类规则只能适用于解释的初步阶段，它们本身并不决定结论。起决定作用的仍在于判断法律及各个规范的立法目的。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 22</span><span class="name">林方清诉常熟市凯莱实业有限公司公司解散纠纷案</span><span>指导案例 8 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>凯莱公司由林方清与戴小明两名股东各持 50% 股份，章程规定股东会决议须经代表二分之一以上表决权的股东通过，且各方一致认可此处「二分之一以上」不含本数。2006 年起两人交恶，自同年 6 月 1 日起公司未再召开过股东会，林方清的股东权与监事权长期无法行使。林方清诉请解散公司；公司与戴小明抗辩称公司及其分公司运营状态良好，服装城管委会亦证明公司经营尚正常。</dd>
+      <dt>争点</dt><dd>《公司法》（2005 年修订）第一百八十三条以「公司经营管理发生严重困难」为股东请求解散的条件之一。公司处于盈利状态，是否即不构成「经营管理发生严重困难」？</dd>
+      <dt>裁判</dt><dd>江苏省苏州市中级人民法院（2006）苏中民二初字第 0277 号判决驳回诉讼请求；江苏省高级人民法院（2010）苏商终字第 0043 号判决撤销原判，解散凯莱公司。最高人民法院 2012 年 4 月 9 日发布为指导案例 8 号。裁判理由：判断经营管理是否发生严重困难，应当从股东会、董事会或执行董事及监事会或监事的运行现状综合分析；其侧重点在于公司管理方面存有严重内部障碍，如股东会机制失灵、无法就经营管理作出决策，「不应片面理解为公司资金缺乏、严重亏损等经营性困难」。</dd>
+      <dt>方法论解读</dt><dd>这是目的解释最干净的一次演示，而且两步法的两步都看得见。<strong>第一步指明目的性命题：</strong>第一百八十三条所救济的是公司僵局——股东之间的对立使公司的意思形成机制失灵，少数股东的投资目的无法实现而又退出无门，解散之诉是这一困境的最后出口。<strong>第二步以该目的界定文义：</strong>「经营管理」在日常语言中偏向经营业绩，在本条中则须读作组织机构的运行，因为只有后一种读法才使本条有用武之地；若以亏损为条件，一家盈利却瘫痪的公司将永远不能解散，而这恰恰是本条所要解决的那种情形。这一步用的是禁止赘余（§31）：解释不得使规范的适用领域被虚置。</dd>
+      <dt>延伸</dt><dd>本案并未突破文义射程。「经营管理」本就同时涵盖「经营」与「管理」两个语义成分，法院所做的是在并列的两者之中确定何者为本条的重心，这仍属选择与限缩，不是修正（§14）。请同时对照案例 14（汤长龙案）：一个拒绝把分期付款买卖的解除规则移入股权转让，一个把「经营管理困难」从经营读向管理——方向相反而方法相同，都是先查明规范目的，再据以裁剪文义。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院指导案例 8 号「林方清诉常熟市凯莱实业有限公司、戴小明公司解散纠纷案」（2012 年 4 月 9 日发布，第 2 批）；相关法条：《中华人民共和国公司法》（2005 年修订）第一百八十三条（现为 2023 年修订第二百三十一条）。</div>
+  </div>
+</div>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 23</span><span class="name">「为生产经营目的」的理解与认定</span><span>（2020）最高法知民终 831 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>焦蕊丽系「一种增乳壮牛中药饲料添加剂及制备方法」发明专利的专利权人。中国农业科学院饲料研究所与北京市大兴区农业农村局在院区科技合作项目中，以「院区合作＋示范基地＋农户」的模式制造、使用了落入该专利保护范围的技术与产品，共培训技术人员和农民一万余人次，使四千五百余农户直接受益，创造直接经济效益一点一四亿元。专利权人起诉二者侵权。</dd>
+      <dt>争点</dt><dd>《专利法》第十一条第一款以「为生产经营目的」为侵权成立的要件之一，而该法未对其作任何定义、未列举其具体表现、亦未从反面规定例外。事业单位与政府机关主观上不以营利为目的、客观上从事公共服务，其实施专利的行为是否「为生产经营目的」？</dd>
+      <dt>裁判</dt><dd>北京知识产权法院一审以二者「均不具备生产经营的资质」、无证据显示项目实施以生产经营为目的，判决驳回全部诉讼请求。最高人民法院（2020）最高法知民终 831 号判决撤销一审判决，判令饲料研究所赔偿六十万元及合理开支一点五万元，大兴区农业局对其中二十一点五万元承担连带责任。其确立的标准是：对「为生产经营目的」的理解，既不能简单等同于实际获利，又不能仅依实施主体的机构性质认定，而应着眼于具体的被诉侵权行为，综合考虑该行为<strong>是否属于参与市场活动、是否影响专利权人市场利益</strong>。</dd>
+      <dt>方法论解读</dt><dd>这是「推断的规范目的」的标准作业。立法者既未定义也未列举，文义解释只能给出一个空洞的框，法院于是回到制度本身：第十一条之所以设此要件，是为合理平衡专利权人与社会公众的利益，把那些对专利权人市场利益不构成实质影响的行为排除在侵权之外。目的一经指明，要件的内容随之确定——判准不在主体是谁、也不在有没有赚到钱，而在这个行为有没有挤占专利权人本可通过许可或销售获得的市场。目的决定了判准所指向的那个事实。</dd>
+      <dt>延伸</dt><dd>一审的错误值得单独拆开，因为它是本书反复警告的那种失手。「事业单位、政府机关不具备生产经营资质，故不以生产经营为目的」——这是以<em>主体的形式身份</em>代替对<em>行为</em>的评价，属于论证跳跃（§31）：从「机构性质」直接跳到「要件不成立」，中间省掉了「本条为什么要设这个要件」这一前提。二审之所以能够纠正，不是因为掌握了更多事实，而是因为先问了目的。此案可与案例 22（公司解散案）对读：两案的一审都停在了文义或形式论据上，两案的二审都是靠追问规范目的翻过来的。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院知识产权法庭（2020）最高法知民终 831 号；一审（2019）京 73 民初 207 号。裁判要旨载《人民司法》2021 年第 20 期。</div>
+  </div>
+</div>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 24</span><span class="name">农药登记试验的「科研例外」</span><span>（2023）最高法知民终 1511 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>涉案专利为名称「杀节肢动物的邻氨基苯甲酰胺」的发明专利。农药仿制企业为向农药行政主管部门申请农药登记，制造并使用落入专利保护范围的产品以取得所必需的试验数据；并有向案外人提供该农药进行登记试验，以及许诺销售的行为。</dd>
+      <dt>争点</dt><dd>《专利法》第七十五条第四项规定「专为科学研究和实验而使用有关专利」不视为侵犯专利权。为申请行政许可而进行的登记试验，是否属于「科学研究和实验」？</dd>
+      <dt>裁判</dt><dd>最高人民法院知识产权法庭认定：农药仿制药生产商为向农药行政主管部门提供申请农药登记所必需的试验数据，有限地制造、使用落入农药专利保护范围的被诉侵权产品，没有对专利权的正常利用和专利权人的合法权益产生不合理的损害的，可以构成不视为侵犯专利权的「科研例外」情形；但向案外人提供农药进行登记试验、许诺销售，均构成侵权。</dd>
+      <dt>方法论解读</dt><dd>本案把目的解释的两步法演示得极为完整。<strong>第一步，指明目的命题：</strong>法院从专利权保护期制度切入——若禁止仿制企业在专利期内完成必需的登记试验，则专利到期后相当长的时期内仿制药仍然不能合法上市，专利权保护期被不合理地「变相延长」，不符合专利法的立法目的。这就把一个抽象的目的（在专利激励与公众及时获得技术之间取得平衡）落到了可检验的命题上。<strong>第二步，以目的界定文义射程：</strong>「科学研究和实验」的日常语感偏向基础研究，而登记试验带有明显的商业筹备色彩；法院并未硬说登记试验就是纯粹的科学研究，而是以规范目的为准绳，把射程界定为「为自己取得行政许可所必需」的部分，越出此限（向案外人提供、许诺销售）即回落到侵权。</dd>
+      <dt>延伸</dt><dd>与此相邻的是《专利法》第七十五条第五项（药品与医疗器械的 Bolar 例外），系 2008 年第三次修正时新增。历史解释在此发挥双重作用：其一，新增条款证明立法者确实承认「为行政审批而实施」应予豁免的价值取向；其二，立法者只为药品与医疗器械明文设例外，而未及农药——依「明示其一即排除其他」，本可反推农药登记试验不在豁免之列。本案的处理表明，这一形式论据被目的性考量所修正：第五项是对特定行业的明确化，并不构成对第四项固有射程的限缩。此处正是<strong>体系论据如何让位于目的论据</strong>的范本（详见 §34）。请与案例 19 对读：同一条第七十五条之下，第五项因采封闭列举而被严格解释，第四项因采评价性表述而由目的决定——松紧之别不在「例外」这个身份，而在例外条款的写法（§24）。</dd>
+    </dl>
+    <div class="src">出处：<a href="https://ipc.court.gov.cn/zh-cn/news/view-5727.html" target="_blank" rel="noopener">为取得农药登记所必需的试验数据而制造并使用农药专利产品的行为如何适用「科研例外」</a>，最高人民法院知识产权法庭，（2023）最高法知民终 1511 号。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s5-3"><span class="s">§30</span>从利益法学到价值法学</h3>
+
+<p class="rn">概念法学忠实于词语，认为不得违背法律明确的文义即是规范目标的应有之义。<span class="term">利益法学</span>转而反对这种技术性的概念操作：在利益法学看来，任何法规范的目的都是平衡相互冲突的利益。法官必须查明这些利益，从而将蕴含于法律当中的有关这一冲突的决断具体化。法律所要求的并非形式逻辑上的推演，毋宁是通过评价而形成一种诫命。</p>
+
+<p class="rn">利益法学所面临的批评是：它并未明确指出法官应当注意什么利益，从而允许法官单方面地确定利益。<span class="term">价值法学</span>因此要求依据法律本身的价值安排来确定利益——法律不仅是为利益冲突所确立的规则，也同时意味着对价值的具体化；法秩序亦是价值秩序。</p>
+
+<p class="rn">由此可以区分两种取向：<strong>利益取向的解释</strong>着重考量当事人的利益，常用于探明一种「推断的当事人意思」；<strong>目的解释</strong>则不只关注利益，同时还关注作为「目的要素」的法律之价值安排。前者在法律行为解释中更常出现，后者才是制定法解释的正体。</p>
+
+<h4>价值法学之后：原则、内部体系与权衡</h4>
+<p class="rn">价值法学把「法秩序亦是价值秩序」立为前提，接下来的问题便是：这些价值以什么形态存在于法之中？答案是<span class="term">法原则</span>。原则与规则的区别不在抽象程度，而在适用方式：规则以「全有或全无」的方式适用，构成要件成就即生法效果，两条规则冲突必有一条让位；原则则是<em>最佳化诫命</em>，要求在法律与事实的可能范围内尽最大程度实现，两项原则冲突不生效力取舍，而是依个案分量作<strong>权衡</strong>，败下的一项并不失效，只是在本案中退让。</p>
+<p class="rn">这一区别对解释有直接后果。诉诸规则，只需论证涵摄；诉诸原则，必须论证权衡——指出相冲突的是哪两项原则、各自在本案中的分量由什么决定、为何此重彼轻。实务中大量「依据诚实信用原则」「根据公平原则」的说理之所以空洞，正是因为只做了第一步的援引而略去了第二步的权衡。案例 27（泸州遗赠案）的争议，归根到底是公序良俗原则与遗嘱自由原则的权衡未被充分展开（§32）。</p>
+<p class="rn">诸原则所构成的那个有序整体，就是 §21 所说的<span class="term">内部体系</span>。它与外部体系（概念、编章、引致）的分工是：外部体系告诉你条文在哪里，内部体系告诉你它为什么在那里。目的解释最终要落到内部体系上——所谓查明规范目的，多数时候就是辨认该条规范在这套价值秩序中的位置。</p>
+<p class="rn">我国学界对应的讨论是<span class="term">利益衡量论</span>。它与德国的利益法学共享「从概念回到利益」的转向，但须警惕一个本土化的变形：把利益衡量理解为法官对案件结果的直观取舍，再回头寻找法律依据。那不是利益衡量，那是先定后找。价值法学对利益法学的全部修正，恰恰就在于此——可以衡量的只能是<strong>法律本身的价值安排</strong>所承认的利益，衡量的尺度也只能来自那套安排，而不是解释者的偏好（§28 的三条禁令）。</p>
+
+<h3 class="sec" id="s5-4"><span class="s">§31</span>具体的逻辑论证模型</h3>
+
+<p class="rn">目的解释既然主观性最强，就必须以最严格的逻辑纪律来约束。以下几条是最常被违反的。</p>
+
+<h4>一、循环论证（乞题）<span class="m">petitio principii</span></h4>
+<p class="rn">以乞题形式展开的循环论证，是指某一命题被预设为已经得到证明，命题得以自证，故不再需要预设其他前提。它构成一种错谬的论证，因为人们将需要被证明的一个命题当成了理所当然。循环论证不只出现在前提本身有缺陷时。如果在某一推导过程中，结论所依据的一系列前提当中已然包含了待推导的命题本身，则同样构成循环论证。</p>
+
+<h4>二、默证 <span class="m">argumentum e silentio</span></h4>
+<p class="rn">从「无有」或「沉默」当中得出结论。从立法者对特定法律问题的沉默并不能得出什么；此时唯有立法材料中较为具体的说明才应被考量在内（详见 §18）。</p>
+
+<h4>三、论证跳跃</h4>
+<p class="rn">康德的界定最为精当：论证或证明中的跳跃，是指将某一前提与结论相联系，而其他的前提则被略去不提。若被省略的前提很容易为人想见，那么这样的跳跃就是合法的；若涵摄的过程并不明朗，这种跳跃就是非法的。在论证跳跃的情形，大前提和小前提之间未能达到契合，存在一种因使用无根据的概念所导致的「前提缺陷」。那种动辄援引基本权利、而不做必要的具体化论证的舍近求远的做法，也是一种论证跳跃。</p>
+
+<h4>四、避免规避法律</h4>
+<p class="rn">规范的解释不得造成法律被规避。<span class="term">法律规避</span>，是指虽然没有采取明确被禁止的方式，但使用这种方式会导致法律所反对的后果。实质上这属于权利滥用的问题，原则上可以通过诚实信用原则得到解决；有时立法者会以宣告规避行为或类似行为无效的方式予以特别规定（消费者保护领域尤多此类半强制性规定）。即使没有特别规定，禁止规避也是一种法原则，并可作为目的解释的一种模型。至于一个行为究竟属于被允许的「对构成要件的回避」，抑或属于被禁止的「法律规避」——要澄清这一问题，探寻法的内在理性即具有决定性意义。</p>
+
+<h4>五、禁止赘余：不得「限缩解释至零」</h4>
+<p class="rn">对规范的解释原则上应确保它的适用领域不会被虚置，换言之，不能使规范沦为赘余之物。因此那种「限缩解释至零」的做法是不妥当的。其背后的思考是：<strong>立法者不会制定多余无用之法。</strong>基于同理，解释也不能造成法律被规避的后果。这条规则在欧盟法上被表述为<span class="term">实际有效原则</span>（<span class="de">effet utile</span>）：条款的解释之方向，在于使条款的目的尽可能地被实现，使条款体现实际的益处；若某种解释能够最好地发挥规范的效力并使其实际益处最大化，则应优先采纳之。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 25</span><span class="name">「农民自繁自用例外」的认定</span><span>（2019）最高法知民终 407 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>背景</dt><dd>《种子法》就植物新品种权设有一项例外：农民自繁自用授权品种的繁殖材料，可以不经品种权人许可、不向其支付使用费。该例外的立法考虑是小农户的口粮与生计，而非农业经营。</dd>
+      <dt>案情</dt><dd>秦永宏通过与其他农户签订转包合同的方式流转取得九百七十三点二亩土地的经营权，未经许可生产「南粳 9108」水稻种子并留作次年播种，另有以稻换种的行为。品种权独占被许可人高科种业公司起诉。秦永宏抗辩：其行为属于农民自繁自用。</dd>
+      <dt>争点</dt><dd>规模化经营的土地流转受让人，能否援引「农民自繁自用例外」？</dd>
+      <dt>裁判</dt><dd>一审判决停止侵害并赔偿五十万元。最高人民法院 2020 年 12 月 28 日以（2019）最高法知民终 407 号判决，维持侵权认定、酌减赔偿为十万元。其对例外的射程作了三重限定：<strong>主体</strong>限于以家庭联产承包责任制形式签订农村土地承包合同的农民个人，不包括合作社、种粮大户、家庭农场等新型农业经营主体；<strong>土地</strong>限于通过家庭联产承包责任制承包的土地，不包括通过各种流转方式获得经营权的土地；<strong>用途</strong>以自用为限，除法律允许在当地集贸市场出售、串换剩余的常规种子外，不能通过各种交易形式提供给他人使用。</dd>
+      <dt>方法论解读</dt><dd>本案的落点是<strong>避免法律规避</strong>。秦永宏的行为在形式上逐字符合「农民」「自繁」「自用」三个语词：他是农民，种子是自己繁的，也确系自己播种。法院所拒绝的，正是这种「虽未采取明确被禁止的方式，但使用该方式会导致法律所反对的后果」的构造。判决的实质理由写得很直白——若允许九百余亩土地所用的繁殖材料均由其自己生产、留种而无需付费，「无疑会给品种权人造成重大经济损失」。</dd>
+      <dt>延伸</dt><dd>与案例 19 比较，可以看清两条不同的限缩路径。451 号靠的是列举的封闭性，是形式论据；本案的三项限定在条文上一个字也找不到，靠的是例外的设立目的——小农生计，而不是农业经营。换言之，本案所做的是<em>目的性的具体化</em>：把一个未被定义的例外要件，依其设立目的裁剪到它本来要覆盖的那类人身上。请一并注意它的代价：法院为此承担了相当的论证负担，三项限定逐一给出理由，而没有满足于「例外应严格解释」一句。凡越是靠目的而非靠文字作出的限定，说理就越不能省（§34）。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院知识产权法庭（2019）最高法知民终 407 号，裁判要旨「『农民自繁自用例外』的认定」；一审江苏省南京市中级人民法院。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s5-5"><span class="s">§32</span>结果取向的解释</h3>
+
+<p class="rn">先定其身份。结果考量不是第五种解释方法，而是目的解释在最后一程的展开形态（§4）：它所衡量的后果，只能是规范目的本身所要实现或避免的那些后果；与规范目的无关的后果，无论多么可欲，都不进入这一步。</p>
+
+<p class="rn">在解释工作的最后阶段，需要分析、衡量解释的后果；若结果无法令人接受，就该修正结论。理想情况下这一工作分三层：<strong>结果预估</strong>（判断裁判会产生什么结果）、<strong>结果评价</strong>（判断其接受程度如何）、<strong>结果取向的调控</strong>（依循所欲达成的结果而对结论加以调整）。</p>
+
+<div class="block caution">
+  <div class="hd"><span class="tag">警示</span><span class="name">结果考量的三重限制</span></div>
+  <div class="bd">
+    <p>其一，立法者若对结果的考量作出了明文规定，则任何情况下都必须遵循之。其二，除此以外，可以被纳入衡量的<strong>只能是法律意图实现或追求的法效果</strong>——不是解释者自己认为好的后果。其三，结果取向的考量并不具备绝对性，它仅可作为法律价值安排的补充。</p>
+  </div>
+</div>
+
+<h4>一、归谬法 <span class="m">reductio ad absurdum</span></h4>
+<p class="rn">作为一种结果取向的论据，归谬法并不用于证明命题自身，而是通过提示明显难以令人接受故而荒谬的结论来证明相反命题的错误性。它与当然推论、反面推论有一定近似性，但其关注的乃是法效果。要使归谬法发挥作用，须<strong>累积式地</strong>满足五个前提：相反命题所展现的结果，(1) 必须是荒谬也即不合情理的，而不能仅仅是违背意愿的；(2) 荒谬的结论必须是由逻辑推演而得，而不能只是宣称的结论；(3) 不能是主张「第三种观点」；(4) 命题之荒谬不能只是论者自己的看法；(5) 唯有否定相反命题，才能避免荒谬的结果。</p>
+
+<p class="rn">五个条件很少能同时满足，因此相应的论证往往缺乏说服力。若如此，首先要做的即是提示价值的冲突。归谬法能够稳妥发挥作用的一个场合是：在多种可能的解释结论当中，若有一种结论不切实际，即可依归谬法将其排除出去——此即「不可承受性论据」。归谬法一旦滥用，就成了掩盖思维跳跃与法外考量（经济的或其他的）的工具。</p>
+
+<h4>二、避免过度责任或不合理的负担</h4>
+<p class="rn">立法者通常会赋予人们从事有一定经济风险的行为而又不必为此负责的自由。法官收尾时也会复核结论是否公正，这时要盯住一件事：负担有没有落到不成比例的地步。若某一方将因此陷入难以承受的困境，就得另寻读法。</p>
+
+<h4>三、法不干涉琐事 <span class="m">minima non curat praetor</span></h4>
+<p class="rn">形式上说，其含义在于「法院不理琐事」。实质内容上，在很多情况下法律已然排除了对那些不重要的违反义务行为加以追究的必要性；因其无足轻重，故请求权亦被排除。即使法律没有规定限制，损害较小的情形下通常也会排除受害人行使请求权的可能。一般而言，此类情形在构成要件层面就能解决：譬如每个人都不得不承担「一般的生活风险」；又如「社会相当性」这一为人熟知的法构造——那些普遍通行的、具有社会相当性的事物，因不具重要性，故而无可非难。</p>
+
+<h4>四、裁判的可接受度与法学通说</h4>
+<p class="rn">如果法院希望通过自己的判决定纷止争，那就理应重视其裁判的可接受度。援引学界和判例通说的理由在于，它能确保以「连贯性」为导向的法之安定性。通说初看起来给人一种正确的印象，故其具备一种<strong>推定效力</strong>；因此若有人意欲驳斥通说，则需承担相应的论证负担。为实现裁判的可接受度，亦可能将外国判例考虑在内。与可接受度相邻的还有一项常被忽略的结果考量：<strong>可普遍适用性</strong>——你所提出的标准，将来的法院在不知悉本案细节的情况下能否照样适用？一个只能解决眼前这一件事的标准，通常说明它不是从规范中取得的，而是从结论倒推出来的。下面案例 26 所确立的标准经受住了这项检验：两年之后，最高人民法院发布指导案例 142 号「刘明莲等诉孙伟、河南兰庭物业案」——行为人为维护因碰撞受伤一方的合法权益，劝阻另一方不要离开现场且未超过合理限度的，属于合法行为，被劝阻人因自身疾病猝死的，其近亲属请求承担侵权责任，人民法院不予支持。两案的事实相去甚远（电梯劝烟与车祸现场劝阻），标准却原样适用，案件类型于是形成。这正是通说与先例取得推定效力的方式。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 26</span><span class="name">电梯劝阻吸烟猝死案</span><span>郑州市中级人民法院 · （2017）豫 01 民终 14848 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>杨某在电梯内劝阻段某吸烟，双方发生言语争执，段某随后心脏病发作猝死。死者家属田某起诉杨某赔偿。</dd>
+      <dt>争点</dt><dd>劝阻他人在公共场所吸烟的行为，与被劝阻者随后的疾病死亡之间，是否存在侵权法上可归责的关联？在双方均无过错的情形，能否依公平责任判令劝阻者分担损失？</dd>
+      <dt>一审</dt><dd>郑州市金水区人民法院依公平原则，判令杨某补偿田某一万五千元。</dd>
+      <dt>二审</dt><dd>郑州市中级人民法院于 2018 年 1 月 23 日宣判：撤销一审判决，驳回田某的诉讼请求，一、二审诉讼费共计一万四千余元由田某负担。理由是杨某劝阻吸烟的行为未超出必要限度，属于正当劝阻行为，是履行公民应尽的社会责任；一审错误适用公平责任，不仅违反了公民有权制止在禁止吸烟的公共场所吸烟的法律规定，且会损害社会公共利益。</dd>
+      <dt>方法论解读</dt><dd>本案是结果取向解释的一次标准操作，且其操作是<em>在构成要件层面</em>完成的，而非在「情理」层面。二审的论证链条是：公共场所禁止吸烟是法定义务，制止吸烟是法律所鼓励的行为；一个法律所鼓励的行为，不能因偶然的、不可预见的因果进程而生赔偿责任——否则规范就自相矛盾（参 §26 关于规范调适）。至于「结果」的分量：若劝阻者须为此付钱，则此后无人再敢挺身而出，法律所欲实现的秩序反而落空。这正是「结果预估—结果评价—结果调控」三步的现实形态。</dd>
+      <dt>延伸</dt><dd>须留意一审所犯的错误类型。适用公平责任分担损失，形式上有法律依据，实质上却是以「双方都无过错、总得有人承担」的直观取代了构成要件的检验。这在方法论上是一种<strong>论证跳跃</strong>：从「结果令人同情」直接跳到「应予补偿」，中间省掉了「何种规范为此提供了请求权基础」这一前提。公平责任的适用范围因此必须被严格限定——《民法典》第一千一百八十六条已将其改为「依照法律的规定由双方分担损失」，把它从一般条款压缩为引致性条款。这一修法本身即是对本案一类裁判的回应，是历史解释与结果考量互相印证的又一例。</dd>
+    </dl>
+    <div class="src">出处：郑州市中级人民法院（2017）豫 01 民终 14848 号；参见 <a href="https://www.hncourt.gov.cn/public/detail.php?id=173160" target="_blank" rel="noopener">河南省高级人民法院：郑州「电梯劝阻吸烟猝死」案二审宣判</a>；<a href="https://m.thepaper.cn/newsDetail_forward_1964701" target="_blank" rel="noopener">澎湃新闻报道</a>。</div>
+  </div>
+</div>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 27</span><span class="name">泸州遗赠案</span><span>四川泸州 · 2001</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>黄某与蒋某系夫妻，黄某长期与张某同居。黄某病重期间立下经公证的遗嘱，将其个人财产及部分共同财产遗赠给张某。黄某去世后，张某诉请交付遗赠财产。</dd>
+      <dt>争点</dt><dd>《继承法》第十六条第三款明文允许公民将个人财产遗赠给国家、集体或法定继承人以外的人；本案遗嘱形式合法、意思真实。法院可否以《民法通则》第七条（民事活动应当尊重社会公德，不得损害社会公共利益）否定其效力？</dd>
+      <dt>裁判</dt><dd>一审泸州市纳溪区人民法院、二审泸州市中级人民法院均认定遗赠违反公序良俗而无效，驳回张某之诉。</dd>
+      <dt>方法论解读</dt><dd>本案在方法论上争议极大，恰恰因此最值得作为反思材料。<strong>可辩护的一面：</strong>法院所做的是体系论证——将《继承法》的具体规定置于《民法通则》的基本原则之下理解，以维护内部体系（价值安排）的一贯性；这是「法秩序的统一」与合宪性／上位法解释思路的运用。<strong>可质疑的一面：</strong>《继承法》第十六条第三款的文义并未留下「受遗赠人须品行端正」的空间，以一般条款排除具体规定的适用，实质上已越出解释而进入<em>目的性限缩</em>——按本讲义的划界，这已属法续造，须承担远高于解释的论证负担，而判决并未提供相应密度的说理。其二，「公共利益」在此被填入的内容究竟来自法秩序的价值安排，还是来自裁判者的道德直观？若是后者，即触犯 §28 的禁令——解释者不得以自己的前见取代立法者的意图，不得用「公正」「社会需要」一类文字游戏充当目的。</dd>
+      <dt>练习</dt><dd>试以《民法典》第八条、第一百五十三条第二款与第一千一百三十三条重构本案的论证，并回答：如何在承认公序良俗条款效力的同时，防止它成为吞掉一切具体规定的「万能钥匙」？提示：从「一般条款的具体化须诉诸案件类型」入手。</dd>
+    </dl>
+    <div class="src">出处：四川省泸州市纳溪区人民法院一审、泸州市中级人民法院二审。判决文本与学界讨论参见 <a href="https://www.wangkanglawyer.com/248.html" target="_blank" rel="noopener">四川泸州遗赠案判决书（一审＋二审）</a>。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s5-6"><span class="s">§33</span>法的经济分析</h3>
+
+<p class="rn">法的经济分析研究法律规则在结果预估（实证分析）及目标实现（规范分析）两个意义上的影响，因而被称为「特别敏感的后果理念」。在评价的框架内，它所探究的问题是：法律规则是否有效率，以及能否最优地促进整体的幸福（配置效率）。它的基本假设是<span class="term">经济人</span>：个体原则上理性行事，会依成本与收益算出对自己最有利的那个决定。</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>工具</th><th>内容</th><th>在解释中的用法</th></tr></thead>
+  <tbody>
+    <tr><td class="k">帕累托最优</td><td>若要使某一个体的处境更优，则必须同时损害另一个体</td><td>判断某种解释是否仍有改进空间</td></tr>
+    <tr><td class="k">卡尔多—希克斯</td><td>若受益者的收益高于受损者的损失，而损失可以通过收益得到补偿，则该规则合理</td><td>为利益衡量提供可计算的标准</td></tr>
+    <tr><td class="k">科斯定理</td><td>在产权明确且交易成本为零的条件下，资源可经私人交易达到最有效率的配置；现实中交易成本不为零，制度设计才有必要</td><td>提示交易成本在制度选择中的位置</td></tr>
+    <tr><td class="k">最低防范成本</td><td>避免损害的义务应分配给能以最低成本避免该损害的一方；若某方的防范花费高于预期损失，或另一方能以更低花费避免同一损害，前者即不再负有相应的注意义务</td><td>侵权法上注意义务的分配</td></tr>
+  </tbody>
+</table>
+<figcaption>经济分析的四件常用工具。其中「最低防范成本」在责任法解释中最具操作性。</figcaption>
+</div>
+
+<p class="rn"><strong>三重局限必须同时记住。</strong>其一，<em>人的有限理性</em>——行为金融学表明，人们能够获取的信息有时会显得过于庞大或过于琐碎，接收人的处理能力有限，负担一重，他就不再能理性决策；此即「信息过载」。立法者只使用少量、简单的信息，反而能为消费者或投资者提供助益。其二，<em>宪法观念与立法者的价值安排</em>优先——效率不能推翻法律自身的价值决定。其三，<em>实证数据之不足</em>——多数法律争议中根本没有可靠数据支持成本收益的计算。</p>
+
+<p class="rn">结论因此十分克制：法的经济分析并不会替代传统的法教义学，但可以作为后者之补充。用黄茂荣的话说，<strong>经济解释不是一种特别的解释方法，而仅是一个取向于经济的规范目的之目的解释</strong>。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 28</span><span class="name">电镀污水处理差别待遇案</span><span>（2024）最高法知民终 896 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>背景</dt><dd>反垄断法上的「相关市场」，指经营者在一定时期内就特定商品或者服务进行竞争的商品范围和地域范围。界定它要用到两个经济学工具：<em>需求替代</em>（从买方角度看，哪些商品在买方眼中可以互相替换）与<em>供给替代</em>（从卖方角度看，别的生产者能否在短期内低成本转产）。这两个概念不是学理发挥，而是由《反垄断法》第十五条与国务院反垄断委员会《关于相关市场界定的指南》写进规范的。</dd>
+      <dt>案情</dt><dd>某污水处理公司是某工业园一期内唯一经审批具有电镀污水处理资质的企业。它对园区内企业按两类标准收费：与其母公司有共同自然人股东的 41 家「自有业主单位」每吨 45 元，租用这些单位厂房的 16 家租户每吨 55 元。某五金公司是纠纷发生时园区内唯一既拥有厂房所有权、又与该母公司无关联关系的电镀加工企业，被按 55 元收费。可见实际的分档标准不是「自有还是租用」，而是「与母公司有无股东关联」——某五金公司虽自有厂房，因无关联而落入高价一档。</dd>
+      <dt>争点</dt><dd>《反垄断法》第二十二条第一款第六项禁止具有市场支配地位的经营者「没有正当理由，对<strong>条件相同的交易相对人</strong>在交易价格等交易条件上实行差别待遇」。股东身份的有无，是不是「条件不同」？</dd>
+      <dt>裁判</dt><dd>最高人民法院 2026 年 8 月 27 日判决。相关商品市场：电镀污水含重金属，与生活污水、印染化工污水在污染物类型、处理工艺、设备上无替代关系，且其他污水处理企业转产需巨额技术改造与环保资质，短期内无法形成有效供给，故界定为电镀污水处理服务市场。相关地域市场：电镀污水须经专用管网输送、长途运输有泄漏风险、当地实行集中处理政策，最近的同类设施相距约 19 至 20 公里而不构成紧密替代，故界定为涉案工业园。关于「条件相同」：应以交易安全、交易成本、规模和能力、信用状况、所处交易环节、交易持续时间等与具体交易直接相关的因素为判断标准，<strong>特定身份本身原则上不能单独作为认定条件不同的依据</strong>；57 位自然人股东持股均在 1.41% 至 2.62% 之间，未达控制程度，不能视为单一经济实体，故仍应适用相同的实质性判断标准。本案系最高人民法院 2026 年人民法院反垄断典型案例之二。</dd>
+      <dt>方法论解读</dt><dd>这是经济分析进入解释的<strong>最强形态</strong>——不是作为补充的考量，而是由实证法指定的判准。需求替代与供给替代在本案中不是法官借来的分析框架，而是第十五条所要求的认定方法；解释者在此没有「要不要做经济分析」的自由。这与本节所讲的一般情形正相反：通常经济考量只是取向于经济的规范目的之目的解释，可被宪法观念与立法者的价值安排所压倒；而当立法者已把经济学概念写入构成要件，它就取得了法概念的地位，须依法概念的方法处理。</dd>
+      <dt>延伸</dt><dd>本案的第三个争点与案例 23（「为生产经营目的」案）结构完全相同，值得并读：那里法院说「不能仅根据实施主体的机构性质来认定」，这里法院说「特定身份本身原则上不能单独作为认定条件不同的依据」。同一种方法论错误——<strong>以主体的形式身份代替对行为或交易的实质评价</strong>——在专利法与反垄断法上各被纠正一次。这类错误之所以顽固，是因为身份是现成的、可见的，而实质判断要费力；形式论据的诱惑，归根到底就是省力的诱惑（§34）。</dd>
+    </dl>
+    <div class="src">出处：最高人民法院知识产权法庭（2024）最高法知民终 896 号民事判决（2026 年 8 月 27 日）；一审（2023）浙 03 知民初 468 号；相关法条：《反垄断法》第十五条第二款、第二十二条第一款第六项，《最高人民法院关于审理垄断民事纠纷案件适用法律若干问题的解释》第三十五条、第四十一条。</div>
+  </div>
+</div>
+
+<h3 class="sec" id="s5-7"><span class="s">§34</span>目的解释对形式论据的修正</h3>
+
+<p class="rn">本节是全书的枢纽。前三种解释所提供的，多半是<span class="term">形式论据</span>：文义明确、体系位置、例外从严、新法优先。这些论据的共同特征是——它们以规则的形态出现，便于援引，且省去了实质说理。目的解释的任务之一，就是在必要时修正它们。核心纪律只有一句：<strong>形式论据不能取代价值安排。</strong></p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>形式论据</th><th>原初主张</th><th>目的解释的修正</th><th>本书对应</th></tr></thead>
+  <tbody>
+    <tr><td class="k">文义明确性规则</td><td>文义明确即排除其他解释</td><td>降格为可被推翻的推定；即使文义无语言歧义，亦应衡诸法律精神与目的，因语词往往只是对主要思想的不完整表达</td><td>§12</td></tr>
+    <tr><td class="k">体系位置</td><td>构成要件要素的位置决定其含义</td><td>仅提供初步帮助，可因目的性考量或上位法因素而更正；即使同一法律内的体系关联亦可被修正</td><td>§21・§25</td></tr>
+    <tr><td class="k">法秩序的统一</td><td>同一概念在不同法律中作同一解释</td><td>以价值平等性为前提；前提不成立时由法概念的相对性反驳，并可出现区分解释</td><td>§25</td></tr>
+    <tr><td class="k">例外从严</td><td>例外规则不得扩张</td><td>例外亦可从宽解释甚或类推适用；此构造地位弱于目的性考量，唯限于内部体系时方属正当</td><td>§24</td></tr>
+    <tr><td class="k">新法优先</td><td>新的规定优于旧的规定</td><td>新法终将变旧；旧特别法与新一般法冲突时该原则自相矛盾；须借目的性考量加以修正</td><td>§26</td></tr>
+    <tr><td class="k">连续性推定</td><td>旧法文本未改即承认旧有内容</td><td>立法者变更规范内容时，连续性规则失效，应作相反解释</td><td>§16</td></tr>
+    <tr><td class="k">有意义的沉默</td><td>立法者不说即为有意不予规定</td><td>通常只是未被证明的前提，构成默证；须有立法材料中较具体的说明方可采</td><td>§18</td></tr>
+  </tbody>
+</table>
+<figcaption>七组形式论据及其修正。表的用法：当你在判决书或论文中读到左栏任一句作为论证的<em>终点</em>时，应立即检查它有没有通过右栏的检验。</figcaption>
+</div>
+
+<p class="rn">这里要立刻解开一个看似矛盾的结。§28 说目的解释没有独立的出发点，它本身只是一项仍需借助其他论证模型加以加强的前提；本节却说它有权修正文义明确性、体系位置与例外从严。两个命题并不冲突，因为它们讲的是两个阶段的事。在<strong>发现阶段</strong>，目的不能自证：它只能从目的条款、立法理由、规范群的比较中被读出来，而这些材料恰恰就是文义、历史、体系三者的材料——这就是 §28 所说的「没有独立出发点」。在<strong>权衡阶段</strong>，目的一旦已由那些材料证成，它就高于同样由那些材料生成的形式论据；因为形式论据只是材料的<em>外形</em>（位置、句式、新旧、明确与否），而目的是这些材料所要<em>服务</em>的东西。外形服从于所服务者，这是位阶，不是偏好。</p>
+
+<p class="rn">由此得出一条可以直接拿去检查判决书的换算规则：<strong>目的解释的修正权，恰好等于它为自己的目的性命题所提供的论据的强度。</strong>谁援引「规范目的要求如此」去推翻一条形式论据，谁就必须先出示证成该目的的材料，且其强度不得低于被推翻的那条形式论据；未经证成的目的主张不是论据，只是命题（§20）。这也解释了为什么本节的修正表是一张<em>负担转移表</em>而不是一张<em>优先顺序表</em>：右栏从不宣告左栏无效，它只是把论证负担从援引形式论据的一方，移到了主张修正的一方。</p>
+
+<p class="rn">还须分清两件常被混为一谈的事：<strong>「文义明确」是一项论据，「可能文义的射程」是一道界限。</strong>目的解释有权推翻前者——它可以指出这个看似明确的词在本案语境中并不明确；它无权移动后者——射程由语言用法决定，不由目的决定。§12 与本表第一行所修正的，只是前者；§6 与图 3 所划的，始终是后者。刑法上这一区分尤其要紧：为行为人不利地援引目的以突破射程，就是类推（§13）；为行为人有利地援引目的以缩小适用范围，则只受禁止赘余（§31）的约束。把「明确性被推翻」误当成「射程被移动」，是目的解释最常见的越界方式，也是最难被察觉的一种，因为它每一步看起来都在解释。</p>
+
+<p class="rn">但修正权不是恣意权。目的解释的权力有多大，其论证负担就有多重。两条边界必须守住：其一，在刑法领域，目的解释不得越过可能文义的射程为行为人不利地扩张构成要件（§13）；其二，在任何领域，主张「规范目的已经改变」「法典已经过时」「此处存在漏洞」都只是命题，不是论据，须另行证明（§20）。</p>
+
+<p class="rn">最后是一条贯穿全书的量度。受方法论指引的法发现，无论在何种情况下都必须回溯于「法律」本身。造法成分越多，法官要承担的论证负担就越重：在法发现的过程中，法官愈是偏离概念核心或者迄今为止的先例，就其为结论提供的说理而言，他就应当愈加严格地审查这一说理是否具有说服力以及方法上的合理性。</p>
+
+<div class="block case">
+  <div class="hd"><span class="tag">案例 29</span><span class="name">专利被宣告无效后鉴定费的负担</span><span>（2023）最高法知民终 2221 号</span></div>
+  <div class="bd">
+    <dl>
+      <dt>案情</dt><dd>某2 公司以「骨传导扬声器」发明专利起诉某1 公司侵权。一审中双方各自申请鉴定、各预缴鉴定费五万八千元，一审判决侵权成立，鉴定费由被告负担。二审期间，国家知识产权局宣告涉案专利权全部无效。</dd>
+      <dt>争点</dt><dd>依《最高人民法院关于审理侵犯专利权纠纷案件应用法律若干问题的解释（二）》第二条应裁定驳回起诉。《诉讼费用交纳办法》第二十九条第一款规定「诉讼费用由败诉方负担」。在以<strong>裁定驳回起诉</strong>终结的案件中，谁是「败诉方」？</dd>
+      <dt>裁判</dt><dd>最高人民法院 2024 年 4 月 16 日以（2023）最高法知民终 2221 号裁定撤销一审判决、驳回起诉，并判定全部鉴定费十一万六千元由原告负担。理由是：鉴定费属于诉讼费用范畴，应依《诉讼费用交纳办法》由败诉方承担；「专利侵权诉讼中因专利权被宣告全部无效，人民法院先行裁定驳回原告起诉，系基于原告请求保护的权利基础处于不稳定状态，原告应承担败诉的法律后果」；「过错在于某2 公司」。若无效决定日后被生效行政判决撤销，原告可在将来的侵权诉讼中将该鉴定费作为赔偿依据另行主张。</dd>
+      <dt>方法论解读</dt><dd>把本节的换算规则拿来用一遍，本案就是练习。<strong>形式论据这一侧：</strong>民事诉讼法上「裁定驳回起诉」与「判决驳回诉讼请求」是一组体系性区分——前者程序性、未经实体审理、可另行起诉；后者实体性、受既判力约束。《诉讼费用交纳办法》第二十九条所称「败诉」，其典型语境是实体判决中胜负已分。把程序性驳回的原告径称「败诉方」，是对该词的扩张，与这组体系区分存在张力（§22、§25）。<strong>目的论据这一侧：</strong>法院并未止步于宣告，而是给出了目的性命题——原告以处于不稳定状态的权利基础提起诉讼，由此创造的诉讼风险在其一方，风险实现时由其承担不利后果，方才合乎费用负担规则所要分配的那个东西。依本节的换算规则，修正权等于目的论据的强度；读者应自行判断：这一强度是否足以推翻那组体系区分。</dd>
+      <dt>练习</dt><dd>就本案逐项回答。(1) 法院在「败诉」之外还引入了「过错在于某2 公司」。原告起诉时专利权尚属有效，这一「过错」的论据是什么？它是本节意义上已被证成的目的，还是一个未经证成的命题（§20）？(2) 法院同时指出，无效决定若被撤销，原告可在将来的侵权诉讼中主张该鉴定费——这一「可回转」的安排，对于「败诉」扩张的正当性，是加强还是削弱？(3) 若改以《诉讼费用交纳办法》第三十条（二审改变一审裁判的，应相应变更费用负担）为出发点，能否在不扩张「败诉」一词的前提下得出同一结论？比较两条路径的论证负担。(4) 本案所扩张的，究竟是「文义明确」这项论据，还是「败诉」一词可能文义的射程？两者的后果有何不同？</dd>
+    </dl>
+    <div class="src">出处：最高人民法院知识产权法庭（2023）最高法知民终 2221 号民事裁定；一审广东省深圳市中级人民法院（2022）粤 03 民初 2632 号。</div>
+  </div>
+</div>
+
+<div class="fig-wrap">
+<svg viewBox="0 0 640 260" role="img" aria-labelledby="figC">
+  <title id="figC">论证负担随偏离文义的程度双向递增</title>
+  <g stroke="var(--rule-strong)" stroke-width="1" fill="none">
+    <path d="M60 210 L610 210"></path><path d="M60 210 L60 34"></path>
+  </g>
+  <rect x="215" y="34" width="245" height="176" fill="var(--accent-soft)" opacity=".55"></rect>
+  <g stroke="var(--warn)" stroke-width="1.2" stroke-dasharray="5 4" fill="none">
+    <path d="M215 34 L215 210"></path><path d="M460 34 L460 210"></path>
+  </g>
+  <path d="M110 54 L170 120 L215 170 L300 196 L390 188 L460 158 L520 100 L580 48" stroke="var(--accent)" stroke-width="2.6" fill="none" stroke-linecap="round"></path>
+  <g fill="var(--accent)"><circle cx="300" cy="196" r="4"></circle><circle cx="390" cy="188" r="4"></circle></g>
+  <g fill="var(--warn)"><circle cx="110" cy="54" r="4"></circle><circle cx="580" cy="48" r="4"></circle></g>
+  <g font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--muted)">
+    <text x="120" y="26" text-anchor="middle" fill="var(--warn)" font-size="11">由内突破</text>
+    <text x="565" y="26" text-anchor="middle" fill="var(--warn)" font-size="11">由外突破</text>
+    <text x="120" y="230" text-anchor="middle" fill="var(--warn)">目的性限缩</text>
+    <text x="300" y="230" text-anchor="middle">概念核心</text>
+    <text x="400" y="230" text-anchor="middle">外围·扩张与限缩解释</text>
+    <text x="565" y="230" text-anchor="middle" fill="var(--warn)">类推·整体类推</text>
+    <text x="337" y="250" text-anchor="middle" font-size="11">可能文义的射程（本讲义的终点）</text>
+    <text x="52" y="40" text-anchor="end" fill="var(--ink)" font-size="12" font-weight="600">高</text>
+    <text x="52" y="210" text-anchor="end" fill="var(--ink)" font-size="12" font-weight="600">低</text>
+    <text x="16" y="122" font-size="11.5" transform="rotate(-90 16 122)" text-anchor="middle">论证负担</text>
+  </g>
+</svg>
+<figcaption>图 3　论证负担的阶梯是双向的。射程之内，负担随偏离概念核心的程度平缓上升；两端之外——由内突破的目的性限缩与由外突破的类推——负担陡然抬高，且已进入法续造，不在本讲义范围之内。</figcaption>
+</div>
+
+<h3 class="sec" id="s5-8"><span class="s">§35</span>论证负担与证明责任</h3>
+
+<p class="rn">本书从头到尾在说「论证负担」。这不是一个修辞上的口头禅，而是方法论真正的产出。§5 说过一句话：方法论不生产答案，它生产论证负担。现在要把它兑现为一套可操作的规则，并用它收束全书。</p>
+
+<p class="rn"><span class="term">论证负担</span>是一个<strong>分配装置</strong>。它不告诉你谁是对的；它告诉你，在双方都言之成理、谁也压不倒谁的时候，哪一方必须再说一句话——说不出来的那一方败。解释上真正的争议极少是「一方有理、一方无理」，绝大多数是「两种读法都站得住」。方法论之所以有用，正是因为它为这种僵局准备了出路。</p>
+
+<h4>一、与证明责任的异同</h4>
+
+<p class="rn">论证负担与<span class="term">证明责任</span>结构相同而对象不同。证明责任分配的是<strong>事实</strong>的不确定风险：待证事实真伪不明时，由负证明责任的一方承担不利后果。论证负担分配的是<strong>规范</strong>的不确定风险：法律见解相持不下时，由负论证负担的一方承担不利后果。两者都是在「不明」状态下预先指定输家，区别只在不明的是事实还是规范。</p>
+
+<p class="rn">一个重要的推论：<strong>证明责任可以用证据解决，论证负担不能。</strong>当事人举不出证据，可以再去找证据；论证负担不足，再多的证据也无济于事，只能换一套论证或者接受默认值。实务中最常见的混淆，是把「你没有说清这个概念为什么应当这样解释」说成「你没有证明」——前者是论证负担的问题，举证解决不了。</p>
+
+<p class="rn">两者在不确定概念上交界。「相应保密措施」「安全保障义务」「情节严重」「正当理由」这类要件，内容不是现成的，须由法院具体化。此时的分工是：具体化的方案由主张者提出并论证（论证负担），方案一旦确定，其所指向的事实——采取了哪些措施、场所属何性质、数额多少——由主张者举证（证明责任）。两步不能混为一谈。案例 28 中法院要求「经营者主张因身份差异导致条件不同的，应举证证明该身份差异导致与具体交易条件直接相关的因素存在实质性差异」，正是先定判准、再分举证的标准句式：判准（什么算「条件不同」）由法院依论证确定，事实（是否存在实质性差异）由当事人举证。</p>
+
+<h4>二、本书出现过的论证负担规则</h4>
+
+<p class="rn">散落在各章的规则可以归并成一张表。读这张表的办法是：每一条都由一个<strong>默认值</strong>和一个<strong>翻转条件</strong>组成。</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>默认值</th><th>谁负论证负担</th><th>翻转所需的论据</th><th>出处</th></tr></thead>
+  <tbody>
+    <tr><td>立法者意图成立</td><td>主张偏离者</td><td>指出规范语境已变，或意图自相矛盾、无从查明</td><td>§20</td></tr>
+    <tr><td>文本未改即承继旧有内容</td><td>主张非连续者</td><td>指出立法者已变更规范内容</td><td>§16</td></tr>
+    <tr><td>通说与先例成立</td><td>欲驳斥者</td><td>提出通说未曾考虑的理由</td><td>§32</td></tr>
+    <tr><td>同一概念作同一解释</td><td>主张法概念相对性者</td><td>指出两部法律在此处价值取向分殊</td><td>§25</td></tr>
+    <tr><td>例外不得扩张</td><td>主张从宽者</td><td>指出该例外系评价式表述而非封闭列举</td><td>§24</td></tr>
+    <tr><td>兜底项须与示例同质</td><td>入罪方向上的主张者</td><td>正面证成同质性，且强度足以支撑可预见性</td><td>§23</td></tr>
+    <tr><td>文义成立</td><td>主张目的修正者</td><td>其目的性命题所获论据，强度不低于被推翻的形式论据</td><td>§34</td></tr>
+    <tr><td>不越出可能文义</td><td>欲越界者</td><td>论证漏洞之存在及其可填补性；造法成分越多，负担越重</td><td>§6・§34</td></tr>
+  </tbody>
+</table>
+<figcaption>八条论证负担规则。每一条的左半是默认值，右半是翻转条件。把它们并排看，方法论的大部分内容就是在确定这两样东西。</figcaption>
+</div>
+
+<h4>三、默认值从哪里来</h4>
+
+<p class="rn">默认值不是习惯，更不是直觉，它有三个来源，而且都是宪法性的。</p>
+
+<ul>
+  <li><strong>法的安定性。</strong>既有的理解、通说、先例之所以优先，是因为人们据此安排了生活与交易。改变它们要付代价，故提出改变者举证。</li>
+  <li><strong>民主正当性。</strong>立法者的决定优先于适用者的决定，因为前者有授权而后者没有。偏离立法者意图，就是以未经授权的判断替代经过授权的判断（§2 特征五）。</li>
+  <li><strong>权力分立。</strong>文本优先于解释者，因为文本是权限的边界所在。越出文本，就是把界桩自己往外挪（§6）。</li>
+</ul>
+
+<p class="rn">三者合起来解释了一件事：<strong>论证负担为什么总是压在主张改变的那一方。</strong>这不是保守主义的偏好，而是权限分配的逻辑后果。也正因如此，默认值并非不可翻转——它只是要求翻转者说明，为什么在本案中，上述三项理由中的某一项不再成立或已被更强的理由压过。</p>
+
+<h4>四、负担的强度是连续的</h4>
+
+<p class="rn">论证负担不是一个开关，而是一个连续量。§34 给出的换算规则——修正权等于目的性命题所获论据的强度——在此可以一般化为一条通则：<strong>欲推翻默认值者，其所提论据的强度不得低于该默认值所依赖的那个理由。</strong></p>
+
+<p class="rn">于是有了一个可以直接拿去读判决书的量表。推翻通说，须给出通说未曾考虑的理由；推翻立法者意图，须指出规范语境已经变更；推翻文义，须指出该语词在本案语境中并不像看上去那样明确；越出可能文义，须论证漏洞的存在、其计划违反性，以及填补方案的可用性。强度不足，默认值维持——不是因为默认值被证明正确，而是因为翻转它的理由不够。这正是「不明时谁败」的含义。</p>
+
+<div class="block caution">
+  <div class="hd"><span class="tag">警示</span><span class="name">三种假装承担了论证负担的写法</span></div>
+  <div class="bd">
+    <p><strong>其一，援引代替论证。</strong>「依据诚实信用原则」「根据公平原则」「宪法要求如此」——只指出了原则，没有做权衡（§30、§27）。原则越抽象，越容易用来掩盖空缺。</p>
+    <p><strong>其二，命题冒充论据。</strong>「法典已经过时」「规范目的已经改变」「此处存在漏洞」——这些都是有待证明的前提，不是支持结论的理由（§20）。把命题当论据，是本书反复点名的那一种失手。</p>
+    <p><strong>其三，形式论据收尾。</strong>「文义明确」「例外应严格解释」「新法优于旧法」——它们是出发点，不是终点；凡以其中一句结束论证的，都还欠着 §34 修正表那一关（附一第 09 项）。</p>
+  </div>
+</div>
+
+<h4>五、收束</h4>
+
+<p class="rn"><strong>论证负担是可以被公开检验的，价值判断不是。</strong></p>
+
+<p class="rn">方法论值得学，不是因为它能替解释者作出价值判断——它不能，§2 的第二项特征已经说明任何稍具难度的解释最终都会把人推到价值判断面前。方法论的全部功用在于：它迫使解释者说出自己在哪一步作了价值判断、依据什么作的、为什么这个理由足以压过默认值。做到这三点，别人才能检验他。</p>
+
+<p class="rn">因此，一份判决书或一篇论文的方法论质量，不取决于它援引了几种解释方法，甚至不取决于结论是否正确——结论正确而论证负担未尽，下一个案件照样会错；结论可商榷而论证负担已尽，至少争点是清楚的，后人知道该从哪里反驳。<em>本书全部三十五节，归根到底只教这一件事：在该承担论证负担的地方承担论证负担。</em></p>
+
+</section>
+
+<!-- ══════════════ 附录 ══════════════ -->
+<section id="app">
+<div class="ch-open">
+  <div class="fig">附</div>
+  <div>
+    <p class="kicker">附录 · Anhang</p>
+    <h2>操作清单・案例索引・文献</h2>
+  </div>
+</div>
+
+<h3 class="sec" id="app-1"><span class="s">附一</span>解释的操作清单</h3>
+<p class="rn">这份清单不是方法的替代品，而是自查表。写完一段解释论证后，逐条对照；凡答不上来的，即是说理的缺口。</p>
+
+<div class="checklist">
+  <div><span class="n">01</span><div><p class="q">争点是否已经案件化？</p><p>你要解释的究竟是条文的哪一个构成要件要素？它在本案中为什么成为疑难？与本案无关的含义，不必解释。（§1・§2）</p></div></div>
+  <div><span class="n">02</span><div><p class="q">立法者有没有自己下过定义？</p><p>先查立法定义、推定与拟制；有「视为」字样处，注意不存在反证空间。（§10）</p></div></div>
+  <div><span class="n">03</span><div><p class="q">法学专业用语与日常用语是否分歧？</p><p>民法上专业用语优先；刑法上日常用语在不利于行为人的方向上构成界限。（§9）</p></div></div>
+  <div><span class="n">04</span><div><p class="q">本案事实处在概念核心还是概念外围？</p><p>若在核心之外，先问：它仍在概念周边之内（尚属解释），还是已在周边之外（已属类推）？（§11）</p></div></div>
+  <div><span class="n">05</span><div><p class="q">前身规范怎么写的？是连续还是非连续？</p><p>非连续时，旧法学说与判例不得径行沿用；沿用者自负论证负担。（§16）</p></div></div>
+  <div><span class="n">06</span><div><p class="q">立法材料说了什么？是不是可用的材料？</p><p>官方公布、可为公众获取、代表多数人意图。第三方意见与起草者个人立场不算。（§17）</p></div></div>
+  <div><span class="n">07</span><div><p class="q">你是否在从沉默中得出结论？</p><p>若是，请补上前提论证——否则那是默证。（§18）</p></div></div>
+  <div><span class="n">08</span><div><p class="q">相邻条文、款项划分与规范位置给出了什么提示？</p><p>兜底条款须受示例的同质性约束（同类解释规则）。（§23）</p></div></div>
+  <div><span class="n">09</span><div><p class="q">你是否把「文义明确」或「例外从严」当成了论证的终点？</p><p>两者都只是形式论据：前者应降格为可被推翻的推定，后者的地位弱于目的性考量。凡以其中一句收尾的论证，须再过 §34 的修正表一遍。（§12・§24）</p></div></div>
+  <div><span class="n">10</span><div><p class="q">是否与其他规范发生冲突或价值不一致？</p><p>若两个规范对同一事实给出不可并存的法效果，先依冲突规则与规范调适处理；若只是价值取向不一致，则应尽可能通过解释避免，但在法定的界限内有时必须容忍。（§26）</p></div></div>
+  <div><span class="n">11</span><div><p class="q">跨法律的同一概念，有无价值平等性？</p><p>无则可主张法概念相对性，但须承担论证负担。（§25）</p></div></div>
+  <div><span class="n">12</span><div><p class="q">规范目的是什么？依据何在？</p><p>明示目的条款、立法理由、或从多个规范推断。不得以「事物本质」「公正」代替。（§29）</p></div></div>
+  <div><span class="n">13</span><div><p class="q">你的解释会不会使规范虚置或被规避？</p><p>「限缩解释至零」不可取；立法者不制定多余无用之法。（§31）</p></div></div>
+  <div><span class="n">14</span><div><p class="q">结论的后果是否可承受、是否可用？</p><p>结果只能在法律意图实现的法效果范围内考量；并须考虑将来的法院能否适用你提出的标准。（§32）</p></div></div>
+  <div><span class="n">15</span><div><p class="q">有无一种解释更符合宪法？</p><p>前提是存在多种解释可能。若只有一种解释可能且违宪，则属违宪审查问题，不是解释问题。（§27）</p></div></div>
+  <div><span class="n">16</span><div><p class="q">最后：你的结论还在可能文义的射程之内吗？</p><p>若已溢出，请改写为法续造的论证格式，并相应提高论证密度。最后再过一遍 §35 的那张表：你所推翻的每一个默认值，是否都配了一个强度足够的理由？（§6・§34・§35）</p></div></div>
+</div>
+
+<h3 class="sec" id="app-2"><span class="s">附二</span>案例索引</h3>
+<div class="idx">
+  <div><span>案例 1　窃电案（RGSt 32, 165，1899）</span><span class="where">§1・§6</span></div>
+  <div><span>案例 2　「黑社会性质组织」的四个特征（2002 年立法解释）</span><span class="where">§7・§8・§9・§16</span></div>
+  <div><span>案例 3　深圳「鹦鹉案」（深圳市中级人民法院，2018）</span><span class="where">§9・§27</span></div>
+  <div><span>案例 4　赵春华气球射击摊案（天津，2016—2017）</span><span class="where">§9・§10・§25</span></div>
+  <div><span>案例 5　涉老年人彩礼纠纷案（2024）渝 0104 民初 3037 号</span><span class="where">§3・§11</span></div>
+  <div><span>案例 6　垄断协议参与者索赔案（2025）黔 01 民初 1331 号</span><span class="where">§12</span></div>
+  <div><span>案例 7　坐地示威案（BVerfGE 92, 1，1995）</span><span class="where">§13・§27</span></div>
+  <div><span>案例 8　陈某某、刘某某故意伤害、虐待案（指导案例 226 号）</span><span class="where">§13</span></div>
+  <div><span>案例 9　陆勇案（沅江市人民检察院，2015）</span><span class="where">§14・§25</span></div>
+  <div><span>案例 10　支某1等诉北京市永定河管理处生命权纠纷案（指导案例 141 号）</span><span class="where">§14</span></div>
+  <div><span>案例 11　药品专利链接「过渡期」案（2023）最高法知民终 4 号</span><span class="where">§19</span></div>
+  <div><span>案例 12　「北雁云依」案（指导案例 89 号）</span><span class="where">§20・§7</span></div>
+  <div><span>案例 13　无人继承遗产与酌给制度的协调（2023）京 0114 民初 22038 号</span><span class="where">§21</span></div>
+  <div><span>案例 14　汤长龙诉周士海股权转让纠纷案（指导案例 67 号）</span><span class="where">§22・§29</span></div>
+  <div><span>案例 15　药品专利链接诉讼参照适用「先行裁驳、另行起诉」（2022）最高法知民终 2177 号</span><span class="where">§22</span></div>
+  <div><span>案例 16　王力军非法经营再审改判无罪案（指导案例 97 号）</span><span class="where">§23</span></div>
+  <div><span>案例 17　阳光一佰生产、销售有毒、有害食品案（指导案例 70 号）</span><span class="where">§23</span></div>
+  <div><span>案例 18　江苏省纺织集团六公司实质合并破产重整案（指导案例 163 号）</span><span class="where">§24</span></div>
+  <div><span>案例 19　许诺销售不属于药品行政审批例外（2021）最高法知行终 451 号、702 号</span><span class="where">§24・§29・§31</span></div>
+  <div><span>案例 20　捆绑搭赠构成专利法上的「销售」（2024）最高法知民终 1286 号</span><span class="where">§25</span></div>
+  <div><span>案例 21　鲁潍盐业公司诉苏州市盐务管理局案（指导案例 5 号）</span><span class="where">§19・§26</span></div>
+  <div><span>案例 22　林方清诉常熟市凯莱实业有限公司公司解散纠纷案（指导案例 8 号）</span><span class="where">§8・§29</span></div>
+  <div><span>案例 23　「为生产经营目的」的理解与认定（2020）最高法知民终 831 号</span><span class="where">§29・§33</span></div>
+  <div><span>案例 24　农药登记试验的「科研例外」（2023）最高法知民终 1511 号</span><span class="where">§29・§24</span></div>
+  <div><span>案例 25　「农民自繁自用例外」的认定（2019）最高法知民终 407 号</span><span class="where">§31</span></div>
+  <div><span>案例 26　电梯劝阻吸烟猝死案（郑州市中级人民法院，（2017）豫 01 民终 14848 号）</span><span class="where">§32・§14</span></div>
+  <div><span>案例 27　泸州遗赠案（2001）</span><span class="where">§30・§32</span></div>
+  <div><span>案例 28　电镀污水处理差别待遇案（2024）最高法知民终 896 号</span><span class="where">§33・§35</span></div>
+  <div><span>案例 29　专利被宣告无效后鉴定费的负担（2023）最高法知民终 2221 号</span><span class="where">§34</span></div>
+</div>
+
+<h4>正文援引的其他案例</h4>
+<div class="idx">
+  <div><span>指导案例 24 号　荣宝英诉王阳、永诚财险江阴支公司案（法定减责事由的穷尽性）</span><span class="where">§23</span></div>
+  <div><span>指导案例 139 号　上海鑫晶山建材诉上海市金山区环保局案（法条竞合的选择）</span><span class="where">§26</span></div>
+  <div><span>指导案例 142 号　刘明莲等诉孙伟、河南兰庭物业案（劝阻类型的形成）</span><span class="where">§32</span></div>
+  <div><span>（2022）最高法知行终 29 号　混凝土企业微信群协同涨价案（并列式兜底的解释）</span><span class="where">§23</span></div>
+  <div><span>RAG 搜索引擎案　某文化公司诉某网络科技公司案（裁判要点在再发布中的变形）</span><span class="where">§7</span></div>
+  <div><span>某银行南郑区支行诉李某案　（2022）陕 0703 民初 1683 号（自称「参照」实为自主类推）</span><span class="where">§22</span></div>
+  <div><span>李某申请人格权侵害禁令案　（「难以弥补的损害」在三部法律中）</span><span class="where">§25</span></div>
+  <div><span>新疆某建筑公司诉某煤业集团案　（2024）兵 09 民终 8 号（强制性规定射程由目的划定）</span><span class="where">§29</span></div>
+  <div><span>指导案例 221 号　「砖瓦协会」垄断纠纷案（任何人不得因其违法行为获益）</span><span class="where">§12</span></div>
+  <div><span>指导案例 244 号　胡某波申请刑事赔偿案（参照适用的筛选）</span><span class="where">§22</span></div>
+</div>
+
+<h4>法条沿革对照</h4>
+<div class="idx">
+  <div><span>沿革 1　侵犯商业秘密罪的门槛之变（刑法第 219 条）</span><span class="where">§16</span></div>
+  <div><span>沿革 2　继承权丧失与「宽恕」的插入（民法典第 1125 条）</span><span class="where">§16</span></div>
+</div>
+
+<h3 class="sec" id="app-3b"><span class="s">附三</span>法条与规范性文件索引</h3>
+<p class="rn">按法律位阶与部门排列；括号内为本讲义节号。同一条文在案例框与正文中重复出现者只列一次。</p>
+
+<h4>一、法律</h4>
+<div class="idx">
+  <div><span><strong>宪法</strong>　第三十八条（人格尊严，§27）</span><span class="where">§27</span></div>
+  <div><span><strong>立法法</strong>（2023 修正）　第十一条第四项（§10・§13）；第四十八条（§7）、第四十八条第二款第一项与第二项（§15・§20）；第九十八条（§26・§27）；第九十九条、第一百条（§26・§27）；第一百零一条（§26）；第一百零二条（§26）；第一百零三条（§26）；第一百零四条（§13・§19）；第一百零五条、第一百零六条（§26）；第一百一十条（§27）；第一百一十九条（§7・§15・§20）</span><span class="where">§7・§26・§27</span></div>
+  <div><span><strong>刑法</strong>　第三条（§13）；第十二条第一款（§10・§16・§19）；第六十三条第二款（§9）；第九十九条（§8）；第一百一十四条（§23）；第一百四十一条（§25）；第一百四十四条（§23）；第二百一十九条（沿革 1・§16）；第二百二十五条及其第四项（§23）；第二百三十四条（§13）；第二百六十条（§13）；第二百六十七条第二款（§10）；第二百八十七条（§10）；第二百九十四条第一款（§7・§16）；第三百四十一条（§9）</span><span class="where">第二章・第四章</span></div>
+  <div><span><strong>刑法修正案（八）</strong>（§7）；<strong>刑法修正案（十一）</strong>（沿革 1・§14・§16）</span><span class="where">§16</span></div>
+  <div><span><strong>民法典</strong>　第一条（§27）；第八条（§32）；第一百五十三条第二款（§32）；第四百零六条（§22）；第六百三十四条、第六百四十六条（§22）；第九百九十七条（§25）；第一千一百三十一条、第一千一百六十条（案例 13・§21）；第一千一百二十五条（沿革 2・§16）；第一千一百三十三条（§32）；第一千一百八十六条（§32）；第一千一百九十八条（§14・§35）</span><span class="where">第三章—第五章</span></div>
+  <div><span><strong>民法通则</strong>（已废止）　第七条（§32）；第九十九条第一款（§20）。<strong>婚姻法</strong>（已废止）　第二十二条（§20）。<strong>继承法</strong>（已废止）　第七条（沿革 2）、第十六条第三款（§32）。<strong>合同法</strong>（已废止）　第一百六十七条第一款（§22）。<strong>侵权责任法</strong>（已废止）　第三十七条第一款（§14）</span><span class="where">沿革・§20・§32</span></div>
+  <div><span><strong>公司法</strong>（2005 年修订）第一百八十三条，现为 2023 年修订第二百三十一条（§29）</span><span class="where">§29</span></div>
+  <div><span><strong>企业破产法</strong>　第一条、第二条（§24）</span><span class="where">§24</span></div>
+  <div><span><strong>专利法</strong>（2020 年修正）　第十一条第一款（§25・§29）；第七十五条第四项（§29）、第五项（§24・§29）；第七十六条（§19・§22）</span><span class="where">第四章・第五章</span></div>
+  <div><span><strong>反垄断法</strong>（2022 年修正）　第一条、第六十条第一款（§12）；第十五条及其第二款（§33）；第十六条、第十七条第一项、第二十条（§12）；第二十二条第一款第六项（§33）</span><span class="where">§12・§33</span></div>
+  <div><span><strong>种子法</strong>　农民自繁自用例外（§31）。<strong>道路交通安全法</strong>　第一百一十九条第一项（§9・§10）。<strong>枪支管理法</strong>　第四十六条（§10）。<strong>反家庭暴力法</strong>　第三十七条（§13）</span><span class="where">§9—§31</span></div>
+  <div><span><strong>行政许可法</strong>　第十五条第一款、第十六条第三款；<strong>行政处罚法</strong>　第十三条；<strong>行政诉讼法</strong>　依据与参照（均见案例 21・§26）</span><span class="where">§26</span></div>
+  <div><span><strong>人民法院组织法</strong>　第十八条（§7）</span><span class="where">§7</span></div>
+</div>
+
+<h4>二、行政法规与司法解释</h4>
+<div class="idx">
+  <div><span><strong>诉讼费用交纳办法</strong>　第二十九条第一款、第三十条（案例 29・§34）</span><span class="where">§34</span></div>
+  <div><span><strong>全国人大常委会关于《刑法》第二百九十四条第一款的解释</strong>（2002）（案例 2・§7・§16）</span><span class="where">§7</span></div>
+  <div><span><strong>全国人大常委会关于《民法通则》第九十九条第一款、《婚姻法》第二十二条的解释</strong>（2014）（案例 12・§20）</span><span class="where">§20</span></div>
+  <div><span>法释〔2001〕5 号　<strong>适用刑事司法解释时间效力问题的规定</strong>　第一条至第三条（§19）</span><span class="where">§19</span></div>
+  <div><span>法释〔2009〕14 号　<strong>关于裁判文书引用法律、法规等规范性法律文件的规定</strong>（§7・§27）</span><span class="where">§27</span></div>
+  <div><span>法释〔2016〕1 号　<strong>侵犯专利权纠纷案件应用法律若干问题的解释（二）</strong>　第二条（案例 15・案例 29）</span><span class="where">§24・§34</span></div>
+  <div><span>法释〔2020〕10 号　<strong>办理侵犯知识产权刑事案件具体适用法律若干问题的解释（三）</strong>（沿革 1）；<strong>办理危害食品安全刑事案件适用法律若干问题的解释</strong>　第二十条、第二十一条（案例 17・§23）</span><span class="where">§16・§23</span></div>
+  <div><span>法释〔2020〕22 号　<strong>民法典婚姻家庭编的解释（一）</strong>　第五条（案例 5）；法释〔2024〕1 号　<strong>涉彩礼纠纷案件适用法律若干问题的规定</strong>　第三条、第六条（案例 5・§11）</span><span class="where">§11</span></div>
+  <div><span>法释〔2022〕12 号　<strong>办理破坏野生动物资源刑事案件适用法律若干问题的解释</strong>　第十三条第二款、第二十条（案例 3・§9）；法释〔2000〕37 号（已废止，同上）</span><span class="where">§9</span></div>
+  <div><span>法发〔2010〕51 号　<strong>最高人民法院关于案例指导工作的规定</strong>　第七条（§7）；<strong>人民法院民事裁判文书制作规范</strong>（2016）三（七）4（§27）</span><span class="where">§7・§27</span></div>
+  <div><span><strong>最高人民法院关于审理垄断民事纠纷案件适用法律若干问题的解释</strong>　第三十五条、第四十一条（案例 28・§33）</span><span class="where">§33</span></div>
+</div>
+
+<h4>三、外国法与国际文件</h4>
+<div class="idx">
+  <div><span><strong>德国基本法</strong>　第 103 条第 2 款（案例 7・§13・§27）</span><span class="where">§13</span></div>
+  <div><span><strong>德国刑法</strong>　第 240 条（强制罪，案例 7）；第 242 条（盗窃罪，案例 1）；第 248c 条（窃取电能，案例 1）</span><span class="where">§1・§13</span></div>
+  <div><span><strong>关于处罚窃取电能的法律</strong>（1900，案例 1）</span><span class="where">§1</span></div>
+</div>
+
+<h3 class="sec" id="app-4b"><span class="s">附四</span>术语对照与释义</h3>
+<p class="rn">德文、法文、拉丁文术语依首次出现的节次排列（同一节内不计先后）；中文译名以本讲义正文所用者为准。凡本讲义有意区别于通行译法者，于释义中注明。</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>中文</th><th>外文</th><th>释义要点</th><th>节</th></tr></thead>
+  <tbody>
+    <tr><td class="k">涵摄</td><td>Subsumtion</td><td>将特殊归于一般，回答事实是否符合构成要件</td><td>§1</td></tr>
+    <tr><td class="k">有体物</td><td>körperliche Sache</td><td>以空间可支配性与独立性为判准（案例 1）</td><td>§1</td></tr>
+    <tr><td class="k">他人的动产</td><td>fremde bewegliche Sache</td><td>《德国刑法》第 242 条盗窃罪的对象</td><td>§1</td></tr>
+    <tr><td class="k">个案关联性</td><td>Fallbezogenheit</td><td>法条的疑难只在适用于特定事实时发生</td><td>§2</td></tr>
+    <tr><td class="k">价值取向性</td><td>Wertbezogenheit</td><td>解释最终必落到价值判断上</td><td>§2</td></tr>
+    <tr><td class="k">文义的范围性</td><td>Wortlautgrenze</td><td>解释须在可能文义之内；亦译「文义界限」</td><td>§2・§6</td></tr>
+    <tr><td class="k">诠释的循环性</td><td>hermeneutischer Zirkel</td><td>部分与全体互相说明、互相制约</td><td>§2</td></tr>
+    <tr><td class="k">（主观）历史性</td><td>historische Gebundenheit</td><td>解释受立法者历史决定的约束，源于民主原则</td><td>§2</td></tr>
+    <tr><td class="k">合宪性</td><td>Verfassungsmäßigkeit</td><td>解释结果不得逸出宪法的基本价值决定；只淘汰含义，不生产含义</td><td>§2</td></tr>
+    <tr><td class="k">误言无害真意</td><td>falsa demonstratio non nocet</td><td>用词错误不影响真意；在法律行为解释中效力远强于制定法解释</td><td>§3・§19</td></tr>
+    <tr><td class="k">要素（非方法）</td><td>Elemente</td><td>萨维尼原意：四者须共同作用，不可择一而用</td><td>§4</td></tr>
+    <tr><td class="k">可能文义</td><td>möglicher Wortsinn</td><td>解释与法续造的唯一界线</td><td>§6</td></tr>
+    <tr><td class="k">文义明确性规则</td><td>sens-clair-Regel</td><td>文义明确即排除其他解释；本讲义予以摒斥</td><td>§12</td></tr>
+    <tr><td class="k">禁止消融</td><td>Verschleifungsverbot</td><td>不得使某一构成要件要素被另一要素吸收而失去限定功能</td><td>§13</td></tr>
+    <tr><td class="k">暴力</td><td>Gewalt</td><td>《德国刑法》第 240 条的争议概念（案例 7）</td><td>§13</td></tr>
+    <tr><td class="k">谱系解释</td><td>genetische Auslegung</td><td>依立法历程与立法材料探求立法者意图</td><td>§15</td></tr>
+    <tr><td class="k">默证</td><td>argumentum e silentio</td><td>从沉默中得出结论，属不可靠的论证模型</td><td>§18</td></tr>
+    <tr><td class="k">编写疏漏</td><td>Redaktionsfehler</td><td>立法者表达失误致文义与意图不符</td><td>§19</td></tr>
+    <tr><td class="k">同类解释规则</td><td>ejusdem generis</td><td>兜底项的解释不得超越所列示例的范围</td><td>§23</td></tr>
+    <tr><td class="k">明示其一即排除其他</td><td>expressio unius est exclusio alterius</td><td>反面解释的成文形态，前提是列举穷尽</td><td>§23</td></tr>
+    <tr><td class="k">反面解释</td><td>argumentum e contrario</td><td>从只对甲作规定推出对非甲应作相反处理</td><td>§23</td></tr>
+    <tr><td class="k">合宪性解释</td><td>verfassungskonforme Auslegung</td><td>于数种可能解释中选取最合宪者；非违宪审查</td><td>§27</td></tr>
+    <tr><td class="k">法内在的理性</td><td>ratio legis</td><td>法律的精神与目的，目的解释所探究者</td><td>§28</td></tr>
+    <tr><td class="k">目的性设定的诫命</td><td>final überlegtes Gebot</td><td>规范为实现特定目的而创设；旧译「最终考虑的诫命」不取</td><td>§28</td></tr>
+    <tr><td class="k">循环论证（乞题）</td><td>petitio principii</td><td>把待证命题预设为已证</td><td>§31</td></tr>
+    <tr><td class="k">实际有效原则</td><td>effet utile</td><td>解释应使条款的效益最大化、不至于全无意义</td><td>§31</td></tr>
+    <tr><td class="k">归谬法</td><td>reductio ad absurdum</td><td>以相反命题导致的荒谬结论反证其错误，须累积满足五项前提</td><td>§32</td></tr>
+    <tr><td class="k">法不干涉琐事</td><td>minima non curat praetor</td><td>无足轻重的违反义务行为不予追究</td><td>§32</td></tr>
+  </tbody>
+</table>
+<figcaption>外文术语对照表。「目的性设定的诫命」一项另立译名，已在释义栏注明所弃旧译；「禁止消融」是本讲义对 <span class="de">Verschleifungsverbot</span> 的译法，学界译名未定，读者引用时请标明所据。</figcaption>
+</div>
+
+<h4>中文术语的内部区分</h4>
+<p class="rn">以下各组中文术语形近而实异，是全书最容易混淆之处，集中列出以便复习。</p>
+<div class="idx">
+  <div><span><strong>限缩解释 ／ 目的性限缩</strong>——前者在文义界限之内缩小适用范围，后者把核心之内的事实排除出去，已属法续造</span><span class="where">§6・§14</span></div>
+  <div><span><strong>扩张解释 ／ 类推</strong>——前者延及语义边缘，后者越出可能文义</span><span class="where">§14</span></div>
+  <div><span><strong>立法目的 ／ 规范目的</strong>——前者属历史事实，证据在材料；后者属评价判断，证据在论证</span><span class="where">§28</span></div>
+  <div><span><strong>法秩序的统一 ／ 法概念的相对性</strong>——等权重的两个法构造，以价值平等性决定何者适用</span><span class="where">§25</span></div>
+  <div><span><strong>法律拟制 ／ 注意规定</strong>——前者创设内容、不得类推扩张；后者只作提示、可以一般化</span><span class="where">§10</span></div>
+  <div><span><strong>规范性概念 ／ 描述性概念</strong>——前者涉价值判断且仅承载于法律，后者指向可感知的客观事物</span><span class="where">§10</span></div>
+  <div><span><strong>合宪性解释 ／ 合法律解释 ／ 合宪性审查</strong>——前二者是解释，第三者是效力审查</span><span class="where">§27</span></div>
+  <div><span><strong>论证负担 ／ 证明责任</strong>——前者分配规范的不确定风险，后者分配事实的不确定风险</span><span class="where">§35</span></div>
+  <div><span><strong>参照适用 ／ 自主类推</strong>——前者有立法者的授权条文，后者没有；论证负担不同</span><span class="where">§22</span></div>
+  <div><span><strong>外部体系 ／ 内部体系</strong>——前者是形式构造与概念安排，后者是价值判断的连贯秩序</span><span class="where">§21・§30</span></div>
+</div>
+
+<h3 class="sec" id="app-5"><span class="s">附五</span>引注体例与主要参考文献</h3>
+
+<h4>引注体例</h4>
+<p class="rn">本讲义采以下体例，读者引用时请照此核对。<strong>中国法条号</strong>：正文与附三法条索引一律用汉字数字（「第七十五条第四项」），案例框标题与附二案例索引用阿拉伯数字（「刑法第 219 条」）。<strong>德国法条号</strong>从德文惯例，一律用阿拉伯数字（「《基本法》第 103 条第 2 款」「《德国刑法》第 242 条」）。<strong>案号</strong>用全角括号包年份（「（2023）最高法知民终 1511 号」）。<strong>判例</strong>：德国判例用官方汇编缩写加卷、页（RGSt 32, 165；BVerfGE 92, 1），必要时附裁判日期。<strong>司法解释</strong>首次出现用全称加文号（法释〔2024〕1 号），其后用简称。<strong>本讲义自身</strong>的引用格式为「§条号，边码××」；框内内容引作「案例 7·解读」「沿革 1·新法」「附一 09」。</p>
+<p class="rn">凡以引号标出者为条文或裁判文书原文，逐字照录，不作删改；凡经转述者不加引号。学说引述以<span class="de">楷体</span>标注的 <cite>cite</cite> 行交代出处；其中两处拉伦茨的段落系依其相关论述整理而非逐字迻译，已于 <cite>cite</cite> 行注明。<strong>未能逐一核校页码者，本讲义不伪造页码</strong>——参考文献中凡未标页码者，即为尚待读者按所据版本自行核定之处，下列各条已分别注明。</p>
+
+<h4>主要参考文献</h4>
+<ol class="refs">
+  <li>〔德〕托马斯·M. J. 默勒斯：《法学方法论》，杜志浩译，北京大学出版社 2022 年版。——本讲义在解释模型的分类、形式论据的修正、结果取向解释与经济分析部分，主要依循此书的框架。</li>
+  <li>〔德〕卡尔·拉伦茨：《法学方法论》，黄家镇译，商务印书馆 2020 年版（另有陈爱娥译学生版，商务印书馆 2003 年版）。——解释的任务、解释的标准及其相互关系、狭义与广义解释、习惯法与判例的解释等部分。引用时请注明所据版本与页码。</li>
+  <li>〔德〕莱因哈德·博克：《民法总论》（第 4 版），谢远扬、郝丽燕译，北京大学出版社 2024 年版。——各解释标准之间的权重关系（第 64 页）、上位法与合宪性解释（第 70 页）。</li>
+  <li>黄茂荣：《法学方法与现代民法》，中国政法大学出版社（增订版多种，引用时请注明版次）。——法律解释的特征、标的与目标，解释因素的三分（范围性／内容性／控制性）及其相互关系，经济观察法。</li>
+  <li>陈兴良：《赵春华非法持有枪支案的教义学分析》（2017）。——形式解释与实质解释之争，「依法入罪，以理出罪」。刊载出处未能核定，引用时请自行核校。</li>
+  <li>任广科：《法律方法论对裁判者的约束》（2024，案例评析，与钟长江合作）。——以债务人欺骗抵押人为旧债务提供担保为例，讨论法官如何在法律解释范围内寻求公正，以及何时、如何进行正当的法续造。参见 <a href="https://renguangke.com/index.html" target="_blank" rel="noopener">renguangke.com</a>。</li>
+  <li>任广科：《第二课·法条及其结构分类》（2026 课程讲义）。——完全性法条与不完全性法条、请求权基础规范、辅助规范、防御规范及法律适用的逻辑模式。参见 <a href="https://renguangke.com/teaching.html" target="_blank" rel="noopener">renguangke.com/teaching</a>。</li>
+</ol>
+
+<h3 class="sec" id="app-6"><span class="s">附六</span>本讲义未涵盖的部分</h3>
+<p class="rn">依教学安排，以下内容不在本册之内，留待续册处理：<strong>法续造</strong>的四种基本形式（具体类推、整体类推、目的性限缩、目的性扩张），以及<strong>法律漏洞</strong>的认定与补充（计划违反性、有意识的漏洞与非真正漏洞、碰撞漏洞）。此外，<strong>法律行为及合同的解释</strong>自成一系（意思表示的解释、补充性解释、疑义利益解释），与制定法解释虽有共通处，标的与目标俱不相同，亦另册讨论——两者的分界已在 §3 划清，本册只在交界处（案例 5）点到为止，不展开意思表示解释本身。</p>
+<p class="rn">另有三项与本册主题相邻而未展开者，一并交代，以免读者误以为本书认为它们不重要：<strong>欧盟法上的解释特殊性</strong>（多语种文本的比对、自主解释与法比较、实际有效原则在条约解释中的运用），本册仅在 §31 提及 <span class="de">effet utile</span> 一点；<strong>宪法解释自身的方法</strong>（与制定法解释的异同、宪法的开放性与政治性），本册只处理合宪性解释这一侧面（§27）；<strong>法律论证理论</strong>（阿列克西的论证规则、普遍实践论辩与法律论辩的关系），本册只取其论证负担一端（§35）。</p>
+
+<p class="end">
+法律解释讲义 · 教学本<br>
+文义、历史、体系、目的——四个坐标，一条射程。<br>
+引用格式：本讲义 §条号，边码；框内引作「案例 7·解读」。
+</p>
+
+</section>
+
+</div><!-- /body -->
+</main>
+</div><!-- /shell -->
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  if(btn){
+    btn.addEventListener('click',function(){
+      var cur=root.getAttribute('data-theme');
+      if(!cur){
+        var dark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+        cur=dark?'dark':'light';
+      }
+      root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+      try { localStorage.setItem('renguangke-theme', root.getAttribute('data-theme')); } catch (_) {}
+    });
+  }
+  var links=[].slice.call(document.querySelectorAll('.rail nav a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var i=targets.indexOf(e.target);
+      if(i<0) return;
+      links.forEach(function(l){l.classList.remove('on');});
+      links[i].classList.add('on');
+    });
+  },{rootMargin:'-15% 0px -70% 0px'});
+  targets.forEach(function(t){ if(t) io.observe(t); });
+})();
+</script>
+
+</body>
+</html>
