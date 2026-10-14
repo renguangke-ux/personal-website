@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>体系解释与目的解释 · 有声课件 — 任广科</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;background:#0E1A17;overflow:hidden;
+  font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif}
+#wrap{position:fixed;inset:0;display:flex;flex-direction:column}
+#viewport{flex:1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#deck{flex:0 0 auto;width:1920px;height:1080px;position:relative;transform-origin:center center;
+  box-shadow:0 24px 80px rgba(0,0,0,.55);border-radius:4px;overflow:hidden}
+#deck>section{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;
+  opacity:0;visibility:hidden;transition:opacity .28s ease}
+#deck>section.on{opacity:1;visibility:visible}
+#deck aside{display:none}
+#deck h1,#deck h2,#deck h3,#deck h4,#deck p,#deck ul,#deck ol,#deck table{margin:0}
+#deck ul,#deck ol{padding-left:1.4em}
+#deck table{border-collapse:collapse;width:100%}
+#deck th,#deck td{padding:.62rem .8rem;border-bottom:1px solid rgba(0,0,0,.12);text-align:left;vertical-align:top}
+#deck thead th{font-weight:700}
+#deck figcaption{margin-top:.8rem;font-size:24px;opacity:.72}
+#deck hr{border:0;border-top:1px solid currentColor;opacity:.45}
+#deck cite{font-style:italic;opacity:.8}
+
+/* 字幕 */
+#cap{flex:0 0 auto;min-height:74px;display:flex;align-items:center;justify-content:center;
+  padding:12px 42px;background:#0B1714;border-top:1px solid #1D362F;
+  color:#EDF2F0;font-size:20px;line-height:1.62;text-align:center}
+#cap.off{display:none}
+#cap b{font-weight:400}
+#cap i{font-style:normal;color:#6F9A8C;font-size:14px}
+#cap em{font-style:normal;color:#5FB49C;font-variant-numeric:tabular-nums;font-size:13px;
+  margin-right:12px;opacity:.9}
+
+/* 控制条 */
+#bar{flex:0 0 auto;display:flex;align-items:center;gap:14px;padding:10px 18px;
+  background:#132621;border-top:1px solid #23443B;color:#CFE3DC;font-size:13px;flex-wrap:wrap}
+#bar button{appearance:none;border:1px solid #2E6A5C;background:#17302A;color:#DDEBE6;
+  border-radius:8px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:inherit;
+  transition:background .15s,border-color .15s}
+#bar button:hover{background:#1F3F37;border-color:#54917F}
+#bar button.key{background:#2E6A5C;border-color:#49897A;color:#fff;min-width:96px;font-weight:600}
+#bar button.key:hover{background:#38806E}
+#bar button.tog[aria-pressed="true"]{background:#2E6A5C;border-color:#49897A;color:#fff}
+#bar .sp{flex:1}
+#bar label{display:flex;align-items:center;gap:7px;white-space:nowrap;color:#9FBCB2}
+#bar input[type=range]{width:96px;accent-color:#5FB49C}
+#bar select{background:#17302A;color:#DDEBE6;border:1px solid #2E6A5C;border-radius:8px;
+  padding:6px 8px;font-size:13px;max-width:230px;font-family:inherit}
+#pos{font-variant-numeric:tabular-nums;color:#EDF2F0;min-width:74px;text-align:center}
+#prog{position:absolute;left:0;right:0;top:0;height:3px;background:rgba(255,255,255,.08);z-index:5}
+#prog i{display:block;height:100%;background:#5FB49C;width:0;transition:width .3s}
+
+/* 目录 */
+#toc{position:fixed;inset:0;background:rgba(8,18,15,.93);z-index:40;display:none;
+  padding:46px 56px;overflow:auto}
+#toc.on{display:block}
+#toc h3{color:#9EDCC7;font-size:15px;letter-spacing:3px;margin:0 0 16px;font-weight:600}
+#toc ol{list-style:none;margin:0 0 30px;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:8px}
+#toc li{display:flex;gap:11px;align-items:baseline;color:#D8E6E1;padding:9px 12px;
+  border-radius:8px;cursor:pointer;font-size:14px;border:1px solid transparent}
+#toc li:hover{background:#1A322B;border-color:#2E6A5C}
+#toc li.cur{background:#2E6A5C;color:#fff}
+#toc li em{font-style:normal;color:#7FB3A3;font-variant-numeric:tabular-nums;min-width:26px}
+#toc li.cur em{color:#CFEFE3}
+#toc li s{text-decoration:none;margin-left:auto;color:#7FB3A3;font-size:12px}
+#tocX{position:fixed;right:34px;top:30px}
+
+/* 开场遮罩 */
+#gate{position:fixed;inset:0;z-index:60;background:#0E1A17;color:#EDF2F0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  text-align:center;padding:40px}
+#gate.off{display:none}
+#gate h1{font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:46px;margin:0;font-weight:700}
+#gate p{margin:0;max-width:760px;line-height:1.95;color:#9FBCB2;font-size:15px}
+#gate .go{font-size:17px;padding:15px 40px;border-radius:12px;border:1px solid #49897A;
+  background:#2E6A5C;color:#fff;cursor:pointer;font-family:inherit;font-weight:600}
+#gate .go:hover{background:#38806E}
+#gate .alt{background:none;border:0;color:#7FB3A3;cursor:pointer;font-size:13px;
+  text-decoration:underline;font-family:inherit}
+#gate .warn{color:#E0A080;font-size:13px;max-width:700px;line-height:1.8}
+@media (max-width:860px){
+  #bar{font-size:12px;gap:9px;padding:8px 10px}
+  #bar label span{display:none}
+  #bar input[type=range]{width:64px}
+  #toc{padding:30px 20px}
+}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="viewport">
+    <div id="prog"><i></i></div>
+    <div id="deck">
+<section id="cover" data-transition="fade" style="background:#16302A;color:#F3F1EA;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:space-between">
+<div style="display:flex;flex-direction:column;gap:28px">
+<p style="font-size:30px;color:#8FC4B4;letter-spacing:8px">法 学 方 法 论 · 第 四 、五 章</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:132px;font-weight:700;line-height:1.08;color:#F3F1EA">体系解释<br>与目的解释</h1>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<hr style="border-top:3px solid #2E6A5C;width:280px">
+<p style="font-size:40px;line-height:1.5;color:#F3F1EA;width:1300px">一条法条读不通的时候，先问它的<b>邻居</b>，再问它的<b>用处</b>。</p>
+<p style="font-size:30px;color:#8FC4B4">八十分钟 ｜ 两幕各四十分钟 ｜ 十二则案例，全部配对出现</p>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#8FC4B4">配套教材《法律解释讲义》§21–§35</p>
+
+</section>
+<section id="roadmap" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:68px;font-weight:700;line-height:1.15">今天的八十分钟</h2>
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:18px;background:#FFFFFF;padding:44px;border:1px solid #DCD8CC;border-radius:18px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">第一幕 ｜ 40 分钟</p>
+<h3 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:48px;font-weight:700">体系解释</h3>
+<p style="font-size:30px;line-height:1.6;color:#52605C">一个词的含义，由它的<b>邻居</b>决定。<br>五件工具，每件配一组方向相反的案例。</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:18px;background:#FFFFFF;padding:44px;border:1px solid #DCD8CC;border-radius:18px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">第二幕 ｜ 40 分钟</p>
+<h3 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:48px;font-weight:700">目的解释</h3>
+<p style="font-size:30px;line-height:1.6;color:#52605C">一个词的含义，由这条规范的<b>用处</b>决定。<br>两步法，以及它修正前三者的权力。</p>
+</div>
+</div>
+<div style="background:#16302A;padding:40px 48px;border-radius:18px">
+<p style="font-size:34px;line-height:1.6;color:#F3F1EA">两幕之间有一条暗线：<b style="color:#8FC4B4">体系解释提出的每一条规则，最后都要交给目的解释去检验。</b>第一幕结束时你会看到，这不是谦虚，是分工。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §21–§27（体系） ｜ §28–§35（目的）</p>
+
+</section>
+<section id="hook13" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:36px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">开 场 题 ｜ 讲义案例 13</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:68px;font-weight:700;line-height:1.15">一笔遗产，两条规范</h2>
+</div>
+<p style="font-size:32px;line-height:1.6;color:#52605C;width:1664px">赵某 2022 年去世。无配偶、无子女、无兄弟姐妹，父母先于其死亡。叔姑舅姨九人主张对他尽了扶养义务，其中一人是出租车司机，多次开车送他就医、节日带他出境旅游。遗产有房屋、存款、两份保险。</p>
+<div style="display:flex;gap:36px">
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;background:#FFFFFF;padding:40px;border-left:8px solid #2E6A5C;border-radius:14px">
+<h3 style="font-size:30px;font-weight:700;color:#2E6A5C">《民法典》第一千一百六十条</h3>
+<p style="font-size:32px;line-height:1.6">无人继承又无人受遗赠的遗产，<b>归国家所有</b>，用于公益事业。</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;background:#FFFFFF;padding:40px;border-left:8px solid #9E5231;border-radius:14px">
+<h3 style="font-size:30px;font-weight:700;color:#9E5231">《民法典》第一千一百三十一条</h3>
+<p style="font-size:32px;line-height:1.6">对继承人以外的……扶养较多的人，<b>可以分给适当的遗产</b>。</p>
+</div>
+</div>
+<div style="background:#16302A;padding:36px 48px;border-radius:16px">
+<p style="font-size:38px;line-height:1.5;color:#F3F1EA">两条都指向这一笔遗产。一条说归国家，一条说分给扶养人。<b style="color:#8FC4B4">你怎么判？</b></p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">北京市昌平区人民法院（2023）京 0114 民初 22038 号</p>
+
+</section>
+<section id="whatsys" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:68px;font-weight:700;line-height:1.15">体系解释做什么</h2>
+<div style="display:flex;gap:40px;align-items:stretch">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FFFFFF;padding:44px;border:1px solid #DCD8CC;border-radius:18px">
+<h3 style="font-size:32px;font-weight:700;color:#52605C">文义解释</h3>
+<p style="font-size:34px;line-height:1.6">在<b>本条之内</b>取证：这个词在语言里是什么意思。</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#16302A;padding:44px;border-radius:18px">
+<h3 style="font-size:32px;font-weight:700;color:#8FC4B4">体系解释</h3>
+<p style="font-size:34px;line-height:1.6;color:#F3F1EA">到<b>别的规范</b>那里取证：本条与整个体系对不对得上。</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:34px;line-height:1.6;color:#16302A;width:1664px">它所仰赖的假定只有一句：<b>立法者规定这种实质上的关联，本来就是为了让整个规范表达出连贯、易于理解的含义。</b></p>
+<p style="font-size:30px;line-height:1.6;color:#52605C;width:1664px">所以「法秩序的统一」「例外当严格解释」「新法优于旧法」这些口诀，全部属于体系解释的范畴——它们都是在用别处的规范来约束此处的读法。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §21</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="innerouter" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:68px;font-weight:700;line-height:1.15">外部体系 ／ 内部体系</h2>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:30px;color:#16302A;padding:20px 24px;border:1px solid #DCD8CC">
+<tr style="background:#16302A"><th style="width:18%;color:#F3F1EA;text-align:left">　</th><th style="width:41%;color:#8FC4B4;text-align:left">外部体系</th><th style="width:41%;color:#8FC4B4;text-align:left">内部体系</th></tr>
+<tr><td style="color:#2E6A5C">关涉什么</td><td>形式构造、编章结构、制度性概念的形成</td><td>逻辑上无冲突、目的论上协调的价值判断秩序</td></tr>
+<tr style="background:#F1EEE6"><td style="color:#2E6A5C">回答什么</td><td>这条规范<b>在哪里</b></td><td>它<b>为什么在那里</b></td></tr>
+<tr><td style="color:#2E6A5C">典型论据</td><td>概念金字塔、引致链条、条款位置、款项划分</td><td>规范目的、法原则、价值安排的一贯性</td></tr>
+<tr style="background:#F1EEE6"><td style="color:#2E6A5C">分量</td><td>初步帮助，通常要让位于目的论的考量</td><td>决定性；唯有追溯到此才能全面理解意义脉络</td></tr>
+</table>
+<div style="background:#16302A;padding:36px 48px;border-radius:16px">
+<p style="font-size:34px;line-height:1.55;color:#F3F1EA">拉伦茨的提醒：<b style="color:#8FC4B4">意义脉络问题本身已经引出目的标准。</b>不宜把传统解释规则看成各自为战的孤立方法——它们在具体化的过程中水乳交融。主张解释者可以在方法之间自由挑选的人，应当慎重考虑这一点。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §21 ｜ 据拉伦茨《法学方法论》相关论述整理</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="answer13" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">开 场 题 的 答 案 ｜ 案例 13</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">法院两条都用了：规范调适</h2>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#FFFFFF;padding:36px;border:1px solid #DCD8CC;border-radius:14px;display:flex;flex-direction:column;gap:12px">
+<h3 style="font-size:28px;font-weight:700;color:#2E6A5C">判决</h3>
+<p style="font-size:28px;line-height:1.55">房屋归国家，由民政局管理；存款与保险按扶养程度在九人间分配，出租车司机那一份最高。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:36px;border:1px solid #DCD8CC;border-radius:14px;display:flex;flex-direction:column;gap:12px">
+<h3 style="font-size:28px;font-weight:700;color:#2E6A5C">构造</h3>
+<p style="font-size:28px;line-height:1.55">把第一千一百三十一条读作第一千一百六十条的<b>前置扣减</b>：先依扶养程度酌给，余额归国家。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:36px;border:1px solid #DCD8CC;border-radius:14px;display:flex;flex-direction:column;gap:12px">
+<h3 style="font-size:28px;font-weight:700;color:#2E6A5C">为什么成立</h3>
+<p style="font-size:28px;line-height:1.55"><b>禁止赘余</b>：两条各自保有适用领域，无一被虚置。择一则必有一条成为具文。</p>
+</div>
+</div>
+<div style="background:#16302A;padding:34px 44px;border-radius:16px;display:flex;flex-direction:column;gap:14px">
+<p style="font-size:32px;line-height:1.55;color:#F3F1EA">真正要盯住的是法院分配比例用的那把尺子——<b style="color:#8FC4B4">「与所提供的扶养相一致」</b>。它不在任何一条的文字里。</p>
+<p style="font-size:30px;line-height:1.55;color:#C9D8D3">它是从两条规范<b>共同的价值安排</b>中提炼的：酌给制度奖酬的是实际的扶养付出，故扶养的程度决定分得的份额。这就是内部体系。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §21 ｜ 人民法院案例库 2026-07-2-517-001</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="toolbox" data-transition="fade" style="background:#2E6A5C;color:#F3F1EA;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:68px;font-weight:700;line-height:1.15;color:#FFFFFF">体系解释的五件工具</h2>
+<div style="display:grid;grid-template-columns:repeat(5, 1fr);gap:24px">
+<div style="background:#16302A;padding:32px 26px;border-radius:14px;display:flex;flex-direction:column;gap:14px"><p style="font-size:44px;font-weight:700;color:#8FC4B4">一</p><h3 style="font-size:30px;font-weight:700;line-height:1.3;color:#F3F1EA">引致与参照适用</h3><p style="font-size:24px;line-height:1.5;color:#C9D8D3">§22</p></div>
+<div style="background:#16302A;padding:32px 26px;border-radius:14px;display:flex;flex-direction:column;gap:14px"><p style="font-size:44px;font-weight:700;color:#8FC4B4">二</p><h3 style="font-size:30px;font-weight:700;line-height:1.3;color:#F3F1EA">同类解释规则</h3><p style="font-size:24px;line-height:1.5;color:#C9D8D3">§23</p></div>
+<div style="background:#16302A;padding:32px 26px;border-radius:14px;display:flex;flex-direction:column;gap:14px"><p style="font-size:44px;font-weight:700;color:#8FC4B4">三</p><h3 style="font-size:30px;font-weight:700;line-height:1.3;color:#F3F1EA">例外不得扩张</h3><p style="font-size:24px;line-height:1.5;color:#C9D8D3">§24</p></div>
+<div style="background:#16302A;padding:32px 26px;border-radius:14px;display:flex;flex-direction:column;gap:14px"><p style="font-size:44px;font-weight:700;color:#8FC4B4">四</p><h3 style="font-size:30px;font-weight:700;line-height:1.3;color:#F3F1EA">统一与相对性</h3><p style="font-size:24px;line-height:1.5;color:#C9D8D3">§25</p></div>
+<div style="background:#16302A;padding:32px 26px;border-radius:14px;display:flex;flex-direction:column;gap:14px"><p style="font-size:44px;font-weight:700;color:#8FC4B4">五</p><h3 style="font-size:30px;font-weight:700;line-height:1.3;color:#F3F1EA">冲突规则</h3><p style="font-size:24px;line-height:1.5;color:#C9D8D3">§26</p></div>
+</div>
+<div style="background:#FAF8F3;padding:40px 48px;border-radius:16px">
+<p style="font-size:36px;line-height:1.55;color:#16302A">每一件工具，我都配了<b style="color:#2E6A5C">一组结论相反的案例</b>。请盯住一个问题：两案的方法究竟是不是同一套？</p>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#C9D8D3">1 min</p>
+
+</section>
+<section id="tool1" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:36px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">工 具 一 ｜ §22</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">引致与「参照适用」</h2>
+</div>
+<p style="font-size:32px;line-height:1.6;color:#52605C;width:1664px">《民法典》大量使用「参照适用」「适用……的规定」，这是引致技术的中文形态。它是本讲义范围内<b style="color:#16302A">唯一一种由立法者下令进行的类推</b>——一般类推是解释者自己跨越文义射程，属法续造；参照适用是立法者已在文本中授权跨越，故仍在解释之内。</p>
+<div style="display:flex;gap:36px">
+<div style="flex:1;background:#FFFFFF;padding:40px;border-left:8px solid #2E6A5C;border-radius:14px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:34px;font-weight:700;color:#2E6A5C">第一步　类似性</h3>
+<p style="font-size:30px;line-height:1.6">被参照规范所处理的<b>利益冲突</b>，与本案的利益冲突是否同型？<br>比较的是利益冲突，不是两种制度的名称或标的。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:40px;border-left:8px solid #2E6A5C;border-radius:14px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:34px;font-weight:700;color:#2E6A5C">第二步　相容性</h3>
+<p style="font-size:30px;line-height:1.6">被参照规范中的<b>哪些要素</b>因本类型的特殊性而不得移入？<br>「适用」是照搬，「参照」要逐个要素筛选。</p>
+</div>
+</div>
+<div style="background:#16302A;padding:34px 44px;border-radius:16px">
+<p style="font-size:32px;line-height:1.55;color:#F3F1EA">读判决的检验法：法院自称的「参照」，未必是立法者下的指令。<b style="color:#8FC4B4">去找那道授权条文；找不到，「参照」二字就只是一个委婉语</b>——那是自主类推，论证负担按法续造计算。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §22</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="case1415" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">对照组一：拒绝参照 ／ 准许参照</h2>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#FFFFFF;padding:36px;border-radius:14px;border:1px solid #DCD8CC;display:flex;flex-direction:column;gap:14px">
+<p style="font-size:24px;color:#9E5231;letter-spacing:3px">案例 14 ｜ 指导案例 67 号</p>
+<h3 style="font-size:34px;font-weight:700;line-height:1.3">汤长龙诉周士海股权转让案</h3>
+<p style="font-size:28px;line-height:1.55;color:#52605C">分期付款买卖的法定解除权（未付款达五分之一即可解除），能不能用到分期付款的<b>股权转让</b>上？</p>
+<p style="font-size:28px;line-height:1.55"><b style="color:#9E5231">最高法：不能。</b></p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:36px;border-radius:14px;border:1px solid #DCD8CC;display:flex;flex-direction:column;gap:14px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:3px">案例 15 ｜（2022）最高法知民终 2177 号</p>
+<h3 style="font-size:34px;font-weight:700;line-height:1.3">药品专利链接诉讼</h3>
+<p style="font-size:28px;line-height:1.55;color:#52605C">侵权之诉的「先行裁驳、另行起诉」，能不能用到<b>确认是否落入保护范围</b>这一新类型之诉上？</p>
+<p style="font-size:28px;line-height:1.55"><b style="color:#2E6A5C">最高法：能。</b></p>
+</div>
+</div>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px;display:flex;flex-direction:column;gap:14px">
+<p style="font-size:30px;line-height:1.55;color:#F3F1EA"><b style="color:#8FC4B4">2177 号把两步做得一目了然。</b>类似性：两类诉讼中当事人的直接利害关系均在于「拥有合法有效的专利权」，故已被宣告无效的专利权在两类诉讼中地位相同。相容性：以状态极不稳定的专利权为基础作认定，反而无法达到早期解决纠纷的效果；且先行裁驳不致利益失衡，权利人仍可另行起诉。</p>
+<p style="font-size:30px;line-height:1.55;color:#C9D8D3"><b style="color:#8FC4B4">67 号的理由则有欠。</b>「标的物有体物与无体物之别」「交易主体不同」所循者为<b>外部体系</b>的进路，很容易被反驳——股权转让确实可以被涵摄于广义的买卖之下。更有力的理由在<b>内部体系</b>：第一百六十七条保护的是价款回收风险中的出卖人并抑制消费信贷滥用，股权转让要维护的是交易安全与公司人合性。两套价值安排不平行，故缺乏可类比性。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §22 ｜ 结论可从，理由有欠</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+
+</section>
+<section id="tool2" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">工 具 二 ｜ §23</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">同类解释规则 <span style="color:#52605C">ejusdem generis</span></h2>
+</div>
+<p style="font-size:34px;line-height:1.55;width:1664px">一般条款若经由示例规定具体化，<b style="color:#2E6A5C">其解释即不能超越所列出示例的范围</b>。配套的是「明示其一即排除其他」。这两条规则在中国刑法的「其他」条款上有极其重要的用武之地。</p>
+<div style="background:#FFFFFF;padding:40px 44px;border-left:8px solid #B8A574;border-radius:14px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:28px;font-weight:700;color:#8A7742">《刑法》第二百二十五条（非法经营罪）</h3>
+<p style="font-size:28px;line-height:1.6;color:#16302A">违反国家规定，有下列非法经营行为之一，扰乱市场秩序，情节严重的，处五年以下有期徒刑或者拘役……<br>（一）未经许可经营法律、行政法规规定的专营、专卖物品或者其他限制买卖的物品的；<br>（二）买卖进出口许可证、进出口原产地证明以及其他法律、行政法规规定的经营许可证或者批准文件的；<br>（三）未经国家有关主管部门批准非法经营证券、期货、保险业务的，或者非法从事资金支付结算业务的；<br>（四）<b>其他严重扰乱市场秩序的非法经营行为</b>。</p>
+</div>
+<p style="font-size:32px;line-height:1.55;color:#52605C;width:1664px">兜底项还有第三种构造：既非列举之后的收口，也非清单之外的推论，而是与若干类型<b>并列</b>的一项概括表述（「协议、决定或者其他协同行为」）。此时同质性不从前项示例归纳，而从并列各项共有的本质中提炼——<b style="color:#16302A">向左右两边看，不是向前面看。</b></p>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §23</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="case1617" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">对照组二：同一把尺子，两个方向</h2>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#FFFFFF;padding:36px;border-radius:14px;border:1px solid #DCD8CC;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:3px">案例 16 ｜ 指导案例 97 号 ｜ 出罪</p>
+<h3 style="font-size:34px;font-weight:700;line-height:1.3">王力军非法经营再审改判无罪案</h3>
+<p style="font-size:28px;line-height:1.55;color:#52605C">农民无证收购玉米转售粮库，收购二十一万八千余元，获利约六千元。一审有罪，再审改判无罪。</p>
+<p style="font-size:28px;line-height:1.55">裁判要点：应当根据相关行为是否具有与前三项<b>相当的</b>社会危害性、刑事违法性和刑事处罚必要性进行判断。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:36px;border-radius:14px;border:1px solid #DCD8CC;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;color:#9E5231;letter-spacing:3px">案例 17 ｜ 指导案例 70 号 ｜ 入罪</p>
+<h3 style="font-size:34px;font-weight:700;line-height:1.3">阳光一佰生产、销售有毒有害食品案</h3>
+<p style="font-size:28px;line-height:1.55;color:#52605C">保健食品中添加盐酸丁二胍，该物质<b>不在</b>任何违法添加名单之列。涉案八百余万元。</p>
+<p style="font-size:28px;line-height:1.55">裁判理由：与名单中的盐酸二甲双胍、盐酸苯乙双胍<b>同属双胍类降糖药</b>，具有同等属性和同等危害。</p>
+</div>
+</div>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:32px;line-height:1.55;color:#F3F1EA">两案都在为兜底项寻找它与示例之间的<b style="color:#8FC4B4">同质性</b>，差别只在方向。<b>方向一旦相反，论证负担即不对称：</b>出罪方向上，同质性不足就足以否定构成要件，无须额外论证；入罪方向上，同质性必须被正面证成，且强度要足以支撑「民众能够预见其行为入罪的可能性」。</p>
+<p style="font-size:30px;line-height:1.55;color:#C9D8D3">所以 70 号的次序值得留意：先指出<b style="color:#8FC4B4">同等属性</b>（同属双胍类），再以鉴定意见证明<b style="color:#8FC4B4">同等危害</b>。属性在前，危害在后。若只论危害不论属性，兜底项就退化为一个纯粹的结果条款——那已经不是解释。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §23 ｜ 同质性的方向决定负担</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+
+</section>
+<section id="argtypes" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:34px">
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">同族的两组推论：当然解释与反面解释</h2>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:28px;color:#16302A;padding:18px 22px;border:1px solid #DCD8CC">
+<tr style="background:#16302A"><th style="width:22%;color:#8FC4B4;text-align:left">推论</th><th style="width:30%;color:#8FC4B4;text-align:left">结构</th><th style="width:25%;color:#8FC4B4;text-align:left">刑法上能否用</th><th style="width:23%;color:#8FC4B4;text-align:left">负担在哪里</th></tr>
+<tr><td><b>举重以明轻</b></td><td>重者既被允许或不罚，轻者当然如此</td><td style="color:#2E6A5C"><b>可用</b>　方向是出罪或减轻</td><td>排序须取自规范目的</td></tr>
+<tr style="background:#F1EEE6"><td><b>举轻以明重</b></td><td>轻者既被禁止或处罚，重者当然如此</td><td style="color:#9E5231"><b>不可用</b>　结构与类推相同</td><td>民法上可用，仍须证成排序</td></tr>
+<tr><td><b>反面解释</b></td><td>只对甲作了规定，故对非甲作相反处理</td><td style="color:#52605C">视情形；先通过穷尽性的检验</td><td>证明该列举是穷尽的</td></tr>
+<tr style="background:#F1EEE6"><td><b>同类解释规则</b></td><td>兜底项不得超越示例所标示的范围</td><td style="color:#52605C">可用；入罪方向须正面证成</td><td>证明「同类」</td></tr>
+</table>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#FFFFFF;padding:32px;border-left:8px solid #2E6A5C;border-radius:14px">
+<p style="font-size:28px;line-height:1.55"><b style="color:#2E6A5C">成立的反面解释</b>　指导案例 24 号：受害人无过错时，其体质状况「不属于可以减轻侵权人责任的法定情形」——法定减责事由是一张穷尽的清单，清单之外不得增补。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:32px;border-left:8px solid #9E5231;border-radius:14px">
+<p style="font-size:28px;line-height:1.55"><b style="color:#9E5231">失败的反面解释</b>　立法者只为药品与医疗器械明文设例外，并<b>不</b>意味着农药登记试验被排除——《专利法》第七十五条第五项是对特定行业的明确化，不是对同条第四项固有射程的限缩。</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §23 ｜ 举轻以明重在刑法上超出文义，与类推无异</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="tool3" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:36px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">工 具 三 ｜ §24</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">「例外不得扩张」——以及它的相对化</h2>
+</div>
+<p style="font-size:34px;line-height:1.55;width:1664px">这是法律人最爱用的一句话，也是最经不起细看的一句。它的分量必须被压低：<b style="color:#2E6A5C">它只是法发现过程中的诸多步骤之一</b>，例外性的规则也可以从宽解释，甚至类推适用。</p>
+<div style="display:flex;gap:28px">
+<div style="flex:1;background:#FFFFFF;padding:36px;border:1px solid #DCD8CC;border-radius:14px;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:44px;font-weight:700;color:#8FC4B4">一</p>
+<h3 style="font-size:30px;font-weight:700">身份并不稳定</h3>
+<p style="font-size:28px;line-height:1.55;color:#52605C">何者为原则、何者为例外，本身就要靠判断。立法者规定的「例外」，可能在实践中已成通行的原则。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:36px;border:1px solid #DCD8CC;border-radius:14px;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:44px;font-weight:700;color:#8FC4B4">二</p>
+<h3 style="font-size:30px;font-weight:700">例外之例外变回规则</h3>
+<p style="font-size:28px;line-height:1.55;color:#52605C">此时反倒应当从宽解释。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:36px;border:1px solid #DCD8CC;border-radius:14px;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:44px;font-weight:700;color:#8FC4B4">三</p>
+<h3 style="font-size:30px;font-weight:700">概念法学的遗留</h3>
+<p style="font-size:28px;line-height:1.55;color:#52605C">把它当硬规则来用，正是概念法学的做法。它只是形式论据，一旦有更强的实质理由，它就该让位。</p>
+</div>
+</div>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px">
+<p style="font-size:32px;line-height:1.55;color:#F3F1EA">正确的用法是给它加一个限制：<b style="color:#8FC4B4">把这一法构造限于内部体系</b>，从而确保其符合目的性。符合此一限制时，强调「例外不得被一般化」才是正当之举。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §24</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="case1924" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">对照组三：同一个法条，两种例外</h2>
+<p style="font-size:30px;color:#52605C">《专利法》第七十五条第四项与第五项，都是「不视为侵犯专利权」。一则宽缓，一则严格。</p>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#FFFFFF;padding:34px;border-radius:14px;border-top:10px solid #9E5231;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;color:#9E5231;letter-spacing:3px">案例 19 ｜（2021）最高法知行终 451 号 ｜ 从严</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.3">许诺销售不属于 Bolar 例外</h3>
+<p style="font-size:27px;line-height:1.55;color:#52605C">第五项：「为提供行政审批所需要的信息，<b>制造、使用、进口</b>专利药品……」仿制企业在展会展示利伐沙班，抗辩属 Bolar 例外。</p>
+<p style="font-size:27px;line-height:1.55">最高法：该条所列行为<b>不包括许诺销售</b>。「法定不侵权的规定是例外，例外必须严格解释。」</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:34px;border-radius:14px;border-top:10px solid #2E6A5C;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:3px">案例 24 ｜（2023）最高法知民终 1511 号 ｜ 从宽</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.3">农药登记试验属「科研例外」</h3>
+<p style="font-size:27px;line-height:1.55;color:#52605C">第四项：「<b>专为科学研究和实验</b>而使用有关专利」。登记试验带有明显的商业筹备色彩，能否纳入？</p>
+<p style="font-size:27px;line-height:1.55">最高法：<b>可以构成</b>。否则专利保护期被变相延长，不符合专利法的立法目的。</p>
+</div>
+</div>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:34px;line-height:1.5;color:#F3F1EA">结论相反而方法一致。<b style="color:#8FC4B4">决定松紧的不是「例外」这个身份，而是例外条款本身的构造。</b></p>
+<p style="font-size:30px;line-height:1.55;color:#C9D8D3">第五项把允许的行为逐一列举，这是一份<b style="color:#8FC4B4">封闭的清单</b>，其射程由反面解释锁定——明示其一即排除其他。第四项是一个<b style="color:#8FC4B4">评价性的一般表述</b>，没有可供反面解释的清单，其射程只能由规范目的界定。</p>
+<p style="font-size:32px;line-height:1.5;color:#F3F1EA">于是得到一条比「例外应严格解释」有用得多的规则：<b style="color:#8FC4B4">列举式例外受反面解释约束，评价式例外由目的决定。</b>援引「例外从严」之前，先看那个例外是怎么写的。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §24 ｜ Bolar 例外的边界：准备可以，抢市场不行</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">4 min</p>
+
+</section>
+<section id="tool4" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:36px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">工 具 四 ｜ §25</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">法秩序的统一 ／ 法概念的相对性</h2>
+</div>
+<div style="display:flex;gap:36px">
+<div style="flex:1;background:#FFFFFF;padding:40px;border-left:8px solid #2E6A5C;border-radius:14px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:34px;font-weight:700;color:#2E6A5C">统一</h3>
+<p style="font-size:30px;line-height:1.6">同一概念在不同法律中应作同一解释。各法各解，法秩序便无所谓统一。</p>
+<p style="font-size:28px;line-height:1.55;color:#52605C">前提：存在<b>价值平等性</b>——不同法律所赖以为基础的价值必须一致。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:40px;border-left:8px solid #9E5231;border-radius:14px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:34px;font-weight:700;color:#9E5231">相对性</h3>
+<p style="font-size:30px;line-height:1.6">前提不成立时，统一性这个形式论据即失去说服力，应承认概念可以相对化。</p>
+<p style="font-size:28px;line-height:1.55;color:#52605C">可细到：同一部法律之内、乃至<b>同一条规范之内</b>（区分解释）。</p>
+</div>
+</div>
+<div style="background:#16302A;padding:36px 48px;border-radius:16px;display:flex;flex-direction:column;gap:12px">
+<h3 style="font-size:34px;font-weight:700;color:#8FC4B4">谁主张相对性，谁承担论证负担</h3>
+<p style="font-size:30px;line-height:1.55;color:#F3F1EA">两者逻辑上权重等同。关系是：<b>统一性所确立的规则，能够为相对性所反驳</b>；故主张相对性的人，必须指出两部法律在此处的价值取向何以不一致。</p>
+<p style="font-size:28px;line-height:1.55;color:#C9D8D3">例：行政法上「枪支」的 1.8 焦耳标准能否移入刑法（赵春华案）？这个负担是可以扛起来的——但它必须被扛起来，而不是以「刑法自有其独立性」一语带过。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §25</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="case209" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">对照组四：两个「销售」</h2>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#FFFFFF;padding:36px;border-radius:14px;border:1px solid #DCD8CC;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:3px">案例 9 ｜ 陆勇案 ｜ 刑法第一百四十一条</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.3">读<b>窄</b>了</h3>
+<p style="font-size:28px;line-height:1.55;color:#52605C">陆勇为病友代购印度仿制药，设置收款账号。检察机关认定不构成销售假药。</p>
+<p style="font-size:28px;line-height:1.55">理由：销售是<b>卖方</b>业务活动。买方的集体采购，纵在物理上包含收款，也不能被涵摄于「销售」之下。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:36px;border-radius:14px;border:1px solid #DCD8CC;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:3px">案例 20 ｜（2024）最高法知民终 1286 号 ｜ 专利法第十一条</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.3">读<b>宽</b>了</h3>
+<p style="font-size:28px;line-height:1.55;color:#52605C">缠丝机作为滚焊机订单的配套赠品，未单独计价。白送的赠品算不算「销售」？</p>
+<p style="font-size:28px;line-height:1.55">最高法：<b>算</b>。赠品的价值已隐含在付费主商品的利润中，买方实质上已为赠品支付了对价。</p>
+</div>
+</div>
+<div style="background:#16302A;padding:34px 46px;border-radius:16px;display:flex;flex-direction:column;gap:14px">
+<p style="font-size:32px;line-height:1.55;color:#F3F1EA">看上去正是「法概念的相对性」的例证。<b style="color:#8FC4B4">但这一结论不能成立。</b>两案所用的判断标准完全相同——<b>谁居于卖方地位、谁为之支付了对价</b>。陆勇代表买方，对价是病友付给印度公司的；维某公司是卖方，赠品的对价隐含在主商品价款中。方法一致，事实不同，结论自然不同。</p>
+<p style="font-size:34px;line-height:1.5;color:#F3F1EA">由此得一条纪律：<b style="color:#8FC4B4">结论不同不等于概念不同。</b></p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §25 ｜ 法秩序的统一在此恰恰是成立的</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+
+</section>
+<section id="tool5" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:30px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">工 具 五 ｜ §26</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">冲突规则：四条，以及它们自己的冲突</h2>
+</div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:27px;color:#16302A;padding:16px 20px;border:1px solid #DCD8CC">
+<tr style="background:#16302A"><th style="width:24%;color:#8FC4B4;text-align:left">规则</th><th style="width:30%;color:#8FC4B4;text-align:left">内容</th><th style="width:20%;color:#8FC4B4;text-align:left">实证依据</th><th style="width:26%;color:#8FC4B4;text-align:left">相对化</th></tr>
+<tr><td><b>上位法优于下位法</b></td><td>宪法最高；法律高于行政法规，行政法规高于地方性法规、规章</td><td>《立法法》第九十八条至第一百条</td><td>例外由法律明定（第一百零一条：自治条例、经济特区法规的变通规定）</td></tr>
+<tr style="background:#F1EEE6"><td><b>特别法优于一般法</b></td><td>同一机关制定的特别规定与一般规定不一致时，适用特别规定</td><td>《立法法》第一百零三条</td><td>为请求权设更多限制、更不利条件者，肯定其特别法地位</td></tr>
+<tr><td><b>新法优于旧法</b></td><td>同一机关制定的新规定与旧规定不一致时，适用新规定</td><td>《立法法》第一百零三条</td><td>今天的新法迟早变成旧法；旧特别法与新一般法相遇时自相矛盾</td></tr>
+<tr style="background:#F1EEE6"><td><b>新一般 vs 旧特别</b></td><td>不能确定如何适用的，由全国人大常委会裁决</td><td>《立法法》第一百零五条、第一百零六条</td><td>立法者自认这是方法论解决不了的问题，故留给立法程序</td></tr>
+</table>
+<div style="background:#16302A;padding:30px 44px;border-radius:16px">
+<p style="font-size:32px;line-height:1.55;color:#F3F1EA">第四行值得注意：<b style="color:#8FC4B4">冲突规则之间本身也会冲突，且不存在更高一级的冲突规则可供援引。</b>还有一类更精细的工作叫<b>规范调适</b>——开场题的那道遗产题就是。它的成败取决于目的是否已被查明：没有目的，就无从判断哪一种读法会使限制规定落空。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §26 ｜ 案例 21 鲁潍盐业案（指导案例 5 号）：位阶冲突是效力问题，不是解释问题</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+
+</section>
+<section id="constit" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">体 系 解 释 的 顶 层 ｜ §27</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">合宪性解释：三个概念，三条通道</h2>
+</div>
+<div style="display:flex;gap:26px">
+<div style="flex:1;background:#FFFFFF;padding:32px;border:1px solid #DCD8CC;border-radius:14px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:30px;font-weight:700;color:#2E6A5C">合宪性解释</h3><p style="font-size:27px;line-height:1.5;color:#52605C">标的是法律，作业是解释。在数种可能解释中选取最合宪者。</p></div>
+<div style="flex:1;background:#FFFFFF;padding:32px;border:1px solid #DCD8CC;border-radius:14px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:30px;font-weight:700;color:#2E6A5C">合法律解释</h3><p style="font-size:27px;line-height:1.5;color:#52605C">标的是法规、规章、司法解释。我国法院日常所做的绝大多数属此类。</p></div>
+<div style="flex:1;background:#FFFFFF;padding:32px;border:1px solid #DCD8CC;border-radius:14px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:30px;font-weight:700;color:#9E5231">合宪性审查</h3><p style="font-size:27px;line-height:1.5;color:#52605C">不是解释，是效力审查。结果不是确定含义，而是宣告或撤销。</p></div>
+</div>
+<div style="display:flex;gap:26px">
+<div style="flex:1;background:#F1EEE6;padding:30px;border-left:6px solid #2E6A5C;border-radius:12px;display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;color:#2E6A5C">通道一</p><h3 style="font-size:28px;font-weight:700">备案审查</h3><p style="font-size:26px;line-height:1.5;color:#52605C">《立法法》第一百一十条。公民可提出审查建议——鹦鹉案的律师走的正是这条路。</p></div>
+<div style="flex:1;background:#F1EEE6;padding:30px;border-left:6px solid #2E6A5C;border-radius:12px;display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;color:#2E6A5C">通道二</p><h3 style="font-size:28px;font-weight:700">宪法价值的法律化</h3><p style="font-size:26px;line-height:1.5;color:#52605C">《民法典》第一条「根据宪法，制定本法」。形式上引民法典，实质上落实宪法的价值决定。</p></div>
+<div style="flex:1;background:#F1EEE6;padding:30px;border-left:6px solid #2E6A5C;border-radius:12px;display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;color:#2E6A5C">通道三</p><h3 style="font-size:28px;font-weight:700">说理</h3><p style="font-size:26px;line-height:1.5;color:#52605C">宪法不得引为裁判依据，但「其体现的原则和精神可以在说理部分予以阐述」。</p></div>
+</div>
+<div style="background:#16302A;padding:28px 44px;border-radius:16px">
+<p style="font-size:30px;line-height:1.55;color:#F3F1EA"><b style="color:#8FC4B4">说理部分的宪法不是免费的。</b>一份合格的说理至少要交代三件事：(1) 待解释条文确实存在两种以上可能解释；(2) 所涉宪法原则具体是哪一项，在本案中指向什么；(3) 为什么所选的那一种更合于该项原则。三者缺一，「宪法要求如此」就只是一句空洞的口号。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §27</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="act1end" data-transition="magic" style="background:#2E6A5C;color:#F3F1EA;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:center;gap:44px">
+<p style="font-size:30px;color:#CDE4DC;letter-spacing:6px">第 一 幕 小 结</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:76px;font-weight:700;line-height:1.2;color:#FFFFFF;width:1600px">体系解释给出的，全部是<u>形式论据</u></h2>
+<p style="font-size:38px;line-height:1.6;color:#F3F1EA;width:1600px">「文义明确」「体系位置如此」「例外应严格解释」「新法优于旧法」「同一概念同一解释」——它们以规则的形态出现，便于援引，<b>而且省去了实质说理</b>。这正是它们的诱惑所在。</p>
+<div style="background:#16302A;padding:40px 48px;border-radius:16px">
+<p style="font-size:38px;line-height:1.55;color:#F3F1EA">所以第一幕的每一件工具，最后都把决定权交还给了同一个问题：<b style="color:#8FC4B4">这条规范是干什么用的？</b></p>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#CDE4DC">1 min ｜ 四十分钟到此</p>
+
+</section>
+<section id="act2" data-transition="magic" style="background:#16302A;color:#F3F1EA;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<p style="font-size:30px;color:#8FC4B4;letter-spacing:8px">第 二 幕 ｜ 四 十 分 钟</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:124px;font-weight:700;line-height:1.1;color:#FFFFFF">目的解释</h1>
+<hr style="border-top:3px solid #2E6A5C;width:280px">
+<p style="font-size:40px;line-height:1.55;color:#F3F1EA;width:1500px">目的解释虽为四要素之一，但文义、历史、体系三者所提供的材料，最终均须经由规范目的方能确定其意义。<b style="color:#8FC4B4">其修正前三者的权限由此而生，全课最重的论证负担亦由此而生。</b></p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#8FC4B4">讲义 §28–§35</p>
+
+</section>
+<section id="ratio" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§28</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">法内在的理性 <span style="color:#52605C">ratio legis</span></h2>
+</div>
+<p style="font-size:36px;line-height:1.6;width:1664px">法律规范为实现特定目的而创设，因此是一种<b style="color:#2E6A5C">目的性设定的诫命</b>——「诫命」指出它的规范形式，「目的性设定」指出它的形成方式。</p>
+<div style="display:flex;gap:36px">
+<div style="flex:1;background:#FFFFFF;padding:40px;border:1px solid #DCD8CC;border-radius:16px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:32px;font-weight:700;color:#2E6A5C">立法者做了什么</h3>
+<p style="font-size:30px;line-height:1.6;color:#52605C">设定某一构成要件，把它与某一法效果联结。这就表达了他对如何规制社会特定环节的构想。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:40px;border:1px solid #DCD8CC;border-radius:16px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:32px;font-weight:700;color:#2E6A5C">这叫规制裁量</h3>
+<p style="font-size:30px;line-height:1.6;color:#52605C">一方面确定所追求的目的及其界限；另一方面确定为实现它所采手段的适当性与均衡性。</p>
+</div>
+<div style="flex:1;background:#16302A;padding:40px;border-radius:16px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:32px;font-weight:700;color:#8FC4B4">目的解释要找的</h3>
+<p style="font-size:30px;line-height:1.6;color:#F3F1EA">就是这种<b>法内在的</b>理性——不是解释者心里那个理想的理性。</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §28</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="twostep" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">「目的解释是赘余的吗」</h2>
+<div style="background:#FFFFFF;padding:32px 40px;border-left:8px solid #9E5231;border-radius:14px">
+<p style="font-size:32px;line-height:1.55"><b style="color:#9E5231">一种颇具分量的反对意见：</b>不存在目的解释这样的事物，因为规范的目的本来就是任何解释方法的目标。其本身因而并不构成解释之方法。</p>
+</div>
+<p style="font-size:30px;line-height:1.55;color:#52605C;width:1664px">这一批评确有所据，但其结论不能成立。它准确地指出了一项结构差异：文义、体系、历史都直接从规范本身着手，各有原始的出发点；<b style="color:#16302A">目的解释没有这样的出发点</b>。因此它实为两步法——</p>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#16302A;padding:34px;border-radius:14px;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:40px;font-weight:700;color:#8FC4B4">第一步</p>
+<h3 style="font-size:32px;font-weight:700;color:#F3F1EA">指明前提</h3>
+<p style="font-size:28px;line-height:1.55;color:#C9D8D3">何为论据所要辩护的那个<b>目的性命题</b>？这一步是待证的，不是现成的。</p>
+</div>
+<div style="flex:1;background:#16302A;padding:34px;border-radius:14px;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:40px;font-weight:700;color:#8FC4B4">第二步</p>
+<h3 style="font-size:32px;font-weight:700;color:#F3F1EA">以目的界定文义</h3>
+<p style="font-size:28px;line-height:1.55;color:#C9D8D3">在可能文义的射程之内，依该目的裁剪适用范围。</p>
+</div>
+</div>
+<div style="background:#FFFFFF;padding:30px 40px;border-left:8px solid #9E5231;border-radius:14px;display:flex;flex-direction:column;gap:10px">
+<h3 style="font-size:30px;font-weight:700;color:#9E5231">三条禁令：不得「发明」规范目的</h3>
+<p style="font-size:28px;line-height:1.55">解释者不得发明规则的目的；不得以自己的前见取代立法者的意图；不得从客观解释的角度创制一种超然的规则目的。</p>
+<p style="font-size:28px;line-height:1.55;color:#52605C">必须警惕「事物本质」「公正」「社会需要」之类的文字游戏——它们看似给出了目的，实则只是把待证明的命题换了一个庄严的说法。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §28</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">4 min</p>
+
+</section>
+<section id="twopurpose" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">「立法目的」不等于「规范目的」</h2>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:29px;color:#16302A;padding:18px 24px;border:1px solid #DCD8CC">
+<tr style="background:#16302A"><th style="width:18%;color:#F3F1EA;text-align:left">　</th><th style="width:41%;color:#8FC4B4;text-align:left">立法目的</th><th style="width:41%;color:#8FC4B4;text-align:left">规范目的</th></tr>
+<tr><td style="color:#2E6A5C">是什么</td><td>立法者制定该法时所追求的目标</td><td>该条规范在现行法秩序中所承担的功能</td></tr>
+<tr style="background:#F1EEE6"><td style="color:#2E6A5C">属性</td><td>历史事实</td><td>评价判断</td></tr>
+<tr><td style="color:#2E6A5C">证据在哪</td><td>立法材料（§17）</td><td>规范在体系中的位置与它所服务的价值安排</td></tr>
+</table>
+<div style="display:flex;gap:26px">
+<div style="flex:1;background:#FFFFFF;padding:30px;border:1px solid #DCD8CC;border-radius:14px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">分离之一　立法者未曾预见</h3><p style="font-size:26px;line-height:1.5;color:#52605C">规范被用于立法时根本不存在的情形。此时只有规范目的可用，立法目的沉默。</p></div>
+<div style="flex:1;background:#FFFFFF;padding:30px;border:1px solid #DCD8CC;border-radius:14px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">分离之二　规范语境已变</h3><p style="font-size:26px;line-height:1.5;color:#52605C">条文未改而周边法秩序大改，它在新语境中承担的功能已不同于当初。</p></div>
+<div style="flex:1;background:#FFFFFF;padding:30px;border:1px solid #DCD8CC;border-radius:14px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">分离之三　一条规范多个目的</h3><p style="font-size:26px;line-height:1.5;color:#52605C">援引第一条的目的条款去解决第几十条的争议，常常就是以大充小。</p></div>
+</div>
+<div style="background:#16302A;padding:30px 44px;border-radius:16px">
+<p style="font-size:32px;line-height:1.55;color:#F3F1EA">分辨办法很简单：问一句<b style="color:#8FC4B4">「这个目的，立法者说过吗」</b>。说过，是立法目的，证据在材料里；没说过而由解释者从体系中推出，是规范目的，证据在论证里。混称则两头落空——以规范目的冒充立法目的是伪造史料，以立法目的搪塞规范目的是答非所问。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §28</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="findpurpose" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:34px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§29</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">目的怎么查明</h2>
+</div>
+<div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:28px">
+<div style="background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:32px;font-weight:700">一、明示的规范目的</h3><p style="font-size:28px;line-height:1.55;color:#52605C">我国法律通例是第一条：「为了……，制定本法。」这类目的条款与条文同时表决通过，是法律内含的谱系材料，<b>援引它不需要额外论证其可用性</b>。</p></div>
+<div style="background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:32px;font-weight:700">二、推断的规范目的</h3><p style="font-size:28px;line-height:1.55;color:#52605C">不明文规定目的是立法者更惯常的做法。须从法律内部的脉络中推断。<b>从多个规范中提炼一般性的法原则，需要相当的技艺——这也正是论证最易出现疏漏之处。</b></p></div>
+<div style="background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:32px;font-weight:700">三、立法理由</h3><p style="font-size:28px;line-height:1.55;color:#52605C">属历史解释的材料（§17），但功能在于为目的解释提供依据。历史与目的在此交汇：立法者的调整意图及其价值决定，对法官仍是有约束力的准则。</p></div>
+<div style="background:#FFFFFF;padding:34px;border-left:8px solid #B8A574;border-radius:14px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:32px;font-weight:700">四、疑义时的辅助规则</h3><p style="font-size:28px;line-height:1.55;color:#52605C">「有疑义时唯利自由／消费者／劳动者」只能适用于解释的<b>初步阶段</b>，本身并不决定结论。起决定作用的仍是各个规范的立法目的。</p></div>
+</div>
+<div style="background:#16302A;padding:30px 44px;border-radius:16px">
+<p style="font-size:30px;line-height:1.55;color:#F3F1EA"><b style="color:#8FC4B4">强制性规定的射程尤其要靠目的来划分。</b>兵 09 民终 8 号：发包方以分包未经招投标为由主张合同无效，法院指出不经招投标「并不影响招标投标法有关确保国有资金合法使用等立法目的的实现」。某项程序要求是否强制到足以使合同无效，取决于<b>省略它是否真的挫败了该法所要保护的那个东西</b>。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §29</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="hook22" data-transition="push" style="background:#2E6A5C;color:#F3F1EA;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<p style="font-size:30px;color:#CDE4DC;letter-spacing:6px">课 堂 题 ｜ 讲义案例 22 ｜ 指导案例 8 号</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:84px;font-weight:700;line-height:1.2;color:#FFFFFF;width:1620px">一家正在盈利的公司，<br>能不能被判决解散？</h2>
+<div style="background:#16302A;padding:40px 48px;border-radius:16px;display:flex;flex-direction:column;gap:16px">
+<p style="font-size:32px;line-height:1.6;color:#F3F1EA">凯莱公司两名股东各持 50%，章程规定决议须经二分之一以上表决权通过（各方一致认可不含本数）。2006 年起两人交恶，<b style="color:#8FC4B4">公司再未召开过股东会</b>。但公司及其分公司运营状态良好，服装城管委会出具证明称经营正常。</p>
+<p style="font-size:32px;line-height:1.6;color:#F3F1EA">《公司法》（2005 年修订）第一百八十三条：股东请求解散的条件之一是<b style="color:#8FC4B4">「公司经营管理发生严重困难」</b>。</p>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#CDE4DC">1 min</p>
+
+</section>
+<section id="case22" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">答 案 ｜ 案例 22 ｜ 目的解释两步法的完整展现</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">江苏高院：解散。两个步骤均可辨识</h2>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#16302A;padding:36px;border-radius:14px;display:flex;flex-direction:column;gap:14px">
+<p style="font-size:38px;font-weight:700;color:#8FC4B4">第一步　指明目的性命题</p>
+<p style="font-size:29px;line-height:1.6;color:#F3F1EA">第一百八十三条所救济的是<b style="color:#8FC4B4">公司僵局</b>——股东之间的对立使公司的意思形成机制失灵，少数股东的投资目的无法实现而又退出无门。解散之诉是这一困境的最后出口。</p>
+</div>
+<div style="flex:1;background:#16302A;padding:36px;border-radius:14px;display:flex;flex-direction:column;gap:14px">
+<p style="font-size:38px;font-weight:700;color:#8FC4B4">第二步　以目的界定文义</p>
+<p style="font-size:29px;line-height:1.6;color:#F3F1EA">「经营管理」在日常语言中偏向<b>经营业绩</b>，在本条中须读作<b style="color:#8FC4B4">组织机构的运行</b>——因为只有后一种读法才使本条有用武之地。</p>
+</div>
+</div>
+<div style="background:#FFFFFF;padding:32px 40px;border-left:8px solid #2E6A5C;border-radius:14px">
+<p style="font-size:30px;line-height:1.6">裁判理由：判断经营管理是否发生严重困难，应当从股东会、董事会或执行董事及监事会的<b>运行现状</b>综合分析；侧重点在于公司管理方面存有严重内部障碍，如股东会机制失灵、无法就经营管理作出决策，<b>「不应片面理解为公司资金缺乏、严重亏损等经营性困难」</b>。</p>
+</div>
+<div style="display:flex;gap:28px">
+<div style="flex:1;background:#FFFFFF;padding:28px 32px;border-radius:14px;border:1px solid #DCD8CC"><p style="font-size:28px;line-height:1.55">用的是<b style="color:#2E6A5C">禁止赘余</b>（§31）：若以亏损为条件，一家盈利却瘫痪的公司将永远不能解散，而这恰恰是本条要解决的那种情形。</p></div>
+<div style="flex:1;background:#FFFFFF;padding:28px 32px;border-radius:14px;border:1px solid #DCD8CC"><p style="font-size:28px;line-height:1.55">本案<b style="color:#2E6A5C">并未突破文义射程</b>：「经营管理」本就同时涵盖「经营」与「管理」，法院只是在并列的两者中确定何者为本条重心。这是选择与限缩，不是修正。</p></div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §29 ｜ 指导案例 8 号（2012 年 4 月 9 日，第 2 批）</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">4 min</p>
+
+</section>
+<section id="case23" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">案例 23 ｜（2020）最高法知民终 831 号 ｜ 推断的规范目的</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">事业单位搞公益，算不算「为生产经营目的」</h2>
+</div>
+<p style="font-size:30px;line-height:1.6;color:#52605C;width:1664px">农科院饲料研究所与大兴区农业农村局以「院区合作＋示范基地＋农户」模式实施了落入专利保护范围的技术，培训一万余人次，四千五百余农户受益，创造直接经济效益一点一四亿元。《专利法》第十一条第一款以「为生产经营目的」为侵权要件，而该法<b style="color:#16302A">未作定义、未列举、亦未从反面设例外</b>。</p>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#FFFFFF;padding:34px;border-top:10px solid #9E5231;border-radius:14px;display:flex;flex-direction:column;gap:12px">
+<h3 style="font-size:32px;font-weight:700;color:#9E5231">一审：驳回全部诉请</h3>
+<p style="font-size:28px;line-height:1.55;color:#52605C">理由：二者「均不具备生产经营的资质」，无证据显示项目以生产经营为目的。</p>
+<p style="font-size:28px;line-height:1.55"><b>这是论证跳跃。</b>从「机构性质」直接跳到「要件不成立」，中间省掉了「本条为什么要设这个要件」这一前提。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:34px;border-top:10px solid #2E6A5C;border-radius:14px;display:flex;flex-direction:column;gap:12px">
+<h3 style="font-size:32px;font-weight:700;color:#2E6A5C">二审：撤销改判，赔六十万</h3>
+<p style="font-size:28px;line-height:1.55;color:#52605C">先问目的：第十一条设此要件，是为合理平衡专利权人与社会公众的利益，把对权利人市场利益无实质影响的行为排除在侵权之外。</p>
+<p style="font-size:28px;line-height:1.55">认定标准随之确定：<b>不看主体是谁，不看有没有赚到钱</b>，看这个行为有没有挤占权利人本可通过许可或销售获得的市场。</p>
+</div>
+</div>
+<div style="background:#16302A;padding:30px 44px;border-radius:16px">
+<p style="font-size:32px;line-height:1.55;color:#F3F1EA">二审之所以能纠正，<b style="color:#8FC4B4">不是因为掌握了更多事实，而是因为先问了目的。</b>与案例 22 对读：两案的一审都停在了文义或形式论据上，两案的二审均因追问规范目的而得以改判。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §29 ｜ 目的决定了认定标准所指向的事实</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="value" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§30</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">目的从哪里来：概念法学 → 利益法学 → 价值法学</h2>
+</div>
+<div style="display:flex;gap:24px;align-items:stretch">
+<div style="flex:1;background:#FFFFFF;padding:30px;border-radius:14px;border:1px solid #DCD8CC;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;color:#52605C">概念法学</h3><p style="font-size:27px;line-height:1.5;color:#52605C">忠实于词语。不得违背明确的文义，即是规范目标的应有之义。</p></div>
+<div style="flex:1;background:#FFFFFF;padding:30px;border-radius:14px;border:1px solid #DCD8CC;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">利益法学</h3><p style="font-size:27px;line-height:1.5;color:#52605C">任何法规范的目的都是平衡相互冲突的利益。法官须查明这些利益。<br><b>批评：</b>它没说法官该注意哪些利益，等于允许法官单方面确定。</p></div>
+<div style="flex:1;background:#16302A;padding:30px;border-radius:14px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;color:#8FC4B4">价值法学</h3><p style="font-size:27px;line-height:1.5;color:#F3F1EA">依<b>法律本身的价值安排</b>确定利益。法律不只是利益冲突的规则，也是对价值的具体化；法秩序亦是价值秩序。</p></div>
+</div>
+<div style="background:#FFFFFF;padding:32px 40px;border-left:8px solid #2E6A5C;border-radius:14px;display:flex;flex-direction:column;gap:12px">
+<h3 style="font-size:32px;font-weight:700;color:#2E6A5C">那么这些价值以什么形态存在？答案是法原则</h3>
+<p style="font-size:29px;line-height:1.6">原则与规则的区别不在抽象程度，而在适用方式。<b>规则</b>以「全有或全无」的方式适用，两条冲突必有一条让位。<b>原则是最佳化诫命</b>，要求在法律与事实的可能范围内尽最大程度实现；两项原则冲突不生效力取舍，而是依个案分量作<b>权衡</b>，败下的一项并不失效，只是在本案中退让。</p>
+<p style="font-size:29px;line-height:1.6;color:#9E5231">直接后果：<b>诉诸规则只需论证涵摄，诉诸原则必须论证权衡</b>——指出相冲突的是哪两项原则、各自在本案中的分量由什么决定、为何此重彼轻。实务中大量「依据诚实信用原则」「根据公平原则」之所以空洞，正是因为只做了援引而略去了权衡。</p>
+</div>
+<div style="background:#16302A;padding:26px 40px;border-radius:14px">
+<p style="font-size:29px;line-height:1.55;color:#F3F1EA">我国对应的讨论是<b style="color:#8FC4B4">利益衡量论</b>。须警惕一个本土化的变形：把它理解为法官依内心确认对案件结果作出取舍，再回头寻找法律依据。<b style="color:#8FC4B4">那不是利益衡量，那是先定后找。</b></p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §30 ｜ 外部体系告诉你条文在哪里，内部体系告诉你它为什么在那里</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+
+</section>
+<section id="logic" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§31</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">目的解释主观性较强，所以逻辑纪律从严</h2>
+</div>
+<div style="display:grid;grid-template-columns:repeat(5, 1fr);gap:22px">
+<div style="background:#FFFFFF;padding:28px 24px;border-radius:14px;border-top:8px solid #9E5231;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;line-height:1.3">循环论证</h3><p style="font-size:24px;color:#52605C">petitio principii</p><p style="font-size:25px;line-height:1.5">把待证命题预设为已证。也包括：结论所依据的前提中已包含待推导的命题。</p><p style="font-size:22px;line-height:1.5;color:#9E5231;border-top:1px solid #E4DFD2;padding-top:10px">例：「上帝存在，因为《圣经》这样说；《圣经》可信，因为它是上帝的启示。」</p></div>
+<div style="background:#FFFFFF;padding:28px 24px;border-radius:14px;border-top:8px solid #9E5231;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;line-height:1.3">默证</h3><p style="font-size:24px;color:#52605C">argumentum e silentio</p><p style="font-size:25px;line-height:1.5">从立法者的沉默推不出什么。唯有立法材料中较具体的说明才应考量。</p><p style="font-size:22px;line-height:1.5;color:#9E5231;border-top:1px solid #E4DFD2;padding-top:10px">例：2008 年修法只为药品、医疗器械增设例外而未提农药，不能据此反推农药被排除（案例 24）。</p></div>
+<div style="background:#FFFFFF;padding:28px 24px;border-radius:14px;border-top:8px solid #9E5231;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;line-height:1.3">论证跳跃</h3><p style="font-size:24px;color:#52605C">康德</p><p style="font-size:25px;line-height:1.5">把前提与结论相联系而略去其他前提。被省略的前提不易想见时，跳跃即非法。</p><p style="font-size:22px;line-height:1.5;color:#9E5231;border-top:1px solid #E4DFD2;padding-top:10px">例：「事业单位无生产经营资质，故不以生产经营为目的」——被省略的前提并不自明（案例 23 一审）。</p></div>
+<div style="background:#FFFFFF;padding:28px 24px;border-radius:14px;border-top:8px solid #2E6A5C;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;line-height:1.3">避免规避法律</h3><p style="font-size:24px;color:#52605C">禁止规避</p><p style="font-size:25px;line-height:1.5">未采明确被禁止的方式，但该方式会导致法律所反对的后果。</p><p style="font-size:22px;line-height:1.5;color:#9E5231;border-top:1px solid #E4DFD2;padding-top:10px">例：借款外另订低价买卖，达到流押之实，规避《民法典》第 401 条；案例 25 拒绝了这种规避。</p></div>
+<div style="background:#FFFFFF;padding:28px 24px;border-radius:14px;border-top:8px solid #2E6A5C;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;line-height:1.3">禁止赘余</h3><p style="font-size:24px;color:#52605C">effet utile</p><p style="font-size:25px;line-height:1.5">解释应确保规范的适用领域不被虚置。不得「限缩解释至零」。</p><p style="font-size:22px;line-height:1.5;color:#9E5231;border-top:1px solid #E4DFD2;padding-top:10px">例：「禁止驶入公园」若解释为须停留逾二十四小时，则禁令无从适用。</p></div>
+</div>
+<div style="background:#16302A;padding:30px 44px;border-radius:16px">
+<p style="font-size:30px;line-height:1.55;color:#F3F1EA">前三条是<b style="color:#8FC4B4">禁止项</b>，后两条是<b style="color:#8FC4B4">论证模型</b>。今天已经用过两次禁止赘余：开场的遗产题（两条都不能被虚置），和刚才的公司解散案（以亏损为条件，本条永无用武之地）。下一页看避免规避。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §31 ｜ 「那种动辄援引基本权利而不作必要具体化的做法，也是一种论证跳跃」</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+
+</section>
+<section id="case25" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">案例 25 ｜（2019）最高法知民终 407 号 ｜ 避免规避法律</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">九百七十三亩地上的「农民自繁自用」</h2>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#FFFFFF;padding:34px;border-radius:14px;border:1px solid #DCD8CC;display:flex;flex-direction:column;gap:12px">
+<h3 style="font-size:30px;font-weight:700">他逐字符合三个语词</h3>
+<p style="font-size:28px;line-height:1.55;color:#52605C">秦永宏通过转包流转取得九百七十三点二亩土地经营权，未经许可生产「南粳 9108」水稻种子留作次年播种。</p>
+<p style="font-size:28px;line-height:1.55">他<b>是</b>农民，种子<b>是</b>自己繁的，也确系<b>自己</b>播种。《种子法》的例外写着：农民自繁自用授权品种的繁殖材料，可以不经许可、不付费。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:34px;border-radius:14px;border:1px solid #DCD8CC;display:flex;flex-direction:column;gap:12px">
+<h3 style="font-size:30px;font-weight:700;color:#2E6A5C">法院加了三重限定</h3>
+<ul style="font-size:27px;line-height:1.55;color:#16302A">
+<li><b>主体</b>：限于以家庭联产承包责任制形式签约的农民个人，不含合作社、种粮大户、家庭农场</li>
+<li><b>土地</b>：限于家庭联产承包的土地，不含各种流转方式取得经营权的土地</li>
+<li><b>用途</b>：以自用为限，不能通过各种交易形式提供给他人使用</li>
+</ul>
+</div>
+</div>
+<div style="background:#16302A;padding:30px 44px;border-radius:16px;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:30px;line-height:1.55;color:#F3F1EA">这三项限定<b style="color:#8FC4B4">在条文上一个字也找不到</b>。它们靠的是例外的设立目的——<b style="color:#8FC4B4">小农户的口粮与生计，而不是农业经营</b>。法院拒绝的，正是那种「虽未采取明确被禁止的方式，但使用该方式会导致法律所反对的后果」的构造。</p>
+<p style="font-size:30px;line-height:1.55;color:#C9D8D3">与案例 19（Bolar 例外）比较，这是两条不同的限缩路径：451 号靠的是列举的封闭性，是形式论据；本案靠的是目的性的具体化。<b style="color:#8FC4B4">注意它的代价</b>——法院为此三项限定逐一给出理由，而没有满足于「例外应严格解释」一句。凡越是靠目的而非靠文字作出的限定，说理就越不能省。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §31</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="consequence" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:34px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§32</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">结果取向的解释</h2>
+</div>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px">
+<p style="font-size:32px;line-height:1.55;color:#F3F1EA">先定其身份。<b style="color:#8FC4B4">结果考量不是第五种解释方法，而是目的解释在最后一程的展开形态。</b>它所衡量的后果，只能是规范目的本身所要实现或避免的那些后果；与规范目的无关的后果，纵然在政策上值得追求，亦不属于结果考量的衡量范围。</p>
+</div>
+<div style="display:flex;gap:28px">
+<div style="flex:1;background:#FFFFFF;padding:32px;border-radius:14px;border:1px solid #DCD8CC;display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C">第一层</p><h3 style="font-size:30px;font-weight:700">结果预估</h3><p style="font-size:27px;line-height:1.5;color:#52605C">判断裁判会产生什么结果。</p></div>
+<div style="flex:1;background:#FFFFFF;padding:32px;border-radius:14px;border:1px solid #DCD8CC;display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C">第二层</p><h3 style="font-size:30px;font-weight:700">结果评价</h3><p style="font-size:27px;line-height:1.5;color:#52605C">判断其接受程度如何。</p></div>
+<div style="flex:1;background:#FFFFFF;padding:32px;border-radius:14px;border:1px solid #DCD8CC;display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C">第三层</p><h3 style="font-size:30px;font-weight:700">结果调控</h3><p style="font-size:27px;line-height:1.5;color:#52605C">依所欲达成的结果调整结论。</p></div>
+</div>
+<div style="background:#FFFFFF;padding:32px 40px;border-left:8px solid #9E5231;border-radius:14px;display:flex;flex-direction:column;gap:10px">
+<h3 style="font-size:30px;font-weight:700;color:#9E5231">三重限制</h3>
+<p style="font-size:28px;line-height:1.55">其一，立法者若对结果的考量作出明文规定，任何情况下都必须遵循。其二，可纳入衡量的<b>只能是法律意图实现或追求的法效果</b>，不是解释者自己认为好的后果。其三，结果取向的考量不具绝对性，仅可作为法律价值安排的<b>补充</b>。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §32 ｜ 归谬法的五个前提很少能同时满足，故相应论证往往缺乏说服力</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="case26" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">案例 26 ｜（2017）豫 01 民终 14848 号 ｜ 结果取向的典型例证</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">电梯劝阻吸烟猝死案</h2>
+</div>
+<p style="font-size:30px;line-height:1.6;color:#52605C;width:1664px">杨某在电梯内劝阻段某吸烟，双方发生言语争执，段某随后心脏病发作猝死。死者家属起诉杨某赔偿。</p>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#FFFFFF;padding:32px;border-top:10px solid #9E5231;border-radius:14px;display:flex;flex-direction:column;gap:10px">
+<h3 style="font-size:30px;font-weight:700;color:#9E5231">一审　判补偿一万五千元</h3>
+<p style="font-size:27px;line-height:1.55;color:#52605C">依公平原则分担损失。形式上有法律依据，实质上是以「双方都无过错、总得有人承担」的内心确认取代了构成要件的检验。</p>
+<p style="font-size:27px;line-height:1.55">从「结果令人同情」直接跳到「应予补偿」，省掉了「何种规范为此提供了请求权基础」这一前提——<b>论证跳跃</b>。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:32px;border-top:10px solid #2E6A5C;border-radius:14px;display:flex;flex-direction:column;gap:10px">
+<h3 style="font-size:30px;font-weight:700;color:#2E6A5C">二审　撤销原判，驳回诉请</h3>
+<p style="font-size:27px;line-height:1.55;color:#52605C">杨某劝阻吸烟未超出必要限度，属正当劝阻，是履行公民应尽的社会责任。一审错误适用公平责任，违反了公民有权制止在禁止吸烟场所吸烟的法律规定，且会损害社会公共利益。</p>
+<p style="font-size:27px;line-height:1.55">论证链条：公共场所禁止吸烟是法定义务 → 制止吸烟是法律所鼓励的行为 → <b>一个法律所鼓励的行为，不能因偶然的、不可预见的因果进程而生赔偿责任，否则规范自相矛盾</b>。</p>
+</div>
+</div>
+<div style="background:#16302A;padding:28px 44px;border-radius:16px;display:flex;flex-direction:column;gap:10px">
+<p style="font-size:30px;line-height:1.55;color:#F3F1EA">结果的分量在哪里：<b style="color:#8FC4B4">若劝阻者须为此付钱，此后无人再敢挺身而出，法律所欲实现的秩序反而落空。</b>这正是「预估—评价—调控」三步的现实形态，而且三步都在<b>构成要件层面</b>完成，不在「情理」层面。</p>
+<p style="font-size:28px;line-height:1.55;color:#C9D8D3">后续：《民法典》第一千一百八十六条已把公平责任改为「依照法律的规定由双方分担损失」，从一般条款压缩为引致性条款。<b style="color:#8FC4B4">这一修法本身即是对本案一类裁判的回应。</b></p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §32</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="case27" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:24px;color:#9E5231;letter-spacing:4px">案例 27 ｜ 泸州遗赠案（2001）｜ 反思材料</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">目的解释在哪里越的界</h2>
+</div>
+<p style="font-size:29px;line-height:1.6;color:#52605C;width:1664px">黄某立下经公证的遗嘱，将财产遗赠给与其长期同居的张某。《继承法》第十六条第三款明文允许遗赠给法定继承人以外的人；遗嘱形式合法、意思真实。两审法院均以《民法通则》第七条（民事活动应尊重社会公德、不得损害社会公共利益）认定遗赠无效。</p>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#FFFFFF;padding:32px;border-left:8px solid #2E6A5C;border-radius:14px;display:flex;flex-direction:column;gap:10px">
+<h3 style="font-size:30px;font-weight:700;color:#2E6A5C">可辩护的一面</h3>
+<p style="font-size:27px;line-height:1.55">法院所做的是体系论证：把《继承法》的具体规定置于《民法通则》的基本原则之下理解，以维护内部体系（价值安排）的一贯性。这是「法秩序的统一」与上位法解释思路的运用。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:32px;border-left:8px solid #9E5231;border-radius:14px;display:flex;flex-direction:column;gap:10px">
+<h3 style="font-size:30px;font-weight:700;color:#9E5231">可质疑的两点</h3>
+<p style="font-size:27px;line-height:1.55"><b>其一</b>，第十六条第三款的文义并未留下「受遗赠人须品行端正」的空间。以一般条款排除具体规定的适用，实质上已越出解释而进入<b>目的性限缩</b>——按本课的划界，这已属法续造，须承担远高于解释的论证负担，而判决并未提供相应密度的说理。</p>
+<p style="font-size:27px;line-height:1.55"><b>其二</b>，「公共利益」在此被填入的内容，究竟来自法秩序的价值安排，还是来自裁判者在道德上的内心确认？若是后者，即触犯 §28 的禁令。</p>
+</div>
+</div>
+<div style="background:#16302A;padding:28px 44px;border-radius:16px">
+<p style="font-size:30px;line-height:1.55;color:#F3F1EA">回到上一节的区分：这桩争议归根到底是<b style="color:#8FC4B4">公序良俗原则与遗嘱自由原则的权衡未被充分展开</b>——法院援引了原则，却没有做权衡：没有指出相冲突的是哪两项、各自在本案中的分量由什么决定、为何此重彼轻。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §32 ｜ 争议极大，恰恰因此最值得作为反思材料</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">1 min</p>
+
+</section>
+<section id="case27eco" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:24px;color:#9E5231;letter-spacing:4px">案例 27 ｜ 法经济学检验</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">公序良俗背后的成本与收益</h2>
+</div>
+<div style="display:grid;grid-template-columns:repeat(5, 1fr);gap:22px">
+<div style="background:#FFFFFF;padding:28px 24px;border-radius:14px;border-top:8px solid #2E6A5C;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;line-height:1.3">遗嘱自由的激励</h3><p style="font-size:24px;color:#52605C">激励功能</p><p style="font-size:25px;line-height:1.5">预期处分可靠执行，才有积累财产的动机。经公证的遗嘱可被弹性标准事后推翻，所有立遗嘱人的预期风险随之上升。</p></div><div style="background:#FFFFFF;padding:28px 24px;border-radius:14px;border-top:8px solid #2E6A5C;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;line-height:1.3">忠实义务的承诺</h3><p style="font-size:24px;color:#52605C">外部性</p><p style="font-size:25px;line-height:1.5">遗赠第三人使违反义务的预期成本下降，婚姻承诺的可信度减弱。这是判决可获得的经济学支持。</p></div><div style="background:#FFFFFF;padding:28px 24px;border-radius:14px;border-top:8px solid #9E5231;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;line-height:1.3">卡尔多—希克斯</h3><p style="font-size:24px;color:#52605C">损益比较</p><p style="font-size:25px;line-height:1.5">双方损益难以货币化，无可靠数据，遗赠也无补偿路径。此项标准在此给不出确定结论。</p></div><div style="background:#FFFFFF;padding:28px 24px;border-radius:14px;border-top:8px solid #9E5231;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;line-height:1.3">最低防范成本</h3><p style="font-size:24px;color:#52605C">事前规则</p><p style="font-size:25px;line-height:1.5">立法者已设必留份（《民法典》第 1141 条），规则明确、事前可预见；以一般条款事后全盘否定，成本更高。</p></div><div style="background:#FFFFFF;padding:28px 24px;border-radius:14px;border-top:8px solid #9E5231;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:28px;font-weight:700;line-height:1.3">规则与标准</h3><p style="font-size:24px;color:#52605C">适用成本</p><p style="font-size:25px;line-height:1.5">以标准（公序良俗）推翻立法者以规则确定的事项，等于重新交由个案裁量，适用成本与不确定性增加。</p></div>
+</div>
+<div style="background:#16302A;padding:30px 44px;border-radius:16px">
+<p style="font-size:30px;line-height:1.55;color:#F3F1EA">保护遗嘱自由的激励与确定性，同保护婚姻稳定的外部性效益，<b style="color:#8FC4B4">彼此对立，单凭效率无从排序</b>。依 §33 的第二重局限，须回到立法者的价值安排。经济分析在此只把「公序良俗」拆成可检验的命题——<b style="color:#8FC4B4">补充而非替代教义学论证</b>。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §33・案例 27 ｜ 经济解释不是一种特别的解释方法，而是取向于经济的规范目的之目的解释</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="pivot" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:6px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§34 ｜ 全 课 的 枢 纽</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">目的解释对形式论据的修正</h2>
+</div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:25px;color:#16302A;padding:14px 18px;border:1px solid #DCD8CC">
+<tr style="background:#16302A"><th style="width:17%;color:#8FC4B4;text-align:left">形式论据</th><th style="width:28%;color:#8FC4B4;text-align:left">原初主张</th><th style="width:45%;color:#8FC4B4;text-align:left">目的解释的修正</th><th style="width:10%;color:#8FC4B4;text-align:left">出处</th></tr>
+<tr><td><b>文义明确性规则</b></td><td>文义明确即排除其他解释</td><td>降格为可被推翻的推定；语词往往只是对主要思想的不完整表达</td><td>§12</td></tr>
+<tr style="background:#FAF8F3"><td><b>体系位置</b></td><td>要素的位置决定其含义</td><td>仅提供初步帮助，可因目的性考量或上位法因素而更正</td><td>§21・§25</td></tr>
+<tr><td><b>法秩序的统一</b></td><td>同一概念作同一解释</td><td>以价值平等性为前提；前提不成立时由法概念的相对性反驳</td><td>§25</td></tr>
+<tr style="background:#FAF8F3"><td><b>例外从严</b></td><td>例外规则不得扩张</td><td>例外亦可从宽甚或类推；此构造弱于目的性考量，唯限于内部体系时方属正当</td><td>§24</td></tr>
+<tr><td><b>新法优先</b></td><td>新的规定优于旧的规定</td><td>新法终将变旧；旧特别法与新一般法冲突时该原则自相矛盾</td><td>§26</td></tr>
+<tr style="background:#FAF8F3"><td><b>连续性推定</b></td><td>文本未改即承继旧有内容</td><td>立法者变更规范内容时，连续性规则失效，应作相反解释</td><td>§16</td></tr>
+<tr><td><b>有意义的沉默</b></td><td>立法者不说即为有意不予规定</td><td>通常只是未被证明的前提，构成默证；须有立法材料中较具体的说明方可采</td><td>§18</td></tr>
+</table>
+<div style="background:#16302A;padding:26px 40px;border-radius:14px">
+<p style="font-size:30px;line-height:1.5;color:#F3F1EA">表的用法：<b style="color:#8FC4B4">当你在判决书或论文中读到左栏任一句作为论证的终点时，即应检验它是否通过右栏的检验。</b>第一幕那五件工具，全部在这张表里。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §34 ｜ 这是一张负担转移表，不是优先顺序表</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+
+</section>
+<section id="exchange" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:34px">
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">换算规则：修正权有多大</h2>
+<div style="background:#2E6A5C;padding:40px 48px;border-radius:16px">
+<p style="font-size:38px;line-height:1.5;color:#FFFFFF">目的解释的修正权，<b>恰好等于它为自己的目的性命题所提供的论据的强度。</b></p>
+</div>
+<p style="font-size:30px;line-height:1.6;color:#16302A;width:1664px">谁援引「规范目的要求如此」去推翻一条形式论据，谁就必须先出示证成该目的的材料，且其强度<b>不得低于</b>被推翻的那条形式论据。<b style="color:#9E5231">未经证成的目的主张不是论据，只是命题。</b></p>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px;display:flex;flex-direction:column;gap:10px">
+<h3 style="font-size:32px;font-weight:700;color:#2E6A5C">「文义明确」是一项<u>论据</u></h3>
+<p style="font-size:28px;line-height:1.55">目的解释<b>有权推翻它</b>——可以指出这个看似明确的词在本案语境中并不明确。</p>
+</div>
+<div style="flex:1;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px;display:flex;flex-direction:column;gap:10px">
+<h3 style="font-size:32px;font-weight:700;color:#9E5231">「可能文义的射程」是一道<u>界限</u></h3>
+<p style="font-size:28px;line-height:1.55">目的解释<b>无权移动它</b>——射程由语言用法决定，不由目的决定。</p>
+</div>
+</div>
+<div style="background:#16302A;padding:30px 44px;border-radius:16px">
+<p style="font-size:30px;line-height:1.55;color:#F3F1EA">把「明确性被推翻」误当成「射程被移动」，是目的解释中常见的越界方式，<b style="color:#8FC4B4">且不易察觉，因为它每一步看起来都在解释。</b>刑法上这一区分尤其要紧：为行为人不利地援引目的以突破射程，就是类推。</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §34 ｜ 造法成分越多，论证负担越重</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+
+</section>
+<section id="burden" data-transition="push" style="background:#16302A;color:#F3F1EA;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+<div style="display:flex;flex-direction:column;gap:6px">
+<p style="font-size:24px;color:#8FC4B4;letter-spacing:4px">§35 ｜ 收 束</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15;color:#FFFFFF">今天讲的每一条，都是一条论证负担规则</h2>
+</div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:26px;color:#F3F1EA;padding:14px 20px;border:1px solid #2E6A5C">
+<tr style="background:#2E6A5C"><th style="width:34%;color:#FFFFFF;text-align:left">默认值</th><th style="width:28%;color:#FFFFFF;text-align:left">谁负论证负担</th><th style="width:38%;color:#FFFFFF;text-align:left">翻转所需的论据</th></tr>
+<tr><td>同一概念作同一解释</td><td>主张法概念相对性者</td><td>指出两部法律在此处价值取向有差别</td></tr>
+<tr><td>例外不得扩张</td><td>主张从宽者</td><td>指出该例外系评价式表述而非封闭列举</td></tr>
+<tr><td>兜底项须与示例同质</td><td>入罪方向上的主张者</td><td>正面证成同质性，强度足以支撑可预见性</td></tr>
+<tr><td>通说与先例成立</td><td>欲驳斥者</td><td>提出通说未曾考虑的理由</td></tr>
+<tr><td>文义成立</td><td>主张目的修正者</td><td>其目的性命题所获论据，强度不低于被推翻的形式论据</td></tr>
+<tr><td>不越出可能文义</td><td>欲越界者</td><td>论证漏洞之存在及其可填补性；造法成分越多，负担越重</td></tr>
+</table>
+<div style="display:flex;gap:28px">
+<div style="flex:1;background:#2E6A5C;padding:26px 30px;border-radius:14px"><p style="font-size:27px;line-height:1.5;color:#FFFFFF"><b>论证负担</b>分配的是<b>规范</b>的不确定风险；<b>证明责任</b>分配的是<b>事实</b>的不确定风险。两者都在「不明」时预先指定输家。</p></div>
+<div style="flex:1;background:#2E6A5C;padding:26px 30px;border-radius:14px"><p style="font-size:27px;line-height:1.5;color:#FFFFFF">证明责任可以用证据解决，<b>论证负担不能</b>。举不出证据可以再去找；论证负担不足，再多证据也无济于事。</p></div>
+<div style="flex:1;background:#2E6A5C;padding:26px 30px;border-radius:14px"><p style="font-size:27px;line-height:1.5;color:#FFFFFF">默认值有三个来源，都是宪法性的：<b>法的安定性、民主正当性、权力分立</b>。所以负担总是压在主张改变的一方。</p></div>
+</div>
+<div style="background:#FAF8F3;padding:30px 44px;border-radius:16px">
+<p style="font-size:36px;line-height:1.5;color:#16302A"><b>论证负担是可以被公开检验的，价值判断不是。</b>方法论不能替你作价值判断——它只迫使你说出：在哪一步作了价值判断、依据什么作的、为什么这个理由足以压过默认值。</p>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#8FC4B4">2 min</p>
+
+</section>
+<section id="homework" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">课 后 作 业 ｜ 讲义案例 29 ｜（2023）最高法知民终 2221 号</p>
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">专利被宣告无效后，鉴定费归谁出</h2>
+</div>
+<div style="background:#FFFFFF;padding:32px 40px;border-left:8px solid #B8A574;border-radius:14px">
+<p style="font-size:26px;line-height:1.5">双方各预缴鉴定费五万八千元。二审期间涉案专利权被宣告全部无效，应裁定驳回起诉。《诉讼费用交纳办法》第二十九条第一款：「诉讼费用由败诉方负担。」最高法判：<b>全部鉴定费十一万六千元由原告负担</b>，理由是原告「以处于不稳定状态的权利基础提起诉讼，应承担败诉的法律后果」。</p>
+<p style="font-size:26px;line-height:1.5;color:#52605C">形式论据那一侧：「裁定驳回起诉」与「判决驳回诉讼请求」是一组体系性区分——前者程序性、未经实体审理；后者实体性、受既判力约束。把程序性驳回的原告径称「败诉方」，与这组区分存在张力。</p>
+</div>
+<div style="background:#16302A;padding:30px 44px;border-radius:16px;display:flex;flex-direction:column;gap:12px">
+<h3 style="font-size:32px;font-weight:700;color:#8FC4B4">请用今天的换算规则，逐项回答</h3>
+<ol style="font-size:25px;line-height:1.45;color:#F3F1EA">
+<li>法院还引入了「过错在于某2 公司」。原告起诉时专利权尚属有效，这一「过错」的论据是什么？是已被证成的目的，还是未经证成的命题？</li>
+<li>无效决定若被撤销，原告可在将来的侵权诉讼中主张该鉴定费——这一「可回转」的安排，对「败诉」扩张的正当性，是加强还是削弱？</li>
+<li>若改以《诉讼费用交纳办法》第三十条为出发点，能否在不扩张「败诉」一词的前提下得出同一结论？比较两条路径的论证负担。</li>
+<li>本案所扩张的，究竟是「文义明确」这项论据，还是「败诉」一词可能文义的射程？两者的后果有何不同？</li>
+<li>延伸：被告申请鉴定，结论与其主张不符，被告又因原告败诉而不承担实体责任——这笔鉴定费由原告负担，有无问题？（提示：《诉讼费用交纳办法》第六条、第十二条）</li>
+</ol>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">讲义 §34 ｜ 下次课前提交，一页纸</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">1 min</p>
+
+</section>
+<section id="end" data-transition="fade" style="background:#16302A;color:#F3F1EA;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:44px">
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:80px;font-weight:700;line-height:1.25;color:#FFFFFF;width:1620px">在该承担论证负担的地方<br>承担论证负担</h2>
+<hr style="border-top:3px solid #2E6A5C;width:280px">
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:30px;font-weight:700;color:#8FC4B4">第一幕带走的三句话</h3><p style="font-size:27px;line-height:1.6;color:#F3F1EA">外部体系告诉你条文在哪里，内部体系告诉你它为什么在那里。<br>列举式例外受反面解释约束，评价式例外由目的决定。<br>结论不同不等于概念不同。</p></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:30px;font-weight:700;color:#8FC4B4">第二幕带走的三句话</h3><p style="font-size:27px;line-height:1.6;color:#F3F1EA">目的解释是两步法：先指明目的性命题，再以它界定文义。<br>诉诸规则只需论证涵摄，诉诸原则必须论证权衡。<br>「文义明确」是论据，可以推翻；「可能文义的射程」是界限，不能移动。</p></div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#8FC4B4">配套阅读：《法律解释讲义》§21–§35 ｜ 案例 13、14、15、16、17、19、20、22、23、24、25、26、27、29</p>
+
+</section>
+    </div>
+  </div>
+  <div id="cap"></div>
+  <div id="bar">
+    <button id="prev" title="上一页（←）">◀ 上一页</button>
+    <button id="play" class="key" title="播放／暂停（空格）">▶ 播放</button>
+    <button id="next" title="下一页（→）">下一页 ▶</button>
+    <button id="replay" title="重读本页（R）">↺ 重读</button>
+    <span id="pos">1 / 39</span>
+    <button id="auto" class="tog" aria-pressed="true" title="讲完自动翻到下一页">自动播放</button>
+    <label><span>停顿</span><input id="gap" type="range" min="0" max="8" step="1" value="2"><b id="gapV">2 秒</b></label>
+    <label><span>语速</span><input id="rate" type="range" min="0.6" max="1.6" step="0.05" value="1"><b id="rateV">1.00×</b></label>
+    <label><span>语音</span><select id="voice"></select></label>
+    <button id="capt" class="tog" aria-pressed="true" title="显示／隐藏讲稿字幕（S）">字幕</button>
+    <span class="sp"></span>
+    <span id="srcnote" style="color:#6F9A8C"></span>
+    <button id="toclink">目录</button>
+    <button id="full" title="全屏（F）">全屏</button>
+  </div>
+</div>
+
+<div id="toc">
+  <button id="tocX">关闭 ✕</button>
+  <h3>目　录</h3>
+  <ol><li data-n="0"><em>1</em><span>体系解释与目的解释</span><s>开场</s></li><li data-n="1"><em>2</em><span>今天的八十分钟</span><s>1 min</s></li><li data-n="2"><em>3</em><span>一笔遗产，两条规范</span><s>3 min</s></li><li data-n="3"><em>4</em><span>体系解释做什么</span><s>2 min</s></li><li data-n="4"><em>5</em><span>外部体系 ／ 内部体系</span><s>2 min</s></li><li data-n="5"><em>6</em><span>法院两条都用了：规范调适</span><s>2 min</s></li><li data-n="6"><em>7</em><span>体系解释的五件工具</span><s>1 min</s></li><li data-n="7"><em>8</em><span>引致与「参照适用」</span><s>2 min</s></li><li data-n="8"><em>9</em><span>对照组一：拒绝参照 ／ 准许参照</span><s>3 min</s></li><li data-n="9"><em>10</em><span>同类解释规则 ejusdem generis</span><s>2 min</s></li><li data-n="10"><em>11</em><span>对照组二：同一把尺子，两个方向</span><s>3 min</s></li><li data-n="11"><em>12</em><span>同族的两组推论：当然解释与反面解释</span><s>2 min</s></li><li data-n="12"><em>13</em><span>「例外不得扩张」——以及它的相对化</span><s>2 min</s></li><li data-n="13"><em>14</em><span>对照组三：同一个法条，两种例外</span><s>4 min</s></li><li data-n="14"><em>15</em><span>法秩序的统一 ／ 法概念的相对性</span><s>2 min</s></li><li data-n="15"><em>16</em><span>对照组四：两个「销售」</span><s>3 min</s></li><li data-n="16"><em>17</em><span>冲突规则：四条，以及它们自己的冲突</span><s>3 min</s></li><li data-n="17"><em>18</em><span>合宪性解释：三个概念，三条通道</span><s>2 min</s></li><li data-n="18"><em>19</em><span>体系解释给出的，全部是形式论据</span><s>1 min</s></li><li data-n="19"><em>20</em><span>目的解释</span><s>第二幕　目的解释</s></li><li data-n="20"><em>21</em><span>法内在的理性 ratio legis</span><s>2 min</s></li><li data-n="21"><em>22</em><span>「目的解释是赘余的吗」</span><s>4 min</s></li><li data-n="22"><em>23</em><span>「立法目的」不等于「规范目的」</span><s>2 min</s></li><li data-n="23"><em>24</em><span>目的怎么查明</span><s>2 min</s></li><li data-n="24"><em>25</em><span>一家正在盈利的公司，能不能被判决解散？</span><s>1 min</s></li><li data-n="25"><em>26</em><span>江苏高院：解散。两个步骤均可辨识</span><s>4 min</s></li><li data-n="26"><em>27</em><span>事业单位搞公益，算不算「为生产经营目的」</span><s>2 min</s></li><li data-n="27"><em>28</em><span>目的从哪里来：概念法学 → 利益法学 → 价值法学</span><s>3 min</s></li><li data-n="28"><em>29</em><span>目的解释主观性较强，所以逻辑纪律从严</span><s>3 min</s></li><li data-n="29"><em>30</em><span>九百七十三亩地上的「农民自繁自用」</span><s>2 min</s></li><li data-n="30"><em>31</em><span>结果取向的解释</span><s>2 min</s></li><li data-n="31"><em>32</em><span>电梯劝阻吸烟猝死案</span><s>2 min</s></li><li data-n="32"><em>33</em><span>目的解释在哪里越的界</span><s>1 min</s></li><li data-n="33"><em>34</em><span>公序良俗背后的成本与收益</span><s>2 min</s></li><li data-n="34"><em>35</em><span>目的解释对形式论据的修正</span><s>3 min</s></li><li data-n="35"><em>36</em><span>换算规则：修正权有多大</span><s>2 min</s></li><li data-n="36"><em>37</em><span>今天讲的每一条，都是一条论证负担规则</span><s>2 min</s></li><li data-n="37"><em>38</em><span>专利被宣告无效后，鉴定费归谁出</span><s>1 min</s></li><li data-n="38"><em>39</em><span>在该承担论证负担的地方承担论证负担</span><s>第二幕　目的解释</s></li></ol>
+</div>
+
+<div id="gate">
+  <h1>体系解释与目的解释</h1>
+  <p><a href="../teaching.html" style="color:#8FC4B4">← 返回教学栏目</a></p>
+  <p><a href="../teaching.html" style="color:#8FC4B4">← 返回教学栏目</a></p>
+  <p><a href="../teaching.html" style="color:#8FC4B4">← 返回教学栏目</a></p>
+  <p>三十八页，语音讲解约五十分钟（课堂实讲八十分钟，含提问、板书与练习）。<br>
+     讲完一页停两秒自动翻到下一页；随时可用 <b>空格</b> 暂停、<b>←</b> <b>→</b> 手动翻页、<b>R</b> 重读本页、<b>F</b> 全屏。<br>
+     语速、停顿时长与朗读语音都可以在下方控制条里调。</p>
+  <p class="warn" id="nospeech" style="display:none">
+     这个浏览器不支持语音合成，页面仍可正常翻页阅读；或把录音放进同目录的 audio 文件夹（文件名与页面 id 同名的 mp3）。</p>
+  <p class="warn">建议用 <b>Microsoft Edge</b> 打开：它自带「晓晓」「云希」等中文神经语音，听感最接近真人。<br>
+     Chrome 下会退到系统自带的中文语音。若控制条里「语音」是空的，请在系统设置中安装中文语音包。</p>
+  <button class="go" id="start">▶ 开始讲解</button>
+  <button class="alt" id="silent">只看幻灯片，不要语音</button>
+</div>
+
+<script>
+var SLIDES = [{"id": "cover", "title": "体系解释与目的解释", "min": 0, "act": "开场"}, {"id": "roadmap", "title": "今天的八十分钟", "min": 1, "act": "第一幕　体系解释"}, {"id": "hook13", "title": "一笔遗产，两条规范", "min": 3, "act": "第一幕　体系解释"}, {"id": "whatsys", "title": "体系解释做什么", "min": 2, "act": "第一幕　体系解释"}, {"id": "innerouter", "title": "外部体系 ／ 内部体系", "min": 2, "act": "第一幕　体系解释"}, {"id": "answer13", "title": "法院两条都用了：规范调适", "min": 2, "act": "第一幕　体系解释"}, {"id": "toolbox", "title": "体系解释的五件工具", "min": 1, "act": "第一幕　体系解释"}, {"id": "tool1", "title": "引致与「参照适用」", "min": 2, "act": "第一幕　体系解释"}, {"id": "case1415", "title": "对照组一：拒绝参照 ／ 准许参照", "min": 3, "act": "第一幕　体系解释"}, {"id": "tool2", "title": "同类解释规则 ejusdem generis", "min": 2, "act": "第一幕　体系解释"}, {"id": "case1617", "title": "对照组二：同一把尺子，两个方向", "min": 3, "act": "第一幕　体系解释"}, {"id": "argtypes", "title": "同族的两组推论：当然解释与反面解释", "min": 2, "act": "第一幕　体系解释"}, {"id": "tool3", "title": "「例外不得扩张」——以及它的相对化", "min": 2, "act": "第一幕　体系解释"}, {"id": "case1924", "title": "对照组三：同一个法条，两种例外", "min": 4, "act": "第一幕　体系解释"}, {"id": "tool4", "title": "法秩序的统一 ／ 法概念的相对性", "min": 2, "act": "第一幕　体系解释"}, {"id": "case209", "title": "对照组四：两个「销售」", "min": 3, "act": "第一幕　体系解释"}, {"id": "tool5", "title": "冲突规则：四条，以及它们自己的冲突", "min": 3, "act": "第一幕　体系解释"}, {"id": "constit", "title": "合宪性解释：三个概念，三条通道", "min": 2, "act": "第一幕　体系解释"}, {"id": "act1end", "title": "体系解释给出的，全部是形式论据", "min": 1, "act": "第一幕　体系解释"}, {"id": "act2", "title": "目的解释", "min": 0, "act": "第二幕　目的解释"}, {"id": "ratio", "title": "法内在的理性 ratio legis", "min": 2, "act": "第二幕　目的解释"}, {"id": "twostep", "title": "「目的解释是赘余的吗」", "min": 4, "act": "第二幕　目的解释"}, {"id": "twopurpose", "title": "「立法目的」不等于「规范目的」", "min": 2, "act": "第二幕　目的解释"}, {"id": "findpurpose", "title": "目的怎么查明", "min": 2, "act": "第二幕　目的解释"}, {"id": "hook22", "title": "一家正在盈利的公司，能不能被判决解散？", "min": 1, "act": "第二幕　目的解释"}, {"id": "case22", "title": "江苏高院：解散。两个步骤均可辨识", "min": 4, "act": "第二幕　目的解释"}, {"id": "case23", "title": "事业单位搞公益，算不算「为生产经营目的」", "min": 2, "act": "第二幕　目的解释"}, {"id": "value", "title": "目的从哪里来：概念法学 → 利益法学 → 价值法学", "min": 3, "act": "第二幕　目的解释"}, {"id": "logic", "title": "目的解释主观性较强，所以逻辑纪律从严", "min": 3, "act": "第二幕　目的解释"}, {"id": "case25", "title": "九百七十三亩地上的「农民自繁自用」", "min": 2, "act": "第二幕　目的解释"}, {"id": "consequence", "title": "结果取向的解释", "min": 2, "act": "第二幕　目的解释"}, {"id": "case26", "title": "电梯劝阻吸烟猝死案", "min": 2, "act": "第二幕　目的解释"}, {"id": "case27", "title": "目的解释在哪里越的界", "min": 1, "act": "第二幕　目的解释"}, {"id": "case27eco", "title": "公序良俗背后的成本与收益", "min": 2, "act": "第二幕　目的解释"}, {"id": "pivot", "title": "目的解释对形式论据的修正", "min": 3, "act": "第二幕　目的解释"}, {"id": "exchange", "title": "换算规则：修正权有多大", "min": 2, "act": "第二幕　目的解释"}, {"id": "burden", "title": "今天讲的每一条，都是一条论证负担规则", "min": 2, "act": "第二幕　目的解释"}, {"id": "homework", "title": "专利被宣告无效后，鉴定费归谁出", "min": 1, "act": "第二幕　目的解释"}, {"id": "end", "title": "在该承担论证负担的地方承担论证负担", "min": 0, "act": "第二幕　目的解释"}];
+var NAR = {"cover": "欢迎来到法学方法论的第四、五章。今天讲两种解释：体系解释和目的解释。上节课我们处理了文义和历史，那是解释的起点；今天这两种，才是真正决定结论的两种。一条法条读不通的时候，办法只有两个——先问它的邻居，再问它的用处。全课八十分钟，两幕各四十分钟。十二则案例，全部成对出现，每一对都是结论相反而方法相同。请准备好随时暂停，自己先判断，再听法院怎么说。", "roadmap": "先交代今天的路线。第一幕讲体系解释：一个词的含义，由它的邻居决定。我会给你五件工具，每件工具都配一组方向相反的案例。第二幕讲目的解释：一个词的含义，由这条规范的用处决定。核心是一套两步法，以及它修正前三种解释的权力。两幕之间有一条暗线，请你现在就记住：体系解释提出的每一条规则，最后都要交给目的解释去检验。到第一幕结束时你会明白，这句话不是客气，是分工。", "hook13": "开场先给你一道真题，来自讲义案例十三。赵某二零二二年去世，没有配偶、没有子女、没有兄弟姐妹，父母也先于他死亡。他的叔姑舅姨九个人都说自己尽了扶养义务，其中一位是出租车司机，多次开车送他就医，过节还带他出境旅游。遗产有一套房子、一笔存款、两份保险。现在看两条法条。民法典第一千一百六十条说：无人继承又无人受遗赠的遗产，归国家所有。民法典第一千一百三十一条说：对继承人以外的扶养较多的人，可以分给适当的遗产。两条都指向这一笔遗产，一条说归国家，一条说分给扶养人。请你先暂停，自己判断一下：全归国家？全给扶养人？还是另有办法？三页之后我们对答案。", "whatsys": "先把体系解释是什么说清楚。文义解释在本条之内取证，问的是这个词在语言里是什么意思。体系解释要到别的规范那里取证，问的是本条与整个体系对不对得上。它所仰赖的假定只有一句：立法者规定这种实质上的关联，本来就是为了让整个规范表达出连贯、易于理解的含义。这个假定是可以被推翻的，立法者也会自相矛盾；但解释的起点必须是假定它不矛盾，否则任何体系论据都无法成立。顺带说一句，你平时作业里最爱用的那几句口诀——法秩序的统一、例外当严格解释、新法优于旧法——全部属于体系解释。今天就是要把它们一条条拆开，看它们成立的条件。", "innerouter": "这张表是全场第一个要记住的区分。外部体系关涉的是形式构造、编章结构、制度性概念的形成，它的典型论据是概念金字塔、引致链条、条款位置、款项划分。内部体系关涉的是一个逻辑上没有冲突、目的论上协调一致的价值判断秩序，它的论据是规范目的、法原则、价值安排的一贯性。两者的分量差别很大：以外部体系位置为据得出的结论，通常要让位于目的论的考量。请记住这句话——外部体系告诉你条文在哪里，内部体系告诉你它为什么在那里。拉伦茨还有一句提醒值得一并记下：意义脉络问题本身已经引出目的标准，不宜把传统的解释规则看成各自为战的孤立方法，它们在具体化的过程中水乳交融。主张解释者可以在方法之间自由挑选的人，应当慎重考虑这一点。", "answer13": "回到开场那道题。法院的答案是：两条都用。房屋归国家，由民政局管理；存款与保险按扶养程度在九个人之间分配，那位出租车司机分得的比例最高。它的构造叫规范调适——把第一千一百三十一条读作第一千一百六十条的前置扣减，先依扶养程度酌给，余额归国家。这样处理之所以成立，靠的是禁止赘余：两条规范各自保有适用领域，谁也没有被虚置。你想想，如果径直归国家，第一千一百三十一条在无继承人的场合就永远用不上；如果全由扶养人分得，第一千一百六十条就成了具文。但真正要盯住的不是结论，是法院分配比例用的那把尺子——与所提供的扶养相一致。这句话不在任何一条的文字里，它是从两条规范共同的价值安排中提炼出来的：酌给制度奖酬的是实际的扶养付出，所以扶养的程度决定分得的份额。这就是内部体系。", "toolbox": "接下来是体系解释的五件工具：引致与参照适用、同类解释规则、例外不得扩张、法秩序的统一与法概念的相对性、冲突规则。每一件我都配了一组结论相反的案例。听的时候请别急着记结论，请盯住一个问题：这两个案子的方法究竟是不是同一套？", "tool1": "第一件工具，引致与参照适用。民法典大量使用参照适用、适用某某规定的表述，这是引致技术的中文形态。它值得单独立一条规则，因为它是本课程范围内唯一一种由立法者下令进行的类推。一般的类推是解释者自己跨越文义射程，那属于法续造；参照适用是立法者已经在文本中授权跨越，所以仍在制定法解释之内。但授权只解决了可不可以，没有解决怎么做。解释者还要完成两步判断。第一步是类似性：被参照规范所处理的利益冲突，与本案的利益冲突是否同型？注意，比较的是利益冲突，不是两种制度的名称或标的。第二步是相容性：被参照规范中的哪些要素，因为本类型的特殊性而不得移入？适用是照搬，参照要逐个要素筛选。最后给你一条读判决的检验法：法院自称的参照，未必是立法者下的指令。去找那道授权条文；找不到，参照两个字就只是一个委婉语，那其实是自主类推，论证负担要按法续造的标准计算。", "case1415": "第一组对照。左边是讲义案例十四，指导案例六十七号，汤长龙诉周士海股权转让案：分期付款买卖的法定解除权，能不能用到分期付款的股权转让上？最高人民法院说不能。右边是讲义案例十五，二零二二年最高法知民终二一七七号，药品专利链接诉讼：侵权之诉的先行裁驳、另行起诉，能不能用到确认是否落入保护范围这一新类型之诉上？最高人民法院说能。两案的分歧不在于被参照规范的条文有多近，而在于价值安排能不能移入。二一七七号把两步做得一目了然：类似性方面，法院指出两类诉讼中当事人的直接利害关系都在于拥有合法有效的专利权；相容性方面，以状态极不稳定的专利权为基础作认定，反而达不到早期解决纠纷的效果。六十七号的理由则有欠缺。标的物有体物与无体物之别、交易主体不同，所循者为外部体系的进路，很容易被反驳，因为股权转让确实可以被涵摄于广义的买卖之下。更有力的理由在内部体系：第一百六十七条保护的是价款回收风险中的出卖人，而股权转让要维护的是交易安全与有限责任公司的人合性。两套价值安排并不平行，所以缺乏可类比性。这里教你一招：以后看到判决用标的物性质不同、交易主体不同立论，立刻警觉——那是外部体系，分量不够。", "tool2": "第二件工具，同类解释规则，拉丁文叫 ejusdem generis。规则是：一般条款如果经由示例规定具体化，它的解释就不能超越所列出示例的范围。与它配套的是明示其一即排除其他。这两条规则在中国刑法的其他条款上有极其重要的用武之地。请看屏幕上刑法第二百二十五条非法经营罪：前三项是具体列举，第四项是其他严重扰乱市场秩序的非法经营行为。问题就是，这个其他有多大？兜底项还有第三种构造，既不是列举之后的收口，也不是清单之外的推论，而是与若干类型并列的一项概括表述，比如反垄断法把垄断协议界定为协议、决定或者其他协同行为。这时候同质性不从前项示例归纳，而是从并列各项共有的本质中提炼。记一句话：向左右两边看，不是向前面看。", "case1617": "第二组对照，是第一幕最重要的一组。左边是讲义案例十六，指导案例九十七号，王力军非法经营案：农民无证收购玉米转售粮库，收购二十一万八千余元，获利约六千元，一审有罪，再审改判无罪。裁判要点是，应当根据相关行为是否具有与前三项相当的社会危害性、刑事违法性和刑事处罚必要性进行判断。右边是讲义案例十七，指导案例七十号，阳光一佰食品案：在保健食品中添加盐酸丁二胍，而这个物质不在任何违法添加名单之列，涉案八百余万元。法院认定它与名单中的盐酸二甲双胍、盐酸苯乙双胍同属双胍类降糖药，具有同等属性和同等危害。两案结论相反，是不是说明同类解释规则不可靠？恰恰相反。两案都在为兜底项寻找它与示例之间的同质性，差别只在方向。方向一旦相反，论证负担就不对称：出罪方向上，同质性不足就足以否定构成要件，不需要额外论证；入罪方向上，同质性必须被正面证成，而且证成的强度要足以支撑民众能够预见其行为入罪的可能性。所以七十号的次序值得留意：法院先指出同等属性，也就是同属双胍类，再以鉴定意见证明同等危害。属性在前，危害在后。如果只论危害不论属性，兜底项就退化成一个纯粹的结果条款，那已经不是解释了。这句话请记住，它是判断一份入罪判决有没有偷懒的最快办法。", "argtypes": "顺带把同族的两组推论交代清楚。当然解释有两个形态：举重以明轻，重者既然被允许或者不罚，轻者当然如此；举轻以明重，轻者既然被禁止或者处罚，重者当然如此。两者在刑法上的待遇完全不同。举重以明轻可用，因为它的方向是出罪或者减轻，落在有利于行为人的一侧，陈兴良所说的依法入罪、以理出罪，依靠的正是这一推论。举轻以明重在刑法上不可用，它的推理是：法律既然处罚了较轻的行为，较重的行为更应当被处罚。可是较重的那种行为，法律并没有写进构成要件，处罚它就超出了文义，这跟类推没有区别。窃电案里检察官的论据就是标本：电与物功能相同，甚至更便于取用，所以当然是物。帝国法院拒绝的，不是这个论据有没有道理，而是它能不能充当入罪的依据。至于反面解释，它的前提是证明该列举是穷尽的，而这个前提本身不能从沉默推出，否则就是默证。屏幕上给了一个成立的例子和一个失败的例子，请你自己对照着看一遍。", "tool3": "第三件工具，例外不得扩张。这是法律人最爱用的一句话，也是最经不起细看的一句。在座如果有人在作业里写过例外应严格解释，今天这句话要被拆掉一半。它的分量必须被压低，理由有三层。第一，原则与例外的身份并不稳定，何者为原则、何者为例外，本身就要靠判断，立法者所规定的例外，可能在实践中已经成为通行的原则。第二，例外之例外又变回规则，这时候反倒应当从宽解释。第三，它是概念法学的遗留，把它当硬规则来用，正是概念法学的做法；它只是形式论据，地位弱于目的性考量，一旦有更强的实质理由，它就该让位。正确的用法是给它加一个限制：把这一法构造限于内部体系，从而确保它符合目的性。符合这个限制的时候，强调例外不得被一般化才是正当之举。", "case1924": "第三组对照，专利法第七十五条的第四项和第五项，都是不视为侵犯专利权，一则宽缓，一则严格。左边是讲义案例十九，二零二一年最高法知行终四五一号：第五项规定，为提供行政审批所需要的信息，制造、使用、进口专利药品的，不视为侵权。仿制企业在展会上展示利伐沙班，抗辩说属于 Bolar 例外。最高人民法院说，该条所列行为不包括许诺销售，并且明确宣示，法定不侵权的规定是例外，例外必须严格解释。右边是讲义案例二十四，二零二三年最高法知民终一五一一号：第四项规定，专为科学研究和实验而使用有关专利的，不视为侵权。农药登记试验带有明显的商业筹备色彩，能不能纳入？最高人民法院说可以构成，否则专利保护期就被变相延长，不符合专利法的立法目的。同一条法条的相邻两项，一严一宽，最高人民法院是不是前后矛盾？不是。结论相反而方法一致。决定松紧的不是例外这个身份，而是例外条款本身的构造。第五项把允许的行为逐一列举，这是一份封闭的清单，它的射程由反面解释锁定，明示其一即排除其他。第四项是一个评价性的一般表述，没有可供反面解释的清单，它的射程只能由规范目的界定。顺带追问一句：最高人民法院在案例二十四中说的防止保护期变相延长，其实是第五项行政审批例外的典型理由，并不是第四项科研例外自身的目的；第四项保护的，是以专利技术为研究对象的科学研究。借来的目的，能不能作为解释依据？分两种情形。若直接把第五项的目的当作第四项的目的，那是目的的挪用，论证负担最重，而且与明示其一排除其他的形式论据正面冲突。若以两项共同的上位目的，也就是专利权人与公众之间的利益平衡为依据，则可以成立，但上位目的太抽象，划不出第四项的射程，仍须回到科学研究和实验的可能文义中检验。由此可以归纳确定目的的四点：目的要归属于被解释的规范；要有独立于结论的来源；抽象程度要降到本条文所要解决的具体冲突；只能在可能文义之内用来界定射程。于是我们得到一条比例外应严格解释有用得多的规则：列举式例外受反面解释约束，评价式例外由目的决定。以后援引例外从严之前，请先看一眼那个例外是怎么写的。", "tool4": "第四件工具，法秩序的统一与法概念的相对性。统一是指，同一概念在不同法律中应当作同一解释；各法各解，法秩序便无所谓统一。但这条原则有一个前提，叫价值平等性：不同法律所赖以为基础的价值必须是一致的。前提一旦不成立，统一性这个形式论据就失去说服力，此时应当承认法概念的相对性。相对性可以细到什么程度？细到同一部法律之内，甚至同一条规范之内——那叫区分解释。关键在最后这句话：谁主张相对性，谁承担论证负担。两者在逻辑上权重等同，关系是统一性所确立的规则能够为相对性所反驳，所以主张相对性的人，必须指出两部法律在此处的价值取向何以不一致。比如赵春华案里，行政法上枪支的一点八焦耳标准能不能直接移入刑法？这个负担是可以扛起来的，但它必须被扛起来，而不是用一句刑法自有其独立性带过。请注意，论证负担这个词今天第一次正式出现，最后一页我会把它系统化。", "case209": "第四组对照，两个销售。左边是讲义案例九，陆勇案，刑法第一百四十一条：陆勇为病友代购印度仿制药，设置了收款账号，检察机关认定不构成销售假药，理由是销售是卖方业务活动，买方的集体采购即便在物理上包含了收款，也不能被涵摄于销售之下。右边是讲义案例二十，二零二四年最高法知民终一二八六号，专利法第十一条：缠丝机作为滚焊机订单的配套赠品，没有单独计价，白送的赠品算不算销售？最高人民法院说算，因为赠品的价值已经隐含在付费主商品的利润中，买方实质上已经为赠品支付了对价。同一个销售，在刑法中作限缩理解，在专利法中作扩张理解，看上去正是法概念相对性的现成例证。但两案所用的判断标准其实完全相同——谁居于卖方地位，谁为之支付了对价。陆勇代表的是买方的集体采购，对价是病友付给印度公司的；维某公司是卖方，赠品的对价隐含在主商品价款中。方法一致，事实不同，结论自然不同。这恰恰说明法秩序的统一在此是成立的。由此得到一条纪律，请记下来：结论不同不等于概念不同。主张某个语词在甲法与乙法中含义有别的人，必须指出两部法律在此处的价值取向何以不一致，而不能仅仅以两案结论相反相责。", "tool5": "第五件工具，冲突规则。屏幕上是四条，加上它们各自的相对化。上位法优于下位法，依据是立法法第九十八条到第一百条，例外由法律明定。特别法优于一般法、新法优于旧法，依据都是立法法第一百零三条。第四行最值得注意：新的一般规定与旧的特别规定不一致、不能确定如何适用的，由全国人民代表大会常务委员会裁决。换句话说，立法者自己承认这是一个方法论解决不了的问题，所以留给了立法程序。这也说明，冲突规则之间本身也会冲突，而且不存在更高一级的冲突规则可供援引。新法优于旧法这一条最经不起细看——今天的新法迟早变成旧法，而且旧法是特别法、新法是普通法的情形，与其他冲突规则直接矛盾。另外还有一类比冲突规则更精细的工作，叫规范调适，开场那道遗产题就是。它的成败取决于目的是否已被查明：没有目的，就无从判断哪一种读法会使限制规定落空。配套案例是讲义案例二十一，鲁潍盐业案，指导案例五号，有三点值得留意：第一，位阶冲突的处理不是解释问题而是效力问题，法院不是把地方规章解释得窄一些，而是径直不予适用；第二，依据法律、参照规章当中的参照二字，正是第一件工具讲的那道筛选指令，法院有权也有责任审查被参照的规范本身是否合法；第三，把旧法在先读成新法不适用，是时际问题上最常见的误解。", "constit": "体系解释的顶层是合宪性解释。讨论中国路径之前，先分清三件事。合宪性解释，标的是法律，作业是解释，在数种可能解释中选取最符合宪法者。合法律解释，标的是法规、规章、司法解释等下位规范，我国法院日常所做的绝大多数上位法解释属于这一类，而不是严格意义的合宪性解释。合宪性审查，这不是解释，是效力审查，结果不是确定含义，而是宣告或者撤销。宪法进入个案有三条通道。第一条是备案审查，依立法法第一百一十条，公民可以提出审查建议，鹦鹉案的律师走的正是这条路。第二条是宪法价值的法律化，民法典第一条开宗明义根据宪法制定本法，法院形式上援引的是民法典条文，实质上落实的是宪法的价值决定。第三条是说理，宪法不得引为裁判依据，但它所体现的原则和精神可以在说理部分予以阐述。最后一句警示：说理部分的宪法不是免费的。一份合格的合宪性解释说理至少要交代三件事——待解释条文确实存在两种以上可能解释；所涉宪法原则具体是哪一项，在本案中指向什么；为什么所选的那一种比另一种更合于该项原则。三者缺一，宪法要求如此就只是一句空洞的口号。宪法条文的抽象程度最高，因而也最适合用来掩盖说理的空缺。", "act1end": "第一幕到这里结束，收一句话。体系解释给出的，全部是形式论据。文义明确、体系位置如此、例外应严格解释、新法优于旧法、同一概念同一解释——它们以规则的形态出现，便于援引，而且省去了实质说理。这正是它们的诱惑所在。回头看这五件工具：同类解释规则里的同类要靠目的来定；例外的松紧要靠例外条款的构造和目的来定；概念相对性要靠价值取向有差别来证成；规范调适要靠目的才知道哪一条会被虚置；冲突规则要靠目的性考量来修正。所以第一幕的每一件工具，最后都把决定权交还给了同一个问题：这条规范是干什么用的？下面四十分钟，我们就去追这个问题。", "act2": "第二幕，目的解释。刚才每一件工具都把球传给了同一个人，现在轮到他。目的解释虽为四要素之一，但文义、历史、体系三者所提供的材料，最终均须经由规范目的方能确定其意义。其修正前三者的权限由此而生，全课最重的论证负担亦由此而生。请记住：它是四种解释里唯一一种有权推翻其他三种的，也是唯一一种最容易被滥用的。这两件事，其实是同一件事。", "ratio": "先说目的解释在找什么。法律规范是为实现特定目的而创设的，因此它是一种目的性设定的诫命。诫命指出它的规范形式，目的性设定指出它的形成方式。立法者做的事情是：设定某一构成要件，把它与某一法效果联结，这就表达了他对如何规制社会特定环节的构想。这个过程叫规制裁量——一方面确定所要追求的目的及其界限，另一方面确定为实现这一目标所采取的法律手段是否具有适当性与均衡性。目的解释所要探究的，就是这种法内在的理性。请把重音放在法内在的这三个字上：目的在法律里面，不在解释者心里。", "twostep": "接下来是第二幕的方法论骨架，请集中注意力。有一种颇具分量的反对意见说：不存在目的解释这样的事物，因为规范的目的本来就是任何解释方法的目标，它本身因而并不构成解释之方法。这一批评确有所据，但其结论不能成立。它准确地指出了一个结构差异：文义、体系、历史都直接从规范本身着手，各有其原始的出发点；而目的解释没有这样的出发点。所以目的解释实为两步法。第一步，指明前提，也就是指明论据所要辩护的那个目的性命题——这一步是待证的，不是现成的。第二步，以目的界定文义，在可能文义的射程之内，依该目的裁剪适用范围。为什么它不是赘余？因为如果承认规范不过是实现目的的手段，那就必须依循该目的来探究规范的意义；而且单就结论而言也不存在循环论证，它并非简单地提出命题再加以证明，而是进行包含了命题、前提及论据的完整论证。真正的危险在别处，那就是发明规范目的。三条禁令：解释者不得发明规则的目的；不得以自己的前见取代立法者的意图；不得从客观解释的角度创制一种超然的规则目的。请特别警惕事物本质、公正、社会需要这类文字游戏，它们看似给出了目的，实则只是把待证明的命题换了一个庄严的说法。实务中最常见的错误，就是跳过第一步，直接宣称本条的目的是什么。", "twopurpose": "这里要分清中文里最常被混用的一对词：立法目的和规范目的。立法目的是立法者制定该法时所追求的目标，它属于历史事实，证据在立法材料里。规范目的是该条规范在现行法秩序中所承担的功能，它属于评价判断，依据是规范在体系中的位置和它所服务的价值安排。两者多数时候重合，但有三种情形会分离。第一，立法者未曾预见：规范被用于立法时根本不存在的情形，此时只有规范目的可用，立法目的沉默。第二，规范语境已变：条文没改而周边法秩序大改，它在新语境中承担的功能已经不同于当初。第三，一条规范服务多个目的：立法目的通常以整部法律为单位陈述，规范目的则落在具体条文上，援引第一条的目的条款去解决第几十条的争议，常常就是这种以大充小。实务上的分辨办法很简单，问一句：这个目的，立法者说过吗？说过，是立法目的，证据在材料里；没说过而由解释者从体系中推出，是规范目的，证据在论证里。两者的论证负担不同，混称则两头落空——以规范目的冒充立法目的，是伪造史料；以立法目的搪塞规范目的，是答非所问。", "findpurpose": "目的怎么查明？四条路。第一，明示的规范目的。我国法律的通例是第一条，为了什么什么，制定本法。这类目的条款与条文同时表决通过，是法律内含的谱系材料，援引它不需要额外论证其可用性。第二，推断的规范目的。不明文规定法律目的是立法者更为惯常的做法，此时须先从法律内部的脉络中以推断的方法解释法律目的。要从多个规范中提炼出一般性的法原则，需要相当的技艺——而这也正是论证最易出现疏漏之处。第三，立法理由。它属于历史解释的材料，但功能在于为目的解释提供依据，历史与目的两个要素在此处交汇。第四，疑义时的辅助规则。有疑义时唯利自由、唯利消费者、唯利劳动者，这类规则只能适用于解释的初步阶段，本身并不决定结论。最后给你一个实用技巧：强制性规定的射程尤其要靠目的来划分。某项程序要求是否强制到足以使合同无效，取决于省略它是否真的挫败了该法所要保护的那个东西。你以后写合同效力的作业，这就是标准动作。", "hook22": "第二道课堂题。凯莱公司两名股东各持百分之五十，章程规定决议须经二分之一以上表决权通过，各方一致认可这里不含本数。二零零六年起两人交恶，公司再也没有召开过股东会。但公司及其分公司运营状态良好，服装城管委会还出具证明说经营正常。公司法二零零五年修订本第一百八十三条规定，股东请求解散的条件之一是公司经营管理发生严重困难。请你暂停，自己判断：这家正在盈利的公司，能不能被判决解散？", "case22": "答案是：能。一审苏州中院判驳回，二审江苏高院改判解散，最高人民法院把它发布为指导案例八号。本案较为完整地展现了目的解释的两个步骤。第一步，指明目的性命题：第一百八十三条所救济的是公司僵局——股东之间的对立使公司的意思形成机制失灵，少数股东的投资目的无法实现而又退出无门，解散之诉是这一困境的最后出口。第二步，以目的界定文义：经营管理在日常语言中偏向经营业绩，在本条中则须读作组织机构的运行，因为只有后一种读法才使本条有用武之地。裁判理由写得很清楚：判断经营管理是否发生严重困难，应当从股东会、董事会或者执行董事及监事会的运行现状综合分析，侧重点在于公司管理方面存有严重内部障碍，不应片面理解为公司资金缺乏、严重亏损等经营性困难。这里用的仍然是禁止赘余：如果以亏损为条件，一家盈利却瘫痪的公司将永远不能解散，而这恰恰是本条要解决的那种情形。还要注意，本案并未突破文义射程——经营管理本来就同时涵盖经营与管理两个语义成分，法院所做的是在并列的两者之中确定何者为本条的重心，这仍属选择与限缩，不是修正。最后请把它与案例十四对读：一个拒绝把分期付款买卖的解除规则移入股权转让，一个把经营管理困难从经营读向管理——方向相反而方法相同，都是先查明规范目的，再据以裁剪文义。这组对照，把第一幕和第二幕缝在了一起。", "case23": "再看一个推断规范目的的典型例证。讲义案例二十三，二零二零年最高法知民终八三一号。农科院饲料研究所与大兴区农业农村局以院区合作加示范基地加农户的模式，实施了落入专利保护范围的技术，培训一万余人次，四千五百余农户受益，创造直接经济效益一点一四亿元。专利法第十一条第一款以为生产经营目的作为侵权要件，而该法既没有定义，也没有列举，更没有从反面规定例外。一审判决驳回全部诉讼请求，理由是二者均不具备生产经营的资质，没有证据显示项目以生产经营为目的。这是论证跳跃：从机构性质直接跳到要件不成立，中间省掉了本条为什么要设这个要件这一前提。二审撤销改判，赔偿六十万。二审先问目的：第十一条之所以设这个要件，是为了合理平衡专利权人与社会公众的利益，把那些对专利权人市场利益不构成实质影响的行为排除在侵权之外。目的一经指明，认定标准随之确定——不看主体是谁，不看有没有赚到钱，而看这个行为有没有挤占专利权人本可通过许可或销售获得的市场。请注意这句话：二审之所以能够纠正，不是因为掌握了更多事实，而是因为先问了目的。", "value": "现在回答一个更根本的问题：目的从哪里来？这要看一段学说史。概念法学忠实于词语，认为不得违背法律明确的文义即是规范目标的应有之义。利益法学反对这种技术性的概念操作，主张任何法规范的目的都是平衡相互冲突的利益，法官必须查明这些利益。但利益法学面临一个批评：它并没有明确指出法官应当注意什么利益，等于允许法官单方面地确定利益。价值法学因此要求依据法律本身的价值安排来确定利益——法律不仅是为利益冲突所确立的规则，也同时意味着对价值的具体化，法秩序亦是价值秩序。那么这些价值以什么形态存在于法之中？答案是法原则。原则与规则的区别不在抽象程度，而在适用方式。规则以全有或全无的方式适用，构成要件成就即产生法效果，两条规则冲突必有一条让位。原则则是最佳化诫命，要求在法律与事实的可能范围内尽最大程度实现；两项原则冲突不生效力取舍，而是依个案分量作权衡，败下的一项并不失效，只是在本案中退让。这个区别有一个直接后果：诉诸规则，只需论证涵摄；诉诸原则，必须论证权衡——指出相冲突的是哪两项原则、各自在本案中的分量由什么决定、为何此重彼轻。实务中大量依据诚实信用原则、根据公平原则的说理之所以空洞，正是因为只做了第一步的援引，而略去了第二步的权衡。最后提醒一句：我国对应的讨论是利益衡量论，须警惕一个本土化的变形——把它理解为法官依内心确认对案件结果作出取舍，再回头寻找法律依据。那不是利益衡量，那是先定后找。", "logic": "目的解释既然主观性较强，就必须以严格的逻辑纪律加以约束。五条，前三条是禁止项，后两条是论证模型。第一，循环论证，也叫乞题，是把待证命题预设为已证；它也包括另一种情形——结论所依据的一系列前提当中，已经包含了待推导的命题本身。举一个经典的例子：上帝存在，因为圣经这样说；圣经可信，因为它是上帝的启示。结论已经预设在理由里面了。第二，默证，从立法者对特定法律问题的沉默当中推不出什么，唯有立法材料中较为具体的说明才应被考量。史学上也是如此：史记没有记载某人，不等于其人不存在。法律上的例子在案例二十四：二零零八年修法只为药品和医疗器械增设了行政审批例外，没有提农药，就反推农药不在豁免之列，这只是以立法者的沉默为据。沉默可能是有意排除，也可能只是没有想到，法院没有接受这个推论。第三，论证跳跃，康德的界定最精当：把某一前提与结论相联系，而其他的前提则被略去不提；如果被省略的前提不容易为人想见，这种跳跃就是非法的。那种动辄援引基本权利、而不作必要具体化的做法，也是一种论证跳跃——刚才案例二十三的一审就是活标本。合法的跳跃是这样的：苏格拉底是人，所以苏格拉底会死，被省略的大前提人皆有死，不言自明。案例二十三一审省略的前提是，不具备生产经营资质的主体，其行为就不具有市场获利的目的；这个前提既不自明，也与规范目的无关，所以是非法的跳跃。第四，避免规避法律。民法典第四百零一条禁止流押，举一个设例：借款之外另订一份买卖合同，约定债务人届期不还款，债权人就以明显低于市价的价款买下抵押房屋。形式上没有使用被禁止的约定，实质上达到了法律所反对的后果。这个行为是否受禁止，要看条文的规范目的，不看字面。案例二十五的农民自繁自用，就是法院拒绝规避的实例。第五，禁止赘余，欧盟法上称为实际有效原则，解释应当确保规范的适用领域不被虚置，不得限缩解释至零。例如条文规定机动车不得驶入公园，如果把驶入解释为须停留超过二十四小时，这条禁令就永远用不上，这就是限缩解释至零。欧洲法院在范·杜因案中，也是以指令的有益效果为由，承认个人可以援引指令。禁止赘余今天已经用过两次了：开场的遗产题，两条都不能被虚置；刚才的公司解散案，以亏损为条件则本条永无用武之地。", "case25": "看一个避免规避法律的例子。讲义案例二十五，二零一九年最高法知民终四零七号。种子法对植物新品种权设有一项例外：农民自繁自用授权品种的繁殖材料，可以不经品种权人许可、不向其支付使用费。秦永宏通过与其他农户签订转包合同的方式，流转取得九百七十三点二亩土地的经营权，未经许可生产南粳九一零八水稻种子并留作次年播种。请注意，他在形式上逐字符合那三个语词：他是农民，种子是自己繁的，也确实是自己播种。但法院加了三重限定。主体上，限于以家庭联产承包责任制形式签订承包合同的农民个人，不包括合作社、种粮大户、家庭农场。土地上，限于通过家庭联产承包责任制承包的土地，不包括通过各种流转方式获得经营权的土地。用途上，以自用为限，不能通过各种交易形式提供给他人使用。这三项限定在条文上一个字也找不到，它们靠的是例外的设立目的——小农户的口粮与生计，而不是农业经营。法院所拒绝的，正是那种虽未采取明确被禁止的方式、但使用该方式会导致法律所反对的后果的构造。请同时注意它的代价：法院为此承担了相当的论证负担，三项限定逐一给出理由，而没有满足于例外应严格解释一句话。凡越是靠目的而非靠文字作出的限定，说理就越不能省。", "consequence": "接下来是结果取向的解释。先定其身份：结果考量不是第五种解释方法，而是目的解释在最后一程的展开形态。它所衡量的后果，只能是规范目的本身所要实现或者避免的那些后果；与规范目的无关的后果，纵然在政策上值得追求，亦不属于结果考量的衡量范围。理想情况下这项工作分三层：结果预估，判断裁判会产生什么结果；结果评价，判断其接受程度如何；结果取向的调控，依循所欲达成的结果而对结论加以调整。还有三重限制必须同时记住。其一，立法者若对结果的考量作出了明文规定，则任何情况下都必须遵循。其二，除此以外，可以被纳入衡量的只能是法律意图实现或追求的法效果，不是解释者自己认为好的后果。其三，结果取向的考量并不具备绝对性，它仅可作为法律价值安排的补充。", "case26": "讲义案例二十六，电梯劝阻吸烟猝死案。杨某在电梯内劝阻段某吸烟，双方发生言语争执，段某随后心脏病发作猝死，死者家属起诉杨某赔偿。一审依公平原则判令杨某补偿一万五千元。这在形式上有法律依据，实质上却是以双方都无过错、总得有人承担的内心确认，取代了构成要件的检验——从结果令人同情直接跳到应予补偿，省掉了何种规范为此提供了请求权基础这一前提，这就是论证跳跃。二审撤销原判，驳回诉讼请求。请注意二审的论证链条：公共场所禁止吸烟是法定义务，制止吸烟是法律所鼓励的行为；一个法律所鼓励的行为，不能因偶然的、不可预见的因果进程而生赔偿责任，否则规范就自相矛盾。至于结果的分量：如果劝阻者须为此付钱，此后就无人再敢挺身而出，法律所欲实现的秩序反而落空。这正是预估、评价、调控三步的现实形态，而且三步都是在构成要件层面完成的，不在情理层面。还有一个值得记住的检验，叫可普遍适用性：你所提出的标准，将来的法院在不知悉本案细节的情况下能否照样适用？两年之后，最高人民法院发布指导案例一百四十二号，车祸现场劝阻他人不要离开，事实与本案相去甚远，标准却原样适用，案件类型于是形成。顺带一提，民法典第一千一百八十六条已经把公平责任改为依照法律的规定由双方分担损失，从一般条款压缩为引致性条款——这一修法本身就是对本案一类裁判的回应。", "case27": "最后看一个反面材料，泸州遗赠案。黄某立下经过公证的遗嘱，将财产遗赠给与其长期同居的张某。继承法第十六条第三款明文允许遗赠给法定继承人以外的人，遗嘱形式合法、意思真实。但两审法院都以民法通则第七条——民事活动应当尊重社会公德、不得损害社会公共利益——认定遗赠无效。我们今天不评价这个判决在伦理上对不对，只看它的论证格式对不对。可辩护的一面：法院所做的是体系论证，把继承法的具体规定置于民法通则的基本原则之下理解，以维护内部体系也就是价值安排的一贯性。可质疑的有两点。第一，第十六条第三款的文义并没有留下受遗赠人须品行端正的空间，以一般条款排除具体规定的适用，实质上已经越出解释而进入目的性限缩——按本课的划界，这已经属于法续造，须承担远高于解释的论证负担，而判决并未提供相应密度的说理。第二，公共利益在此被填入的内容，究竟来自法秩序的价值安排，还是来自裁判者在道德上的内心确认？如果是后者，就触犯了我们刚才讲的三条禁令。回到上一节的区分：这桩争议归根到底，是公序良俗原则与遗嘱自由原则的权衡未被充分展开。法院援引了原则，却没有做权衡。", "pivot": "现在到了全课的枢纽，讲义第三十四节。前三种解释所提供的，多半是形式论据：文义明确、体系位置、例外从严、新法优先。它们的共同特征是以规则的形态出现，便于援引，而且省去了实质说理。屏幕上这张表列了七组，以及目的解释对它们的修正。请你注意，七行里有五行就是第一幕讲过的那五件工具——原来它们全都收在这里。表的用法很简单：当你在判决书或论文中读到左栏任何一句作为论证的终点时，即应检验它是否通过右栏的检验。这里要解开一个看似矛盾的结。我们前面说目的解释没有独立的出发点，它本身只是一项仍需借助其他论证模型加以加强的前提；本节却说它有权修正文义明确性、体系位置与例外从严。两个命题并不冲突，因为它们讲的是两个阶段的事。在发现阶段，目的不能自证，它只能从目的条款、立法理由、规范群的比较中被读出来，而这些材料恰恰就是文义、历史、体系三者的材料——这就是所谓没有独立出发点。在权衡阶段，目的一旦已由那些材料证成，它就高于同样由那些材料生成的形式论据；因为形式论据只是材料的外形——位置、句式、新旧、明确与否——而目的是这些材料所要服务的东西。外形服从于所服务者，这是位阶，不是偏好。最后请记住这张表的性质：它是一张负担转移表，不是优先顺序表。右栏从不宣告左栏无效，它只是把论证负担从援引形式论据的一方，移到了主张修正的一方。", "exchange": "由此得出一条可直接用于检验判决书的换算规则：目的解释的修正权，恰好等于它为自己的目的性命题所提供的论据的强度。谁援引规范目的要求如此去推翻一条形式论据，谁就必须先出示证成该目的的材料，而且其强度不得低于被推翻的那条形式论据。未经证成的目的主张不是论据，只是命题。还要分清两件常被混为一谈的事：文义明确是一项论据，可能文义的射程是一道界限。目的解释有权推翻前者——它可以指出这个看似明确的词在本案语境中并不明确；它无权移动后者——射程由语言用法决定，不由目的决定。把明确性被推翻误当成射程被移动，是目的解释中常见的越界方式，且不易察觉，因为它每一步看起来都在解释。刚才的泸州遗赠案就是这种越界。刑法上这一区分尤其要紧：为行为人不利地援引目的以突破射程，那就是类推。", "burden": "最后收束。今天讲的每一条，其实都是一条论证负担规则，它们长成同一个形状：一个默认值，加一个翻转条件。同一概念作同一解释，主张法概念相对性者负担；例外不得扩张，主张从宽者负担；兜底项须与示例同质，入罪方向上的主张者负担；通说与先例成立，欲驳斥者负担；文义成立，主张目的修正者负担；不越出可能文义，欲越界者负担。这里要补充三点。第一，论证负担与证明责任结构相同而对象不同：证明责任分配的是事实的不确定风险，论证负担分配的是规范的不确定风险，两者都是在不明状态下预先指定输家。第二，证明责任可以用证据解决，论证负担不能——当事人举不出证据可以再去找证据，论证负担不足，再多的证据也无济于事，只能换一套论证或者接受默认值。第三，默认值有三个来源，而且都是宪法性的：法的安定性、民主正当性、权力分立。所以论证负担为什么总是压在主张改变的那一方？这不是保守主义的偏好，而是权限分配的逻辑后果。全课收在一句话上：论证负担是可以被公开检验的，价值判断不是。方法论值得学，不是因为它能替你作出价值判断——它不能；方法论的全部功用在于，它迫使你说出自己在哪一步作了价值判断、依据什么作的、为什么这个理由足以压过默认值。", "homework": "课后作业，讲义案例二十九，二零二三年最高法知民终二二二一号。双方各预缴鉴定费五万八千元，二审期间涉案专利权被宣告全部无效，应裁定驳回起诉。诉讼费用交纳办法第二十九条第一款规定，诉讼费用由败诉方负担。最高人民法院判定全部鉴定费十一万六千元由原告负担，理由是原告以处于不稳定状态的权利基础提起诉讼，应当承担败诉的法律后果。形式论据那一侧是这样的：民事诉讼法上裁定驳回起诉与判决驳回诉讼请求是一组体系性区分，前者程序性、未经实体审理，后者实体性、受既判力约束；把程序性驳回的原告径直称为败诉方，与这组区分存在张力。请用今天的换算规则逐项回答屏幕上的五问。第四问是分水岭：本案所扩张的，究竟是文义明确这项论据，还是败诉一词可能文义的射程？答对它，说明今天论据与界限那一对区分你真的听懂了。第五问是延伸题：被告申请鉴定，结论与其主张不符，被告又因原告败诉而不承担实体责任，这笔鉴定费由原告出，有没有问题？提示：诉讼费用交纳办法第六条并没有把鉴定费本身列入应当交纳的诉讼费用，第十二条的原则是谁主张、谁负担；可以对照德国民事诉讼法第九十六条，对未获成功的攻击或防御方法所生的费用，法院可令主张该方法的一方负担。写作时请注意，我要的不是你判断法院对不对，而是你指出谁该补充论证。", "end": "全课到此结束。请带走六句话。第一幕三句：外部体系告诉你条文在哪里，内部体系告诉你它为什么在那里；列举式例外受反面解释约束，评价式例外由目的决定；结论不同不等于概念不同。第二幕三句：目的解释是两步法，先指明目的性命题，再以它界定文义；诉诸规则只需论证涵摄，诉诸原则必须论证权衡；文义明确是论据，可以推翻，可能文义的射程是界限，不能移动。配套阅读是《法律解释讲义》第二十一节到第三十五节，附录二有案例索引，附录四有术语对照表，附录一第九项到第十六项是可直接用于研读判决的操作清单。一份判决书的方法论质量，不取决于它援引了几种解释方法，甚至不取决于结论是否正确——结论正确而论证负担未尽，下一个案件照样会错。归根到底只有一件事：在该承担论证负担的地方，承担论证负担。下课。", "case27eco": "接下来换一个角度，用法经济学的工具再检验一次泸州案。先说明一点：经济分析在这里是补充，不是替代。第一，遗嘱自由有激励功能。财产所有人只有预期自己的处分能够可靠执行，才有动机积累和保值财产；经过公证、形式合法的遗嘱，仍可被事后用公序良俗这个弹性标准推翻，所有立遗嘱人和受遗赠人的预期风险都会上升。第二，夫妻之间的忠实义务是一种承诺机制，能降低双方共同投入的风险。如果违反义务的一方可以通过遗赠让第三人取得财产，违反义务的预期成本就下降，婚姻承诺的可信度随之减弱。这是判决可以获得的经济学支持，它指向的是婚姻制度的外部性。第三，卡尔多—希克斯标准要求比较受益者的收益与受损者的损失，并看补偿是否可能。本案双方的损益难以货币化，没有可靠数据，遗赠争议也没有现实的补偿路径，这个标准在这里给不出确定的结论。第四，最低防范成本。立法者对遗嘱自由的限制，已经设置了必留份制度，也就是民法典第一千一百四十一条，规则明确，事前可以预见；用公序良俗这个一般条款事后全盘否定遗赠，是成本更高、不确定性更大的办法。第五，规则与标准的选择。用标准去推翻立法者已经用规则确定的事项，等于把它重新交给个案裁量，适用成本和预期的不确定性都增加了。所以结论是：保护遗嘱自由所生的激励和确定性，同保护婚姻稳定所生的外部性效益，彼此对立，单凭效率排不出先后。按讲义第三十三节说的第二重局限，宪法观念与立法者的价值安排优先，我们必须回到立法者的价值安排，看遗嘱自由与夫妻忠实义务在本案的处境下谁居先。经济分析的作用，只是把公序良俗这个空洞的概念拆成可以检验的命题。"};
+var deck = document.getElementById('deck'), cap = document.getElementById('cap');
+var i = 0, chunks = [], ci = 0, speaking = false, paused = false, audioMode = false;
+var synth = window.speechSynthesis, voice = null, utter = null, timer = null, watch = null;
+var auto = true, gap = 2000, rate = 1.0, capOn = true;
+var player = new Audio();
+
+/* ---------- 版面缩放 ---------- */
+function fit(){
+  var vp = document.getElementById('viewport');
+  var s = Math.min(vp.clientWidth / 1920, vp.clientHeight / 1080) * 0.962;
+  deck.style.transform = 'scale(' + s + ')';
+}
+addEventListener('resize', fit);
+
+/* ---------- 分句 ---------- */
+function split(t){
+  var raw = t.replace(/\s+/g, '').split(/(?<=[。？！；])/).filter(Boolean);
+  var out = [], buf = '';
+  raw.forEach(function(s){
+    if ((buf + s).length > 56 && buf.length >= 20) { out.push(buf); buf = s; }
+    else buf += s;
+  });
+  if (buf) out.push(buf);
+  return out;
+}
+
+/* ---------- 字幕 ---------- */
+function paintCap(){
+  if (!capOn) { cap.classList.add('off'); return; }
+  cap.classList.remove('off');
+  if (!chunks.length) { cap.innerHTML = '<i>本页无讲解词</i>'; return; }
+  var k = Math.min(ci, chunks.length - 1);
+  cap.innerHTML = '<em>' + (k + 1) + '／' + chunks.length + '</em><b>' + chunks[k] + '</b>';
+}
+
+/* ---------- 语音 ---------- */
+function pickVoices(){
+  var all = synth ? synth.getVoices() : [];
+  var zh = all.filter(function(v){ return /^zh/i.test(v.lang); });
+  var sel = document.getElementById('voice');
+  if (!zh.length) { sel.innerHTML = '<option>未找到中文语音</option>'; return; }
+  zh.sort(function(a, b){
+    var score = function(v){
+      var n = v.name;
+      if (/Natural/i.test(n)) return 0;
+      if (/Online/i.test(n)) return 1;
+      if (/Xiaoxiao|Yunxi|Yunyang|Xiaoyi|晓晓|云希/i.test(n)) return 2;
+      return 3;
+    };
+    return score(a) - score(b);
+  });
+  var keep = voice && voice.name;
+  sel.innerHTML = zh.map(function(v){
+    return '<option value="' + v.name + '">' + v.name.replace(/^Microsoft /, '') + '</option>';
+  }).join('');
+  voice = zh.find(function(v){ return v.name === keep; }) || zh[0];
+  sel.value = voice.name;
+}
+
+function stopAll(){
+  clearTimeout(timer); timer = null;
+  if (synth) synth.cancel();
+  player.pause();
+  speaking = false; paused = false;
+  setPlayLabel();
+}
+
+function speakChunk(){
+  if (!synth || ci >= chunks.length) { finishSlide(); return; }
+  paintCap();
+  utter = new SpeechSynthesisUtterance(chunks[ci]);
+  if (voice) { utter.voice = voice; utter.lang = voice.lang; } else { utter.lang = 'zh-CN'; }
+  utter.rate = rate; utter.pitch = 1;
+  utter.onend = function(){ if (speaking && !paused) { ci++; speakChunk(); } };
+  utter.onerror = function(e){ if (e.error !== 'interrupted' && e.error !== 'canceled') { ci++; speakChunk(); } };
+  synth.speak(utter);
+}
+
+function finishSlide(){
+  speaking = false; setPlayLabel();
+  if (!auto) return;
+  if (i >= SLIDES.length - 1) return;
+  timer = setTimeout(function(){ go(i + 1, true); }, gap);
+}
+
+function play(){
+  if (paused) {                       // 续播
+    paused = false;
+    if (audioMode) player.play(); else synth.resume();
+    speaking = true; setPlayLabel(); return;
+  }
+  stopAll();
+  speaking = true; ci = 0; setPlayLabel();
+  if (audioMode) {
+    player.src = 'audio/' + SLIDES[i].id + '.mp3';
+    player.playbackRate = rate;
+    player.play().catch(function(){ audioMode = false; speakChunk(); });
+    paintCap();
+  } else {
+    speakChunk();
+  }
+}
+player.onended = finishSlide;
+
+function pause(){
+  if (!speaking) return;
+  paused = true;
+  if (audioMode) player.pause(); else synth.pause();
+  setPlayLabel();
+}
+function toggle(){ if (speaking && !paused) pause(); else play(); }
+function setPlayLabel(){
+  document.getElementById('play').textContent = (speaking && !paused) ? '⏸ 暂停' : '▶ 播放';
+}
+
+/* ---------- 翻页 ---------- */
+function go(n, andSpeak){
+  stopAll();
+  i = Math.max(0, Math.min(SLIDES.length - 1, n));
+  var secs = deck.children;
+  for (var k = 0; k < secs.length; k++) secs[k].classList.toggle('on', k === i);
+  chunks = split(NAR[SLIDES[i].id] || ''); ci = 0;
+  paintCap();
+  document.getElementById('pos').textContent = (i + 1) + ' / ' + SLIDES.length;
+  document.querySelector('#prog i').style.width = ((i + 1) / SLIDES.length * 100) + '%';
+  var lis = document.querySelectorAll('#toc li');
+  for (var k = 0; k < lis.length; k++) lis[k].classList.toggle('cur', k === i);
+  if (andSpeak) play();
+}
+
+/* ---------- 控件 ---------- */
+function bind(){
+  document.getElementById('play').onclick = toggle;
+  document.getElementById('prev').onclick = function(){ go(i - 1, speaking || paused); };
+  document.getElementById('next').onclick = function(){ go(i + 1, speaking || paused); };
+  document.getElementById('replay').onclick = function(){ stopAll(); play(); };
+  var a = document.getElementById('auto');
+  a.onclick = function(){ auto = !auto; a.setAttribute('aria-pressed', auto); };
+  var c = document.getElementById('capt');
+  c.onclick = function(){ capOn = !capOn; c.setAttribute('aria-pressed', capOn); paintCap(); };
+  document.getElementById('rate').oninput = function(){
+    rate = +this.value; document.getElementById('rateV').textContent = rate.toFixed(2) + '×';
+    player.playbackRate = rate;
+    if (speaking && !paused && !audioMode) { synth.cancel(); speakChunk(); }
+  };
+  document.getElementById('gap').oninput = function(){
+    gap = +this.value * 1000; document.getElementById('gapV').textContent = this.value + ' 秒';
+  };
+  document.getElementById('voice').onchange = function(){
+    voice = synth.getVoices().find(function(v){ return v.name === this.value; }, this) || voice;
+    if (speaking && !paused && !audioMode) { synth.cancel(); speakChunk(); }
+  };
+  document.getElementById('toclink').onclick = function(){ document.getElementById('toc').classList.add('on'); };
+  document.getElementById('tocX').onclick = function(){ document.getElementById('toc').classList.remove('on'); };
+  document.getElementById('full').onclick = function(){
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen();
+  };
+  addEventListener('keydown', function(e){
+    if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+    if (e.key === ' ') { e.preventDefault(); toggle(); }
+    else if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(i + 1, speaking || paused); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(i - 1, speaking || paused); }
+    else if (e.key === 'Escape') document.getElementById('toc').classList.remove('on');
+    else if (e.key.toLowerCase() === 'f') document.getElementById('full').click();
+    else if (e.key.toLowerCase() === 's') document.getElementById('capt').click();
+    else if (e.key.toLowerCase() === 'r') document.getElementById('replay').click();
+  });
+  // Chrome/Edge 长文本会自行暂停，定时 resume
+  watch = setInterval(function(){
+    if (speaking && !paused && !audioMode && synth && synth.speaking && synth.paused) synth.resume();
+  }, 8000);
+}
+
+/* ---------- 启动 ---------- */
+function boot(){
+  fit(); bind(); pickVoices();
+  if (synth) synth.onvoiceschanged = pickVoices;
+  // 探测 audio/ 目录里是否有预录音频
+  var probe = new Audio('audio/' + SLIDES[0].id + '.mp3');
+  probe.oncanplaythrough = function(){ audioMode = true;
+    document.getElementById('srcnote').textContent = '音源：audio 文件夹中的录音'; };
+  probe.onerror = function(){ audioMode = false; };
+  probe.load();
+  go(0, false);
+  if (!synth) {
+    document.getElementById('nospeech').style.display = 'block';
+  }
+  document.getElementById('start').onclick = function(){
+    document.getElementById('gate').classList.add('off'); go(0, true);
+  };
+  document.getElementById('silent').onclick = function(){
+    document.getElementById('gate').classList.add('off'); auto = false;
+    document.getElementById('auto').setAttribute('aria-pressed', false); go(0, false);
+  };
+}
+if (document.readyState === 'loading') addEventListener('DOMContentLoaded', boot); else boot();
+</script>
+<script>
+document.querySelectorAll('#toc li').forEach(function(li){
+  li.onclick = function(){
+    document.getElementById('toc').classList.remove('on');
+    go(+li.dataset.n, speaking || paused);
+  };
+});
+</script>
+</body>
+</html>
