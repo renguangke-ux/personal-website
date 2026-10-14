@@ -276,6 +276,37 @@
         </div>
       </div>
     </div>
+
+    <div class="message-panel">
+      <div class="message-heading">
+        <h3>给我留言</h3>
+        <p>填写下方内容，留言将转发至我的电子邮箱。</p>
+      </div>
+      <form class="message-form" action="https://formsubmit.co/renguangke@hotmail.com" method="POST">
+        <input type="hidden" name="_subject" value="个人网站收到新留言">
+        <input type="hidden" name="_next" value="https://renguangke.com/message-sent.html">
+        <input type="hidden" name="_template" value="table">
+        <div class="message-honeypot" aria-hidden="true">
+          <label>请勿填写此项<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
+        </div>
+        <div class="message-fields">
+          <label>您的姓名
+            <input type="text" name="name" autocomplete="name" maxlength="100" required>
+          </label>
+          <label>电子邮箱
+            <input type="email" name="email" autocomplete="email" maxlength="254" required>
+          </label>
+        </div>
+        <label>留言内容
+          <textarea name="message" rows="6" minlength="5" maxlength="5000" required></textarea>
+        </label>
+        <label class="message-consent">
+          <input type="checkbox" name="consent" value="同意留言信息转发及隐私说明" required>
+          <span>我同意将以上信息经 FormSubmit 转发。该服务说明会保留提交记录 30 天；请勿填写身份证号、案件隐私等敏感信息。<a href="https://formsubmit.co/privacy" target="_blank" rel="noopener">查看服务隐私说明</a></span>
+        </label>
+        <button class="message-submit" type="submit">发送留言</button>
+      </form>
+    </div>
   </div>
 </section>
 
