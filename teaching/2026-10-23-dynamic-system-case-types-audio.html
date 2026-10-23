@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>动态体系与案例类型 · 有声课件 — 任广科</title>
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;background:#0E1A17;overflow:hidden;
+  font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif}
+#wrap{position:fixed;inset:0;display:flex;flex-direction:column}
+#viewport{flex:1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#deck{flex:0 0 auto;width:1920px;height:1080px;position:relative;transform-origin:center center;
+  box-shadow:0 24px 80px rgba(0,0,0,.55);border-radius:4px;overflow:hidden}
+#deck>section{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;
+  opacity:0;visibility:hidden;transition:opacity .28s ease}
+#deck>section.on{opacity:1;visibility:visible}
+#deck aside{display:none}
+#deck h1,#deck h2,#deck h3,#deck h4,#deck p,#deck ul,#deck ol,#deck table{margin:0}
+#deck ul,#deck ol{padding-left:1.4em}
+#deck table{border-collapse:collapse;width:100%}
+#deck th,#deck td{padding:.62rem .8rem;border-bottom:1px solid rgba(0,0,0,.12);text-align:left;vertical-align:top}
+#deck thead th{font-weight:700}
+#deck figcaption{margin-top:.8rem;font-size:24px;opacity:.72}
+#deck hr{border:0;border-top:1px solid currentColor;opacity:.45}
+#deck cite{font-style:italic;opacity:.8}
+
+/* 字幕 */
+#cap{flex:0 0 auto;min-height:74px;display:flex;align-items:center;justify-content:center;
+  padding:12px 42px;background:#0B1714;border-top:1px solid #1D362F;
+  color:#EDF2F0;font-size:20px;line-height:1.62;text-align:center}
+#cap.off{display:none}
+#cap b{font-weight:400}
+#cap i{font-style:normal;color:#6F9A8C;font-size:14px}
+#cap em{font-style:normal;color:#5FB49C;font-variant-numeric:tabular-nums;font-size:13px;
+  margin-right:12px;opacity:.9}
+
+/* 控制条 */
+#bar{flex:0 0 auto;display:flex;align-items:center;gap:14px;padding:10px 18px;
+  background:#132621;border-top:1px solid #23443B;color:#CFE3DC;font-size:13px;flex-wrap:wrap}
+#bar button{appearance:none;border:1px solid #2E6A5C;background:#17302A;color:#DDEBE6;
+  border-radius:8px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:inherit;
+  transition:background .15s,border-color .15s}
+#bar button:hover{background:#1F3F37;border-color:#54917F}
+#bar button.key{background:#2E6A5C;border-color:#49897A;color:#fff;min-width:96px;font-weight:600}
+#bar button.key:hover{background:#38806E}
+#bar button.tog[aria-pressed="true"]{background:#2E6A5C;border-color:#49897A;color:#fff}
+#bar .sp{flex:1}
+#bar label{display:flex;align-items:center;gap:7px;white-space:nowrap;color:#9FBCB2}
+#bar input[type=range]{width:96px;accent-color:#5FB49C}
+#bar select{background:#17302A;color:#DDEBE6;border:1px solid #2E6A5C;border-radius:8px;
+  padding:6px 8px;font-size:13px;max-width:230px;font-family:inherit}
+#pos{font-variant-numeric:tabular-nums;color:#EDF2F0;min-width:74px;text-align:center}
+#prog{position:absolute;left:0;right:0;top:0;height:3px;background:rgba(255,255,255,.08);z-index:5}
+#prog i{display:block;height:100%;background:#5FB49C;width:0;transition:width .3s}
+
+/* 目录 */
+#toc{position:fixed;inset:0;background:rgba(8,18,15,.93);z-index:40;display:none;
+  padding:46px 56px;overflow:auto}
+#toc.on{display:block}
+#toc h3{color:#9EDCC7;font-size:15px;letter-spacing:3px;margin:0 0 16px;font-weight:600}
+#toc ol{list-style:none;margin:0 0 30px;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:8px}
+#toc li{display:flex;gap:11px;align-items:baseline;color:#D8E6E1;padding:9px 12px;
+  border-radius:8px;cursor:pointer;font-size:14px;border:1px solid transparent}
+#toc li:hover{background:#1A322B;border-color:#2E6A5C}
+#toc li.cur{background:#2E6A5C;color:#fff}
+#toc li em{font-style:normal;color:#7FB3A3;font-variant-numeric:tabular-nums;min-width:26px}
+#toc li.cur em{color:#CFEFE3}
+#toc li s{text-decoration:none;margin-left:auto;color:#7FB3A3;font-size:12px}
+#tocX{position:fixed;right:34px;top:30px}
+
+/* 开场遮罩 */
+#gate{position:fixed;inset:0;z-index:60;background:#0E1A17;color:#EDF2F0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  text-align:center;padding:40px}
+#gate.off{display:none}
+#gate h1{font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:46px;margin:0;font-weight:700}
+#gate p{margin:0;max-width:760px;line-height:1.95;color:#9FBCB2;font-size:15px}
+#gate .go{font-size:17px;padding:15px 40px;border-radius:12px;border:1px solid #49897A;
+  background:#2E6A5C;color:#fff;cursor:pointer;font-family:inherit;font-weight:600}
+#gate .go:hover{background:#38806E}
+#gate .alt{background:none;border:0;color:#7FB3A3;cursor:pointer;font-size:13px;
+  text-decoration:underline;font-family:inherit}
+#gate .warn{color:#E0A080;font-size:13px;max-width:700px;line-height:1.8}
+@media (max-width:860px){
+  #bar{font-size:12px;gap:9px;padding:8px 10px}
+  #bar label span{display:none}
+  #bar input[type=range]{width:64px}
+  #toc{padding:30px 20px}
+}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="viewport">
+    <div id="prog"><i></i></div>
+    <div id="deck">
+<section id="cover" data-transition="fade" style="background:#16302A;color:#F3F1EA;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:space-between">
+
+<div style="display:flex;flex-direction:column;gap:28px">
+<p style="font-size:30px;color:#8FC4B4;letter-spacing:8px">法 学 方 法 论 · 第 九 章</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:132px;font-weight:700;line-height:1.08;color:#F3F1EA">动态体系<br>与案例类型</h1>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<hr style="border-top:3px solid #2E6A5C;width:280px">
+<p style="font-size:40px;line-height:1.5;color:#F3F1EA;width:1500px">一般条款的难题不在于越界，而在于<b>射程之内缺少标准</b>。<br>价值补充可以被结构化，可以被逐项复核。</p>
+<p style="font-size:30px;color:#8FC4B4">六十分钟 ｜ 三幕 ｜ 案例 30—37 与指导性案例 141 号</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#8FC4B4">配套教材《法学方法论—理论与实务》§55–§75</p>
+</section>
+<section id="roadmap" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:68px;font-weight:700;line-height:1.15">今天的六十分钟</h2>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">开场 ｜ 6 分钟</h3><div style="font-size:28px;line-height:1.55"><b>一棵杨梅树</b>与一般条款的问题之所在<br>§55</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">第一幕 ｜ 24 分钟</h3><div style="font-size:28px;line-height:1.55"><b>动态体系的理论</b><br>要素、协动机制、学说争议、中国法的立法化<br>§56–§60</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">第二幕 ｜ 15 分钟</h3><div style="font-size:28px;line-height:1.55"><b>中国法上的五个领域</b><br>安全保障义务、公序良俗、说明义务、显失公平、履行费用过高<br>§61–§66</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">第三幕 ｜ 15 分钟</h3><div style="font-size:28px;line-height:1.55"><b>案例类型与知识产权</b><br>案例对比法、类型规范、生成与退出；商业道德、保密措施、生成式人工智能<br>§67–§74</div></div></div>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px"><p style="font-size:32px;line-height:1.55;color:#F3F1EA">贯穿三幕的线索：动态体系与案例类型同处<b style="color:#8FC4B4">法原则与构成要件之间的中间阶段</b>。前者提供数目确定、可以相互补偿的要素；后者从已决案件中萃取类似构成要件的规则。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §55–§75 ｜ 第十章（法教义学与法原则）另讲</p>
+</section>
+<section id="hook30" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:30px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">开 场 题 ｜ 案例 30 · 指导性案例 140 号</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:66px;font-weight:700;line-height:1.15">一棵杨梅树，三级法院</h2></div>
+<p style="font-size:31px;line-height:1.6;color:#52605C;width:1664px">红山村景区为国家 AAA 级旅游景区，不设门票。景区内河道旁的杨梅树为红山村村民委员会所有；村民委员会未向村民或游客提供采摘杨梅的活动。2017 年 5 月 19 日，村民吴某（1957 年出生）私自上树采摘杨梅，不慎跌落，经抢救无效于当日死亡。其近亲属诉请村民委员会承担 70% 的人身损害赔偿责任。</p>
+<div style="display:flex;gap:28px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">一审</h3><div style="font-size:27px;line-height:1.55">广州市花都区人民法院<br>（2017）粤 0114 民初 6921 号<br>判决村民委员会赔偿 <b>45096.17 元</b></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">二审</h3><div style="font-size:27px;line-height:1.55">广州市中级人民法院<br>（2018）粤 01 民终 4942 号<br><b>驳回上诉，维持原判</b></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#9E5231">再审</h3><div style="font-size:27px;line-height:1.55">广州市中级人民法院<br>（2019）粤 01 民再 273 号<br><b style='font-size:44px;color:#9E5231'>？</b></div></div></div>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px"><p style="font-size:34px;line-height:1.55;color:#F3F1EA">村民委员会是否违反了安全保障义务？<b style="color:#8FC4B4">不只写结论，把理由逐项写出来</b>——每一项理由都应当能被另一个人检验。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">《民法典》第一千一百九十八条（原《侵权责任法》第三十七条） ｜ 答案见第二幕</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="generalclause" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§55 ｜ 问 题 之 所 在</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">一般条款：文义并不含混，标准付之阙如</h2></div>
+<div style="display:flex;gap:40px"><div style="flex:5;display:flex;flex-direction:column;gap:16px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:26px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第七条</h3><p style="font-size:24px;line-height:1.6;margin-top:6px">民事主体从事民事活动，应当遵循诚信原则，秉持诚实，恪守承诺。</p></div><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:26px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第八条</h3><p style="font-size:24px;line-height:1.6;margin-top:6px">民事主体从事民事活动，不得违反法律，不得违背公序良俗。</p></div><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:26px;font-weight:700;color:#9E5231;margin-bottom:4px">《反不正当竞争法》第二条第一款</h3><p style="font-size:24px;line-height:1.6;margin-top:6px">经营者在生产经营活动中，应当遵循自愿、平等、公平、诚信的原则，遵守法律和商业道德，公平参与市场竞争。</p></div></div><div style="flex:6;display:flex;flex-direction:column;gap:12px"><div style="display:flex;gap:18px;align-items:center;background:#E7E2D6;color:#16302A;padding:18px 26px;border-radius:12px;margin-left:0px"><b style="font-size:28px;min-width:130px;color:#2E6A5C">法理念</b><span style="font-size:25px">正义、合目的性、法安定性</span></div><div style="display:flex;gap:18px;align-items:center;background:#E7E2D6;color:#16302A;padding:18px 26px;border-radius:12px;margin-left:22px"><b style="font-size:28px;min-width:130px;color:#2E6A5C">法原则</b><span style="font-size:25px">诚信、公平、自愿、公序良俗</span></div><div style="display:flex;gap:18px;align-items:center;background:#16302A;color:#F3F1EA;padding:18px 26px;border-radius:12px;margin-left:44px"><b style="font-size:28px;min-width:130px;color:#8FC4B4">中间阶段</b><span style="font-size:25px">动态体系（归责标准）· 案例类型（类型规范）</span></div><div style="display:flex;gap:18px;align-items:center;background:#E7E2D6;color:#16302A;padding:18px 26px;border-radius:12px;margin-left:66px"><b style="font-size:28px;min-width:130px;color:#2E6A5C">法制度</b><span style="font-size:25px">权利滥用、缔约过失、情势变更</span></div><div style="display:flex;gap:18px;align-items:center;background:#E7E2D6;color:#16302A;padding:18px 26px;border-radius:12px;margin-left:88px"><b style="font-size:28px;min-width:130px;color:#2E6A5C">涵摄</b><span style="font-size:25px">案件事实与构成要件的对应</span></div><p style="font-size:22px;line-height:1.6;color:#52605C">越往上越抽象、越不能直接适用；中间阶段使原则可被检验。</p></div></div>
+<div style="background:#16302A;padding:26px 40px;border-radius:16px"><p style="font-size:29px;line-height:1.55;color:#F3F1EA">杨仁寿、黄茂荣称之为<b style="color:#8FC4B4">价值补充</b>。这一称谓指明了工作的性质，没有指明工作的方法；停留在「法官依其确信补充」，即与以内心确认替代论证无从区别。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §55 ｜ 图 6　从法理念到涵摄</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="flight" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§55 ｜ 警 示</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:64px;font-weight:700;line-height:1.15">向一般条款逃逸</h2></div>
+<p style="font-size:31px;line-height:1.6;color:#52605C;width:1664px">赫德曼，《向一般条款逃逸》（<i>Die Flucht in die Generalklauseln</i>，1933）：法院一旦惯于诉诸一般条款，具体规定即被架空，法的安定性随之丧失。《民法典》总则编第一章把自愿、公平、诚信、公序良俗、绿色诸原则全部成文化，诉诸原则的门槛因此很低。</p>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px"><p style="font-size:34px;line-height:1.55;color:#F3F1EA">本章的基本规则：<b style="color:#8FC4B4">具体规定优先于一般条款，构成要件审查优先于动态体系。</b><br>只有在具体规定确无答案时，才进入具体化程序；一旦进入，须把归责标准、案例类型与衡量过程写进裁判理由，不得以「综合考虑」四字代替。</p></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">方法一 · 动态体系</h3><div style="font-size:26px;line-height:1.55">数目确定、可强可弱、彼此补偿的归责标准<br>§56–§66</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">方法二 · 案例类型</h3><div style="font-size:26px;line-height:1.55">从已决案件中提炼近似构成要件的条件<br>§67–§71</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">方法三 · 法原则与法制度</h3><div style="font-size:26px;line-height:1.55">原则从何处取得，如何经演绎与衡量具体化<br>第十章 §76–§83</div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §55</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">1 min</p>
+</section>
+<section id="act1" data-transition="magic" style="background:#16302A;color:#F3F1EA;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<p style="font-size:30px;color:#8FC4B4;letter-spacing:8px">第 一 幕 ｜ 二 十 四 分 钟</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:118px;font-weight:700;line-height:1.1;color:#FFFFFF">动态体系的理论</h1>
+<hr style="border-top:3px solid #2E6A5C;width:280px">
+<p style="font-size:40px;line-height:1.55;color:#F3F1EA;width:1500px">为一般条款列出数目确定的要素；各要素可强可弱、彼此可以补偿，<b style="color:#8FC4B4">由其数量与强度的合力决定法效果。</b></p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#8FC4B4">教材 §56–§60</p>
+</section>
+<section id="origin" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§56 ｜ 渊 源</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">维尔伯格的动态体系（bewegliches System）</h2></div>
+<div style="display:flex;flex-direction:column"><div style="display:flex;gap:26px;align-items:baseline;padding:14px 0;border-bottom:1px solid #DCD8CC"><b style="font-size:30px;color:#2E6A5C;min-width:110px">1941</b><span style="font-size:27px;line-height:1.5">维尔伯格《损害赔偿法的要素》：反对以单一归责原则解释全部损害赔偿责任</span></div><div style="display:flex;gap:26px;align-items:baseline;padding:14px 0;border-bottom:1px solid #DCD8CC"><b style="font-size:30px;color:#2E6A5C;min-width:110px">1950</b><span style="font-size:27px;line-height:1.5">格拉茨大学校长就职演说《民法中动态体系的发展》：推广为一般的法学方法</span></div><div style="display:flex;gap:26px;align-items:baseline;padding:14px 0;border-bottom:1px solid #DCD8CC"><b style="font-size:30px;color:#2E6A5C;min-width:110px">术语</b><span style="font-size:27px;line-height:1.5">「要素」→「力量」（显示强度）；卡纳里斯建议改称「评价原则」「正义标准」</span></div><div style="display:flex;gap:26px;align-items:baseline;padding:14px 0;border-bottom:1px solid #DCD8CC"><b style="font-size:30px;color:#2E6A5C;min-width:110px">其后</b><span style="font-size:27px;line-height:1.5">比德林斯基系统化；卡纳里斯讨论实在法上的实现；库齐奥用于《欧洲侵权法原则》（PETL）</span></div><div style="display:flex;gap:26px;align-items:baseline;padding:14px 0;border-bottom:1px solid #DCD8CC"><b style="font-size:30px;color:#2E6A5C;min-width:110px">中国</b><span style="font-size:27px;line-height:1.5">经由山本敬三《民法中的动态系统论》（解亘译）进入中国民法学</span></div></div>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px"><p style="font-size:31px;line-height:1.55;color:#F3F1EA">山本敬三的定义：特定在一定的法律领域发挥作用的诸「要素」，通过「<b style="color:#8FC4B4">与要素的数量和强度相对应的协动作用</b>」来说明、正当化法律规范或者法律效果。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §56 一 ｜ 谢鸿飞 2026；解亘、班天可 2017</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="features" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§56 二 ｜ 四 项 特 征</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">四项特征，以及两种误读</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">① 不要求全部满足</h3><div style="font-size:25px;line-height:1.55">构成要件累积适用，缺一即不生效果；动态体系的要素不是</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">② 比较性关系</h3><div style="font-size:25px;line-height:1.55">「越……越……」（je-desto-Satz）：强度越大，法效果越容易发生</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">③ 可以相互补偿</h3><div style="font-size:25px;line-height:1.55">强的要素弥补弱的要素；共同产生合力，也可以彼此抵消</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">④ 数目原则上确定</h3><div style="font-size:25px;line-height:1.55">与开放的「论题目录」（Topoikatalog）相区别</div></div></div>
+<div style="background:#16302A;padding:28px 40px;border-radius:16px"><p style="font-size:29px;line-height:1.55;color:#F3F1EA">卡纳里斯：一方面，决定性的标准限于一个相对较小的范围，<b style="color:#8FC4B4">不能被临时（ad hoc）扩大</b>——区别于论题学；另一方面，放弃固定的事实构成，<b style="color:#8FC4B4">根据要素的数量和强度的共同作用</b>确定法律后果——区别于传统体系观。</p></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">误读一：归入论题学</h3><div style="font-size:25px;line-height:1.55">菲韦格以维尔伯格为论题学的证据；维尔伯格要求「清晰的观点」，反对单纯的公平导向</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">误读二：动态即开放</h3><div style="font-size:25px;line-height:1.55">法律体系对新评价开放是公认事实；若「动态」仅指此，即无特殊之处</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">「动态」不是历时</h3><div style="font-size:25px;line-height:1.55">各要素在同一时刻相互协动的共时评价过程；继续性合同的逐渐形成不是动态体系</div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §56 二 ｜ 卡纳里斯 2023 中译，第 180 页</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="fourforms" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:64px;font-weight:700;line-height:1.15">四种规范结构的对照</h2>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:30px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#16302A"><th style="width:16%;color:#8FC4B4;text-align:left">　</th><th style="width:21%;color:#8FC4B4;text-align:left">构成要件</th><th style="width:25%;color:#8FC4B4;text-align:left">动态体系</th><th style="width:19%;color:#8FC4B4;text-align:left">论题目录</th><th style="width:19%;color:#8FC4B4;text-align:left">一般条款</th></tr><tr><td style="color:#2E6A5C;font-weight:700">要素数目</td><td>确定</td><td><b>确定（限定）</b></td><td>开放</td><td>未列出</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">要素关系</td><td>累积：全部满足始生效果</td><td><b>比较：强弱互补，合力决定</b></td><td>罗列：无结构</td><td>—</td></tr><tr><td style="color:#2E6A5C;font-weight:700">适用方式</td><td>涵摄</td><td><b>权衡</b></td><td>列举后径行判断</td><td>须先具体化</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">可预见性</td><td>高</td><td><b>中</b></td><td>低</td><td>低</td></tr><tr><td style="color:#2E6A5C;font-weight:700">个案适应性</td><td>低</td><td><b>中至高</b></td><td>高</td><td>高</td></tr></table>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px"><p style="font-size:32px;line-height:1.55;color:#F3F1EA">动态体系位于构成要件与一般条款之间：<b style="color:#8FC4B4">比构成要件更能适应个案，比一般条款与论题目录更能被检验。</b>每遇到一份要素清单，先问它落在哪一列。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §56 二 ｜ 参见王磊 2021，第 161 页</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">1 min</p>
+</section>
+<section id="wertung" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:34px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§56 三 ｜ 定 位</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:64px;font-weight:700;line-height:1.15">评价法学的一个版本</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#52605C">概念法学</h3><div style="font-size:28px;line-height:1.55">封闭演绎，过于僵化<br>难以确保个案正义</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">动态体系</h3><div style="font-size:28px;line-height:1.55">以法律自身确定的要素组织评价<br>同时克服僵化与恣意</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#52605C">自由法学</h3><div style="font-size:28px;line-height:1.55">法官「自由地」发现法律<br>有恣意裁判的危险</div></div></div>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px"><p style="font-size:32px;line-height:1.55;color:#F3F1EA">① 首先是<b style="color:#8FC4B4">评价的框架</b>，使评价过程可以被看见、可以被反驳；其次才是使法律效果弹性化的技术。<br>② 是<b style="color:#8FC4B4">正当化的方法</b>，不是发现的方法：它不担保法官按公式得出结论，只要求结论以要素的数量与强度加以正当化。</p></div>
+<p style="font-size:28px;line-height:1.6;color:#52605C">解亘、班天可：国内继受偏重弹性化而忽视评价框架，一味以弹性化为目标，有滑入自由法学的危险。</p>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §56 三 ｜ 解亘、班天可 2017，第 44—46 页</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">1 min</p>
+</section>
+<section id="notelement" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:30px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§57 一 ｜ 要 素</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">相互补偿的是要素，不是要件</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">解亘、班天可</h3><div style="font-size:28px;line-height:1.55">「要件与要件彼此间凭什么可以相互补充呢？」</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">蔡睿</h3><div style="font-size:28px;line-height:1.55">「动态体系下要素的协动，是内在原理的协动，而非构成要件的协动。」</div></div></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:32px;font-weight:700;color:#9E5231">以有余而补缺失 ✕</h3><div style="font-size:30px;line-height:1.55">以一项要素的富余，顶替一项<b>根本不具备的要件</b></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:32px;font-weight:700;color:#2E6A5C">以有余而补不足 ✓</h3><div style="font-size:30px;line-height:1.55">各要件<b>均已具备</b>，某一要件背后的要素较弱，由其他要素的强度弥补</div></div></div>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px"><p style="font-size:31px;line-height:1.55;color:#F3F1EA">要件本身仍以全有或全无的方式适用；要素的强弱影响的，是<b style="color:#8FC4B4">认定某一要件已经具备所需的事实基础</b>。例如：结果失衡越严重，认定「利用」危困状态的证明要求可以相应降低（§64）。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §57 一 ｜ 王文军 2023，第 80 页</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="threelayer" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§57 二 ｜ 原 理 与 因 子 ｜ 教 材 设 例</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:52px;font-weight:700;line-height:1.15">原则、原理与因子：以显失公平为例</h2></div>
+<p style="font-size:27px;line-height:1.6;color:#52605C;width:1664px">甲之子急需手术。甲为筹措医疗费，将市场价约二百万元的住房以一百万元出售给邻居乙；乙知悉甲的处境，在甲提出出售意向当日即要求签约。三个月后，甲依《民法典》第一百五十一条请求撤销。</p>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#16302A"><th style="width:15%;color:#8FC4B4;text-align:left">层次</th><th style="width:25%;color:#8FC4B4;text-align:left">内容</th><th style="width:60%;color:#8FC4B4;text-align:left">在本例中的表现</th></tr><tr><td style="color:#2E6A5C;font-weight:700">规则</td><td>《民法典》第一百五十一条</td><td>一方利用对方处于危困状态、缺乏判断能力等情形，致使民事法律行为成立时显失公平的，受损害方有权请求撤销</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">原则</td><td>意思自治、公平</td><td>宣示价值，不能直接回答本案是否构成显失公平</td></tr><tr><td style="color:#2E6A5C;font-weight:700">原理（低阶层）</td><td>意思瑕疵原理<br>有责性原理<br>等价性原理</td><td>对应「危困状态、缺乏判断能力等情形」<br>对应「利用」<br>对应「显失公平」</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">因子</td><td>测定各原理充足度的指标</td><td>子女手术的急迫；有无其他筹款途径；意向当日签约；乙知悉处境并促成签约；成交价与市场价相差约 50%</td></tr></table>
+<div style="background:#16302A;padding:24px 38px;border-radius:16px"><p style="font-size:28px;line-height:1.55;color:#F3F1EA">裁判理由写成「综合考虑交易价格、交易时间、当事人处境等因素」，只罗列因子，是比德林斯基所称的<b style="color:#8FC4B4">「动态的法思考」</b>；先确定原理，再以因子逐项测定其充足度并说明合力，才是<b style="color:#8FC4B4">本源意义上的动态体系论</b>。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §57 二 ｜ 王磊 2021，第 166—169 页</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="twoviews" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§57 三 ｜ 两 种 要 素 观</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">原理能否充当被权衡的对象</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:27px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#16302A"><th style="width:16%;color:#8FC4B4;text-align:left">　</th><th style="width:42%;color:#8FC4B4;text-align:left">王磊（2021）</th><th style="width:42%;color:#8FC4B4;text-align:left">谢鸿飞（2026）</th></tr><tr><td style="color:#2E6A5C;font-weight:700">要素的性质</td><td>以低阶层<b>法原理</b>为要素；因子只是测定原理充足度的指标</td><td><b>原理性要素</b>是社会事实、状态或关系，不含法原理；<b>阐释性要素</b>是具体因素</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">要素清单</td><td>如意思瑕疵、有责性、等价性原理</td><td>原理性要素：利益、意志、控制、信赖、关系<br>阐释性要素：主体、标的、行为三方面</td></tr><tr><td style="color:#2E6A5C;font-weight:700">理由</td><td>原理具有规范性格，可被完结地列举，维持体系性</td><td>法原理与原则同样空疏；以之为要素，混淆评价依据与被评价的对象</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">风险</td><td>原理与原则同样抽象</td><td>社会事实的选取本身仍须以某种评价为依据</td></tr></table>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px"><p style="font-size:31px;line-height:1.55;color:#F3F1EA">教材的处理：分析具体条文时，<b style="color:#8FC4B4">先确定其背后的低阶层原理，再以阐释性要素测定其充足度</b>。两种方案在操作层面可以衔接；分歧在于原理能否充当被权衡的对象。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §57 三 ｜ 谢鸿飞 2026，第 142、145—146 页；王磊 2021，第 166—169 页</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="limited" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§57 四 ｜ 要 素 的 限 定 性</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:52px;font-weight:700;line-height:1.15">要素须限定：是 A、B、C，就不能还可以是 A、B、D</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">限定性的两项内容</h3><div style="font-size:28px;line-height:1.55">一、要素是哪些须确定（排除替换）<br>二、要素的数量须确定（排除增减）<br><span style='color:#52605C'>否则「论辩便成为一场理性缺席的信念之争」</span></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">与利益衡量论的区别</h3><div style="font-size:28px;line-height:1.55">利益衡量对所衡量的「利益」不作限定，过程不透明，因而<b>不具有可反驳性</b></div></div></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#9E5231">「综合考量」不等于动态体系（王磊所举之例）</h3><div style="font-size:27px;line-height:1.55">以事迹、贡献和声誉认定「英雄人物」；以「时间要素和空间要素」认定动物侵权的责任主体；在过错、原因力、危险之外，例外地再综合衡量双方的财产状况、保险与社会保障——均未把要素限定在确定范围内。</div></div>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px"><p style="font-size:33px;line-height:1.55;color:#F3F1EA">检验一份要素清单的三问：<b style="color:#8FC4B4">要素是否限定？每一要素的作用方向是否明确？要素背后的原理能否指明？</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §57 四 ｜ 解亘、班天可 2017，第 49 页；王磊 2021，第 167—168、173 页</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="coaction" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§58 ｜ 协 动 机 制</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">比较命题、基础评价、原则性示例</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#16302A;color:#F3F1EA;border:1px solid #DCD8CC;border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:10px"><b style="font-size:24px;color:#8FC4B4;letter-spacing:3px">第 1 层</b><h3 style="font-size:34px;font-weight:700">比较命题</h3><p style="font-size:28px;font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif">「a 越多，b 越多」</p><p style="font-size:24px;opacity:.75">只给方向，不给终点</p></div><div style="flex:1;background:#FFFFFF;color:#16302A;border:1px solid #DCD8CC;border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:10px"><b style="font-size:24px;color:#2E6A5C;letter-spacing:3px">第 2 层</b><h3 style="font-size:34px;font-weight:700">基础评价</h3><p style="font-size:28px;font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif">单一要素达到 T → 效果 R</p><p style="font-size:24px;opacity:.75">附「在其他条件相同的情况下」的限定</p></div><div style="flex:1;background:#FFFFFF;color:#16302A;border:1px solid #DCD8CC;border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:10px"><b style="font-size:24px;color:#2E6A5C;letter-spacing:3px">第 3 层</b><h3 style="font-size:34px;font-weight:700">原则性示例</h3><p style="font-size:28px;font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif">A×a1 ＋ B×b1 ＋ …… ＝ R1</p><p style="font-size:24px;opacity:.75">多个要素偏离平均时的法律效果</p></div></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">中国法上的基础评价</h3><div style="font-size:25px;line-height:1.55">民间借贷利率的四倍 LPR 上限；原《合同法解释（二）》第十九条「明显不合理低价」</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">供应是否充足</h3><div style="font-size:25px;line-height:1.55">解亘、班天可：「远远不够」<br>王磊：可在立法上「隐而不现」，由判例累积与学说构建补足</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">权重</h3><div style="font-size:25px;line-height:1.55">维尔伯格：固定权重「既不可能，也没有追求的意义」<br>教材：权重由具体规范或案例类型的价值重心决定</div></div></div>
+<div style="background:#16302A;padding:24px 40px;border-radius:16px"><p style="font-size:30px;line-height:1.55;color:#F3F1EA">缺少后两层，动态体系只能停留在比较命题，<b style="color:#8FC4B4">无法演绎出确定的法律效果。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §58 ｜ 图 7　动态体系的三层协动机制</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="dispute" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:16px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§59 ｜ 学 说 争 议</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">被高估，还是被误解</h2></div>
+<div style="display:flex;gap:20px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">一、法的安定性</h3><div style="font-size:23px;line-height:1.55">埃塞尔、帕夫洛夫斯基：为恣意的正当化提供可能；平等原则具有「方法论规范」的功能<br><span style='color:#2E6A5C'>王磊：要素限定划定外在界限；「欠确定性」；恣意是操作失当</span></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">二、体系性</h3><div style="font-size:23px;line-height:1.55">要素体系与基础评价两根支柱均不稳固：内在体系「没有固定的形态」，基础评价供应不足</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">三、适用领域</h3><div style="font-size:23px;line-height:1.55">比德林斯基：覆盖全部实定法<br>卡纳里斯：限于构成要件与衡平规范之间、<b>能找出背后原理</b>的一般条款</div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:25px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#16302A"><th style="width:22%;color:#8FC4B4;text-align:left">　</th><th style="width:39%;color:#8FC4B4;text-align:left">表见代理（第一百七十二条）</th><th style="width:39%;color:#8FC4B4;text-align:left">人格权侵害责任（第九百九十八条）</th></tr><tr><td style="color:#2E6A5C;font-weight:700">要素补偿</td><td>有：可归责性弱，由信赖保护强弥补</td><td>有：多项要素此消彼长</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">在哪一层面完成</td><td>立法层面，一次性确定</td><td>个案层面，逐案衡量</td></tr><tr><td style="color:#2E6A5C;font-weight:700">法律后果</td><td>固定：发生效力或不发生效力</td><td>可变：责任的有无与轻重随要素组合变化</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">是否动态体系</td><td><b>否</b></td><td><b>是</b></td></tr></table>
+<div style="background:#16302A;padding:22px 36px;border-radius:16px"><p style="font-size:27px;line-height:1.55;color:#F3F1EA">立法者在一般层面让要素相互补偿，不等于动态体系；<b style="color:#8FC4B4">动态体系的标志是法律后果取决于个案中的要素组合。</b>不适用：土地登记法、票据法（维尔伯格）；诉讼法、刑法（比德林斯基）。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §59 ｜ 卡纳里斯 2023 中译，第 181—184 页</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="stance" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§59 ｜ 立 场</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">教材对争议的处理</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:40px;font-weight:700;color:#2E6A5C">一</h3><div style="font-size:28px;line-height:1.55">首先是评价的框架，其次才是弹性化的技术。援用动态体系，须交代<b>要素、作用方向与各要素在本案中的强弱</b>；做不到，就不援用。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:40px;font-weight:700;color:#2E6A5C">二</h3><div style="font-size:28px;line-height:1.55">适用范围以卡纳里斯为准：限于能指明背后原理的一般条款与不确定概念；<b>有构成要件可资涵摄之处，构成要件优先</b>；刑法上不利于行为人的方向，不适用。</div></div></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:40px;font-weight:700;color:#2E6A5C">三</h3><div style="font-size:28px;line-height:1.55">基础评价与原则性示例在中国法上的主要来源：<b>司法解释、指导性案例与案例类型</b>。补足的途径是判例累积，不是放弃动态体系。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:40px;font-weight:700;color:#2E6A5C">四</h3><div style="font-size:28px;line-height:1.55">司法解释「等因素」中的「等」字，<b>只容许增加与已列要素同类、作用方向可以说明的要素</b>（同类解释规则）。</div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §59 立场框 ｜ 参见 §32、§42、§55、§66</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">1 min</p>
+</section>
+<section id="legislate" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§60 ｜ 「要 素 — 效 果」规 范</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">中国法的立法化</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:25px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#16302A"><th style="width:27%;color:#8FC4B4;text-align:left">形态</th><th style="width:36%;color:#8FC4B4;text-align:left">例证</th><th style="width:37%;color:#8FC4B4;text-align:left">说明</th></tr><tr><td style="color:#2E6A5C;font-weight:700">原理性要素直接确定规范</td><td>《民法典》第三百二十二条（添附）</td><td>效率与过错冲突时无优先规则，即为无约束的自由裁量</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">阐释性要素＋法律原则协同</td><td>合同编通则解释第六十二条、第六十五条</td><td>先列阐释性要素，再以公平、诚信原则审查</td></tr><tr><td style="color:#2E6A5C;font-weight:700">阐释性要素纳入构成要件</td><td>《民法典》第一千零二十六条</td><td>把归责过程分解为可检验的步骤</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">阐释性要素纳入效果裁量</td><td>合同编通则解释第六十一条、第六十二条</td><td>在效果层面运作</td></tr></table>
+<p style="font-size:22px;line-height:1.6;color:#52605C">合同编通则解释：《最高人民法院关于适用〈中华人民共和国民法典〉合同编通则若干问题的解释》（法释〔2023〕13 号）</p>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">第三百二十二条设例</h3><div style="font-size:25px;line-height:1.55">甲明知木料属于乙，以乙价值一千元的木料制成价值十万元的家具。依「充分发挥物的效用」，应归甲；依「保护无过错当事人」，应保护乙。条文未规定二者冲突时何者优先。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">立法化不等于正当化</h3><div style="font-size:25px;line-height:1.55">要素出现在法条中，只说明它相关，不说明它在本案中强或弱。须逐项明示各要素的具体情况，并<b>避免重复评价</b>：同一事实只评价一次。</div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §60 ｜ 谢鸿飞 2026，第 144、153—157 页</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="civilcode" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:30px">
+
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">《民法典》中的动态体系条文：四组</h2>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:25px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#16302A"><th style="width:24%;color:#8FC4B4;text-align:left">组别</th><th style="width:42%;color:#8FC4B4;text-align:left">条文</th><th style="width:34%;color:#8FC4B4;text-align:left">要点</th></tr><tr><td style="color:#2E6A5C;font-weight:700">一、条文列出要素清单</td><td>第九百九十八条；第一千零二十六条；第一千二百三十一条；第六百八十条第二款</td><td>第一千零二十六条以「下列因素」<b>封闭列举</b>；其余三条以「等因素」结尾</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">二、概括标准，要素由司法解释补足</td><td>第八条、第一百五十三条第二款；第一百三十二条；第五百八十五条第二款；第一千一百八十三条；第一千一百九十五条至第一千一百九十七条</td><td>公序良俗、滥用民事权利、违约金调整、精神损害赔偿数额、网络服务提供者「知道或者应当知道」</td></tr><tr><td style="color:#2E6A5C;font-weight:700">三、构成要件形式下的要素协动</td><td>第一百五十一条；第五百八十条第一款第二项；第一千一百九十八条；第五百三十三条</td><td>由学说认定（§61、§64、§65）</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">四、只设评价对象或方向</td><td>第一千一百七十二条、第一千一百七十三条；第一千零八十七条第一款；第一千一百三十条等</td><td>有裁量空间而无要素指示；是否属动态体系，取决于广义或狭义理解</td></tr></table>
+<div style="background:#16302A;padding:24px 40px;border-radius:16px"><p style="font-size:30px;line-height:1.55;color:#F3F1EA">适用以「等因素」结尾的条文，增加的要素须与所列要素<b style="color:#8FC4B4">同类</b>，且其<b style="color:#8FC4B4">作用方向须能说明</b>。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §60 ｜ 《民法典》检索结果</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">1 min</p>
+</section>
+<section id="act2" data-transition="magic" style="background:#16302A;color:#F3F1EA;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<p style="font-size:30px;color:#8FC4B4;letter-spacing:8px">第 二 幕 ｜ 十 五 分 钟</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:118px;font-weight:700;line-height:1.1;color:#FFFFFF">中国法上的五个领域</h1>
+<hr style="border-top:3px solid #2E6A5C;width:280px">
+<p style="font-size:40px;line-height:1.55;color:#F3F1EA;width:1500px">安全保障义务、公序良俗、缔约中的说明义务、显失公平、履行费用过高。<b style="color:#8FC4B4">每一个领域都问四件事：要素是哪些，方向如何，强弱如何，合力指向哪里。</b></p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#8FC4B4">教材 §61–§66</p>
+</section>
+<section id="safety" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§61 ｜ 领 域 一</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">安全保障义务：四项归责标准</h2></div>
+<div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:25px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第一千一百九十八条</h3><p style="font-size:23px;line-height:1.6;margin-top:6px">宾馆、商场、银行、车站、机场、体育场馆、娱乐场所等经营场所、公共场所的经营者、管理者或者群众性活动的组织者，未尽到安全保障义务，造成他人损害的，应当承担侵权责任。</p><p style="font-size:23px;line-height:1.6;margin-top:6px">因第三人的行为造成他人损害的，由第三人承担侵权责任；经营者、管理者或者组织者未尽到安全保障义务的，承担相应的补充责任。经营者、管理者或者组织者承担补充责任后，可以向第三人追偿。</p></div>
+<div style="display:flex;gap:20px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">① 危险的开启或维持</h3><div style="font-size:25px;line-height:1.55">危险源与义务人的关联越紧密，义务越重</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">② 控制危险的可期待性</h3><div style="font-size:25px;line-height:1.55">措施越容易、成本越低，义务越重</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">③ 危险源带来的利益</h3><div style="font-size:25px;line-height:1.55">获益（尤其经营性利益）越多，义务越重</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">④ 信赖或危险的明显性</h3><div style="font-size:25px;line-height:1.55">信赖越正当，义务越重；危险越明显，义务越轻</div></div></div>
+<p style="font-size:24px;line-height:1.6;color:#52605C">来源：默勒斯以《德国民法典》第 823 条第 1 款发展出的交往安全义务（Verkehrssicherungspflicht）为动态体系的第一个例证。四项标准数目确定、方向明确，可以证立责任，也可以排除责任。</p>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §61 ｜ 默勒斯《法学方法论》第八章</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="answer30" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">开 场 题 的 答 案 ｜ 案例 30 与案例 10</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:50px;font-weight:700;line-height:1.15">再审：撤销一、二审判决，驳回全部诉讼请求</h2></div>
+<p style="font-size:28px;line-height:1.6;color:#16302A">指导性案例 140 号裁判要点：「公共场所经营管理者的安全保障义务，应限于合理限度范围内，与其管理和控制能力相适应。」</p>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#16302A"><th style="width:20%;color:#8FC4B4;text-align:left">归责标准</th><th style="width:38%;color:#8FC4B4;text-align:left">案例 30 · 杨梅树（指导性案例 140 号）</th><th style="width:42%;color:#8FC4B4;text-align:left">案例 10 · 消力池（指导性案例 141 号）</th></tr><tr><td style="color:#2E6A5C;font-weight:700">危险的开启或维持</td><td>树木本身无隐患；危险由攀爬行为开启 <b>－</b></td><td>水利工程设施，危险由管理人维持 <b>＋</b>；但已设护栏与警示标牌</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">控制的可期待性</td><td>开放式景区，全面围蔽超出管理能力 <b>－</b></td><td>已采取合理提示与防护措施 <b>－</b></td></tr><tr><td style="color:#2E6A5C;font-weight:700">危险源带来的利益</td><td>不设门票、未经营采摘 <b>－</b></td><td>公益性水利设施，无经营性利益 <b>－</b></td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">信赖或明显性</td><td>成年人应当充分预见 <b>－</b></td><td>「依据一般常识即可知」；非对外开放场所，无正当信赖 <b>－</b></td></tr><tr><td style="color:#2E6A5C;font-weight:700">结论</td><td>义务未违反；驳回</td><td>非公共场所，不适用原第三十七条；无过错；驳回</td></tr></table>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">一、二审的缺陷</h3><div style="font-size:25px;line-height:1.55">未对四项标准逐项检验，<b>以结果的严重性替代了义务范围的认定</b>。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">再审第二层理由可议</h3><div style="font-size:25px;line-height:1.55">以违反村规民约、违背公序良俗否定「法律上的因果关系」。受害人过错由《民法典》第一千一百七十三条、第一千一百七十四条处理，在义务层面由第④项吸收；第一层理由足以独立支撑结论。</div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">广州市中级人民法院（2019）粤 01 民再 273 号 ｜ 教材 §61</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="publicorder" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:14px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§62 ｜ 领 域 二</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">公序良俗的整体评价</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:21px;font-weight:700;color:#9E5231;margin-bottom:4px">《最高人民法院关于适用〈中华人民共和国民法典〉合同编通则若干问题的解释》第十七条</h3><p style="font-size:19px;line-height:1.6;margin-top:6px">合同虽然不违反法律、行政法规的强制性规定，但是有下列情形之一，人民法院应当依据民法典第一百五十三条第二款的规定认定合同无效：</p><p style="font-size:19px;line-height:1.6;margin-top:6px">（一）合同影响政治安全、经济安全、军事安全等国家安全的；</p><p style="font-size:19px;line-height:1.6;margin-top:6px">（二）合同影响社会稳定、公平竞争秩序或者损害社会公共利益等违背社会公共秩序的；</p><p style="font-size:19px;line-height:1.6;margin-top:6px">（三）合同背离社会公德、家庭伦理或者有损人格尊严等违背善良风俗的。</p><p style="font-size:19px;line-height:1.6;margin-top:6px">人民法院在认定合同是否违背公序良俗时，应当以社会主义核心价值观为导向，综合考虑当事人的主观动机和交易目的、政府部门的监管强度、一定期限内当事人从事类似交易的频次、行为的社会后果等因素，并在裁判文书中充分说理。当事人确因生活需要进行交易，未给社会公共秩序造成重大影响，且不影响国家安全，也不违背善良风俗的，人民法院不应当认定合同无效。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:18px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">三部分构造</h3><div style="font-size:24px;line-height:1.55">第一款：<b>案例类型</b>（三类）<br>第二款第一句：<b>动态体系</b>（四要素）<br>第二款第二句：<b>排除规则</b>（下限）</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">案例 31 · 指导性案例 170 号</h3><div style="font-size:23px;line-height:1.55">D 级危房出租经营酒店：<br>动机目的 <b>＋</b>（明知危房，向不特定公众开放）<br>监管强度 <b>＋</b>（部门规章明令禁止出租）<br>频次 <b>－</b>（单次交易）<br>社会后果 <b>＋＋</b>（危及不特定公众，已垮塌）<br>→ 合力指向无效</div></div></div></div>
+<div style="background:#16302A;padding:18px 34px;border-radius:16px"><p style="font-size:26px;line-height:1.55;color:#F3F1EA">关键一步：判决不主张违反规章本身导致无效，而以<b style="color:#8FC4B4">公序良俗的整体评价</b>得出结论——避免以公序良俗为通道，使一切部门规章都具有否定合同效力的作用。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">最高人民法院（2019）最高法民再 97 号 ｜ 教材 §62</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="disclosure" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§63 ｜ 领 域 三</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">缔约中的说明义务</h2></div>
+<div style="display:flex;gap:20px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">① 信息的紧要性</h3><div style="font-size:25px;line-height:1.55">信息对相对人是否重要（合同目的可能落空）</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">② 信息获取的不对称</h3><div style="font-size:25px;line-height:1.55">义务人是否明显更容易接触该信息</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">③ 说明的可期待性</h3><div style="font-size:25px;line-height:1.55">专业知识或特定职责；相对人有理由相信会被告知</div></div></div>
+<p style="font-size:24px;line-height:1.6;color:#52605C">尚连杰修正为四项：信息重要性、披露可能性、期待合理性、信赖紧密度。法效果经由两条通道：《民法典》第五百条第二项（缔约过失）；第一百四十八条与《最高人民法院关于适用〈中华人民共和国民法典〉总则编若干问题的解释》第二十一条（欺诈：「负有告知义务的人故意隐瞒真实情况」）。</p>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">案例 32 · 指导性案例 17 号</h3><div style="font-size:24px;line-height:1.55">轿车交付前因运输划伤钣金喷漆维修。<br>① 紧要性：新车与维修过的车差异显著 <b>＋</b><br>② 不对称：维修记录在销售者手中 <b>＋</b><br>③ 可期待性：专业汽车经营者 <b>＋</b><br>→ 告知义务成立；争议转为是否已履行，由销售者证明</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#9E5231">说明义务不是条款订入</h3><div style="font-size:24px;line-height:1.55">未被告知的是<b>合同条款</b>：条款订入问题（第四百九十六条第二款；指导性案例 64 号话费有效期案），法效果是条款不成为合同内容。<br>未被告知的是<b>合同之外的事实</b>：才是说明义务问题。</div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">北京市第二中级人民法院（2008）二中民终字第 00453 号 ｜ 教材 §63</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="unconscion" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§64 ｜ 领 域 四</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">显失公平：构成要件之内的弹性</h2></div>
+<div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:25px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第一百五十一条</h3><p style="font-size:23px;line-height:1.6;margin-top:6px">一方利用对方处于危困状态、缺乏判断能力等情形，致使民事法律行为成立时显失公平的，受损害方有权请求人民法院或者仲裁机构予以撤销。</p></div>
+<div style="display:flex;gap:28px"><div style="flex:11;display:flex;flex-direction:column;gap:0px"><table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:22px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#16302A"><th style="width:18%;color:#8FC4B4;text-align:left">　</th><th style="width:41%;color:#8FC4B4;text-align:left">蔡睿（2021）</th><th style="width:41%;color:#8FC4B4;text-align:left">王文军（2023）</th></tr><tr><td style="color:#2E6A5C;font-weight:700">内在原理</td><td>交换正义、合同自由、诚实信用</td><td>公平原则＋意思自治原理</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">弹性方向</td><td>同向或逆向协动，形成整体图像</td><td><b>单向</b>：意志侵扰极强时可降低失衡要求；不因失衡严重而缓和主观要件</td></tr><tr><td style="color:#2E6A5C;font-weight:700">「利用」的证明</td><td>依失衡程度或结构优势作事实推定</td><td>表面证据规则：不利情势＋显著失衡 → 推定「利用」，可推翻</td></tr></table></div><div style="flex:8;display:flex;flex-direction:column;gap:8px"><table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:22px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#16302A"><th style="width:30%;color:#8FC4B4;text-align:left">制度</th><th style="width:22%;color:#8FC4B4;text-align:left">意思瑕疵</th><th style="width:48%;color:#8FC4B4;text-align:left">附加要求</th></tr><tr><td style="color:#2E6A5C;font-weight:700">胁迫</td><td>最高</td><td>无</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">欺诈</td><td>高</td><td>第三人欺诈须相对人知情</td></tr><tr><td style="color:#2E6A5C;font-weight:700">重大误解</td><td>较低</td><td>「重大」</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">显失公平</td><td>更低</td><td>「利用」＋「显失公平」</td></tr></table><p style="font-size:21px;line-height:1.6;color:#52605C">立法层面的要素补偿：瑕疵越轻，所需的其他要素越多。</p></div></div>
+<div style="background:#16302A;padding:22px 34px;border-radius:16px"><p style="font-size:25px;line-height:1.55;color:#F3F1EA">前提：相互补偿的是要件背后的评价要素，不是要件（§57）。中国法上显失公平（可撤销）与公序良俗（无效）不是特别与一般的关系，不能回到一般条款，<b style="color:#8FC4B4">弹性只能在第一百五十一条的构成要件之内发生。</b>教材：单向论更合于本条的文义与体系；以原《合同法解释（二）》第十九条作基础评价，须先论证两条规范目的可比，负担在主张移用者。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §64 ｜ 蔡睿 2021；王文军 2023</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="costly" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§65 ｜ 领 域 五</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:52px;font-weight:700;line-height:1.15">履行费用过高：一个只列出单一判断对象的概念</h2></div>
+<div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第五百八十条第一款</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">当事人一方不履行非金钱债务或者履行非金钱债务不符合约定的，对方可以请求履行，但是有下列情形之一的除外：</p><p style="font-size:22px;line-height:1.6;margin-top:6px">（一）法律上或者事实上不能履行；</p><p style="font-size:22px;line-height:1.6;margin-top:6px">（二）债务的标的不适于强制履行或者履行费用过高；</p><p style="font-size:22px;line-height:1.6;margin-top:6px">（三）债权人在合理期限内未请求履行。</p></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#9E5231">新宇公司诉冯玉梅商铺买卖合同纠纷案</h3><div style="font-size:24px;line-height:1.55">《最高人民法院公报》2006 年第 6 期。裁判要旨压缩为「超过履行利益」一项；一审实际考量了商铺比例极小、违背多数业主意愿、影响整体功能、社会财富浪费等多项因素——<b>表述的过度一般化</b>（§69）。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">时明涛的三项要素</h3><div style="font-size:25px;line-height:1.55">① 债权人的牺牲限度<br>② 履行利益与给付费用的不均衡程度<br>③ 替代损害赔偿的可能性</div></div></div>
+<div style="background:#16302A;padding:22px 34px;border-radius:16px"><p style="font-size:26px;line-height:1.55;color:#F3F1EA">评析：② ③ 对象与方向明确；① 在内部容纳人身安全、公共利益、第三人权益，<b style="color:#8FC4B4">本身已是一份开放的论题目录</b>。宜拆分为「履行对债权人的主观价值」与「履行对第三人或公共利益的影响」（方向相反），并把债务人的可归责性列为第四项（参《德国民法典》第 275 条第 2 款）。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §65 ｜ 时明涛 2020，第 85—94 页</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="fourstep" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§66 ｜ 方 法 具 体 化 的 四 步 检 验</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">查、列、定、合</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;background:#FFFFFF;border:1px solid #DCD8CC;border-radius:14px;padding:30px;display:flex;flex-direction:column;gap:14px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:88px;color:#2E6A5C;line-height:1">查</b><p style="font-size:26px;line-height:1.55">有无具体规定或可资涵摄的构成要件？是否落入已形成的案例类型规范？有，则涵摄</p></div><div style="flex:1;background:#FFFFFF;border:1px solid #DCD8CC;border-radius:14px;padding:30px;display:flex;flex-direction:column;gap:14px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:88px;color:#2E6A5C;line-height:1">列</b><p style="font-size:26px;line-height:1.55">列出限定的要素，说明每一要素的作用方向及其背后的原理</p></div><div style="flex:1;background:#FFFFFF;border:1px solid #DCD8CC;border-radius:14px;padding:30px;display:flex;flex-direction:column;gap:14px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:88px;color:#2E6A5C;line-height:1">定</b><p style="font-size:26px;line-height:1.55">逐项认定本案中每一要素的强弱，写进裁判理由；同一事实只评价一次</p></div><div style="flex:1;background:#FFFFFF;border:1px solid #DCD8CC;border-radius:14px;padding:30px;display:flex;flex-direction:column;gap:14px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:88px;color:#2E6A5C;line-height:1">合</b><p style="font-size:26px;line-height:1.55">说明合力的方向，并与司法解释、指导性案例或案例类型的规则比较</p></div></div>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px"><p style="font-size:30px;line-height:1.55;color:#F3F1EA">反转检验：<b style="color:#8FC4B4">把结论换成相反的结论，说理若同样通顺，那段「综合考虑」就没有承担任何论证功能。</b><br>界限：动态体系不提供权重；「等」字不得使清单退化为论题目录；不能取代构成要件。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §66 ｜ 附二 01—08</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">1 min</p>
+</section>
+<section id="act3" data-transition="magic" style="background:#16302A;color:#F3F1EA;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<p style="font-size:30px;color:#8FC4B4;letter-spacing:8px">第 三 幕 ｜ 十 五 分 钟</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:118px;font-weight:700;line-height:1.1;color:#FFFFFF">案例类型与知识产权</h1>
+<hr style="border-top:3px solid #2E6A5C;width:280px">
+<p style="font-size:40px;line-height:1.55;color:#F3F1EA;width:1500px">动态体系提供归责标准；案例类型更进一步，<b style="color:#8FC4B4">从已决案件中萃取类似构成要件的条件，使一般条款在类型之内可以涵摄。</b></p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#8FC4B4">教材 §67–§74</p>
+</section>
+<section id="casecompare" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:18px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§67 ｜ 案 例 对 比 法（Fallvergleich）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">案例类型怎样形成</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">第一步 · 整理</h3><div style="font-size:27px;line-height:1.55">把同一主题的已决案件系统地加以整理</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">第二步 · 提炼</h3><div style="font-size:27px;line-height:1.55">提炼与价值有关的标准，剔除其与具体情形的关联：剔除「杨梅树」「消力池」，保留「危险由受害人行为开启」「危险对一般人显而易见」</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">第三步 · 体系化</h3><div style="font-size:27px;line-height:1.55">依特定的归类标准把提炼出的标准体系化</div></div></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">类型（Typus）≠ 案例类型（Fallgruppen）</h3><div style="font-size:25px;line-height:1.55">前者是与概念相对的思维形式（拉伦茨、黄茂荣）；后者是一般条款具体化的成果，要回答的是<b>法源问题</b>：从哪里取得，对后案有何拘束。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">制度载体：指导性案例</h3><div style="font-size:25px;line-height:1.55">「类似」的判断本身就是一次案例对比：比较<b>基本案情与法律适用</b>，不只是比较关键词。2024 年起人民法院案例库扩大了比对范围。</div></div></div>
+<div style="background:#16302A;padding:24px 38px;border-radius:16px"><p style="font-size:29px;line-height:1.55;color:#F3F1EA">警示：<b style="color:#8FC4B4">一则指导性案例不是一个案例类型。</b>单一先例不能告诉后案法官哪些事实是决定性的；指导性案例 140 号与 141 号对照之后，共同标准才显现，类型才开始形成。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §67 ｜ 《最高人民法院关于案例指导工作的规定》第七条</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="typenorm" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§68、§70 ｜ 案 例 类 型 规 范</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:52px;font-weight:700;line-height:1.15">「成年人自陷明显危险」：草拟一项类型规范</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#16302A"><th style="width:17%;color:#8FC4B4;text-align:left">要件</th><th style="width:50%;color:#8FC4B4;text-align:left">内容</th><th style="width:33%;color:#8FC4B4;text-align:left">来源</th></tr><tr><td style="color:#2E6A5C;font-weight:700">主体</td><td>受害人为完全民事行为能力人</td><td>两案均明示</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">危险的来源</td><td>危险由受害人自己的行为开启，或场所本身不对公众开放</td><td>140 号（攀爬）；141 号（非公共场所）</td></tr><tr><td style="color:#2E6A5C;font-weight:700">危险的明显性</td><td>危险依一般常识即可预见</td><td>「应当充分预见」；「依据一般常识即可知」</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">管理人的行为</td><td>未就该危险从事经营活动，或已采取相适应的提示与防护</td><td>140 号（未经营采摘）；141 号（护栏、标牌）</td></tr><tr><td style="color:#2E6A5C;font-weight:700">法效果</td><td>管理人不承担《民法典》第一千一百九十八条的责任</td><td>两案结论</td></tr></table>
+<p style="font-size:26px;line-height:1.6;color:#16302A">四项要件累积适用；任何一项不满足，即退回动态体系作整体衡量。<b>案例类型规范是动态体系在某一事实组合上的定型。</b></p>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:23px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#16302A"><th style="width:38%;color:#8FC4B4;text-align:left">合同编通则解释第十七条第一款</th><th style="width:32%;color:#8FC4B4;text-align:left">权重较高</th><th style="width:30%;color:#8FC4B4;text-align:left">权重较低</th></tr><tr><td style="color:#2E6A5C;font-weight:700">（一）国家安全</td><td>社会后果</td><td>频次</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">（二）社会公共秩序</td><td>监管强度、社会后果</td><td>主观动机</td></tr><tr><td style="color:#2E6A5C;font-weight:700">（三）善良风俗</td><td>主观动机和交易目的</td><td>监管强度（通常无规范可援引）</td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §68、§70 ｜ 类型之间权重不同；机械地逐项检验会系统性地降低善良风俗类型的无效认定</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="chances" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:30px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§69 ｜ 机 会 与 风 险</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">案例类型的机会与风险</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">机会</h3><div style="font-size:28px;line-height:1.55">① 平等对待<br>② 可预见<br>③ 减轻论证负担：只需论证本案属于该类型<br>④ 可批评：要件是否完整、价值基础是否一贯</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#9E5231">风险</h3><div style="font-size:28px;line-height:1.55">① 封闭化：被当作一般条款的穷尽列举<br>② 以引用代替比较<br>③ 表述的过度一般化：140 号裁判要点脱离「开放式景区、未经营采摘、成年人攀爬」而被单独援引<br>④ 在刑法上不利于行为人的方向越界</div></div></div>
+<div style="background:#16302A;padding:32px 44px;border-radius:16px"><p style="font-size:30px;line-height:1.55;color:#F3F1EA"><b style="color:#8FC4B4">参照的是裁判要点，比较的是基本案情。</b>主张参照的一方，须证明两案在决定性事实上相同；主张不参照的一方，须指出决定性事实上的差异（distinguishing）。在某一归责标准上强弱方向相反的事实差异，才是决定性的差异。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §69</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">1 min</p>
+</section>
+<section id="lifecycle" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§71 ｜ 案 例 类 型 的 演 变</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">生成、定型、退出</h2></div>
+<div style="display:flex;flex-direction:column"><div style="display:flex;gap:24px;align-items:baseline;padding:12px 0;border-bottom:1px solid #DCD8CC"><b style="font-size:30px;color:#2E6A5C;min-width:90px">2003</b><span style="font-size:26px;line-height:1.5">《最高人民法院关于审理人身损害赔偿案件适用法律若干问题的解释》第六条：「合理限度范围内的安全保障义务」</span></div><div style="display:flex;gap:24px;align-items:baseline;padding:12px 0;border-bottom:1px solid #DCD8CC"><b style="font-size:30px;color:#2E6A5C;min-width:90px">2009</b><span style="font-size:26px;line-height:1.5">《侵权责任法》第三十七条上升为法律；「合理限度范围内」未进入文本</span></div><div style="display:flex;gap:24px;align-items:baseline;padding:12px 0;border-bottom:1px solid #DCD8CC"><b style="font-size:30px;color:#2E6A5C;min-width:90px">2020</b><span style="font-size:26px;line-height:1.5">《民法典》第一千一百九十八条扩充列举；指导性案例 140 号裁判要点以「合理限度范围内」补回</span></div></div>
+<p style="font-size:26px;line-height:1.6;color:#16302A">法条文本的沉默不必然是有意义的沉默：立法者删去的限定，可能只是被交还给了具体化的程序。</p>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">定型的另一途径</h3><div style="font-size:25px;line-height:1.55">指导性案例 166 号 → 合同编通则解释第六十五条第三款：「恶意违约的当事人一方请求减少违约金的，人民法院一般不予支持。」</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">退出</h3><div style="font-size:25px;line-height:1.55">法〔2020〕343 号通知：指导性案例 9 号、20 号自 2021 年 1 月 1 日起不再参照<br>法〔2026〕119 号通知：指导性案例 123 号、136 号、139 号、204 号自 2026 年 8 月 15 日起不再参照</div></div></div>
+<div style="background:#16302A;padding:22px 38px;border-radius:16px"><p style="font-size:29px;line-height:1.55;color:#F3F1EA">不再参照不影响该案裁判及此前参照该案作出的裁判的效力：<b style="color:#8FC4B4">退出的是类型的拘束力，而非个案的既判力。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §71 ｜ 沿革 3</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="unfaircomp" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§72 ｜ 知 识 产 权 法 专 节 · 一</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:50px;font-weight:700;line-height:1.15">商业道德：《反不正当竞争法》第二条的具体化</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:21px;font-weight:700;color:#9E5231;margin-bottom:4px">《最高人民法院关于适用〈中华人民共和国反不正当竞争法〉若干问题的解释》</h3><p style="font-size:19px;line-height:1.6;margin-top:6px">第一条　经营者扰乱市场竞争秩序，损害其他经营者或者消费者合法权益，且属于违反反不正当竞争法第二章及专利法、商标法、著作权法等规定之外情形的，人民法院可以适用反不正当竞争法第二条予以认定。</p><p style="font-size:19px;line-height:1.6;margin-top:6px">第三条　特定商业领域普遍遵循和认可的行为规范，人民法院可以认定为反不正当竞争法第二条规定的「商业道德」。</p><p style="font-size:19px;line-height:1.6;margin-top:6px">人民法院应当结合案件具体情况，综合考虑行业规则或者商业惯例、经营者的主观状态、交易相对人的选择意愿、对消费者权益、市场竞争秩序、社会公共利益的影响等因素，依法判断经营者是否违反商业道德。</p><p style="font-size:19px;line-height:1.6;margin-top:6px">人民法院认定经营者是否违反商业道德时，可以参考行业主管部门、行业协会或者自律组织制定的从业规范、技术规范、自律公约等。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:16px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:24px;font-weight:700;color:#2E6A5C">案例 33 · 指导性案例 45 号</h3><div style="font-size:23px;line-height:1.55">接入环节强行弹出广告。先审第二章，再启用第二条；三项步骤已具构成要件形态 → 2017 年互联网专条吸收。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:24px;font-weight:700;color:#2E6A5C">案例 34 · 指导性案例 262 号</h3><div style="font-size:23px;line-height:1.55">50392 个短视频数据集合被搬运。先排除著作权法，再排除第二章，最后启用一般条款；以「实质性替代」为核心 → 2025 年第十三条第三款吸收。</div></div></div></div>
+<div style="background:#16302A;padding:22px 36px;border-radius:16px"><p style="font-size:27px;line-height:1.55;color:#F3F1EA">第一条决定一般条款<b style="color:#8FC4B4">能否启用</b>（补充性）；第三条决定启用后<b style="color:#8FC4B4">如何判断</b>（动态体系）。「商业道德」不是一般道德：须证明某一领域存在相应行为规范及其被普遍遵循的事实。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">法释〔2022〕9 号 ｜ 教材 §72</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="secrecy" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:12px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§73 ｜ 知 识 产 权 法 专 节 · 二</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:52px;font-weight:700;line-height:1.15">「相应保密措施」：一个动态体系的演进</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:23px;font-weight:700;color:#52605C">法释〔2007〕2 号第十一条第二款</h3><div style="font-size:23px;line-height:1.55">信息载体的特性 · 保密的意愿 · 可识别程度 · <s>他人通过正当方式获得的难易程度</s></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:23px;font-weight:700;color:#2E6A5C">法释〔2020〕7 号第五条第二款</h3><div style="font-size:23px;line-height:1.55">载体的性质 · <b>商业价值</b> · 可识别程度 · <b>与商业秘密的对应程度</b> · 保密意愿</div></div></div>
+<p style="font-size:24px;line-height:1.6;color:#16302A">删去的一项关涉<b>秘密性</b>而非保密性，是构成要件之间的体系归位；增加的两项是对「相应」二字的具体化。第六条列举七种情形，是类型规范；不在其中的，退回第五条第二款的动态体系。</p>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:21px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#16302A"><th style="width:16%;color:#8FC4B4;text-align:left">要素</th><th style="width:28%;color:#8FC4B4;text-align:left">案例 35（538 号）</th><th style="width:28%;color:#8FC4B4;text-align:left">案例 36（312 号）</th><th style="width:28%;color:#8FC4B4;text-align:left">案例 37（2581 号）</th></tr><tr><td style="color:#2E6A5C;font-weight:700">载体的性质</td><td>流通产品，要求措施约束第三人</td><td>客户名单，内部资料</td><td>配方与采购信息，内部资料</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">可识别程度</td><td>标签为安全与保修提示</td><td>对总经理不可能不识别</td><td>对核心技术人员足以识别</td></tr><tr><td style="color:#2E6A5C;font-weight:700">对应程度</td><td>措施约束客户，风险来自第三人</td><td>不要求一一对应</td><td>不要求一一严格对应</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">保密意愿</td><td>「未体现出」</td><td>已客观化（代签协议、领保密费）</td><td>劳动合同、员工手册</td></tr><tr><td style="color:#2E6A5C;font-weight:700">结论</td><td>措施不成立</td><td>措施成立</td><td>措施成立</td></tr></table>
+<div style="background:#16302A;padding:18px 32px;border-radius:16px"><p style="font-size:24px;line-height:1.55;color:#F3F1EA">决定性差异：<b style="color:#8FC4B4">载体是否进入流通</b>。载体留在内部时，可识别程度随被诉侵权人的身份而变化。2581 号援引第二条：第一方面决定措施是否存在，第二方面决定已存在的措施对特定人是否足以识别，<b style="color:#8FC4B4">后者不能替代前者</b>。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">法释〔2007〕2 号：不正当竞争民事解释 ｜ 法释〔2020〕7 号：商业秘密规定 ｜ 教材 §73</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="genai" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§74 ｜ 知 识 产 权 法 专 节 · 三</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:50px;font-weight:700;line-height:1.15">生成式人工智能服务提供者的注意义务</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">载体：违反安全保障义务的侵权责任</h3><div style="font-size:23px;line-height:1.55">安全保障义务兼含过错与危险两种归责要素：注意义务越严格，越接近无过错责任<br>用户以输入介入服务提供者管领的风险领域，与《民法典》第一千一百九十八条第二款结构相合<br>「避风港规则」只适用于存储与链接服务</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">注意义务强度的三项因素（张华韬）</h3><div style="font-size:23px;line-height:1.55">① 防范成本与收益的平衡（汉德公式：B &lt; P × L）<br>② 识别侵权后果的难易程度<br>③ 现有行业通行技术水平<br><span style='color:#52605C'>参照：广州互联网法院（2024）粤 0192 民初 113 号；杭州市中级人民法院（2024）浙 01 民终 10332 号</span></div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:23px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#16302A"><th style="width:20%;color:#8FC4B4;text-align:left">检视</th><th style="width:80%;color:#8FC4B4;text-align:left">要点</th></tr><tr><td style="color:#2E6A5C;font-weight:700">术语</td><td>三项因素在功能上是<b>阐释性要素</b>，不是基础评价；两判决对数据输入与训练阶段采取的宽松标准，才是<b>基础评价</b></td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">与第九条的关系</td><td>《最高人民法院关于审理侵害信息网络传播权民事纠纷案件适用法律若干问题的规定》第九条以「具体事实是否明显」为前提，后列各项因素：<b>基础评价＋要素</b></td></tr><tr><td style="color:#2E6A5C;font-weight:700">避风港规则降格为要素</td><td>代价是可预见性的损失；是否值得，取决于生成式人工智能是否在结构上不同于存储与链接服务——<b>须以技术事实论证</b></td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §74 ｜ 张华韬 2025，第 82—99 页</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="homework" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:30px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">课 后 练 习</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">两道题，各自用上今天的一组工具</h2></div>
+<div style="display:flex;gap:28px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">一 · 动态体系与类型规范（§61、§68）</h3><div style="font-size:26px;line-height:1.55">假设红山村景区<b>收取门票</b>，并在杨梅成熟季以「自助采摘」为名招揽游客，但未提供梯具、未设警示。<br>（1）依四项标准逐项重新检验：哪几项的强度变化，方向如何？<br>（2）「成年人自陷明显危险」类型规范的哪一项要件不再满足？<br>（3）受害人自身的过错应在哪一层面处理？</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#9E5231">二 · 补充性与同类解释（§72）</h3><div style="font-size:26px;line-height:1.55">《反不正当竞争法》第十三条第三款：「经营者不得以欺诈、胁迫、避开或者破坏技术管理措施等不正当方式，获取、使用其他经营者合法持有的数据……」某经营者以普通爬虫抓取另一平台公开展示的数据集合，造成实质性替代。<br>（1）是否属于「等不正当方式」？<br>（2）若不属于，能否再依第二条认定？<br>（3）解释第一条的「之外情形」指第二章未调整的行为类型，还是第二章构成要件未被满足的行为？</div></div></div>
+<p style="font-size:28px;line-height:1.6;color:#16302A">写作要求：每一项强弱判断都写出所依据的事实；结论之后作一次反转检验。</p>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §61 练习 ｜ §72 案例 34 练习</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">1 min</p>
+</section>
+<section id="end" data-transition="fade" style="background:#16302A;color:#F3F1EA;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:44px;justify-content:center">
+
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:78px;font-weight:700;line-height:1.25;color:#FFFFFF;width:1620px">具体规定优先于一般条款<br>构成要件审查优先于动态体系</h2>
+<hr style="border-top:3px solid #2E6A5C;width:280px">
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:30px;font-weight:700;color:#8FC4B4">动态体系</h3><p style="font-size:27px;line-height:1.65;color:#F3F1EA">相互补偿的是要素，不是要件。<br>首先是评价的框架、正当化的方法，其次才是弹性化的技术。<br>立法在一般层面让要素相互补偿，不等于动态体系。</p></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:30px;font-weight:700;color:#8FC4B4">案例类型</h3><p style="font-size:27px;line-height:1.65;color:#F3F1EA">一则指导性案例不是一个案例类型。<br>参照的是裁判要点，比较的是基本案情。<br>检验说理：查、列、定、合，最后作反转检验。</p></div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#8FC4B4">配套阅读：《法学方法论—理论与实务》§55–§75 ｜ 案例 10、30—37 ｜ 附二 01—13</p>
+</section>
+    </div>
+  </div>
+  <div id="cap"></div>
+  <div id="bar">
+    <button id="prev" title="上一页（←）">◀ 上一页</button>
+    <button id="play" class="key" title="播放／暂停（空格）">▶ 播放</button>
+    <button id="next" title="下一页（→）">下一页 ▶</button>
+    <button id="replay" title="重读本页（R）">↺ 重读</button>
+    <span id="pos">1 / 37</span>
+    <button id="auto" class="tog" aria-pressed="true" title="讲完自动翻到下一页">自动播放</button>
+    <label><span>停顿</span><input id="gap" type="range" min="0" max="8" step="1" value="2"><b id="gapV">2 秒</b></label>
+    <label><span>语速</span><input id="rate" type="range" min="0.6" max="1.6" step="0.05" value="1"><b id="rateV">1.00×</b></label>
+    <label><span>语音</span><select id="voice"></select></label>
+    <button id="capt" class="tog" aria-pressed="true" title="显示／隐藏讲稿字幕（S）">字幕</button>
+    <span class="sp"></span>
+    <span id="srcnote" style="color:#6F9A8C"></span>
+    <button id="toclink">目录</button>
+    <button id="full" title="全屏（F）">全屏</button>
+  </div>
+</div>
+
+<div id="toc">
+  <button id="tocX">关闭 ✕</button>
+  <h3>目　录</h3>
+  <ol><li data-n="0"><em>1</em><span>动态体系与案例类型</span><s>开场</s></li><li data-n="1"><em>2</em><span>今天的六十分钟</span><s>1 min</s></li><li data-n="2"><em>3</em><span>一棵杨梅树，三级法院</span><s>2 min</s></li><li data-n="3"><em>4</em><span>一般条款：问题之所在</span><s>2 min</s></li><li data-n="4"><em>5</em><span>警示：向一般条款逃逸</span><s>1 min</s></li><li data-n="5"><em>6</em><span>动态体系的理论</span><s>第一幕　动态体系的理论</s></li><li data-n="6"><em>7</em><span>维尔伯格的动态体系</span><s>2 min</s></li><li data-n="7"><em>8</em><span>四项特征与两种误读</span><s>2 min</s></li><li data-n="8"><em>9</em><span>四种规范结构的对照</span><s>1 min</s></li><li data-n="9"><em>10</em><span>评价法学的一个版本</span><s>1 min</s></li><li data-n="10"><em>11</em><span>要素不是要件</span><s>2 min</s></li><li data-n="11"><em>12</em><span>原则、原理与因子：以显失公平为例</span><s>3 min</s></li><li data-n="12"><em>13</em><span>两种要素观：王磊与谢鸿飞</span><s>2 min</s></li><li data-n="13"><em>14</em><span>要素的限定性</span><s>2 min</s></li><li data-n="14"><em>15</em><span>协动机制：三层</span><s>2 min</s></li><li data-n="15"><em>16</em><span>学说争议：被高估，还是被误解</span><s>3 min</s></li><li data-n="16"><em>17</em><span>教材的立场</span><s>1 min</s></li><li data-n="17"><em>18</em><span>中国法的立法化</span><s>2 min</s></li><li data-n="18"><em>19</em><span>《民法典》中的动态体系条文</span><s>1 min</s></li><li data-n="19"><em>20</em><span>中国法上的五个领域</span><s>第二幕　中国法上的五个领域</s></li><li data-n="20"><em>21</em><span>安全保障义务：四项归责标准</span><s>2 min</s></li><li data-n="21"><em>22</em><span>再审：驳回全部诉讼请求</span><s>3 min</s></li><li data-n="22"><em>23</em><span>公序良俗的整体评价</span><s>2 min</s></li><li data-n="23"><em>24</em><span>缔约中的说明义务</span><s>2 min</s></li><li data-n="24"><em>25</em><span>显失公平：构成要件之内的弹性</span><s>3 min</s></li><li data-n="25"><em>26</em><span>履行费用过高</span><s>2 min</s></li><li data-n="26"><em>27</em><span>查、列、定、合</span><s>1 min</s></li><li data-n="27"><em>28</em><span>案例类型与知识产权</span><s>第三幕　案例类型与知识产权</s></li><li data-n="28"><em>29</em><span>案例对比法</span><s>2 min</s></li><li data-n="29"><em>30</em><span>案例类型规范</span><s>2 min</s></li><li data-n="30"><em>31</em><span>案例类型的机会与风险</span><s>1 min</s></li><li data-n="31"><em>32</em><span>生成、定型、退出</span><s>2 min</s></li><li data-n="32"><em>33</em><span>商业道德：反不正当竞争法第二条</span><s>2 min</s></li><li data-n="33"><em>34</em><span>相应保密措施：一个动态体系的演进</span><s>3 min</s></li><li data-n="34"><em>35</em><span>生成式人工智能服务提供者的注意义务</span><s>2 min</s></li><li data-n="35"><em>36</em><span>课后练习</span><s>1 min</s></li><li data-n="36"><em>37</em><span>相互补偿的是要素，不是要件</span><s>第三幕　案例类型与知识产权</s></li></ol>
+</div>
+
+<div id="gate">
+  <h1>动态体系与案例类型</h1>
+  <p><a href="../teaching.html" style="color:#8FC4B4">← 返回教学栏目</a></p>
+  <p>37 页，语音讲解约六十分钟（法学方法论第九章，教材 §55–§75）。<br>
+     讲完一页停两秒自动翻到下一页；随时可用 <b>空格</b> 暂停、<b>←</b> <b>→</b> 手动翻页、<b>R</b> 重读本页、<b>F</b> 全屏。<br>
+     语速、停顿时长与朗读语音都可以在下方控制条里调。</p>
+  <p class="warn" id="nospeech" style="display:none">
+     这个浏览器不支持语音合成，页面仍可正常翻页阅读；或把录音放进同目录的 audio 文件夹（文件名与页面 id 同名的 mp3）。</p>
+  <p class="warn">建议用 <b>Microsoft Edge</b> 打开：它自带「晓晓」「云希」等中文神经语音，听感最接近真人。<br>
+     Chrome 下会退到系统自带的中文语音。若控制条里「语音」是空的，请在系统设置中安装中文语音包。</p>
+  <button class="go" id="start">▶ 开始讲解</button>
+  <button class="alt" id="silent">只看幻灯片，不要语音</button>
+</div>
+
+<script>
+var SLIDES = [{"id": "cover", "title": "动态体系与案例类型", "min": 0, "act": "开场"}, {"id": "roadmap", "title": "今天的六十分钟", "min": 1, "act": "开场"}, {"id": "hook30", "title": "一棵杨梅树，三级法院", "min": 2, "act": "开场"}, {"id": "generalclause", "title": "一般条款：问题之所在", "min": 2, "act": "开场"}, {"id": "flight", "title": "警示：向一般条款逃逸", "min": 1, "act": "开场"}, {"id": "act1", "title": "动态体系的理论", "min": 0, "act": "第一幕　动态体系的理论"}, {"id": "origin", "title": "维尔伯格的动态体系", "min": 2, "act": "第一幕　动态体系的理论"}, {"id": "features", "title": "四项特征与两种误读", "min": 2, "act": "第一幕　动态体系的理论"}, {"id": "fourforms", "title": "四种规范结构的对照", "min": 1, "act": "第一幕　动态体系的理论"}, {"id": "wertung", "title": "评价法学的一个版本", "min": 1, "act": "第一幕　动态体系的理论"}, {"id": "notelement", "title": "要素不是要件", "min": 2, "act": "第一幕　动态体系的理论"}, {"id": "threelayer", "title": "原则、原理与因子：以显失公平为例", "min": 3, "act": "第一幕　动态体系的理论"}, {"id": "twoviews", "title": "两种要素观：王磊与谢鸿飞", "min": 2, "act": "第一幕　动态体系的理论"}, {"id": "limited", "title": "要素的限定性", "min": 2, "act": "第一幕　动态体系的理论"}, {"id": "coaction", "title": "协动机制：三层", "min": 2, "act": "第一幕　动态体系的理论"}, {"id": "dispute", "title": "学说争议：被高估，还是被误解", "min": 3, "act": "第一幕　动态体系的理论"}, {"id": "stance", "title": "教材的立场", "min": 1, "act": "第一幕　动态体系的理论"}, {"id": "legislate", "title": "中国法的立法化", "min": 2, "act": "第一幕　动态体系的理论"}, {"id": "civilcode", "title": "《民法典》中的动态体系条文", "min": 1, "act": "第一幕　动态体系的理论"}, {"id": "act2", "title": "中国法上的五个领域", "min": 0, "act": "第二幕　中国法上的五个领域"}, {"id": "safety", "title": "安全保障义务：四项归责标准", "min": 2, "act": "第二幕　中国法上的五个领域"}, {"id": "answer30", "title": "再审：驳回全部诉讼请求", "min": 3, "act": "第二幕　中国法上的五个领域"}, {"id": "publicorder", "title": "公序良俗的整体评价", "min": 2, "act": "第二幕　中国法上的五个领域"}, {"id": "disclosure", "title": "缔约中的说明义务", "min": 2, "act": "第二幕　中国法上的五个领域"}, {"id": "unconscion", "title": "显失公平：构成要件之内的弹性", "min": 3, "act": "第二幕　中国法上的五个领域"}, {"id": "costly", "title": "履行费用过高", "min": 2, "act": "第二幕　中国法上的五个领域"}, {"id": "fourstep", "title": "查、列、定、合", "min": 1, "act": "第二幕　中国法上的五个领域"}, {"id": "act3", "title": "案例类型与知识产权", "min": 0, "act": "第三幕　案例类型与知识产权"}, {"id": "casecompare", "title": "案例对比法", "min": 2, "act": "第三幕　案例类型与知识产权"}, {"id": "typenorm", "title": "案例类型规范", "min": 2, "act": "第三幕　案例类型与知识产权"}, {"id": "chances", "title": "案例类型的机会与风险", "min": 1, "act": "第三幕　案例类型与知识产权"}, {"id": "lifecycle", "title": "生成、定型、退出", "min": 2, "act": "第三幕　案例类型与知识产权"}, {"id": "unfaircomp", "title": "商业道德：反不正当竞争法第二条", "min": 2, "act": "第三幕　案例类型与知识产权"}, {"id": "secrecy", "title": "相应保密措施：一个动态体系的演进", "min": 3, "act": "第三幕　案例类型与知识产权"}, {"id": "genai", "title": "生成式人工智能服务提供者的注意义务", "min": 2, "act": "第三幕　案例类型与知识产权"}, {"id": "homework", "title": "课后练习", "min": 1, "act": "第三幕　案例类型与知识产权"}, {"id": "end", "title": "相互补偿的是要素，不是要件", "min": 0, "act": "第三幕　案例类型与知识产权"}];
+var NAR = {"cover": "欢迎来到法学方法论第九章，动态体系与案例类型。第四章到第八章处理的疑难，多数出在某一个构成要件要素的含义上：物、公共场所、为生产经营目的。这些要素的含义有争议，但争议有边界，四种解释因素足以把它确定下来。今天处理的是另一类条文：公序良俗、诚信原则、商业道德。它们的文义并不含混，但没有给出判断个案所需的标准。本章要说明一件事：一般条款之下的价值补充可以被结构化，可以被逐项复核。全课六十分钟，分为三幕。请准备好随时暂停，先自己判断，再听法院怎么说。", "roadmap": "先交代今天的路线。开场六分钟，提出一道题，并说明一般条款的问题出在哪里。第一幕二十四分钟，讲动态体系的理论：要素是什么，要素之间怎样协动，学说上有哪些争议，以及中国法怎样把它写进条文。第二幕十五分钟，用这套方法检验中国法上的五个领域：安全保障义务、公序良俗、缔约中的说明义务、显失公平、履行费用过高。第三幕十五分钟，讲案例类型，再以知识产权法为专节。三幕之间有一条线索，请现在就记住：动态体系与案例类型都处在法原则与构成要件之间的中间阶段。前者提供数目确定、可以相互补偿的要素；后者从已决案件中萃取出类似构成要件的规则。", "hook30": "开场先给你一道题，来自教材案例三十，指导性案例一百四十号。红山村景区是国家三A级旅游景区，不设门票。景区内河道旁有杨梅树，所有人是红山村村民委员会；村民委员会没有向村民或游客提供采摘杨梅的活动。二零一七年五月十九日，村民吴某私自上树采摘杨梅，不慎跌落，经抢救无效于当日死亡。他的近亲属起诉村民委员会，请求其承担百分之七十的人身损害赔偿责任。一审判决村民委员会赔偿四万五千零九十六元一角七分，二审驳回上诉、维持原判。案件随后进入再审。请你暂停，自己判断：村民委员会是否违反了安全保障义务？我的要求是，不只给出结论，而是把理由逐项写出来。你写下的每一项理由，都应当能被另一个人检验。到第二幕，我们用一组确定的标准重新组织这个案件，再对照再审判决。这道题的争点有两层：景区管理人对游客或村民私自攀爬果树造成的自身损害，是否负有安全保障义务；如果负有，义务的范围如何确定。三级法院面对的是同一组事实，分歧不在事实，而在义务的范围。一份只写未尽到安全保障义务、酌定承担部分责任的判决，与一份只写已尽到合理限度的义务的判决，在论证上同样空洞：两者都没有说明，义务的范围依据什么划定。", "generalclause": "先说明问题出在哪里。法条的标准结构是构成要件加法效果。一般条款的情形不同。《民法典》第七条规定应当遵循诚信原则，第八条规定不得违背公序良俗，《反不正当竞争法》第二条第一款规定经营者应当遵守法律和商业道德。读者知道公序良俗指向什么方向，却不知道一份把危房出租用于经营酒店的合同是否违背公序良俗。杨仁寿与黄茂荣把这项工作称为价值补充：不确定法律概念与概括条款，须由法官在个案中依价值判断补充其内容。这一称谓指明了工作的性质，却没有指明工作的方法。价值补充如果停留在法官依其确信补充，就与以内心确认替代论证的做法无从区别。右边这张图按抽象程度排列各个环节。法理念位于顶端，在案件中只能充当空白公式；其下是法原则；动态体系与案例类型同处中间阶段，把原则转化为可以检验的标准；再往下是法制度，即权利滥用、缔约过失、情势变更这类类似构成要件的规则；最后是涵摄。今天讲的，就是中间阶段。这里还要分清两件事。第二部分处理的是解释：文义含混，须在可能文义之内确定含义。一般条款的工作是具体化：问题不在于文义含混，而在于射程之内缺少可供涵摄的标准。所以本章的方法不是第五种解释方法，而是在射程之内为一般条款补足标准的程序。动态体系与案例类型属于具体化的技术，法原则是具体化的出发点，法教义学是具体化成果的储存形式。", "flight": "在进入方法之前，先记住一项警示。一九三三年，赫德曼以《向一般条款逃逸》为题指出：法院一旦惯于诉诸一般条款，具体规定即被架空，法的安定性随之丧失。这一警示对中国法更为迫切，因为《民法典》总则编第一章把自愿、公平、诚信、公序良俗、绿色诸原则全部成文化，诉诸原则的门槛因此很低。由此得出本章的基本规则：具体规定优先于一般条款，构成要件审查优先于动态体系。只有在具体规定确无答案时，才进入具体化程序；而一旦进入，就必须把归责标准、案例类型与衡量过程写进裁判理由，不得以综合考虑四个字代替。具体化的方法有三：动态体系、案例类型，以及第十章的法原则与法制度。", "act1": "第一幕，动态体系的理论。我们要回答四个问题：动态体系从哪里来；它的要素是什么；要素之间怎样协动；以及它在什么领域可以使用，在什么领域不可以使用。", "origin": "动态体系由奥地利民法学者瓦尔特·维尔伯格提出。一九四一年，他在《损害赔偿法的要素》中反对以单一的归责原则，也就是过错或者危险，解释全部损害赔偿责任，主张责任取决于若干要素的数量及其协同作用。一九五零年，他在格拉茨大学的校长就职演说《民法中动态体系的发展》中，把这一思路推广为一般的法学方法。术语上有一段变化：维尔伯格最初用要素，其后改用力量，以显示不同要素具有不同强度；卡纳里斯则建议改称评价原则或者正义标准，理由是要素、力量的自然科学色彩过重。此后，比德林斯基把动态体系系统化，卡纳里斯讨论了它在实在法上的实现程度，库齐奥把它用于《欧洲侵权法原则》的起草。动态体系进入中国民法学，最早经由日本学者山本敬三一文的中译。他的定义今天仍被普遍引用，请看屏幕下方：特定在一定的法律领域发挥作用的诸要素，通过与要素的数量和强度相对应的协动作用，来说明、正当化法律规范或者法律效果。请记住定义中的两个词：数量与强度。请注意维尔伯格最初针对的问题：损害赔偿责任的归责。过错原则与危险原则各自都只能说明一部分责任；他的回答是不必在二者之间择一，而是把过错、危险等作为要素，按照各自的强度共同决定责任的有无与范围。库齐奥参与起草的《欧洲侵权法原则》，在条文中明示考量要素、由法官据以判断，因而成为讨论动态体系能否立法化的主要对象。", "features": "与传统构成要件相比，动态体系有四项特征。第一，不要求全部要素均得满足。构成要件的要素是累积性的，缺一即不发生法效果；动态体系的要素不是。第二，要素之间是比较性的关系，句式是越……越……：某一要素的强度越大，法效果越容易发生。第三，要素可以相互补偿，强的要素可以弥补弱的要素，也可以彼此抵消。第四，要素的数目原则上是确定的。卡纳里斯把后两项概括为动态体系的特殊性：一方面，决定性的标准被限制在一个相对较小的范围内，不能被临时扩大，这是它与论题学的区别；另一方面，它放弃固定的事实构成，根据要素的数量和强度的共同作用确定法律后果，这是它与传统体系观的区别。由此排除两种误读。第一种把动态体系归入论题学；而维尔伯格要求清晰的观点，明确反对单纯的公平导向。第二种把动态性等同于开放性；如果动态只意味着法律体系对新的评价开放，它就没有任何特殊之处。还须澄清动态一词：它不是沿时间轴展开的历时过程，而是各个要素在同一时刻相互协动的共时评价过程。把继续性合同中权利义务的逐渐形成称为动态体系，是对这一概念的误用。以一个例子说明第三项特征：在安全保障义务中，危险由管理人维持这一要素可能很强，但管理人已采取充分的防护措施、危险对一般人显而易见，后两项要素可以将其抵消。第二幕的消力池案，就是这种情形。", "fourforms": "这张表把四种规范结构放在一起。构成要件：要素数目确定，累积适用，适用方式是涵摄，可预见性高，个案适应性低。论题目录：要素开放，只是罗列，列举之后径行判断，可预见性低。一般条款：未列出要素，须先具体化。动态体系位于构成要件与一般条款之间：要素确定而且限定，各要素比较、互补，由合力决定，适用方式是权衡。它比构成要件更能适应个案，比一般条款与论题目录更能被检验。请把这张表与后面的每一个案例对照：每遇到一份要素清单，先问它落在哪一列。还须注意，动态体系的可预见性只能达到中等，这是它为个案适应性付出的代价。立法者选择固定构成要件还是动态体系，正是在这两列之间作出取舍。", "wertung": "维尔伯格提出动态体系时，面对的是概念法学与自由法学的对立：前者过于僵化，难以确保个案正义；后者有恣意裁判的危险。动态体系因此从一开始就须同时克服两者，在这个意义上它是评价法学的一个版本。这一定位决定了阅读的重心：动态体系首先是一个评价的框架，用以使评价过程可以被看见、可以被反驳；其次才是一种使法律效果弹性化的技术。解亘、班天可指出，国内的继受偏重后者而忽视前者，若一味追求弹性，就有滑入自由法学的危险。同样重要的是：动态体系是正当化的方法，不是发现的方法。它不能担保法官按某一公式得出结论；它能做的，是要求结论以要素的数量与强度加以正当化。这里可以与第二部分第四十九节对照：价值法学与评价法学是同一德文术语的两种译法。评价法学强调，法秩序是一个价值秩序，解释与续造均须依循法律自身的评价。动态体系所以被称为评价法学的一个版本，是因为它既不接受概念法学的封闭演绎，也不接受自由法学的法官自由，而以法律自身确定的要素组织评价。", "notelement": "下面进入第五十七节，要素。先排除一种误解：动态体系中相互协动的是要素，不是构成要件。构成要件以全有或全无的方式适用，只有满足与否，没有满足程度的问题，彼此之间也无从补偿。解亘、班天可批评部分研究把山本敬三原文中的要素替换成了要件，并追问：要件与要件彼此间凭什么可以相互补充？蔡睿的表述是：动态体系下要素的协动，是内在原理的协动，而非构成要件的协动。王文军用两个短语区分允许与不允许的情形。以有余而补缺失，是以一项要素的富余顶替一项根本不具备的要件，这是不允许的。以有余而补不足，是各要件均已具备，只是某一要件背后的要素较弱，可以由其他要素的强度弥补。要件本身仍然全有或全无；要素的强弱所影响的，是认定某一要件已经具备所需的事实基础。例如在显失公平中，结果失衡越严重，认定利用危困状态的证明要求就可以相应降低。第二幕讲显失公平时还会用到这一点。请把这一区分与证明联系起来。以有余而补不足，在诉讼上表现为事实推定：受损方证明了危困状态与显著失衡，法院可以据此推定相对人利用了这一状态，相对人可以举证推翻。这样处理，要件一个不少，变化的只是认定要件所需的证明。反过来，如果受损方根本不处于危困状态、也不缺乏判断能力，无论价格多么失衡，都不能以失衡的严重程度顶替这一要件。", "threelayer": "要素究竟是什么？学说上有不同立场，先看山本敬三与王磊的区分：作为原理的要素与作为因子的要素。原理是支配、衍生或者证成实定法规则的规范性基础；因子是测定原理充足度的具体指标，本身不具规范性格，更多是经验事实。王磊还指出，这里的原理不是宣示价值的法原则，而是直接支配某一法律问题的低阶层原理。规则与原则的二阶层结构，由此变为规则、原理、原则的三阶层结构。看教材的设例。甲之子急需手术，甲为筹措医疗费，把市场价约二百万元的住房以一百万元卖给邻居乙。乙知悉甲的处境，在甲提出出售意向的当日即要求签约。三个月后，甲依《民法典》第一百五十一条请求撤销。表的第一行是规则，即第一百五十一条。第二行是原则，意思自治与公平，它们宣示价值，但不能直接回答本案是否构成显失公平。第三行是三项低阶层原理：意思瑕疵原理，对应危困状态、缺乏判断能力等情形；有责性原理，对应利用；等价性原理，对应显失公平。最后一行是因子：筹款的急迫程度，有无其他筹款途径，从意向到签约只在当日，乙知悉甲的处境并促成当日签约，成交价与市场价相差约百分之五十。这个设例说明三点。第一，原理回答为什么这些事实与撤销有关，因子回答本案中该原理被满足到什么程度。第二，因子本身不具规范性格：当日签约只是一项经验事实，只有经由意思瑕疵原理，才与撤销的法效果发生关联；脱离原理罗列因子，就无法说明某一事实应向哪一方向计算。第三，这正是比德林斯基区分本源意义上的动态体系论与动态的法思考的意义所在。裁判理由若写成综合考虑交易价格、交易时间、当事人处境等因素，认定构成显失公平，只罗列了因子，属于动态的法思考；先确定三项原理，再以因子逐项测定各原理的充足度，并说明合力，才是本源意义上的动态体系论。", "twoviews": "谢鸿飞提出了一个与之对立的方案。他把要素分为原理性要素与阐释性要素。原理性要素是从法律秩序提炼的、支撑法律规范的特定社会事实、状态或关系，不包括任何次级的法律原则或法原理；他据此提炼出利益、意志、控制、信赖、关系五项。阐释性要素是阐明原理性要素的具体因素，按主体、标的、行为三方面展开。他认为把法原理作为要素，是动态体系理论流变中的败笔：法原理与原则同样空疏；而且原理的适用本身依赖权衡，把它作为被权衡的对象，会混淆评价依据与被评价的对象。两种方案的风险各有所在：王磊方案的风险是原理与原则同样抽象；谢鸿飞方案的风险是社会事实的选取本身仍须以某种评价为依据。教材的处理是：分析一个具体条文时，先确定其背后的低阶层原理，再以阐释性要素测定其充足度。两种方案在操作层面可以衔接，分歧主要在于原理能否充当被权衡的对象。以教材的商场滑倒设例看谢鸿飞方案。商场雨天未在入口铺设防滑垫，也未设置警示，顾客进门滑倒受伤。原理性要素有四：控制，商场支配入口区域，能够防范湿滑的危险；利益，商场以开放经营获利；信赖，顾客信赖经营场所的通行安全；关系，经营者与进入场所的顾客之间的接触关系。阐释性要素说明各自的强弱：人流密集的入口、雨天湿滑可以预见、防滑垫与警示牌的成本很低、顾客进门的方式。这四项原理性要素，可以与第二幕安全保障义务的四项归责标准相互对照。", "limited": "无论采哪一种要素观，要素都必须是限定的。解亘、班天可把限定性分为两项：一是要素是哪些要确定，是A、B、C，就不能还可以是A、B、D；二是要素的数量要确定。分列两项，是为了分别排除两种做法：以其他要素替换所列要素，以及在所列要素之外增减要素。若任由解释者引入新的要素，论辩便成为一场理性缺席的信念之争。动态体系与利益衡量论的区别正在于此：利益衡量对所衡量的利益不作限定，过程不透明，因而不具有可反驳性。王磊举过几个例子：以事迹、贡献和声誉认定英雄人物；以时间要素和空间要素认定动物侵权的责任主体；或者在过错、原因力、危险三项要素之外，又在例外情况下综合衡量双方的财产状况、保险与社会保障。这些都只是综合考量，不是本源意义上的动态体系。检验一份要素清单，至少问三个问题：要素是否限定？每一要素的作用方向是否明确？要素背后的原理能否指明？谢鸿飞同样以有限性为提炼要素的第一原则，并补充多元性与开放性两项：原理性要素数量相对固定，阐释性要素可以随社会、技术变迁而增减。张平华从立法技术的角度提出，要素还应具有适度抽象性：既不能抽象到公平、诚信那样缺乏具体内涵，也不能具体到可以直接涵摄的程度。", "coaction": "列出要素，只确定了须考虑哪些事项；要从要素得出法律效果，还须知道要素之间如何协动。学说上分三层。第一层是比较命题：越多，越多。它只告诉解释者方向，不告诉他终点。第二层是基础评价：在只考虑一个因子的情形，满足程度达到某一数值时，效果为某一结果；它附有在其他条件相同的情况下这一限定。中国法上，民间借贷利率的四倍LPR上限、原《合同法解释（二）》第十九条关于明显不合理低价的规定，都可以充当某一原理的基础评价。第三层是原则性示例：多个要素都偏离平均状态时，以各要素乘以其充足度之和确定法律效果。实际的法律命题很少能达到这种精度。缺少后两层，动态体系只能停留在比较命题。争议在于实定法的供应。解亘、班天可认为基础评价与原则性示例远远不够；王磊回应说，协动机制可以在立法上隐而不现，由判例累积与学说构建补足。至于权重，维尔伯格后期认为，为要素赋予固定权重既不可能，也没有追求的意义。教材的处理是：权重不是抽象地预设的，而是由具体规范或具体案例类型的价值重心决定。蔡睿还提出一种读法：把《民法典》第一百五十一条本身看作立法者给出的示例性规范，该条描述的情形就是立法者心目中典型的显失公平合同，个案的整体图像与之比较，判断是否达到该典型的程度。谢鸿飞则把评价基准分为平均规则、原则性示例与案例群方法三类；案例群方法与第三幕的案例类型是同一思路。", "dispute": "第五十九节，学说争议：动态体系是被高估，还是被误解？争议集中在三个问题上。第一，法的安定性。埃塞尔警告，放弃法教义学，法律保障将完全取决于法官个人；帕夫洛夫斯基说，动态体系为排除恣意所做的努力，只不过为恣意的正当化提供了可能性。解亘、班天可还指出一个宪法层面的限制：若一种方法的弹性导致严重的同案不同判，援用它本身即违反平等原则。王磊的回应有三层：要素的限定性为评价划定外在界限；动态体系处于确定性与不确定性之间，可以称为欠确定性；以动态评价之名行恣意之实，是操作失当，不是方法本身的错误。第二，体系性。动态体系由要素体系与基础评价两根支柱支撑，批评者认为二者都不稳固：内在体系没有固定的形态，基础评价供应不足。第三，适用领域。比德林斯基主张动态体系可以覆盖全部实定法；卡纳里斯则把它限于固定构成要件与衡平规范之间的中间地带：能够找出背后原理的一般条款，适用动态体系；找不出原理、只能依衡平判断的，归于论题学。卡纳里斯的一个判断值得细看。在容忍代理中，本人的可归责程度较低，但交易安全需要更强的保护，后者弥补了前者。他承认这符合动态体系的基本理念，却认为它不是动态体系，因为法律后果不取决于个别情况，而是普遍固定。用中国法检验：《民法典》第一百七十二条规定的表见代理，补偿关系已由立法一次性确定，相对人有理由相信，代理行为即有效，法官不会因为被代理人的可归责程度特别低而令其只承担一半合同义务。第九百九十八条的人格权侵害责任则不同：职业、影响范围、过错程度，以及行为的目的、方式、后果此消彼长，责任的有无与轻重须逐案衡量。由此得出一项区分，请记下来：立法者在一般层面让要素相互补偿，不等于动态体系；动态体系的标志是法律后果取决于个案中的要素组合。最后是不适用的一端：维尔伯格本人排除了土地登记法与票据法，比德林斯基又加上诉讼法与刑法。", "stance": "教材对争议的立场有四点。第一，动态体系首先是评价的框架，其次才是弹性化的技术；凡援用动态体系，须交代要素、作用方向与各要素在本案中的强弱，做不到这三点，就不援用。第二，适用范围以卡纳里斯的立场为准：限于能指明背后原理的一般条款与不确定概念；有构成要件可资涵摄之处，构成要件优先；刑法上不利于行为人的方向，不适用。第三，基础评价与原则性示例在中国法上的主要来源，是司法解释、指导性案例与案例类型；补足的途径是判例累积，而不是放弃动态体系。第四，司法解释中等因素的等字，只容许增加与已列要素同类、作用方向可以说明的要素。", "legislate": "第六十节，中国法的立法化。动态体系在两个层面运作。在规范制定层面，立法者与司法解释的制定者以考虑……等因素的形式把要素写入规范，形成要素—效果规范。在法律适用层面，法官列出要素，认定各要素在本案中的强弱，说明合力的方向，必要时与先例比较。两个层面相互衔接：立法只提供要素，不代替衡量；个案中形成的要素，又常经由司法解释被吸收进规范文本。动态体系在德语国家主要停留于学说，在中国法上却已获得广泛的立法应用。谢鸿飞把立法化的形态归为四类，屏幕上是这张表。第一种形态值得单独说明。《民法典》第三百二十二条规定，法律没有规定的，按照充分发挥物的效用以及保护无过错当事人的原则确定添附物的归属。设甲明知木料属于乙，仍以乙价值一千元的木料制成价值十万元的家具。依充分发挥物的效用，家具应归甲；依保护无过错当事人，应保护乙。条文没有规定两者冲突时何者优先，法官只能自行取舍，这就是无约束的自由裁量。其余三种形态都以阐释性要素或者原则审查约束权衡，第一种形态缺少这一层。最后一个提示：立法化不等于正当化。一项要素出现在法条中，只说明它是相关的，不说明它在本案中强还是弱；并须避免重复评价，同一事实只评价一次。", "civilcode": "在《民法典》中检索因素、考虑、程度、具体情况、责任大小等表述，逐条判断是否具备动态体系的特征，结果可以分为四组。第一组，条文自身列出要素清单的只有四条：第九百九十八条、第一千零二十六条、第一千二百三十一条、第六百八十条第二款。其中第一千零二十六条以下列因素封闭列举，最接近要素数目确定的要求；其余三条以等因素结尾，允许法院增加要素，但增加的要素须与所列要素同类，作用方向须能说明。第二组，条文只设概括标准，要素由司法解释补足，公序良俗、滥用民事权利、违约金的调整、精神损害赔偿的数额都属此类。第三组是构成要件形式下的要素协动，由学说认定。第四组只设评价对象或方向，未列要素，是否称为动态体系，取决于对立法化作广义还是狭义理解。", "act2": "第二幕，中国法上的五个领域。前几节的方法在这里接受检验。每一个领域，我们都问同样的问题：要素是哪些，作用方向如何，在案件中各自强弱如何，合力指向哪里。先回到开场那棵杨梅树。", "safety": "《民法典》第一千一百九十八条第一款规定，宾馆、商场等经营场所、公共场所的经营者、管理者或者群众性活动的组织者，未尽到安全保障义务，造成他人损害的，应当承担侵权责任。其中经营场所、公共场所与经营者、管理者尚可涵摄；安全保障义务则不能，法条没有说明义务的内容与范围。在德国法上，与之对应的是从《德国民法典》第八百二十三条第一款发展出的交往安全义务，默勒斯以之为动态体系的第一个例证，列出四项归责标准，可以直接移用于本条。第一，危险的开启或维持：危险源与义务人的关联越紧密，义务越重。第二，控制危险的可期待性：措施越容易、成本越低，义务越重。第三，危险源带来的利益：获益越多，义务越重。第四，相关人的信赖或危险的明显性：信赖越正当，义务越重；危险越明显，义务越轻。四项标准都是越……越……的结构，各有明确的作用方向，数目确定；它们可以证立责任，也可以排除责任。在进入案例之前，请回到第五十七节的检验三问。要素是否限定：四项，数目确定。作用方向是否明确：每一项都有明确的越……越……。背后的原理能否指明：危险的开启与控制、获益者负担风险、信赖保护，均可指明。三问都能回答，这份清单才构成动态体系，而不只是一份考量因素的罗列。", "answer30": "现在回答开场题。再审判决撤销一、二审判决，驳回全部诉讼请求。裁判要点是：公共场所经营管理者的安全保障义务，应限于合理限度范围内，与其管理和控制能力相适应。用四项标准逐项检验。危险的开启：杨梅树本身并无安全隐患，危险由受害人自己的攀爬行为开启，指向否定。可期待性：对开放式景区内所有树木加以围蔽、设置警示，超出管理和控制能力，指向否定；裁判要点正是对这一标准的表述。利益：景区不设门票、未经营采摘活动，管理人没有从该危险中获取经营性利益，指向否定。明显性：完全民事行为能力的成年人应当充分预见攀爬的危险，指向否定。四项一致指向否定，结论没有疑义。一、二审之所以判令部分赔偿，是未对上述标准逐项检验，而以结果的严重性替代了义务范围的认定。再把它与案例十，即指导性案例一百四十一号的消力池案，放在同一张表上。消力池是水利工程设施，危险由管理人维持，第一项比杨梅树案更强；但管理人已设护栏与警示标牌，危险依一般常识即可知，又不是对外开放的场所，第二项与第四项将其抵消。这就是要素相互补偿的形态。还须指出再审理由中一处可议之处：判决以吴某违反村规民约、违背公序良俗为由，否定法律上的因果关系。受害人自身的过错，在《民法典》中由第一千一百七十三条过失相抵与第一千一百七十四条受害人故意处理，在义务层面则由第四项标准吸收；把它放进因果关系，等于以一般条款替代已有的具体规则，正是开场所说的向一般条款逃逸。判决的结论由第一层理由即可独立支撑。还要补充两点学说上的讨论。其一，解亘、班天可认为，原《侵权责任法》第三十七条第一款这类规定，可以从侵权责任法的一般条款中轻易演绎出来，不属于原则性示例。按此标准，第一千一百九十八条本身也只是一般条款的具体化，法律效果的确定须依赖判例。指导性案例一百四十号与一百四十一号共同确立了一项原则性示例：完全民事行为能力人自行进入明显危险，管理人未经营该危险或已尽合理提示的，管理人不负责任。第三幕会看到，它已具备案例类型规范的形态。其二，张华韬指出，安全保障义务把过错责任与危险责任之间的选择，转化为注意义务强弱的程度问题。第三幕讨论生成式人工智能时，还会用到这一点。", "publicorder": "第二个领域，公序良俗的整体评价。德国判例对《德国民法典》第一百三十八条第一款采整体评价，由内容、动机与目的综合得出的整体特征起决定作用。中国法上，《民法典》第一百五十三条第二款规定违背公序良俗的民事法律行为无效；最高人民法院已在《最高人民法院关于适用〈中华人民共和国民法典〉合同编通则若干问题的解释》第十七条中把要素写了出来。这一条由三部分构成：第一款是案例类型，把公序良俗分为国家安全、社会公共秩序、善良风俗三类；第二款第一句是动态体系，列出主观动机和交易目的、监管强度、交易频次、社会后果四项要素，并要求在裁判文书中充分说理；第二款第二句是一项排除规则，为动态体系设定下限。案例三十一，指导性案例一百七十号，早于该解释，但可以用四项要素重新组织：双方明知是应予拆除的D级危房，仍以经营酒店为目的订约；部门规章明令禁止出租；本案是单次交易，频次一项弱；危及不特定公众的人身及财产安全，房屋事实上已经垮塌，社会后果一项强度最高。其余三项的强度补偿了频次的弱，合力指向无效。判决的关键一步，是没有主张违反规章本身导致无效，而是以公序良俗的整体评价得出结论。这一区分避免了以公序良俗为通道，使一切部门规章都具有否定合同效力的作用。请把本案与案例二十七泸州遗赠案对照。两案同以公序良俗否定法律行为的效力，但指导性案例一百七十号的结论有一项具体的公共安全利益支撑，并有规章条文指明该利益的位置；泸州遗赠案所援引的社会公德，没有经过任何要素检验。泸州遗赠案的结论若要成立，须论证其属于第一款第三项背离社会公德、家庭伦理的类型，并承担第二款四项要素的说理负担。", "disclosure": "第三个领域，缔约中的说明义务。默勒斯列出三项要素：信息的紧要性，即信息对相对人是否重要；信息获取的不对称，即义务人是否比相对人明显更容易接触该信息；说明的可期待性，即相对人是否有理由相信义务人会转达该信息。尚连杰把它修正为四项：信息重要性、披露可能性、期待合理性、信赖紧密度。法效果经由两条通道发生：《民法典》第五百条第二项的缔约过失，以及第一百四十八条的欺诈。总则编解释第二十一条把欺诈界定为包括负有告知义务的人故意隐瞒真实情况；一方是否负有告知义务，法条没有回答，正须以上述要素判断。先划定对象：说明义务指向的是不约定于合同之中的背景信息。它与条款订入不同。《民法典》第四百九十六条第二款的提示与说明，对象是格式条款本身，法效果是该条款不成为合同的内容；指导性案例六十四号的话费有效期案属于这一类。案例三十二，指导性案例十七号，才是说明义务的例证：轿车在交付前曾因运输划伤进行钣金喷漆维修。三项要素均强：新车与维修过的车在价格与缔约决定上差异显著；维修记录在销售者手中；销售者是专业的汽车经营者。告知义务因此成立，争议转到事实层面：义务是否已被履行，由销售者证明。反面的例子是限购政策：它向社会公布，购房人可以自行了解，一项要素的强烈反向作用，也可以单独否定说明义务。教材的练习可以检验这三项要素。出卖人出售一套住宅，房屋内两年前发生过非正常死亡事件，合同未作约定，买受人也未询问。紧要性强，不对称强，可期待性较强，三项合力，出卖人负有告知义务。若出售方是中介机构，第二项取决于中介是否知悉该事实，第三项因其专业身份与《民法典》第九百六十二条的如实报告义务而增强；但中介不是买卖合同的当事人，其责任依中介合同处理。", "unconscion": "第四个领域，显失公平。与前三个领域不同，《民法典》第一百五十一条是一个有构成要件的条文：一方利用对方处于危困状态、缺乏判断能力等情形，致使民事法律行为成立时显失公平的，受损害方有权请求撤销。问题是：在有构成要件的条文上，动态体系还有没有用武之地？以要件—效果模式适用本条有其困境：玉原石、股权等标的没有市场价格可资参照；等情形被法院扩展为无经验、信息不对称等，却缺乏论证；对要素分布不均的非典型案件，法官只能在成立与不成立之间择一，实际的评价过程被隐藏在涵摄之下。比较法上，瑞士、奥地利的判例与美国多数州的滑动标尺法，都承认一个要素的较强满足可以弥补另一个要素的不足；德国法则让落在《德国民法典》第一百三十八条第二款之外的案件回到第一款的一般条款。王文军指出，中国法上显失公平的法效果是可撤销，违背公序良俗的法效果是无效，二者不是特别规定与一般规定的关系，不能照搬德国法；动态体系若要发挥作用，只能在第一百五十一条的构成要件之内。蔡睿与王文军都作了肯定的回答，前提是第五十七节的界限：相互补偿的是要件背后的评价要素，不是要件本身。二者的分歧在弹性的方向。蔡睿主张交换正义、合同自由、诚实信用三项原理可以同向或逆向协动。王文军主张单向：侵扰意志自由的程度很高时，结果失衡的要求可以降低；反对因结果严重失衡而缓和主观要件；客观失衡只在证据层面支持利用的推定。他的体系论据是屏幕右侧的梯度：胁迫、欺诈、重大误解、显失公平，意思瑕疵程度逐级减弱，立法者逐级加入相对人因素与客观失衡的要求。依卡纳里斯的标准，这一梯度本身不是动态体系，但它为本条之内的弹性评价提供了方向。教材的评价是：单向论更符合第一百五十一条的文义与体系。还有一点：以原《合同法解释（二）》第十九条作为显失公平的基础评价，须先论证两条规范目的具有可比性，因为该条保护的是债权人免受债务人诈害；这一论证负担由主张移用者承担。", "costly": "第五个领域，履行费用过高。《民法典》第五百八十条第一款第二项规定，债务的标的不适于强制履行或者履行费用过高的，对方不得请求履行。这是一个只列出单一判断对象的不确定概念：法条要求比较费用，却没有说与什么比较、高到什么程度。时明涛检索的八十件有效判决中，裁判标准极不统一。《最高人民法院公报》刊载的新宇公司诉冯玉梅商铺买卖合同纠纷案，裁判要旨可以概括为：继续履约所需的财力、物力超过合同双方所能获得的利益时，可以允许违约方解除合同。但一审实际考量了商铺在整体中所占比例极小、继续履行违背多数业主意愿、影响整体功能发挥、造成社会财富浪费等多项因素。裁判要旨只保留一项标准，适用范围就超出了原判论证所能支持的范围。时明涛据此提出三项要素：债权人的牺牲限度；履行利益与给付费用之间的不均衡程度；替代损害赔偿的可能性。以第五十七节的标准检验，后两项对象与方向都明确；第一项却在内部容纳了人身安全、公共利益、第三人权益等多种考量，本身已是一份开放的论题目录。较为稳妥的做法是把它拆开，区分履行对债权人的主观价值与履行对第三人或公共利益的影响，二者作用方向相反；并把债务人的可归责性列为第四项要素，《德国民法典》第二百七十五条第二款即明列此项。", "fourstep": "第二幕收在一份可以直接用于检验裁判文书的清单上：查、列、定、合。查，有无具体规定或可资涵摄的构成要件，本案是否落入已形成的案例类型规范；有，则涵摄，不进入动态体系。列，列出限定的要素，说明每一要素的作用方向及其背后的原理。定，逐项认定本案中每一要素的强弱，写进裁判理由，同一事实只评价一次。合，说明合力的方向，并与司法解释、指导性案例或案例类型确立的规则比较。最后作反转检验：把结论换成相反的结论，说理若同样通顺，那段综合考虑就没有承担任何论证功能。动态体系的界限也有三：它不提供权重；等字不得使清单退化为论题目录；它不能取代构成要件。", "act3": "第三幕，案例类型，以及知识产权法专节。动态体系为一般条款提供归责标准；案例类型更进一步，从已决案件中萃取出类似构成要件的规则，使一般条款在某一类型之内可以涵摄。", "casecompare": "案例类型的形成方法是案例对比法，分三步。第一步，把同一主题的已决案件系统地整理。第二步，从每一案件中提炼出与价值有关的标准，并剔除它与具体情形的关联：从杨梅树、消力池中剔除树种与水利设施，保留危险由受害人自己的行为开启、危险对一般人显而易见。第三步，依特定的归类标准把提炼出的标准体系化。须区分两个术语。拉伦茨与黄茂荣所说的类型，是与概念相对的思维形式，以特征描述、可以分级；本章的案例类型，是一般条款具体化的成果，要回答的是法源问题：它从哪里取得，对后案有何拘束。中国法为案例对比法提供了一个制度载体：指导性案例。各级人民法院审判类似案例时应当参照，而类似的判断本身就是一次案例对比，须比较基本案情与法律适用，不只是比较关键词。请记住一项警示：一则指导性案例不是一个案例类型。单一先例只能说明这一事实组合得出了这一结论；哪些事实是决定性的，须与其他案件比较才能确定。指导性案例一百四十号与一百四十一号对照之后，共同标准才显现，类型才开始形成。案例类型与动态体系是什么关系？洛伦茨主张在说明义务领域以案例类型完全代替动态体系，理由是只有案例类型才能确保最低程度的法律安定性。尚连杰的回应是，二者是补充关系而非替代关系：案例类型为抽象的要素提供具体内容，也使动态体系的成果得以固定。教材采后一立场。", "typenorm": "案例类型若要发挥具体化的作用，须同时满足两项条件：有足够的弹性以适应个案，又足够具体以适用于案件。判例发展出一系列类似构成要件的条件时，默勒斯称之为案例类型规范。比较两则指导性案例，可以草拟一项成年人自陷明显危险的类型规范：受害人为完全民事行为能力人；危险由受害人自己的行为开启，或场所本身不对公众开放；危险依一般常识即可预见；管理人未就该危险从事经营活动，或已采取与其管理控制能力相适应的提示与防护。四项要件累积适用，任何一项不满足，即退回动态体系作整体衡量。可见案例类型规范是动态体系在某一事实组合上的定型。类型之间还有权重的差别。合同编通则解释第十七条第一款的三个类型中，国家安全类型以社会后果为重；社会公共秩序类型以监管强度与社会后果为重；善良风俗类型通常无监管规范可资援引，判断重心落在主观动机和交易目的上。若机械地逐项检验，监管强度一项将始终指向弱，从而系统性地降低善良风俗类型的无效认定。合理的处理是：在每一类型内，先依类型的价值重心确定主要要素，再以其余要素作补充检验。这张草拟的类型规范也显示了它的边界：它只能覆盖已经过充分比较的那一类案件，不能穷尽第一千一百九十八条的适用范围。课后练习的第一题，就是一个落在类型之外的案件。", "chances": "案例类型的机会有四：平等对待，可预见，减轻论证负担，可批评。风险也有四：其一，封闭化，把类型当作一般条款的穷尽列举；其二，以引用代替比较，只引用裁判要点的文字；其三，表述的过度一般化，指导性案例一百四十号的裁判要点，若脱离开放式景区、未经营采摘、成年人攀爬的事实被单独援引，可以为几乎任何减责主张提供文字依据；其四，在刑法上不利于行为人的方向扩张构成要件，违反类推禁止。由此得出一条论证负担规则：参照的是裁判要点，比较的是基本案情。主张参照的一方，须证明两案在决定性事实上相同；主张不参照的一方，须指出决定性事实上的差异。何为决定性事实，正须借助归责标准判断：在某一归责标准上强弱方向相反的事实差异，才是决定性的差异。", "lifecycle": "案例类型不是静止的，它经历生成、定型、退出三个阶段。安全保障义务是一个完整的过程。《民法通则》没有规定；二零零三年，《最高人民法院关于审理人身损害赔偿案件适用法律若干问题的解释》第六条首次以司法解释规定合理限度范围内的安全保障义务；二零零九年，《侵权责任法》第三十七条把它上升为法律；二零二零年，《民法典》第一千一百九十八条扩充列举。其中有一处值得注意：合理限度范围内一语，没有进入后来的法律文本，但指导性案例一百四十号的裁判要点又把它带了回来。立法者删去的限定，由判例以动态体系的方式补回；法条文本的沉默，不必然是有意义的沉默。定型的另一条途径，是司法解释吸收指导性案例：指导性案例一百六十六号的规则，两年后被合同编通则解释第六十五条第三款一般化为：恶意违约的当事人一方请求减少违约金的，人民法院一般不予支持。退出的形态，是最高人民法院以通知宣布指导性案例不再参照，二零二零年的法〔2020〕343号通知、二零二六年的法〔2026〕119号通知都是如此。须注意：不再参照不影响该案裁判以及此前参照该案作出的裁判的效力，退出的是类型的拘束力，而非个案的既判力。", "unfaircomp": "进入知识产权法专节。《反不正当竞争法》第二条第一款要求经营者遵守法律和商业道德。《最高人民法院关于适用〈中华人民共和国反不正当竞争法〉若干问题的解释》第一条与第三条分工明确。第一条规定一般条款的补充性：只有在第二章以及专利法、商标法、著作权法规定之外的情形，才可以适用第二条；它决定一般条款能否被启用。第三条第一款把商业道德限定为特定商业领域普遍遵循和认可的行为规范；第二款列出行业规则或者商业惯例、经营者的主观状态、交易相对人的选择意愿，以及对消费者权益、市场竞争秩序、社会公共利益的影响等要素，构成动态体系；第三款为第一项要素指明证据来源。案例三十三与三十四，即指导性案例四十五号与二百六十二号，显示了一般条款之下类型的生成与定型。四十五号中，接入服务环节强行弹出广告，第二章没有列举；判决先审查列举规定，再启用第二条，并提出三项已具构成要件形态的步骤；该类型被二零一七年修订的互联网专条吸收。二百六十二号中，五万余个短视频连同用户信息被搬运；判决先排除著作权法，再排除第二章，最后才启用一般条款，以实质性替代为损害认定的核心；该指导性案例在发布时即说明，二零二五年修订后应适用第十三条第三款。请记住：商业道德不是一般道德。论证违反商业道德，须证明某一领域存在相应的行为规范及其被普遍遵循的事实；以有违诚信一语代替这一证明，是把诚信原则与商业道德两个不同的标准混为一谈。", "secrecy": "第七十三节，相应保密措施，一个动态体系的演进。《反不正当竞争法》第十条第四款把商业秘密定义为不为公众所知悉、具有商业价值并经权利人采取相应保密措施的商业信息。相应二字指明措施须与某种东西相适应，却未说明与什么相适应。最高人民法院先后两次为它列出判断要素。二零零七年的《最高人民法院关于审理不正当竞争民事案件应用法律若干问题的解释》第十一条，列出信息载体的特性、权利人保密的意愿、保密措施的可识别程度、他人通过正当方式获得的难易程度。二零二零年的《最高人民法院关于审理侵犯商业秘密民事案件适用法律若干问题的规定》第五条第二款，删去了最后一项，增加了商业秘密的商业价值、保密措施与商业秘密的对应程度。删去的理由是：正当获得的难易关涉的是秘密性，不是保密性，放在这里会使两个构成要件相互混淆。增加的两项，都是对相应二字的具体化：价值越高，要求的措施越严密；措施须指向所主张的秘密。第六条另列七种情形，是类型规范；不在其中的，退回第五条第二款的动态体系。看三则案例。案例三十五，思克公司案：载体是市场流通的仪器，合同只约束客户，标签只是安全与保修提示，措施不成立。案例三十六，魏某乙案：被诉的是亲自代表公司签订保密协议、领取保密费的总经理；判决把保密措施要件的目的表述为保密的主观意愿客观化，不要求一一对应，措施成立。案例三十七，关某涂料案：对核心技术人员而言，一般性的保密制度已足以识别，判决并提出善良的秘密管理人标准。三案对照，决定性的差异在于载体是否进入流通；载体留在内部时，可识别程度的强度随被诉侵权人的身份而变化。但须注意二五八一号判决援引第二条的方式：若用以具体化构成要件中的不确定概念，属于体系解释的正常运用；若在保密措施不足时以一般条款补足构成要件，则违反补充性要求。较为稳妥的读法是：第一方面决定措施是否存在，第二方面决定已存在的措施对特定被诉侵权人是否足以识别，后者不能替代前者。", "genai": "最后一个领域，生成式人工智能服务提供者的注意义务。学说上有过错责任、产品责任，以及依算法透明度区分白箱、灰箱、黑箱的类型化方案。张华韬主张直接以动态体系构建归责框架，以违反安全保障义务的侵权责任为载体：安全保障义务同时包含过错与危险两种归责要素，注意义务越严格，责任越接近无过错责任；用户以输入内容介入服务提供者所管领的风险领域，结构与《民法典》第一千一百九十八条第二款相合；避风港规则只适用于信息存储空间与链接服务，而生成式人工智能对内容有从训练到输出的全流程控制力。他提出三项因素：侵权防范成本与收益的平衡，可以汉德公式衡量；识别侵权后果的难易程度；现有行业通行技术水平。以本章的标准检视，有三点。第一，术语：三项因素在功能上是阐释性要素，不是基础评价；两则判决对数据输入与训练阶段采取的宽松标准，才是基础评价。要素回答看什么，基础评价回答看到什么程度就发生什么效果，二者混同，论证就会只列因素而不给结论。第二，《最高人民法院关于审理侵害信息网络传播权民事纠纷案件适用法律若干问题的规定》第九条以具体事实是否明显为前提，后列各项因素，这一结构恰是基础评价加要素。第三，把避风港规则降格为一个要素，代价是可预见性的损失；是否值得，取决于生成式人工智能是否真的在结构上不同于存储与链接服务。这是一个须以技术事实论证的前提，方法论本身不能回答。", "homework": "课后练习两题。第一题：假设红山村景区收取门票，并在杨梅成熟季以自助采摘为名招揽游客，但未提供梯具、未设警示。请依四项标准逐项重新检验，说明哪几项的强度发生了变化、变化方向如何；成年人自陷明显危险这一类型规范的哪一项要件不再满足；以及受害人自身的过错应在哪一层面处理。第二题：《反不正当竞争法》第十三条第三款禁止以欺诈、胁迫、避开或者破坏技术管理措施等不正当方式，获取、使用其他经营者合法持有的数据。某经营者没有避开任何技术管理措施，仅以普通爬虫抓取另一平台公开展示的数据集合，并造成实质性替代。请回答：它是否属于等不正当方式；若不属于，能否再依第二条认定；以及解释第一条所称第二章规定之外情形，应当理解为第二章未调整的行为类型，还是第二章的构成要件未被满足的行为。写作时，每一项强弱判断都要写出所依据的事实，结论之后作一次反转检验。", "end": "全课到此结束。请带走几句话。具体规定优先于一般条款，构成要件审查优先于动态体系。相互补偿的是要素，不是要件。动态体系首先是评价的框架、正当化的方法，其次才是弹性化的技术。立法在一般层面让要素相互补偿，不等于动态体系。一则指导性案例不是一个案例类型；参照的是裁判要点，比较的是基本案情。检验一段说理，用查、列、定、合，最后作反转检验。配套阅读是教材第五十五节到第七十五节。下课。"};
+var deck = document.getElementById('deck'), cap = document.getElementById('cap');
+var i = 0, chunks = [], ci = 0, speaking = false, paused = false, audioMode = false;
+var synth = window.speechSynthesis, voice = null, utter = null, timer = null, watch = null;
+var auto = true, gap = 2000, rate = 1.0, capOn = true;
+var player = new Audio();
+
+/* ---------- 版面缩放 ---------- */
+function fit(){
+  var vp = document.getElementById('viewport');
+  var s = Math.min(vp.clientWidth / 1920, vp.clientHeight / 1080) * 0.962;
+  deck.style.transform = 'scale(' + s + ')';
+}
+addEventListener('resize', fit);
+
+/* ---------- 分句 ---------- */
+function split(t){
+  var raw = t.replace(/\s+/g, '').split(/(?<=[。？！；])/).filter(Boolean);
+  var out = [], buf = '';
+  raw.forEach(function(s){
+    if ((buf + s).length > 56 && buf.length >= 20) { out.push(buf); buf = s; }
+    else buf += s;
+  });
+  if (buf) out.push(buf);
+  return out;
+}
+
+/* ---------- 字幕 ---------- */
+function paintCap(){
+  if (!capOn) { cap.classList.add('off'); return; }
+  cap.classList.remove('off');
+  if (!chunks.length) { cap.innerHTML = '<i>本页无讲解词</i>'; return; }
+  var k = Math.min(ci, chunks.length - 1);
+  cap.innerHTML = '<em>' + (k + 1) + '／' + chunks.length + '</em><b>' + chunks[k] + '</b>';
+}
+
+/* ---------- 语音 ---------- */
+function pickVoices(){
+  var all = synth ? synth.getVoices() : [];
+  var zh = all.filter(function(v){ return /^zh/i.test(v.lang); });
+  var sel = document.getElementById('voice');
+  if (!zh.length) { sel.innerHTML = '<option>未找到中文语音</option>'; return; }
+  zh.sort(function(a, b){
+    var score = function(v){
+      var n = v.name;
+      if (/Natural/i.test(n)) return 0;
+      if (/Online/i.test(n)) return 1;
+      if (/Xiaoxiao|Yunxi|Yunyang|Xiaoyi|晓晓|云希/i.test(n)) return 2;
+      return 3;
+    };
+    return score(a) - score(b);
+  });
+  var keep = voice && voice.name;
+  sel.innerHTML = zh.map(function(v){
+    return '<option value="' + v.name + '">' + v.name.replace(/^Microsoft /, '') + '</option>';
+  }).join('');
+  voice = zh.find(function(v){ return v.name === keep; }) || zh[0];
+  sel.value = voice.name;
+}
+
+function stopAll(){
+  clearTimeout(timer); timer = null;
+  if (synth) synth.cancel();
+  player.pause();
+  speaking = false; paused = false;
+  setPlayLabel();
+}
+
+function speakChunk(){
+  if (!synth || ci >= chunks.length) { finishSlide(); return; }
+  paintCap();
+  utter = new SpeechSynthesisUtterance(chunks[ci]);
+  if (voice) { utter.voice = voice; utter.lang = voice.lang; } else { utter.lang = 'zh-CN'; }
+  utter.rate = rate; utter.pitch = 1;
+  utter.onend = function(){ if (speaking && !paused) { ci++; speakChunk(); } };
+  utter.onerror = function(e){ if (e.error !== 'interrupted' && e.error !== 'canceled') { ci++; speakChunk(); } };
+  synth.speak(utter);
+}
+
+function finishSlide(){
+  speaking = false; setPlayLabel();
+  if (!auto) return;
+  if (i >= SLIDES.length - 1) return;
+  timer = setTimeout(function(){ go(i + 1, true); }, gap);
+}
+
+function play(){
+  if (paused) {                       // 续播
+    paused = false;
+    if (audioMode) player.play(); else synth.resume();
+    speaking = true; setPlayLabel(); return;
+  }
+  stopAll();
+  speaking = true; ci = 0; setPlayLabel();
+  if (audioMode) {
+    player.src = 'audio/' + SLIDES[i].id + '.mp3';
+    player.playbackRate = rate;
+    player.play().catch(function(){ audioMode = false; speakChunk(); });
+    paintCap();
+  } else {
+    speakChunk();
+  }
+}
+player.onended = finishSlide;
+
+function pause(){
+  if (!speaking) return;
+  paused = true;
+  if (audioMode) player.pause(); else synth.pause();
+  setPlayLabel();
+}
+function toggle(){ if (speaking && !paused) pause(); else play(); }
+function setPlayLabel(){
+  document.getElementById('play').textContent = (speaking && !paused) ? '⏸ 暂停' : '▶ 播放';
+}
+
+/* ---------- 翻页 ---------- */
+function go(n, andSpeak){
+  stopAll();
+  i = Math.max(0, Math.min(SLIDES.length - 1, n));
+  var secs = deck.children;
+  for (var k = 0; k < secs.length; k++) secs[k].classList.toggle('on', k === i);
+  chunks = split(NAR[SLIDES[i].id] || ''); ci = 0;
+  paintCap();
+  document.getElementById('pos').textContent = (i + 1) + ' / ' + SLIDES.length;
+  document.querySelector('#prog i').style.width = ((i + 1) / SLIDES.length * 100) + '%';
+  var lis = document.querySelectorAll('#toc li');
+  for (var k = 0; k < lis.length; k++) lis[k].classList.toggle('cur', k === i);
+  if (andSpeak) play();
+}
+
+/* ---------- 控件 ---------- */
+function bind(){
+  document.getElementById('play').onclick = toggle;
+  document.getElementById('prev').onclick = function(){ go(i - 1, speaking || paused); };
+  document.getElementById('next').onclick = function(){ go(i + 1, speaking || paused); };
+  document.getElementById('replay').onclick = function(){ stopAll(); play(); };
+  var a = document.getElementById('auto');
+  a.onclick = function(){ auto = !auto; a.setAttribute('aria-pressed', auto); };
+  var c = document.getElementById('capt');
+  c.onclick = function(){ capOn = !capOn; c.setAttribute('aria-pressed', capOn); paintCap(); };
+  document.getElementById('rate').oninput = function(){
+    rate = +this.value; document.getElementById('rateV').textContent = rate.toFixed(2) + '×';
+    player.playbackRate = rate;
+    if (speaking && !paused && !audioMode) { synth.cancel(); speakChunk(); }
+  };
+  document.getElementById('gap').oninput = function(){
+    gap = +this.value * 1000; document.getElementById('gapV').textContent = this.value + ' 秒';
+  };
+  document.getElementById('voice').onchange = function(){
+    voice = synth.getVoices().find(function(v){ return v.name === this.value; }, this) || voice;
+    if (speaking && !paused && !audioMode) { synth.cancel(); speakChunk(); }
+  };
+  document.getElementById('toclink').onclick = function(){ document.getElementById('toc').classList.add('on'); };
+  document.getElementById('tocX').onclick = function(){ document.getElementById('toc').classList.remove('on'); };
+  document.getElementById('full').onclick = function(){
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen();
+  };
+  addEventListener('keydown', function(e){
+    if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+    if (e.key === ' ') { e.preventDefault(); toggle(); }
+    else if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(i + 1, speaking || paused); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(i - 1, speaking || paused); }
+    else if (e.key === 'Escape') document.getElementById('toc').classList.remove('on');
+    else if (e.key.toLowerCase() === 'f') document.getElementById('full').click();
+    else if (e.key.toLowerCase() === 's') document.getElementById('capt').click();
+    else if (e.key.toLowerCase() === 'r') document.getElementById('replay').click();
+  });
+  // Chrome/Edge 长文本会自行暂停，定时 resume
+  watch = setInterval(function(){
+    if (speaking && !paused && !audioMode && synth && synth.speaking && synth.paused) synth.resume();
+  }, 8000);
+}
+
+/* ---------- 启动 ---------- */
+function boot(){
+  fit(); bind(); pickVoices();
+  if (synth) synth.onvoiceschanged = pickVoices;
+  // 探测 audio/ 目录里是否有预录音频
+  var probe = new Audio('audio/' + SLIDES[0].id + '.mp3');
+  probe.oncanplaythrough = function(){ audioMode = true;
+    document.getElementById('srcnote').textContent = '音源：audio 文件夹中的录音'; };
+  probe.onerror = function(){ audioMode = false; };
+  probe.load();
+  go(0, false);
+  if (!synth) {
+    document.getElementById('nospeech').style.display = 'block';
+  }
+  document.getElementById('start').onclick = function(){
+    document.getElementById('gate').classList.add('off'); go(0, true);
+  };
+  document.getElementById('silent').onclick = function(){
+    document.getElementById('gate').classList.add('off'); auto = false;
+    document.getElementById('auto').setAttribute('aria-pressed', false); go(0, false);
+  };
+}
+if (document.readyState === 'loading') addEventListener('DOMContentLoaded', boot); else boot();
+</script>
+<script>
+document.querySelectorAll('#toc li').forEach(function(li){
+  li.onclick = function(){
+    document.getElementById('toc').classList.remove('on');
+    go(+li.dataset.n, speaking || paused);
+  };
+});
+</script>
+</body>
+</html>
