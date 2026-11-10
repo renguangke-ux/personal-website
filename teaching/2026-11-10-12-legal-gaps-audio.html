@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>法律漏洞 · 有声课件 — 任广科</title>
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;background:#0E1A17;overflow:hidden;
+  font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif}
+#wrap{position:fixed;inset:0;display:flex;flex-direction:column}
+#viewport{flex:1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#deck{flex:0 0 auto;width:1920px;height:1080px;position:relative;transform-origin:center center;
+  box-shadow:0 24px 80px rgba(0,0,0,.55);border-radius:4px;overflow:hidden}
+#deck>section{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;
+  opacity:0;visibility:hidden;transition:opacity .28s ease}
+#deck>section.on{opacity:1;visibility:visible}
+#deck aside{display:none}
+#deck h1,#deck h2,#deck h3,#deck h4,#deck p,#deck ul,#deck ol,#deck table{margin:0}
+#deck ul,#deck ol{padding-left:1.4em}
+#deck table{border-collapse:collapse;width:100%}
+#deck th,#deck td{padding:.62rem .8rem;border-bottom:1px solid rgba(0,0,0,.12);text-align:left;vertical-align:top}
+#deck thead th{font-weight:700}
+#deck figcaption{margin-top:.8rem;font-size:24px;opacity:.72}
+#deck hr{border:0;border-top:1px solid currentColor;opacity:.45}
+#deck cite{font-style:italic;opacity:.8}
+
+/* 字幕 */
+#cap{flex:0 0 auto;min-height:74px;display:flex;align-items:center;justify-content:center;
+  padding:12px 42px;background:#0B1714;border-top:1px solid #1D362F;
+  color:#EDF2F0;font-size:20px;line-height:1.62;text-align:center}
+#cap.off{display:none}
+#cap b{font-weight:400}
+#cap i{font-style:normal;color:#6F9A8C;font-size:14px}
+#cap em{font-style:normal;color:#5FB49C;font-variant-numeric:tabular-nums;font-size:13px;
+  margin-right:12px;opacity:.9}
+
+/* 控制条 */
+#bar{flex:0 0 auto;display:flex;align-items:center;gap:14px;padding:10px 18px;
+  background:#132621;border-top:1px solid #23443B;color:#CFE3DC;font-size:13px;flex-wrap:wrap}
+#bar button{appearance:none;border:1px solid #2E6A5C;background:#17302A;color:#DDEBE6;
+  border-radius:8px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:inherit;
+  transition:background .15s,border-color .15s}
+#bar button:hover{background:#1F3F37;border-color:#54917F}
+#bar button.key{background:#2E6A5C;border-color:#49897A;color:#fff;min-width:96px;font-weight:600}
+#bar button.key:hover{background:#38806E}
+#bar button.tog[aria-pressed="true"]{background:#2E6A5C;border-color:#49897A;color:#fff}
+#bar .sp{flex:1}
+#bar label{display:flex;align-items:center;gap:7px;white-space:nowrap;color:#9FBCB2}
+#bar input[type=range]{width:96px;accent-color:#5FB49C}
+#bar select{background:#17302A;color:#DDEBE6;border:1px solid #2E6A5C;border-radius:8px;
+  padding:6px 8px;font-size:13px;max-width:230px;font-family:inherit}
+#pos{font-variant-numeric:tabular-nums;color:#EDF2F0;min-width:74px;text-align:center}
+#prog{position:absolute;left:0;right:0;top:0;height:3px;background:rgba(255,255,255,.08);z-index:5}
+#prog i{display:block;height:100%;background:#5FB49C;width:0;transition:width .3s}
+
+/* 目录 */
+#toc{position:fixed;inset:0;background:rgba(8,18,15,.93);z-index:40;display:none;
+  padding:46px 56px;overflow:auto}
+#toc.on{display:block}
+#toc h3{color:#9EDCC7;font-size:15px;letter-spacing:3px;margin:0 0 16px;font-weight:600}
+#toc ol{list-style:none;margin:0 0 30px;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:8px}
+#toc li{display:flex;gap:11px;align-items:baseline;color:#D8E6E1;padding:9px 12px;
+  border-radius:8px;cursor:pointer;font-size:14px;border:1px solid transparent}
+#toc li:hover{background:#1A322B;border-color:#2E6A5C}
+#toc li.cur{background:#2E6A5C;color:#fff}
+#toc li em{font-style:normal;color:#7FB3A3;font-variant-numeric:tabular-nums;min-width:26px}
+#toc li.cur em{color:#CFEFE3}
+#toc li s{text-decoration:none;margin-left:auto;color:#7FB3A3;font-size:12px}
+#tocX{position:fixed;right:34px;top:30px}
+
+/* 开场遮罩 */
+#gate{position:fixed;inset:0;z-index:60;background:#0E1A17;color:#EDF2F0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  text-align:center;padding:40px}
+#gate.off{display:none}
+#gate h1{font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:46px;margin:0;font-weight:700}
+#gate p{margin:0;max-width:760px;line-height:1.95;color:#9FBCB2;font-size:15px}
+#gate .go{font-size:17px;padding:15px 40px;border-radius:12px;border:1px solid #49897A;
+  background:#2E6A5C;color:#fff;cursor:pointer;font-family:inherit;font-weight:600}
+#gate .go:hover{background:#38806E}
+#gate .alt{background:none;border:0;color:#7FB3A3;cursor:pointer;font-size:13px;
+  text-decoration:underline;font-family:inherit}
+#gate .warn{color:#E0A080;font-size:13px;max-width:700px;line-height:1.8}
+@media (max-width:860px){
+  #bar{font-size:12px;gap:9px;padding:8px 10px}
+  #bar label span{display:none}
+  #bar input[type=range]{width:64px}
+  #toc{padding:30px 20px}
+}
+</style>
+<style>
+html,body{background:#E7E3D8}
+#deck{box-shadow:0 18px 50px rgba(22,48,42,.18)}
+#cap{background:#F6F3EC;border-top:1px solid #DCD8CC;color:#16302A}
+#cap i{color:#6B7A75} #cap em{color:#2E6A5C}
+#bar{background:#EFEBE1;border-top:1px solid #DCD8CC;color:#16302A}
+#bar button{background:#FFFFFF;border-color:#C9D9D2;color:#16302A}
+#bar button:hover{background:#E4EFEA;border-color:#2E6A5C}
+#bar button.key,#bar button.tog[aria-pressed="true"]{background:#2E6A5C;border-color:#2E6A5C;color:#fff}
+#bar label{color:#52605C} #bar select{background:#FFFFFF;color:#16302A;border-color:#C9D9D2}
+#pos{color:#16302A} #prog{background:rgba(22,48,42,.08)} #prog i{background:#2E6A5C}
+#toc{background:rgba(246,243,236,.97)} #toc h3{color:#2E6A5C}
+#toc li{color:#16302A} #toc li:hover{background:#E4EFEA;border-color:#2E6A5C}
+#toc li em,#toc li s{color:#2E6A5C} #toc li.cur{background:#2E6A5C;color:#fff} #toc li.cur em,#toc li.cur s{color:#E4EFEA}
+#gate{background:#F6F3EC;color:#16302A} #gate p{color:#52605C} #gate .alt{color:#2E6A5C} #gate .warn{color:#9E5231}
+#srcnote{color:#52605C!important}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="viewport">
+    <div id="prog"><i></i></div>
+    <div id="deck">
+<section id="cover" data-transition="fade" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:space-between">
+
+<div style="display:flex;flex-direction:column;gap:28px">
+<p style="font-size:30px;color:#2E6A5C;letter-spacing:8px">法 学 方 法 论 · 第 十 二 章</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:128px;font-weight:700;line-height:1.08;color:#16302A">法律漏洞</h1>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<hr style="border-top:3px solid #9E5231;width:280px">
+<p style="font-size:40px;line-height:1.5;color:#16302A;width:1600px">越出可能文义之后，第一个问题是：<b>法律真的欠缺答案吗？</b><br>这一欠缺是不是立法者有意为之？</p>
+<p style="font-size:30px;color:#2E6A5C">六十分钟 ｜ 两幕 ｜ 以案例讲方法</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#2E6A5C">配套教材《法学方法论—理论与实务》§90–§98</p>
+</section>
+<section id="roadmap" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:68px;font-weight:700;line-height:1.15">今天的六十分钟</h2>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">开场 ｜ 6 分钟</h3><div style="font-size:28px;line-height:1.55"><b>一份没有登记的补充协议</b><br>解释与法续造的界线<br>§90</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">第一幕 ｜ 12 分钟</h3><div style="font-size:28px;line-height:1.55"><b>什么是漏洞</b><br>不圆满性、违反计划性；法外空间；有意义的沉默<br>§91–§92</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">第二幕 ｜ 36 分钟</h3><div style="font-size:28px;line-height:1.55"><b>漏洞的类型</b><br>法内漏洞；有据式体系违反五种；无据式体系违反<br>§93–§97</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">收束 ｜ 6 分钟</h3><div style="font-size:28px;line-height:1.55"><b>认定漏洞的五问</b><br>练习：冷冻胚胎<br>§98</div></div></div>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:32px;line-height:1.55;color:#16302A">贯穿全课的一句话：<b style="color:#2E6A5C">「法律没有规定」本身既不证明漏洞存在，也不证明漏洞不存在。</b>认定漏洞，须分别证明不圆满性与违反计划性。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §90–§98 ｜ 漏洞的类型体系参照黄茂荣《法学方法与现代民法》</p>
+</section>
+<section id="hook47" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">开 场 题 ｜ 案例 47（指导性案例 95 号）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">一份没有登记的补充协议</h2></div>
+<p style="font-size:28px;line-height:1.6;color:#52605C;width:1664px">2012 年 4 月，银行向柏冠公司发放借款 300 万元。同年 10 月，凯盛公司以商铺为银行对柏冠公司等四户企业 2012 年 10 月 19 日至 2015 年 10 月 19 日期间的债权设立<b>最高额抵押</b>，最高余额 4000 万元，并办理登记。11 月，双方签订补充协议，约定 4 月那笔 300 万元借款也纳入担保范围，但<b>未办理变更登记</b>。柏冠公司到期未还款。</p>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">《物权法》第二百零三条（现《民法典》第四百二十条）</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">为担保债务的履行，债务人或者第三人对一定期间内将要连续发生的债权提供担保财产的，债务人不履行到期债务或者发生当事人约定的实现抵押权的情形，抵押权人有权在最高债权额限度内就该担保财产优先受偿。</p><p style="font-size:22px;line-height:1.6;margin-top:6px">最高额抵押权设立前已经存在的债权，经当事人同意，可以转入最高额抵押担保的债权范围。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#9E5231">凯盛公司的抗辩</h3><div style="font-size:26px;line-height:1.55">补充协议约定的转入事项没有办理变更登记，抵押权的效力不及于这笔 300 万元。</div></div></div>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:32px;line-height:1.55;color:#16302A">第二款允许「转入」，却没有说转入是否须登记。<b style="color:#2E6A5C">法律对此有答案吗？如果没有，法院凭什么补上答案？</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">答案见第二幕 §95 ｜ 本案一审、二审：宣城市中级人民法院；安徽省高级人民法院</p>
+</section>
+<section id="levels" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§90 ｜ 越 出 射 程</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">解释与法续造的四个层级</h2></div>
+<div style="display:flex;gap:18px"><div style="flex:1;background:#FFFFFF;border:1px solid #DCD8CC;border-top:8px solid #2E6A5C;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:10px"><b style="font-size:29px;color:#16302A">解释</b><span style="font-size:24px">可能文义之内</span><span style="font-size:22px;color:#52605C">说明含义</span></div><div style="flex:1;background:#FFFFFF;border:1px solid #DCD8CC;border-top:8px solid #4F8E7C;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:10px"><b style="font-size:29px;color:#16302A">法律内的法续造</b><span style="font-size:24px">类推 · 目的性限缩 · 目的性扩张</span><span style="font-size:22px;color:#52605C">依法律本身的计划</span></div><div style="flex:1;background:#FFFFFF;border:1px solid #DCD8CC;border-top:8px solid #B07A4F;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:10px"><b style="font-size:29px;color:#16302A">超越法律的法续造</b><span style="font-size:24px">创制性补充</span><span style="font-size:22px;color:#52605C">依法秩序整体</span></div><div style="flex:1;background:#FFFFFF;border:1px solid #DCD8CC;border-top:8px solid #9E5231;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:10px"><b style="font-size:29px;color:#16302A">违法的法续造</b><span style="font-size:24px">无特别的法律上理由</span><span style="font-size:22px;color:#52605C">越过正当界限</span></div></div>
+<p style="font-size:25px;line-height:1.6;color:#2E6A5C">↑ 可能文义的射程（§25）位于第一格与第二格之间　　　论证负担自左至右递增 →</p>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">类推</h3><div style="font-size:27px;line-height:1.55">把概念周边以外的事实纳入规范</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">目的性限缩</h3><div style="font-size:27px;line-height:1.55">把明确处于概念核心之内的事实排除出去</div></div></div>
+<div style="background:#E4EFEA;padding:24px 38px;border-radius:16px"><p style="font-size:29px;line-height:1.55;color:#16302A">法律人须先确定自己的工作处于哪一层级，才能确定须承担多重的说理义务。<b style="color:#2E6A5C">把法续造表述为解释，等于以较轻的论证负担替代较重的论证负担</b>——第十四章称之为隐蔽性的法续造。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §90 ｜ 图 8</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="act1" data-transition="magic" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<p style="font-size:30px;color:#2E6A5C;letter-spacing:8px">第 一 幕 ｜ 十 二 分 钟</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:112px;font-weight:700;line-height:1.1;color:#16302A">什么是漏洞</h1>
+<hr style="border-top:3px solid #9E5231;width:280px">
+<p style="font-size:40px;line-height:1.55;color:#16302A;width:1500px">漏洞是法律体系上<b style="color:#2E6A5C">违反计划的不圆满状态</b>：不圆满性与违反计划性，须分别证明。</p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">教材 §91–§92</p>
+</section>
+<section id="lackanswer" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§91 一 ｜ 不 圆 满 性</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">不圆满性：法律有没有清楚的答案</h2></div>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:32px;line-height:1.55;color:#16302A">法律漏洞：法律体系上<b style="color:#2E6A5C">违反计划的不圆满状态</b>（planwidrige Unvollständigkeit）。两项要素：不圆满性 ＋ 违反计划性。</p></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">有不圆满性</h3><div style="font-size:26px;line-height:1.55">法律经解释后，对某一生活类型仍<b>没有清楚的答案</b>，且该生活类型不属于法外空间。<br>例：《物权法》第二百零三条第二款对转入是否须登记，没有答案（案例 47）。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#52605C">没有不圆满性</h3><div style="font-size:26px;line-height:1.55">法律有清楚的答案，只是答案不理想——属于<b>立法政策或立法技术</b>上的缺失，原则上由立法者修改。</div></div></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#9E5231">警示：「法律规定不合理」不等于「法律有漏洞」</h3><div style="font-size:26px;line-height:1.55">裁判文书常写：某规定依文义适用，结果不公平，因此「存在法律漏洞」。主张漏洞的一方须证明的不是「结果不好」，而是<b>「法律依其自身的计划本应有不同的答案」</b>。只有当不合理达到与法律自身的价值判断相矛盾的程度时，才构成体系违反意义上的漏洞（§94）。</div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §91 一</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="plan" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§91 二 ｜ 违 反 计 划 性</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">违反计划性：沉默是否违反立法计划</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">沉默不违反计划的两种情形</h3><div style="font-size:27px;line-height:1.55">① 立法者本不打算规范它 → 法外空间<br>② 立法者已借沉默表达了否定的意思 → 有意义的沉默<br><b>违反计划性的判断，就是排除这两种情形的过程。</b></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">「计划」以什么为准</h3><div style="font-size:27px;line-height:1.55">以历史上立法者的意图为出发点，以法律在今日法秩序中的客观目的为修正（与 §39 一致）。</div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:26px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:22%;color:#2E6A5C;text-align:left">漏洞违反的是</th><th style="width:56%;color:#2E6A5C;text-align:left">例</th><th style="width:22%;color:#2E6A5C;text-align:left">论证负担</th></tr><tr><td style="color:#2E6A5C;font-weight:700">历史上立法者的计划</td><td>最高额抵押的转入：立法者规定了转入，若无疏忽当已规定其公示要件（案例 47）</td><td>较轻</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">只违反今日的客观目的</td><td>人工授精子女的身份：1980 年《婚姻法》制定时这一技术尚未普及（案例 48）</td><td>较重：须另行证明客观目的已经形成</td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §91 二 ｜ 第十四章 §110 把这一区分转化为审查次序</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="freespace" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§92 一 ｜ 法 外 空 间（rechtsfreier Raum）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:54px;font-weight:700;line-height:1.15">法律本不应规范的事项，不构成漏洞</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">非人际的关系</h3><div style="font-size:27px;line-height:1.55">个人的好恶、生活方式、信仰、感情、思想与意见</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">不适宜以法律规范的人际关系</h3><div style="font-size:27px;line-height:1.55">如何打招呼、宴会如何进行、友谊关系——适宜由其他生活规范调整</div></div></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">界限会移动</h3><div style="font-size:26px;line-height:1.55">恋爱关系中的赠与、婚约、同居关系，都曾被认为属于法外空间，又先后被司法解释部分纳入规范。<br>界限的划分是法律解释问题；界限的移动是社会变迁与法律伦理演变的结果。</div></div>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:30px;line-height:1.55;color:#16302A">法外空间与法内空间的分野，是国家权力介入范围的分野；<b style="color:#2E6A5C">认定某事项进入法内空间，本身已是一项需要论证的决定。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §92 一</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="silence" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§92 二 ｜ 有 意 义 的 沉 默 ｜ 设 例 6</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:52px;font-weight:700;line-height:1.15">继承人杀害被继承人，宽恕能否恢复继承权</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:22px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第一千一百二十五条</h3><p style="font-size:20px;line-height:1.6;margin-top:6px">继承人有下列行为之一的，丧失继承权：</p><p style="font-size:20px;line-height:1.6;margin-top:6px">（一）故意杀害被继承人；</p><p style="font-size:20px;line-height:1.6;margin-top:6px">（二）为争夺遗产而杀害其他继承人；</p><p style="font-size:20px;line-height:1.6;margin-top:6px">（三）遗弃被继承人，或者虐待被继承人情节严重；</p><p style="font-size:20px;line-height:1.6;margin-top:6px">（四）伪造、篡改、隐匿或者销毁遗嘱，情节严重；</p><p style="font-size:20px;line-height:1.6;margin-top:6px">（五）以欺诈、胁迫手段迫使或者妨碍被继承人设立、变更或者撤回遗嘱，情节严重。</p><p style="font-size:20px;line-height:1.6;margin-top:6px">继承人有前款第三项至第五项行为，确有悔改表现，被继承人表示宽恕或者事后在遗嘱中将其列为继承人的，该继承人不丧失继承权。</p><p style="font-size:20px;line-height:1.6;margin-top:6px">受遗赠人有本条第一款规定行为的，丧失受遗赠权。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:16px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">问题</h3><div style="font-size:24px;line-height:1.55">继承人有第一款第一项、第二项行为，被继承人表示宽恕的，能否类推第二款，使其不丧失继承权？</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">答案：不能</h3><div style="font-size:24px;line-height:1.55">第二款以项号划定「第三项至第五项」，并把最严重的两项排除在外——依立法意旨可知，立法者只拟对后三项赋予宽恕的效力。<b>列举封闭 → 反面解释有效 → 类推被排除 → 不存在漏洞。</b></div></div></div></div>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:28px;line-height:1.55;color:#16302A">能否反面解释与能否类推，取决于<b style="color:#2E6A5C">同一个判断：列举是否封闭</b>。这一判断不能由逻辑作出，取决于对规范目的的评价。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §92 二 ｜ 设例 6</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="controller" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§92 二 ｜ 沉 默 须 以 立 法 材 料 证 明 ｜ 预 告 沿 革 5</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:54px;font-weight:700;line-height:1.15">「股东利用其控制的」：实际控制人呢？</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:28px;font-weight:700;color:#9E5231;margin-bottom:4px">《公司法》（2023 年修订）第二十三条第二款</h3><p style="font-size:26px;line-height:1.6;margin-top:6px">股东利用其控制的两个以上公司实施前款规定行为的，各公司应当对任一公司的债务承担连带责任。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">问题</h3><div style="font-size:26px;line-height:1.55">指导性案例 15 号的事实：三家公司的实际控制人王永礼<b>不是股东</b>。非股东的实际控制人控制两个以上公司、使其人格混同的，能否适用本款？</div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:25px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:32%;color:#2E6A5C;text-align:left">主张</th><th style="width:68%;color:#2E6A5C;text-align:left">须证明什么</th></tr><tr><td style="color:#2E6A5C;font-weight:700">沉默有意义：立法者有意排除实际控制人</td><td>立法材料显示立法者曾考虑并拒绝「实际控制人」的方案（《全国法院民商事审判工作会议纪要》第 11 条曾写入实际控制人）</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">存在漏洞：可以类推</td><td>列举并不封闭：本款的规范意旨（防止以多个公司的独立人格逃避债务）同样及于实际控制人；且沉默并非有意为之</td></tr></table>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:30px;line-height:1.55;color:#16302A">「法律没有规定」只是出发点。<b style="color:#2E6A5C">双方都须出示比这句话更具体的论据。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §92、§110 ｜ 沿革 5</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="act2" data-transition="magic" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<p style="font-size:30px;color:#2E6A5C;letter-spacing:8px">第 二 幕 ｜ 三 十 六 分 钟</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:112px;font-weight:700;line-height:1.1;color:#16302A">漏洞的类型</h1>
+<hr style="border-top:3px solid #9E5231;width:280px">
+<p style="font-size:40px;line-height:1.55;color:#16302A;width:1500px">不同类型的漏洞，认定的难度、法院补充的权限与适用的补充方法各不相同；<b style="color:#2E6A5C">分类是为了检验，不是为了命名。</b></p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">教材 §93–§97</p>
+</section>
+<section id="types" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§93 ｜ 类 型 体 系</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">漏洞的三大类型</h2></div>
+<div style="display:flex;flex-direction:column;gap:18px"><div style="display:flex;gap:24px;align-items:center;background:#FFFFFF;border:1px solid #DCD8CC;border-left:10px solid #2E6A5C;border-radius:12px;padding:26px 30px"><b style="font-size:32px;min-width:430px;color:#2E6A5C">法内漏洞 §93</b><span style="font-size:27px;line-height:1.5">开放概念与一般条项 · 授权式类推（参照适用）· 空白规定（习惯）</span></div><div style="display:flex;gap:24px;align-items:center;background:#FFFFFF;border:1px solid #DCD8CC;border-left:10px solid #4F8E7C;border-radius:12px;padding:26px 30px"><b style="font-size:32px;min-width:430px;color:#4F8E7C">有据式体系违反 §94—§95</b><span style="font-size:27px;line-height:1.5">① 规范矛盾　② 价值判断矛盾（四种）　③ 准竞合式　④ 残缺式　⑤ 演变式（嗣后漏洞）</span></div><div style="display:flex;gap:24px;align-items:center;background:#FFFFFF;border:1px solid #DCD8CC;border-left:10px solid #9E5231;border-radius:12px;padding:26px 30px"><b style="font-size:32px;min-width:430px;color:#9E5231">无据式体系违反 §96</b><span style="font-size:27px;line-height:1.5">自始存在、因疏忽而生；找不到可资对照的具体规定</span></div></div>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:30px;line-height:1.55;color:#16302A">基本命题：<b style="color:#2E6A5C">一切漏洞的态样皆构成体系违反。</b>法内漏洞以法律明文授权法院补充为特征；有据式体系违反都有可资对照的具体规定；无据式体系违反只能诉诸法律追求正义的一般意旨。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §93 ｜ 图 9　分类参照黄茂荣《法学方法与现代民法》</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="inlaw" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§93 ｜ 法 内 漏 洞</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">法内漏洞：法律明文授权法院补充</h2></div>
+<div style="display:flex;gap:20px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">① 开放概念与一般条项</h3><div style="font-size:24px;line-height:1.55">诚信原则、权利滥用的禁止、公序良俗、显失公平、违约金的酌减。<br>立法者已预见的不圆满，不是不存在的不圆满。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">② 授权式类推：参照适用</h3><div style="font-size:24px;line-height:1.55">第四百六十七条第一款：没有明文规定的合同，适用合同编通则，「并可以参照适用本编或者其他法律<b>最相类似</b>合同的规定」<br>第一千零一条：身份权利，「可以<b>根据其性质</b>参照适用本编人格权保护的有关规定」</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">③ 空白规定：习惯</h3><div style="font-size:24px;line-height:1.55">第十条：法律没有规定的，可以适用习惯，但是不得违背公序良俗。<br>另见第二百八十九条、第四百八十条、第五百一十条等。</div></div></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">「根据其性质」「最相类似」不是赘语</h3><div style="font-size:25px;line-height:1.55">它们把类推的第二步——<b>相容性审查</b>——写进了授权规范：参照适用不是全盘移植。授权解决了「可不可以」，被授权的类推仍须完成类似性与相容性两步。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">习惯是待证的事实</h3><div style="font-size:25px;line-height:1.55">援引习惯的当事人须证明习惯的存在与内容；法院援引习惯，须在理由中说明它如何被认定，并审查其是否违背公序良俗。<b>习惯不是法官的价值判断。</b></div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §93 ｜ 参见 §41</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">4 min</p>
+</section>
+<section id="collision" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§94 ｜ 有 据 式 体 系 违 反（一）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:52px;font-weight:700;line-height:1.15">规范矛盾，以及「两条规定不一样」的主张</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">规范矛盾：同一案型</h3><div style="font-size:23px;line-height:1.55">同一事实同时满足数项规定的构成要件，各规定却赋予不同的法效果。<br>例：标的物上存在第三人权利——权利瑕疵担保与债务不履行。《民法典》第六百一十二条至第六百一十四条把权利瑕疵规定为出卖人的义务，违反即依第五百七十七条承担违约责任，两组规定已经合流。<br>不可化解的，形成<b>碰撞漏洞</b>；中国法上多表现为依《立法法》送请有权机关裁决。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:14px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第一千一百九十二条第一款</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">个人之间形成劳务关系，提供劳务一方因劳务造成他人损害的，由接受劳务一方承担侵权责任。……</p></div><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第一千一百九十三条</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">承揽人在完成工作过程中造成第三人损害或者自己损害的，定作人不承担侵权责任。但是，定作人对定作、指示或者选任有过错的，应当承担相应的责任。</p></div></div></div>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:28px;line-height:1.55;color:#16302A">价值判断矛盾（碰撞式）的主张须先证明两类案型在法律上重要之点相同。接受劳务一方对劳务的<b style="color:#2E6A5C">指示与控制</b>，正是区分二者的特征，差别处理有正当理由——这一主张在解释阶段即被化解，不构成漏洞。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §94</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="valueform" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§94 ｜ 价 值 判 断 矛 盾</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:54px;font-weight:700;line-height:1.15">依平等原则：相同者相同处理，不同者不同处理</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:16%;color:#2E6A5C;text-align:left">形态</th><th style="width:26%;color:#2E6A5C;text-align:left">矛盾之所在</th><th style="width:42%;color:#2E6A5C;text-align:left">例</th><th style="width:16%;color:#2E6A5C;text-align:left">填补方法</th></tr><tr><td style="color:#2E6A5C;font-weight:700">类推适用式</td><td>类似案型中，一部分有规定，另一部分未规定</td><td>原《公司法》第二十条第三款只规定股东滥用法人独立地位；关联公司之间的人格混同未规定（案例 49（指导性案例 15 号））</td><td>类推适用</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">目的性扩张式</td><td>未规定案型与已规定案型类似性较低，但依规范意旨同样应受规范</td><td>为申请农药登记而进行的试验，若不在《专利法》第七十五条第四项「科学研究和实验」的文义之内而被纳入（案例 29）</td><td>目的性扩张</td></tr><tr><td style="color:#2E6A5C;font-weight:700">目的性限缩式</td><td>规定的范围过广，把依规范意旨应作不同处理的案型一并规定</td><td>《民法典》第一百六十八条第一款的文义涵盖被代理人纯获利益的自己代理（设例 7）</td><td>目的性限缩</td></tr></table>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">类推与目的性扩张：区别是相对的</h3><div style="font-size:25px;line-height:1.55">取决于判断类似性时要求的共同特征的多寡。判决称「类推」还是「扩张」本身不重要；重要的是它是否说明了类似性的判断标准从何而来。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">目的性限缩与限缩解释</h3><div style="font-size:25px;line-height:1.55">已压缩文义核心的，是目的性限缩，属法续造；未压缩的，是限缩解释，属解释。民法上的目的性限缩剥夺了文义明确赋予某一方的地位，须承担法续造的论证负担。</div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §94 ｜ 三种形态的填补方法见第十三章 §101—§103</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">4 min</p>
+</section>
+<section id="quasi" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§95 一 ｜ 准 竞 合 式 体 系 违 反</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:54px;font-weight:700;line-height:1.15">保证人与物上保证人：损失最终由谁承担</h2></div>
+<p style="font-size:28px;line-height:1.6;color:#16302A;width:1664px">设例：甲向银行借款，乙提供保证，丙以房屋提供抵押。甲无力清偿。银行向谁请求，由银行选择。<b>乙清偿后，能否请求丙分担向甲不能追偿的部分？</b></p>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:16%;color:#2E6A5C;text-align:left">阶段</th><th style="width:42%;color:#2E6A5C;text-align:left">规定</th><th style="width:42%;color:#2E6A5C;text-align:left">担保人之间能否追偿</th></tr><tr><td style="color:#2E6A5C;font-weight:700">1995—2007</td><td>《担保法》第十二条；担保法解释第三十八条第一款</td><td>可以：已承担责任的担保人可以要求其他担保人清偿其应当分担的份额</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">2007—2020</td><td>《物权法》第一百七十六条：提供担保的第三人「有权向债务人追偿」</td><td>未规定；担保法解释第三十八条是否仍可适用，成为争点</td></tr><tr><td style="color:#2E6A5C;font-weight:700">2021—</td><td>《民法典》第三百九十二条、第七百条；担保制度解释第十三条</td><td>仅在约定相互追偿、约定连带共同担保，或在同一份合同书上签字、盖章、按指印时，才可请求分担</td></tr></table>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">为什么是体系违反</h3><div style="font-size:24px;line-height:1.55">乙、丙地位相同，最终损失却取决于银行先找谁——违反「相同者相同处理」；而对处境相近的连带债务人，第五百一十九条已规定相互分担。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">对照：不生体系违反的准竞合</h3><div style="font-size:24px;line-height:1.55">产品责任（第一千二百零三条）、补充责任（第一千一百九十八条第二款）、保险代位（《保险法》第六十条）：追偿或代位使损失落在依法应当承担的一方，<b>债权人的选择不影响终局结果</b>。</div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §95 一 ｜ 担保制度解释：《最高人民法院关于适用〈中华人民共和国民法典〉有关担保制度的解释》（法释〔2020〕28 号）</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">4 min</p>
+</section>
+<section id="answer47" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">开 场 题 的 答 案 ｜ 案例 47（指导性案例 95 号）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">部分残缺：构成要件未为规定</h2></div>
+<p style="font-size:26px;line-height:1.6;color:#16302A;width:1664px">安徽省高级人民法院（2014）皖民二终字第 00395 号：银行就抵押房产优先受偿。裁判要点：转入的债权数额仍在最高债权额限度内的，即使未办理变更登记，最高额抵押权的效力仍然及于被转入的债权，<b>但不得对第三人产生不利影响</b>。</p>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:23px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:18%;color:#2E6A5C;text-align:left">步骤</th><th style="width:82%;color:#2E6A5C;text-align:left">内容</th></tr><tr><td style="color:#2E6A5C;font-weight:700">定性的前提</td><td>若转入是《民法典》第二百零九条所称不动产物权的「变更」，该条已有答案（未经登记不发生效力），漏洞不存在。法院先排除这一前提：转入不是重新设立，也不是第二百零五条规定的变更，被转入的债权亦非登记簿的必要记载事项</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">定性</td><td>第二百零三条第二款规定了转入，却未规定其公示要件——<b>部分残缺</b>。立法者若无疏忽，当已加以规定：担保范围的扩大是否须公示，直接关系后顺位抵押权人的利益。也不能经由类推第二百零五条弥补</td></tr><tr><td style="color:#2E6A5C;font-weight:700">填补</td><td>依最高额抵押权的特点确立两项条件：① 转入的数额在最高债权额限度内；② 不得对第三人产生不利影响（借用第二百零五条但书的思路，并把保护对象扩及第三人）</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">「法无禁止即可为」</td><td>只表达了不加限制的推定，不能说明登记要件是否欠缺；只能在漏洞认定之后支持填补的方向</td></tr></table>
+<div style="background:#E4EFEA;padding:20px 36px;border-radius:16px"><p style="font-size:28px;line-height:1.55;color:#16302A">现行法：《民法典》第四百二十条第二款、第四百二十二条沿用原文，<b style="color:#2E6A5C">转入是否须办理变更登记，仍无明文。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">宣城市中级人民法院（2013）宣中民二初字第 00080 号 ｜ 教材 §95 二</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="pfv" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§95 二 ｜ 残 缺 式 的 另 一 种 ｜ 比 较 法</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:54px;font-weight:700;line-height:1.15">全部残缺：德国法上的积极侵害债权</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">部分残缺</h3><div style="font-size:26px;line-height:1.55">法律就某案型已有规定，但对其构成要件、法效果、权利人或义务人、权利行使方法等未为规定。<br>例：案例 47 的转入登记。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">全部残缺</h3><div style="font-size:26px;line-height:1.55">法律就某上位案型的部分下位案型已有规定，而对另一些下位案型全未规范。</div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:24%;color:#2E6A5C;text-align:left"></th><th style="width:76%;color:#2E6A5C;text-align:left">内容</th></tr><tr><td style="color:#2E6A5C;font-weight:700">《德国民法典》原规定</td><td>给付障碍只有给付不能与给付迟延两种</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">欠缺的下位案型</td><td>不良给付：债务人虽为给付，但给付不符合债务本旨，或违反保护义务侵害债权人其他法益</td></tr><tr><td style="color:#2E6A5C;font-weight:700">填补</td><td>1902 年施陶布提出「积极侵害债权」，类推给付不能与给付迟延的规定；判例与学说普遍接受</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">立法吸收</td><td>2002 年《债法现代化法》以「义务违反」为统一的请求权基础（第 280 条第 1 款）</td></tr><tr><td style="color:#2E6A5C;font-weight:700">中国法</td><td>《民法典》第五百七十七条以「不履行合同义务或者履行合同义务不符合约定」统一规定违约责任，不良给付自始在法律规定之内，<b>不发生这一漏洞</b></td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §95 二 ｜ 知识补充：积极侵害债权</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="case48" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§95 三 ｜ 演 变 式 体 系 违 反 ｜ 案例 48（指导性案例 50 号）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:50px;font-weight:700;line-height:1.15">嗣后漏洞：人工授精子女与胎儿的份额</h2></div>
+<p style="font-size:26px;line-height:1.6;color:#16302A;width:1664px">郭某顺无生育能力，与妻子李某共同签字同意医院为李某施行人工授精。李某受孕后，郭某顺患病，立遗嘱否认胎儿是其子女，将夫妻共有的房屋全部遗赠其父母。郭某顺死亡后，郭某阳出生。南京市秦淮区人民法院 2006 年判决：郭某阳是婚生子女；遗嘱未为胎儿保留份额的部分无效。</p>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">漏洞一：嗣后漏洞</h3><div style="font-size:23px;line-height:1.55">1980 年《婚姻法》制定时，人工授精尚未普及，「婚生子女」以血缘为默示前提。<b>不是立法者疏忽，而是技术发展造成的不圆满。</b><br>填补：最高人民法院复函——「双方一致同意」是决定性的连结点；法院以意思表示的约束力（《民法通则》第五十七条）为其提供教义学连结。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">漏洞二：胎儿是不是「继承人」</h3><div style="font-size:23px;line-height:1.55">《继承法》第十九条：遗嘱应当对缺乏劳动能力又没有生活来源的<b>继承人</b>保留必要的遗产份额。<br>第二十八条：遗产分割时，应当保留<b>胎儿</b>的继承份额。<br>以第二十八条的价值判断为依据，把胎儿纳入第十九条——目的性扩张或类推，二者的区别在此只是相对的。</div></div></div>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:27px;line-height:1.55;color:#16302A">后续：婚姻家庭编解释（一）第四十条吸收第一个规则；《民法典》第十六条（胎儿视为具有民事权利能力）解决第二个问题。<b style="color:#2E6A5C">认定嗣后漏洞，须证明情事已经变化，且变化在法律中能找到依归。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §95 三 ｜ 婚姻家庭编解释（一）：《最高人民法院关于适用〈中华人民共和国民法典〉婚姻家庭编的解释（一）》（法释〔2020〕22 号）</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">4 min</p>
+</section>
+<section id="nobasis" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§96 ｜ 无 据 式 体 系 违 反</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">死者的名誉：找不到可资对照的规定</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法通则》（已废止）</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">第九条　公民从出生时起到死亡时止，具有民事权利能力，依法享有民事权利，承担民事义务。</p><p style="font-size:22px;line-height:1.6;margin-top:6px">第一百零一条　公民、法人享有名誉权，公民的人格尊严受法律保护，禁止用侮辱、诽谤等方式损害公民、法人的名誉。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">「荷花女」案</h3><div style="font-size:24px;line-height:1.55">最高人民法院〔1988〕民他字第 52 号复函：「吉文贞（艺名荷花女）死后，其名誉权应依法保护，其母陈秀琴亦有权向人民法院提起诉讼。」<br>——以复函作出的<b>创制性补充</b></div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:22%;color:#2E6A5C;text-align:left">检验</th><th style="width:78%;color:#2E6A5C;text-align:left">结论</th></tr><tr><td style="color:#2E6A5C;font-weight:700">是否有意否定</td><td>否：立法者并未考虑这一案型，沉默不违反民法通则制定时的计划</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">有无可资对照的规定</td><td>无：保护名誉权的规定以权利主体存在为前提，不能当然延及已无权利能力的死者</td></tr><tr><td style="color:#2E6A5C;font-weight:700">依据</td><td>只能是法律追求正义的一般意旨 → 超越法律的法续造，论证负担最重</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">后续</td><td>2001 年精神损害赔偿解释改以近亲属所受精神损害为保护对象；《民法典》第九百九十四条规定为死者近亲属的请求权</td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §96 ｜ 精神损害赔偿解释：《最高人民法院关于确定民事侵权精神损害赔偿责任若干问题的解释》（法释〔2001〕7 号）</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="lifecycle" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:30px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§95—§96 ｜ 三 则 例 证 的 共 同 轨 迹</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">漏洞的去向：从个案到法典</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:23px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:20%;color:#2E6A5C;text-align:left">漏洞</th><th style="width:20%;color:#2E6A5C;text-align:left">类型</th><th style="width:22%;color:#2E6A5C;text-align:left">最初的填补</th><th style="width:20%;color:#2E6A5C;text-align:left">整理</th><th style="width:18%;color:#2E6A5C;text-align:left">立法吸收</th></tr><tr><td style="color:#2E6A5C;font-weight:700">人工授精子女的身份</td><td>嗣后漏洞</td><td>最高人民法院复函；指导性案例 50 号</td><td>婚姻家庭编解释（一）第四十条</td><td>—（以司法解释规定）</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">胎儿的必留份</td><td>有据式（类推或目的性扩张）</td><td>指导性案例 50 号</td><td>—</td><td>《民法典》第十六条</td></tr><tr><td style="color:#2E6A5C;font-weight:700">死者的名誉</td><td>无据式</td><td>「荷花女」案复函（1988）</td><td>精神损害赔偿解释（2001）</td><td>《民法典》第九百九十四条</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">关联公司人格混同</td><td>类推适用式</td><td>指导性案例 15 号（2013）</td><td>会议纪要第 11 条（2019）</td><td>《公司法》第二十三条第二款（2023）</td></tr></table>
+<div style="background:#E4EFEA;padding:24px 38px;border-radius:16px"><p style="font-size:29px;line-height:1.55;color:#16302A">填补的性质是<b style="color:#2E6A5C">造法的尝试</b>：它可能被立法吸收，也可能被修正或放弃。被吸收之后，围绕新法条的解释与续造问题又重新开始——《公司法》第二十三条第二款的「股东」即是一例。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §95、§96、§99 ｜ 会议纪要：《全国法院民商事审判工作会议纪要》（法〔2019〕254 号）</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="causes" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§97 ｜ 两 个 分 类</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:54px;font-weight:700;line-height:1.15">类型决定填补方法，发生原因决定论证负担</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">漏洞的类型</h3><div style="font-size:27px;line-height:1.55">着眼于漏洞与现行法的关系：有无授权、有无可资对照的规定、表现为矛盾、残缺还是演变。<br><b>决定填补的方法与法院的权限。</b></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">漏洞的发生原因</h3><div style="font-size:27px;line-height:1.55">① 立法者思虑不周<br>② 法律上有意义的情况变更<br>③ 立法者有意不加规范<br><b>决定违反计划性能否成立，以及论证负担的轻重。</b></div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:26px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:42%;color:#2E6A5C;text-align:left">立法者有意不规范，而……</th><th style="width:58%;color:#2E6A5C;text-align:left">后果</th></tr><tr><td style="color:#2E6A5C;font-weight:700">以沉默表示否定</td><td>不构成漏洞（有意义的沉默，§92）</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">在立法说明中称「留待司法实践探索」</td><td>把补充权限明示委托给法院，填补的论证负担较轻（§110）</td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §97 ｜ 认定漏洞时，先依发生原因判断是否违反计划，再依类型选择填补方法</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="openhidden" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§97 ｜ 文 献 上 的 分 类</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">明显漏洞与隐藏漏洞：欠缺的是什么</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">明显漏洞（offene Lücke）</h3><div style="font-size:26px;line-height:1.55">欠缺的是<b>积极规定</b>：法律对应予规范的案型根本未作规范。<br>例：关联公司之间的人格混同——原《公司法》第二十条第三款只规定股东（案例 49（指导性案例 15 号））。<br><b>填补：类推</b></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">隐藏漏洞（verdeckte Lücke）</h3><div style="font-size:26px;line-height:1.55">欠缺的是对一般规定的<b>限制规定</b>：规定涵盖过广。<br>例：《民法典》第一百六十八条第一款涵盖纯获利益的自己代理（设例 7）。<br><b>填补：目的性限缩</b></div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:20%;color:#2E6A5C;text-align:left">分类</th><th style="width:38%;color:#2E6A5C;text-align:left">标准</th><th style="width:42%;color:#2E6A5C;text-align:left">须回答的问题</th></tr><tr><td style="color:#2E6A5C;font-weight:700">有认识／无认识</td><td>立法时是否已认知该不圆满</td><td>有认识而不规范者：是委托司法，还是有意否定？</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">自始／嗣后</td><td>制定时已存在，抑或因事实变迁而生</td><td>嗣后漏洞：变化在法律中有无依归？</td></tr><tr><td style="color:#2E6A5C;font-weight:700">部分／全部</td><td>问题是否根本未受规范</td><td>对应部分残缺与全部残缺</td></tr></table>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:30px;line-height:1.55;color:#16302A">分类的用途在于检验，不在于命名：<b style="color:#2E6A5C">每一个分类标准都指向一个须回答的问题。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §97 ｜ 「明显／隐藏」为拉伦茨的用语</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="standard" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:30px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§98 ｜ 认 定 标 准</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">法律应予规范，而有下列情形之一</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:25px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:34%;color:#2E6A5C;text-align:left">法律对该生活事实……</th><th style="width:30%;color:#2E6A5C;text-align:left">对应的类型</th><th style="width:36%;color:#2E6A5C;text-align:left">例</th></tr><tr><td style="color:#2E6A5C;font-weight:700">（1）无完全的规范</td><td>残缺式</td><td>转入是否须登记（案例 47）</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">（2）所作的规范互相矛盾</td><td>规范矛盾</td><td>权利瑕疵担保与债务不履行（中国法上已合流）</td></tr><tr><td style="color:#2E6A5C;font-weight:700">（3）对类似案型已作规范，对之却根本未作规范</td><td>类推适用式、目的性扩张式价值判断矛盾</td><td>关联公司之间的人格混同（案例 49）；胎儿的必留份（案例 48）</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">（4）对之作了不妥当的规范</td><td>目的性限缩式价值判断矛盾</td><td>纯获利益的自己代理（设例 7）</td></tr></table>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:31px;line-height:1.55;color:#16302A">第（4）项须以「不妥当」<b style="color:#2E6A5C">达到与法律自身价值判断矛盾的程度</b>为限——否则只是立法政策问题。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §98</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">1 min</p>
+</section>
+<section id="fiveq" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§98 ｜ 漏 洞 的 认 定</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">认定漏洞的五问</h2></div>
+<div style="display:flex;flex-direction:column;gap:12px"><div style="display:flex;gap:24px;align-items:baseline;background:#FFFFFF;border:1px solid #DCD8CC;border-radius:12px;padding:16px 26px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:40px;color:#2E6A5C;min-width:60px">01</b><b style="font-size:28px;min-width:420px">解释是否已穷尽？</b><span style="font-size:24px;color:#52605C">文义、历史、体系、目的都已检验，结论仍不在可能文义之内</span></div><div style="display:flex;gap:24px;align-items:baseline;background:#FFFFFF;border:1px solid #DCD8CC;border-radius:12px;padding:16px 26px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:40px;color:#2E6A5C;min-width:60px">02</b><b style="font-size:28px;min-width:420px">是否属于法外空间？</b><span style="font-size:24px;color:#52605C">非人际关系，或依今日的法律伦理不适宜以法律规范</span></div><div style="display:flex;gap:24px;align-items:baseline;background:#FFFFFF;border:1px solid #DCD8CC;border-radius:12px;padding:16px 26px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:40px;color:#2E6A5C;min-width:60px">03</b><b style="font-size:28px;min-width:420px">沉默是否有意义？</b><span style="font-size:24px;color:#52605C">列举是否封闭；立法材料中有无否定的意思；是否属于禁止类推的法域</span></div><div style="display:flex;gap:24px;align-items:baseline;background:#FFFFFF;border:1px solid #DCD8CC;border-radius:12px;padding:16px 26px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:40px;color:#2E6A5C;min-width:60px">04</b><b style="font-size:28px;min-width:420px">属于哪一类型？</b><span style="font-size:24px;color:#52605C">法内漏洞、有据式五种、无据式；自始抑或嗣后</span></div><div style="display:flex;gap:24px;align-items:baseline;background:#FFFFFF;border:1px solid #DCD8CC;border-radius:12px;padding:16px 26px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:40px;color:#2E6A5C;min-width:60px">05</b><b style="font-size:28px;min-width:420px">违反历史计划还是客观目的？</b><span style="font-size:24px;color:#52605C">后者须另行证明客观目的已经形成，且变化在法律中有依归</span></div></div>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:27px;line-height:1.55;color:#16302A">「法律没有明确规定」只是起点。案例 50（指导性案例 228 号）先写明「现行法律和司法解释对于婚内监护权的行使虽无明确具体规定」，说明了不圆满与补充的必要；<b style="color:#2E6A5C">完整的认定还应说明立法者的沉默不是有意为之。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §98 ｜ 认定与填补是两道接续的操作；填补见第十三章</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="homework" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">课 后 练 习 ｜ 教 材 §95 练 习</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">冷冻胚胎：现行法没有明文规定</h2></div>
+<p style="font-size:29px;line-height:1.6;color:#16302A;width:1664px">夫妻在婚姻关系存续期间一致同意实施体外受精—胚胎移植，胚胎冷冻保存；男方死亡后，女方要求医院移植胚胎并生育。现行法对此没有明文规定。</p>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">请回答</h3><div style="font-size:27px;line-height:1.55">（1）这一不圆满属于哪种类型？<br>（2）它是否违反历史上立法者的计划？<br>（3）法院若予补充，可资援引的既有规定与法原则有哪些？</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">参考思路</h3><div style="font-size:23px;line-height:1.55">（1）若主张立法者有意不作规定，须以立法材料证明，否则不能认定为有意义的沉默；若立法者未曾考虑，则不违反历史计划而违反客观目的，属演变式或无据式体系违反，论证负担较重。<br>（2）可资援引：婚姻家庭编解释（一）第四十条「双方一致同意」规则；《民法典》第十六条、第一千一百五十五条；人格尊严与自我决定（第一百零九条、第九百九十条第二款）。核心问题：男方的同意是否以其生存为前提。<br>（3）还须审查人类辅助生殖技术的行政管制规定，是否构成「法律已作规定」。</div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §95 练习</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="end" data-transition="fade" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:74px;font-weight:700;line-height:1.25;color:#16302A;width:1660px">法律没有规定，<br>既不证明漏洞存在，也不证明漏洞不存在</h2>
+<hr style="border-top:3px solid #9E5231;width:280px">
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:30px;font-weight:700;color:#2E6A5C">漏洞的认定</h3><p style="font-size:27px;line-height:1.65;color:#16302A">漏洞是违反计划的不圆满性，两项要素须分别证明。<br>「法律规定不合理」不等于「法律有漏洞」。<br>能否反面解释与能否类推，取决于列举是否封闭。</p></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:30px;font-weight:700;color:#2E6A5C">漏洞的类型</h3><p style="font-size:27px;line-height:1.65;color:#16302A">法内漏洞：法律明文授权补充，「根据其性质」写进了相容性审查。<br>有据式五种：规范矛盾、价值判断矛盾、准竞合、残缺、演变。<br>无据式：找不到可资对照的规定，论证负担最重。</p></div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#2E6A5C">配套阅读：《法学方法论—理论与实务》§90–§98 ｜ 案例 47、48 ｜ 设例 6</p>
+</section>
+    </div>
+  </div>
+  <div id="cap"></div>
+  <div id="bar">
+    <button id="prev" title="上一页（←）">◀ 上一页</button>
+    <button id="play" class="key" title="播放／暂停（空格）">▶ 播放</button>
+    <button id="next" title="下一页（→）">下一页 ▶</button>
+    <button id="replay" title="重读本页（R）">↺ 重读</button>
+    <span id="pos">1 / 27</span>
+    <button id="auto" class="tog" aria-pressed="true" title="讲完自动翻到下一页">自动播放</button>
+    <label><span>停顿</span><input id="gap" type="range" min="0" max="8" step="1" value="2"><b id="gapV">2 秒</b></label>
+    <label><span>语速</span><input id="rate" type="range" min="0.6" max="1.6" step="0.05" value="1"><b id="rateV">1.00×</b></label>
+    <label><span>语音</span><select id="voice"></select></label>
+    <button id="capt" class="tog" aria-pressed="true" title="显示／隐藏讲稿字幕（S）">字幕</button>
+    <span class="sp"></span>
+    <span id="srcnote" style="color:#6F9A8C"></span>
+    <button id="toclink">目录</button>
+    <button id="full" title="全屏（F）">全屏</button>
+  </div>
+</div>
+
+<div id="toc">
+  <button id="tocX">关闭 ✕</button>
+  <h3>目　录</h3>
+  <ol><li data-n="0"><em>1</em><span>法律漏洞</span><s>开场</s></li><li data-n="1"><em>2</em><span>今天的六十分钟</span><s>1 min</s></li><li data-n="2"><em>3</em><span>一份没有登记的补充协议</span><s>2 min</s></li><li data-n="3"><em>4</em><span>解释与法续造的四个层级</span><s>3 min</s></li><li data-n="4"><em>5</em><span>什么是漏洞</span><s>第一幕　什么是漏洞</s></li><li data-n="5"><em>6</em><span>不圆满性：法律有没有清楚的答案</span><s>3 min</s></li><li data-n="6"><em>7</em><span>违反计划性：历史计划与客观目的</span><s>2 min</s></li><li data-n="7"><em>8</em><span>法外空间</span><s>2 min</s></li><li data-n="8"><em>9</em><span>有意义的沉默：设例 6</span><s>3 min</s></li><li data-n="9"><em>10</em><span>立法者的沉默：「实际控制人」</span><s>2 min</s></li><li data-n="10"><em>11</em><span>漏洞的类型</span><s>第二幕　漏洞的类型</s></li><li data-n="11"><em>12</em><span>漏洞的类型体系</span><s>2 min</s></li><li data-n="12"><em>13</em><span>法内漏洞：授权补充</span><s>4 min</s></li><li data-n="13"><em>14</em><span>规范矛盾与碰撞式价值矛盾</span><s>3 min</s></li><li data-n="14"><em>15</em><span>价值判断矛盾的三种填补形态</span><s>4 min</s></li><li data-n="15"><em>16</em><span>准竞合式：两个担保人之间</span><s>4 min</s></li><li data-n="16"><em>17</em><span>残缺式：回到最高额抵押案</span><s>3 min</s></li><li data-n="17"><em>18</em><span>全部残缺：积极侵害债权</span><s>2 min</s></li><li data-n="18"><em>19</em><span>嗣后漏洞：人工授精子女</span><s>4 min</s></li><li data-n="19"><em>20</em><span>无据式体系违反：死者的名誉</span><s>3 min</s></li><li data-n="20"><em>21</em><span>漏洞的去向：从复函到法典</span><s>2 min</s></li><li data-n="21"><em>22</em><span>类型与发生原因：两个分类</span><s>2 min</s></li><li data-n="22"><em>23</em><span>明显漏洞与隐藏漏洞</span><s>2 min</s></li><li data-n="23"><em>24</em><span>漏洞认定的四项标准</span><s>1 min</s></li><li data-n="24"><em>25</em><span>认定漏洞的五问</span><s>3 min</s></li><li data-n="25"><em>26</em><span>课后练习：冷冻胚胎</span><s>3 min</s></li><li data-n="26"><em>27</em><span>认定与填补是两道接续的操作</span><s>收束</s></li></ol>
+</div>
+
+<div id="gate">
+  <h1>法律漏洞</h1>
+  <p><a href="../teaching.html" style="color:#8FC4B4">← 返回教学栏目</a></p>
+  <p>27 页，语音讲解约六十分钟（法学方法论第十二章，教材 §90–§98）。<br>
+     讲完一页停两秒自动翻到下一页；随时可用 <b>空格</b> 暂停、<b>←</b> <b>→</b> 手动翻页、<b>R</b> 重读本页、<b>F</b> 全屏。<br>
+     语速、停顿时长与朗读语音都可以在下方控制条里调。</p>
+  <p class="warn" id="nospeech" style="display:none">
+     这个浏览器不支持语音合成，页面仍可正常翻页阅读；或把录音放进同目录的 audio 文件夹（文件名与页面 id 同名的 mp3）。</p>
+  <p class="warn">建议用 <b>Microsoft Edge</b> 打开：它自带「晓晓」「云希」等中文神经语音，听感最接近真人。<br>
+     Chrome 下会退到系统自带的中文语音。若控制条里「语音」是空的，请在系统设置中安装中文语音包。</p>
+  <button class="go" id="start">▶ 开始讲解</button>
+  <button class="alt" id="silent">只看幻灯片，不要语音</button>
+</div>
+
+<script>
+var SLIDES = [{"id": "cover", "title": "法律漏洞", "min": 0, "act": "开场"}, {"id": "roadmap", "title": "今天的六十分钟", "min": 1, "act": "开场"}, {"id": "hook47", "title": "一份没有登记的补充协议", "min": 2, "act": "开场"}, {"id": "levels", "title": "解释与法续造的四个层级", "min": 3, "act": "开场"}, {"id": "act1", "title": "什么是漏洞", "min": 0, "act": "第一幕　什么是漏洞"}, {"id": "lackanswer", "title": "不圆满性：法律有没有清楚的答案", "min": 3, "act": "第一幕　什么是漏洞"}, {"id": "plan", "title": "违反计划性：历史计划与客观目的", "min": 2, "act": "第一幕　什么是漏洞"}, {"id": "freespace", "title": "法外空间", "min": 2, "act": "第一幕　什么是漏洞"}, {"id": "silence", "title": "有意义的沉默：设例 6", "min": 3, "act": "第一幕　什么是漏洞"}, {"id": "controller", "title": "立法者的沉默：「实际控制人」", "min": 2, "act": "第一幕　什么是漏洞"}, {"id": "act2", "title": "漏洞的类型", "min": 0, "act": "第二幕　漏洞的类型"}, {"id": "types", "title": "漏洞的类型体系", "min": 2, "act": "第二幕　漏洞的类型"}, {"id": "inlaw", "title": "法内漏洞：授权补充", "min": 4, "act": "第二幕　漏洞的类型"}, {"id": "collision", "title": "规范矛盾与碰撞式价值矛盾", "min": 3, "act": "第二幕　漏洞的类型"}, {"id": "valueform", "title": "价值判断矛盾的三种填补形态", "min": 4, "act": "第二幕　漏洞的类型"}, {"id": "quasi", "title": "准竞合式：两个担保人之间", "min": 4, "act": "第二幕　漏洞的类型"}, {"id": "answer47", "title": "残缺式：回到最高额抵押案", "min": 3, "act": "第二幕　漏洞的类型"}, {"id": "pfv", "title": "全部残缺：积极侵害债权", "min": 2, "act": "第二幕　漏洞的类型"}, {"id": "case48", "title": "嗣后漏洞：人工授精子女", "min": 4, "act": "第二幕　漏洞的类型"}, {"id": "nobasis", "title": "无据式体系违反：死者的名誉", "min": 3, "act": "第二幕　漏洞的类型"}, {"id": "lifecycle", "title": "漏洞的去向：从复函到法典", "min": 2, "act": "第二幕　漏洞的类型"}, {"id": "causes", "title": "类型与发生原因：两个分类", "min": 2, "act": "第二幕　漏洞的类型"}, {"id": "openhidden", "title": "明显漏洞与隐藏漏洞", "min": 2, "act": "第二幕　漏洞的类型"}, {"id": "standard", "title": "漏洞认定的四项标准", "min": 1, "act": "第二幕　漏洞的类型"}, {"id": "fiveq", "title": "认定漏洞的五问", "min": 3, "act": "收束"}, {"id": "homework", "title": "课后练习：冷冻胚胎", "min": 3, "act": "收束"}, {"id": "end", "title": "认定与填补是两道接续的操作", "min": 0, "act": "收束"}];
+var NAR = {"cover": "欢迎来到法学方法论第十二章，法律漏洞。第二、三部分止于可能文义的射程：射程之内，是解释与具体化。今天开始的第四部分越过这条界线。越出射程之后，法官要做的不再是确定文义，而是补上法律所欠缺的答案。在补之前，必须先回答两个问题：法律对本案真的欠缺答案吗？这一欠缺是不是立法者有意为之？这两个问题，就是漏洞的认定。全课六十分钟，分两幕，每一个要点都配一则案例或设例。", "roadmap": "先交代路线。开场六分钟，看一件最高额抵押的案件，并说明解释与法续造之间的界线。第一幕十二分钟，讲什么是漏洞：漏洞由不圆满性与违反计划性两项要素构成，并须与法外空间、有意义的沉默相区别。第二幕三十六分钟，讲漏洞的类型：法内漏洞，有据式体系违反的五种态样，以及无据式体系违反。每一种类型都配一则案例或设例。最后六分钟，把认定漏洞的工作整理为五个依次回答的问题，并留一道练习。请先记住一句话：法律没有规定，本身既不证明漏洞存在，也不证明漏洞不存在。", "hook47": "开场先看一件案件，教材案例四十七，指导性案例九十五号。二零一二年四月，工商银行宣城龙首支行向柏冠公司发放借款三百万元。同年十月，凯盛公司以自己的商铺，为银行在此后三年内对柏冠公司等四户企业的债权设立最高额抵押，最高余额四千万元，并办理了抵押登记。十一月，双方又签订补充协议，明确四月那笔三百万元的借款也纳入担保范围，但没有就此办理变更登记。柏冠公司到期没有还款，银行起诉，请求以抵押的商铺优先受偿。凯盛公司抗辩说：补充协议约定的事项没有登记，抵押权的效力不及于这笔三百万元。请看屏幕上的《物权法》第二百零三条，现为《民法典》第四百二十条。第二款规定，最高额抵押权设立前已经存在的债权，经当事人同意，可以转入最高额抵押担保的债权范围。它允许转入，却没有说转入是否须办理登记。请你暂停，先回答两个问题：法律对这个问题有没有答案？如果没有，法院凭什么补上答案，又应当补上什么样的答案？第二幕我们回到这个案件。这个问题不是技术细节。最高额抵押权以登记设立，登记簿上记载的担保范围，是后顺位抵押权人、查封债权人等第三人判断抵押物剩余价值的依据。担保范围扩大了而不登记，第三人就可能受到不测的损害；反过来，若一律要求登记，当事人在最高债权额限度内的约定又可能被否定。法律对此没有说话，法院必须先判断：这是不是一个漏洞。", "levels": "第十二至十五章以法续造为上位概念：凡结论不再为规范文义所涵盖的法发现活动，都属于法续造。解释与法续造之间只有一条界线可用，就是语言上可能的文义。越出这条界线有两个方向：把概念周边以外的事实纳入规范，是类推；把明确处于概念核心之内的事实排除出去，是目的性限缩。两者都不再是确定文义，而是修正规范的适用范围。屏幕上是四个层级。第一格是解释，在可能文义之内，只需说明含义。第二格是法律内的法续造：在制定法原有计划的框架内，依制定法本身的目的进行，典型形态是类推、目的性限缩与目的性扩张。第三格是超越法律的法续造：超越个别法律的意旨，依法秩序整体的价值基础进行，典型形态是创制性补充。第四格是违法的法续造：超越法律的续造若不能以特别的法律上理由为依据，就越过了正当界限。自左至右，与文义和立法计划的距离越来越远，论证负担也越来越重。所以，法律人须先确定自己所作的工作处于哪一层级，才能确定须承担多重的说理义务。把法续造表述为解释，等于以解释较轻的论证负担替代法续造较重的论证负担，第十四章将把这种做法称为隐蔽性的法续造。法续造与解释的另一个区别是：解释只需说明含义，法续造还须论证漏洞的存在。今天就讲这一步。用今天和下一章的案例对号入座。确定婚生子女一词的含义，是解释；把原《公司法》第二十条第三款参照适用于关联公司之间，是法律内的法续造；在法律毫无规定的情况下承认死者的名誉受保护，是超越法律的法续造。术语上还要说明一点：黄茂荣称之为法律补充，杨仁寿与王泽鉴称之为漏洞补充，教材统一使用法续造作为上位概念，漏洞填补是它的主要形态。", "act1": "第一幕，什么是漏洞。漏洞的定义含有两项要素，我们逐项讲，再讲两种不构成漏洞的情形：法外空间与有意义的沉默。", "lackanswer": "漏洞一词首先是一项评价判断。称某物有漏洞，含有两个特征：所描述的对象有影响其功能的欠缺，而这一欠缺是不受欢迎的。法律漏洞因此可以界定为：法律体系上违反计划的不圆满状态。这一定义有两项要素，不圆满性与违反计划性，二者须分别证明。先说不圆满性。法律经解释之后，对某一生活类型仍然没有答案，而该生活类型又不属于法外空间，法律对它即有不圆满性。判断的标准，是法律能否给待处理的事实一个清楚的答案。开场的案件就是一例：《物权法》第二百零三条第二款允许转入，却对转入是否须登记没有答案。不圆满性要与立法政策上的缺失区分开。带有政策或技术缺失的法律，仍然对相关生活类型给出了答案；答案即使不理想，也不构成漏洞意义上的不圆满。请特别注意屏幕下方的警示。裁判文书中常见这样的论证：某规定若依文义适用，结果不公平，因此存在法律漏洞。这一推论混淆了两个问题。法律对本案有清楚的答案而答案不合理，属于立法政策问题，原则上应由立法者修改；只有当不合理的程度达到与法律自身的价值判断相矛盾时，才构成漏洞。主张漏洞的一方须证明的，不是结果不好，而是法律依其自身的计划本应有不同的答案。还有一个临界问题：答案不清楚到一定程度，实际上等于没有答案。诚信原则、公序良俗、显失公平这类开放概念，外延不能由可能的文义清楚界定，须经评价地补充才能适用于具体案件。由此留下的不圆满，是立法者已经预见的不圆满，第二幕称之为法内漏洞。", "plan": "不圆满性只是漏洞的必要条件。法律对某一事项沉默，可能是因为立法者本不打算规范它，也可能是因为立法者已经借沉默表达了否定的意思。这两种情形下，沉默都不违反立法计划，因而不构成漏洞。违反计划性的判断，就是排除这两种情形的过程，我们马上分别讲。这里的计划以什么为准？教材的立场与第六章一致：以历史上立法者的意图为出发点，以法律在今日法秩序中的客观目的为修正。由此产生论证负担的差别。看屏幕下方的表。开场的最高额抵押案，立法者已经规定了转入，若无疏忽，当已规定转入的公示要件，这一欠缺违反的是历史上立法者的计划，论证负担较轻。第二幕要讲的人工授精案则不同：一九八零年《婚姻法》制定时，以他人精子人工授精尚未普及，历史上的立法者不可能对它有所计划；这一欠缺只违反今日法秩序的客观目的。主张这类漏洞，须另行证明客观目的已经形成，论证负担较重。第十四章会把这一区分转化为法续造审查的次序。为什么要作这一区分？因为主张漏洞的一方实际上是在说：法律本应有一个答案。如果他能指出立法者自己的计划，比如立法者已经规定了转入，却遗漏了转入的公示要件，他只是在补全立法者未完成的工作；如果他只能指出今天的法秩序已经变化，他就是在说立法者当时的计划已不足以应对今天的问题，这需要更多的论证。", "freespace": "先看第一种不构成漏洞的情形，法外空间。法律规范生活，但不是一切生活事实都受法律规范。不受法律规范的事项有两类。一类是非人际的关系，例如个人的好恶、生活方式、信仰、感情、思想与意见。另一类虽然涉及人际关系，却被认为不适宜用法律、而适宜用其他生活规范调整，例如如何打招呼、宴会如何进行、朋友之间的友谊。法律管不着的、不需要或不适宜用法律规范的事项，构成法外空间。只要某一事项确属法律本不应规范者，法律对它未作规定，便没有违反计划性，不构成漏洞。须注意，这条界限并不一直清楚，也不一直不变。恋爱关系中的赠与、婚约、同居关系，都曾被认为属于法外空间，后来又先后被司法解释部分纳入规范。法外空间与法内空间的分野，是国家权力介入范围的分野；认定某一事项进入法内空间，本身已经是一项需要论证的决定。举一个设想的例子：两位朋友约好周末一起去看电影，一方临时爽约，另一方请求对方赔偿往返车费。这类情谊行为通常被认为不发生法律上的拘束力，属于法外空间；法律对它没有规定，不是漏洞。但如果一方明确承诺承担某种费用，对方也据此作出了安排，界限就开始移动，法院是否介入，需要说明理由。", "silence": "第二种不构成漏洞的情形，是有意义的沉默：立法者借沉默表达了意思。它的典型表现，是允许反面解释的规定。反面推论只有在构成要件被充分列举时才有效：若只有在A1到An时才导出B，那么C不属于A1到An时，由C不能导出B。这里的穷尽列举，不要求立法者已穷尽一切类似案型，而是要求立法者已经明示、或者依立法意旨可以认知，他只拟对规定中提到的情形赋予该法效果。看设例六，《民法典》第一千一百二十五条。第一款列举了丧失继承权的五种行为。第二款规定，继承人有前款第三项至第五项行为，确有悔改表现，被继承人表示宽恕或者事后在遗嘱中将其列为继承人的，该继承人不丧失继承权。问题是：继承人故意杀害被继承人，或者为争夺遗产而杀害其他继承人，被继承人表示宽恕的，能否类推第二款，使他不丧失继承权？答案取决于第二款对第三项至第五项的列举是否封闭。立法者以项号明确划定范围，并把最严重的两项排除在外，依立法意旨可以认知，他只拟对后三项赋予宽恕的效力。所以此处允许反面解释，类推被排除；有第一项、第二项行为的继承人，不因宽恕而恢复继承权。不存在漏洞。由此得出一个重要结论：一项规定能否作反面解释，与它能否类推，取决于同一个判断，就是列举是否封闭。主张反面解释的一方须证明列举封闭，主张类推的一方须证明列举不封闭。还要记住一点：对方以立法者的沉默是有意为之来反驳时，这一反驳同样须以较具体的立法材料为依据，证明立法者曾考虑并拒绝某一方案；否则，它只是重述了法律没有规定这一出发点。再补充反面推论的逻辑形式，帮助理解为什么列举必须封闭。如果规定的结构是：只有A才导出B，那么非A就不能导出B，这是有效的推论。如果规定的结构只是：A导出B，那么从非A推不出非B，因为B也可能由别的事实导出。第一千一百二十五条第二款之所以可以作反面解释，正是因为依立法意旨，它的结构是只有第三项至第五项才可因宽恕而恢复继承权。", "controller": "再用一个最新的立法例说明有意义的沉默如何证明。二零二三年修订的《公司法》第二十三条第二款规定：股东利用其控制的两个以上公司实施前款规定行为的，各公司应当对任一公司的债务承担连带责任。这一款吸收了指导性案例十五号的横向人格否认，但写的是股东。而指导性案例十五号的事实恰恰是：三家公司的实际控制人王永礼不是股东。问题来了：非股东的实际控制人控制两个以上公司、使其人格混同的，能否适用这一款？主张沉默有意义、立法者有意排除实际控制人的一方，须出示立法材料，证明立法者曾考虑并拒绝了实际控制人的方案。可以注意的线索是：此前的《全国法院民商事审判工作会议纪要》第十一条曾把实际控制人写进去，立法时没有采纳。主张存在漏洞、可以类推的一方，则须证明列举并不封闭：这一款防止以多个公司的独立人格逃避债务的意旨，同样及于实际控制人，并且立法者的沉默不是有意为之。两种主张孰是孰非，第十四章会再讨论；今天要记住的是：法律没有规定只是出发点，双方都须出示比这句话更具体的论据。", "act2": "第二幕，漏洞的类型。分类不只是整理工作：不同类型的漏洞，其认定的难度、法院补充的权限与适用的补充方法都不相同。每一种类型，我们都用一则案例或设例说明。", "types": "教材把法律漏洞归纳为三大类型。第一类是法内漏洞：它不在法律之外，而在法律之内；法院补充它，是基于法律的明文授权。第二类是有据式体系违反：法律中已有可资对照的具体规定，法律现状与该规定所体现的价值判断不一致，体系违反即据此认定，该规定通常也是填补的出发点。它又分为五种：规范矛盾、价值判断矛盾、准竞合式、残缺式与演变式。第三类是无据式体系违反：找不到可资对照的具体规定，只能诉诸法律追求正义的一般意旨。这一分类的基本命题是：一切漏洞的态样皆构成体系违反。下面逐一用案例说明。读这张图时请注意三类之间的区别标准。法内漏洞与其他两类的区别，在于法律有没有明文授权法院补充；有据式与无据式的区别，在于能不能找到一条可资对照的具体规定。这两个问题都须经论证回答，所以同一个案件，不同的人可能把它归入不同的类型，关键是说明归类的理由。", "inlaw": "第一类，法内漏洞。它与其他漏洞的区别只有一点：法院已被法律特别授权补充它。法内漏洞有三种来源。第一，需要评价地予以补充的开放概念与一般条项，例如诚信原则、权利滥用的禁止、公序良俗、显失公平、违约金的酌减。立法者对拟规范的事项不能完全知道如何清楚规范，于是借助开放概念，使规范能弹性地适用于生活事实。由此留下的不圆满，是立法者已经预见的不圆满，而不是不存在的不圆满。第二，授权式类推，在中国立法中多表述为参照适用。《民法典》第四百六十七条第一款规定，本法或者其他法律没有明文规定的合同，适用合同编通则的规定，并可以参照适用本编或者其他法律最相类似合同的规定。第一千零一条规定，自然人因婚姻家庭关系等产生的身份权利的保护，没有规定的，可以根据其性质参照适用人格权保护的有关规定。请注意两条中的最相类似与根据其性质。这些限定词不是赘语，它们把类推的第二步，也就是相容性审查，写进了授权规范：参照适用不是全盘移植，被参照的规定须与待处理关系的性质相容。授权解决了可不可以，被授权的类推仍须完成类似性与相容性两步判断。第三，空白规定，典型是指示以习惯为裁判标准的规定。第十条规定，处理民事纠纷，应当依照法律；法律没有规定的，可以适用习惯，但是不得违背公序良俗。由此得出一个实务上的结论：习惯不是法官的价值判断，而是待证的事实。援引习惯的当事人须证明习惯的存在与内容；法院援引习惯，须在裁判理由中说明该习惯如何被认定，并审查它是否违背公序良俗。再补充两点。第一，承诺方式条款是习惯优先于任意性规定的例子：《民法典》第四百八十条规定，承诺应当以通知的方式作出；但是，根据交易习惯或者要约表明可以通过行为作出承诺的除外。主张存在这种交易习惯的一方，须证明它。第二，参照适用的两步，在前面几章的案例中已经出现：指导性案例六十七号拒绝把分期付款买卖的解除规则参照适用于股权转让，拒绝的理由正在于价值安排不能移入，也就是相容性不成立。最后说明法内漏洞与第九至十一章的关系。第九至十一章强调，一般条款的具体化不越出文义射程，仍属解释论的范围；法内漏洞的概念则强调，一般条款的适用须由法院在法律授权下评价地补充其内容。两种描述的差别在于观察点：前者从文义出发，后者从答案的清楚程度出发。即使采用法内漏洞的说法，也不应因为开放概念的存在而放弃解释与补充的区别，否则就无法在禁止漏洞填补的法域，比如刑法上，作出适当的决定。", "collision": "第二类是有据式体系违反，先看前两种：规范矛盾与价值判断矛盾。二者都表现为规定之间的冲突，区别在于所涉案型。规范矛盾存在于对同一案型的规定之间：同一事实同时满足数项规定的构成要件，各规定却赋予不同的法效果。例如出卖人交付的标的物上存在第三人的权利，这一事实既落入权利瑕疵担保的规定，也落入债务不履行的规定。在中国法上，《民法典》第六百一十二条至第六百一十四条把权利瑕疵规定为出卖人的义务，违反这一义务即依第五百七十七条承担违约责任，两组规定已经合流，这一矛盾基本不再发生。规范矛盾大多可以依特别法优先、新法优先、上位法优先等规则经由解释化解；不能化解的，所涉法条互相废止，形成碰撞漏洞。中国法上，《立法法》设置了较完整的冲突规则与裁决机制，真正的碰撞漏洞往往表现为须送请有权机关裁决的程序问题。价值判断矛盾存在于对类似案型的规定之间。它最常见的一种主张是：这两条规定不一样，所以有漏洞。看屏幕右侧。第一千一百九十二条规定，个人劳务关系中，提供劳务一方因劳务造成他人损害的，由接受劳务一方承担侵权责任。第一千一百九十三条规定，承揽人在完成工作过程中造成第三人损害的，定作人原则上不承担侵权责任。两类案型都是为他人完成工作的一方致人损害，法效果却不同。主张这里存在价值判断矛盾，须先证明两类案型在法律上重要之点相同；而接受劳务一方对劳务的指示与控制，正是区分二者的特征，差别处理有正当理由。这一主张在解释阶段即被化解，不构成漏洞。这正是第一幕所说的：法律规定不一样，不等于法律有漏洞。还要补充一点：碰撞式的主张在中国法上还常常遇到另一个问题，即两条规定的制定机关与效力层级不同。这时首先适用的是冲突规则，而不是漏洞填补；只有在冲突规则不能解决、又无法送请有权机关裁决时，才谈得上碰撞漏洞。", "valueform": "价值判断矛盾的根据是平等原则：相同的案型应为相同的处理，不同的案型应为不同的处理。除了刚才的碰撞式，另外三种形态各自对应一种填补方法，每一种配一个例子。第一种，类推适用式：类似案型中，一部分有明文规定，另一部分没有。原《公司法》第二十条第三款只规定股东滥用公司法人独立地位时对公司债务承担连带责任，对关联公司之间人格混同的情形没有规定；依该款防止以法人独立地位为工具逃避债务的意旨，二者在法律上重要之点相同，应作相同处理。指导性案例十五号即是以参照该款的方式作了处理。第二种，目的性扩张式：未规定的案型与已规定的案型类似性较低，但依规范意旨同样应受规范。《专利法》第七十五条第四项把专为科学研究和实验而使用有关专利列为不视为侵权的情形；为申请农药登记而进行的试验，以专利技术为取得行政许可的手段，若不在科学研究和实验的可能文义之内，法院依规范意旨将其纳入，就属于目的性扩张。第三种，目的性限缩式：规定涵盖的范围过广，把依规范意旨应作不同处理的案型一并规定。《民法典》第一百六十八条第一款禁止自己代理，文义涵盖被代理人纯获利益的自己代理；禁止自己代理旨在防止利益冲突，后者不存在利益冲突，依不同者不同处理，应排除于该款的适用范围之外。三个例子都将在第十三章展开。最后两点提示。类推与目的性扩张的区别是相对的，取决于判断类似性时要求的共同特征的多寡；判决称其所作的是类推还是目的性扩张，本身并不重要，重要的是它是否说明了类似性的判断标准从何而来。目的性限缩与限缩解释的区别，在于限缩是否已压缩文义核心：压缩了的，是目的性限缩，属法续造；没有压缩的，是限缩解释，属解释。三个例子对应的填补方法，分别是类推、目的性扩张与目的性限缩。它们有一个共同点：都以法律已有的某一具体规定为出发点，从这一规定的规范意旨出发，判断未规定的案型应当如何处理。这正是有据式三个字的含义。主张这类漏洞时，第一句话应当指出那条可资对照的规定是哪一条，它的规范意旨是什么。", "quasi": "第三种是准竞合式体系违反。先理解竞合：同一事实使同一债权人对同一债务人取得数项请求权，例如同一行为既构成违约又构成侵权。准竞合则是同一债权人对不同的人取得数项经济目的相同的请求权，债权人只能受偿一次。看屏幕上的设例：甲向银行借款，乙提供保证，丙以房屋提供抵押。甲无力清偿，银行可以向乙请求，也可以就丙的房屋实现抵押权，由银行选择。问题在内部关系：乙清偿之后，向甲追偿不能，能否请求丙分担？如果不能，最终由谁承担损失，就取决于银行先找了谁。乙、丙地位相同，却受到不同对待，违反相同者相同处理；而对处境相近的连带债务人，《民法典》第五百一十九条已经规定了相互之间的分担。这就是准竞合式的体系违反。中国法上这一问题经历了三个阶段。《担保法》第十二条与担保法解释第三十八条第一款允许担保人之间分担。《物权法》第一百七十六条只规定提供担保的第三人有权向债务人追偿，没有规定担保人之间的追偿，旧解释是否仍可适用成为争点。《民法典》第三百九十二条沿用了这一表述，担保制度解释第十三条随后确定：担保人之间约定相互追偿或连带共同担保，或者在同一份合同书上签字、盖章、按指印的，才可请求其他担保人分担；此外的情形，不予支持。可见司法解释没有类推连带债务的分担规则，而是以担保人之间是否存在共同担保的意思为界。在没有这种意思的情形，最终的损失仍取决于债权人的选择，准竞合所生的不平等并未消除，只是被归结为担保人未作约定的后果。请与屏幕右下方对照：产品责任、安全保障义务人的补充责任、保险人代位，追偿或代位的规定都使最终的损失落在依法应当承担的一方，债权人先找谁不影响终局结果，所以不生体系违反。这一结论对实务有直接的意义：两个以上的第三人为同一债务提供担保时，担保人若希望相互之间可以追偿，须在合同中约定，或者至少在同一份合同书上签字、盖章、按指印；否则，最终损失由谁承担，就取决于债权人的选择。", "answer47": "第四种是残缺式体系违反，回到开场题。一审、二审都判决银行就抵押房产优先受偿。裁判要点是：当事人另行达成协议，将最高额抵押权设立前已经存在的债权转入担保范围，只要转入的债权数额仍在最高债权额限度内，即使未办理变更登记，最高额抵押权的效力仍然及于被转入的债权，但不得对第三人产生不利影响。用本章的方法拆解这个判决，分四步。第一步，定性的前提。如果把转入看作《民法典》第二百零九条所称不动产物权的变更，该条已经给出答案：未经登记，不发生效力，漏洞就不存在。法院先否定了这一前提：转入不是重新设立最高额抵押权，也不是第二百零五条规定的变更，被转入的债权也不是登记簿的必要记载事项。认定漏洞之前，须先排除既有规定已有答案的可能，本案正是经过这一步才进入漏洞填补的。第二步，定性。第二百零三条第二款已就转入作出规定，却没有规定其公示要件，这是部分残缺，即构成要件未为规定。由法律已有的规定可以明白看出，立法者若无疏忽，当已加以规定，因为担保范围的扩大是否须公示，直接关系到后顺位抵押权人等第三人的利益。这一欠缺也不能经由类推弥补，法院明言转入不是第二百零五条的变更，排除了比照该条的可能。第三步，填补。法院依最高额抵押权的特点，即担保的债权不确定、以最高债权额为限，确立了两项条件：转入的债权数额仍在最高债权额限度内；不得对第三人产生不利影响。后一项条件借用了第二百零五条但书的思路，但把保护对象由其他抵押权人扩及第三人。以既有规定的意旨补足欠缺的要件，再以限制条件控制射程，是部分残缺的典型填补方式。第四步，判决另以法无禁止即可为作为依据。这一论据只表达了不加限制的推定，本身不能说明登记要件是否欠缺，只能在漏洞认定之后支持填补的方向。最后，《民法典》第四百二十条与第四百二十二条沿用了原文，转入是否须办理变更登记，至今仍无明文。", "pfv": "残缺式体系违反分为两种。部分残缺，是法律就某案型已有规定，但对其构成要件、法效果、权利人或义务人、权利行使方法等未为规定，开场的最高额抵押案即属此类。全部残缺，是法律就某一上位案型的部分下位案型已有规定，对另一些下位案型却全未规范。比较法上的典型是德国法上的积极侵害债权。《德国民法典》原就给付障碍只规定了给付不能与给付迟延两种形态。一九零二年，德国律师施陶布指出：债务人虽为给付，但给付不符合债务本旨，或者违反保护义务而侵害债权人其他法益的情形，法典并无规定，应当类推适用给付不能与给付迟延的规定处理。这一主张为判例与学说普遍接受，长期以习惯法的地位适用。二零零二年，德国《债法现代化法》以义务违反作为统一的损害赔偿请求权基础，积极侵害债权由此纳入法典。中国法的情形不同。《民法典》第五百七十七条以不履行合同义务或者履行合同义务不符合约定统一规定违约责任，不良给付自始就在法律规定之内，不发生德国法上的这一漏洞。同一个问题，在一个法秩序中是漏洞，在另一个法秩序中不是，取决于立法者当初如何设计上位概念。", "case48": "第五种是演变式体系违反，也称嗣后漏洞：法律制定时并无不圆满，后来由于情事发展、价值观演进或知识进步，产生了新的规范需要。它的重要特征是不具通常意义上的违反计划性，因为历史上的立法者不可能对尚未出现的事实有所计划。看案例四十八，指导性案例五十号。郭某顺没有生育能力，与妻子李某共同到医院，签字同意医院为李某施行人工授精。李某受孕后，郭某顺患病，在医院立下遗嘱，否认李某腹中的胎儿是他的子女，并把登记在他名下、实为夫妻共同财产的房屋全部遗赠给他的父母。郭某顺死亡后，郭某阳出生。母子二人起诉，请求依法定继承分割遗产。本案包含两个性质不同的漏洞。第一个是典型的嗣后漏洞。一九八零年《婚姻法》制定时，以他人精子人工授精尚未成为普遍的医疗手段，婚生子女的概念以夫妻之间的血缘为默示前提。技术的普及使这一前提不再能涵盖全部情形：子女与丈夫没有血缘关系，却是夫妻共同决定的结果。这不是立法者的疏忽，而是知识与技术发展造成的不圆满。填补的方法是创制性的：最高人民法院以复函确立，夫妻关系存续期间双方一致同意进行人工授精的，所生子女应视为夫妻双方的婚生子女，双方一致同意成为决定性的连结点；本案法院又以意思表示的约束力这一既有制度为它提供教义学上的连结，郭某顺签字同意之后，不得擅自变更。第二个漏洞性质不同。《继承法》第十九条要求遗嘱为缺乏劳动能力又没有生活来源的继承人保留必要份额，胎儿在继承开始时尚未出生，是否属于该条所称的继承人，文义上有疑问。法院以第二十八条，即遗产分割时应当保留胎儿的继承份额，作为体系上的支撑，把胎儿纳入第十九条。这是以第二十八条的价值判断为依据的目的性扩张，也可以说是类推，二者的区别在此只是相对的。两个漏洞后来都被吸收：婚姻家庭编解释一第四十条规定了人工授精子女的地位，《民法典》第十六条规定涉及遗产继承等胎儿利益保护的，胎儿视为具有民事权利能力。最后请记住嗣后漏洞的特别要求：须证明情事已经变化，并且变化在法律中能找到依归。本案的依归，是婚姻法保护婚生子女利益的价值，以及意思表示的约束力原则；单凭人工授精已经普及这一社会事实，不足以支持新规则。请把两个漏洞的填补方法对照一下：第一个漏洞找不到可以类推的规定，只能创设新的连结点，即双方一致同意；第二个漏洞有第二十八条可资对照，只需把第十九条的保护延及胎儿。同一个案件，一个属于超越法律的续造，一个属于法律内的续造，论证负担并不相同。", "nobasis": "第三类是无据式体系违反。法律对某一生活事实沉默，这一沉默所造成的不圆满不属于法外空间，不允许反面解释，又找不到可资类推的规定，它就可能构成一个因立法者疏忽而造成的体系违反。由于找不到可资对照的具体规定，称为无据式体系违反。它不与历史上立法者的意思相违，但它使一部分重要的生活关系得不到法律保障，与法律追求正义的意旨不符，因此同样构成漏洞。它的填补属于超越法律的法续造，面对最重的论证负担。看死者名誉的保护。《民法通则》第九条规定，公民从出生时起到死亡时止，具有民事权利能力；第一百零一条所保护的名誉权，以权利主体存在为前提。对于死者的名誉是否受保护，法律没有任何规定。逐项检验：这一沉默不是立法者有意否定，立法者并没有考虑这一案型；法律中也找不到可资对照的具体规定，保护生者名誉权的规定，不能当然延及已无权利能力的死者。若仍须保护，依据只能是法律追求正义的一般意旨。最高人民法院在荷花女一案中以复函表示：吉文贞死后，其名誉权应依法保护，其母陈秀琴亦有权向人民法院提起诉讼。这是以复函作出的创制性补充。此后，二零零一年的精神损害赔偿解释改以死者近亲属所受的精神损害为保护对象；《民法典》第九百九十四条最终把它规定为死者近亲属的请求权。一个无据式的漏洞，经由复函、司法解释，最后由法典吸收。还要说明，有据式与无据式的界限本身须经论证。有人会指出，《著作权法》对作者的署名权、修改权、保护作品完整权的保护期不受限制，作者死后仍受保护，这表明法律已经有突破民事权利能力终于死亡的规定，可以据以类推或目的性扩张。若采这一看法，死者名誉的漏洞就有可资对照的规定，应归入有据式体系违反。可见能否找到可资对照的规定，不是查一下法条就能回答的，它本身就是一个须经论证的判断。", "lifecycle": "把本章的几则例证放在一张表上，可以看出漏洞的一般去向。人工授精子女的身份，是嗣后漏洞，最初由最高人民法院复函与指导性案例五十号填补，后由婚姻家庭编解释一第四十条整理为规则。胎儿的必留份，是有据式的漏洞，指导性案例五十号以类推或目的性扩张填补，《民法典》第十六条最终在总则层面解决。死者的名誉，是无据式的漏洞，一九八八年以复函创制性地补充，二零零一年精神损害赔偿解释改以近亲属的精神损害为保护对象，《民法典》第九百九十四条最终规定为近亲属的请求权。关联公司之间的人格混同，是类推适用式的漏洞，二零一三年指导性案例十五号填补，二零一九年会议纪要整理，二零二三年《公司法》第二十三条第二款吸收。四则例证的轨迹相同：个案中的填补，经由复函、指导性案例或司法解释的整理，最后由立法吸收。下一章会说明，法院填补漏洞的性质只是造法的尝试，而不是终局地制定法律：它可能被立法吸收，也可能被修正或放弃。还要注意，被吸收并不意味着问题结束。第一幕已经看到，《公司法》第二十三条第二款写的是股东，围绕实际控制人，新的解释与续造问题随之开始。", "causes": "最后说明两个分类的关系。漏洞的类型，着眼于漏洞与现行法的关系：法律有没有授权补充，有没有可资对照的具体规定，不圆满表现为矛盾、残缺还是演变。它决定填补的方法与法院的权限。漏洞的发生原因，着眼于漏洞是怎样产生的。教材归纳了三种：立法者思虑不周，法律上有意义的情况变更，以及立法者有意不加规范。它决定违反计划性能否成立，以及论证负担的轻重。第三种原因要特别分辨。立法者有意不规范，不等于立法者有意否定。以沉默表示否定的，是有意义的沉默，不构成漏洞；而立法机关在立法说明中称某一问题留待司法实践探索，则是把补充权限明示委托给法院，法院据此填补漏洞，论证负担较轻。两个分类交叉而不一一对应。认定漏洞时，两项须分别回答：先依发生原因判断是否违反计划，再依类型选择填补方法。中国法上一个较新的例子是彩礼。婚约与彩礼曾被认为主要由习俗调整，法律只有零星规定；随着彩礼纠纷大量进入法院，返还规则的缺失被认为构成嗣后的法律漏洞，最高人民法院随后以专门的司法解释加以规定。这是情况变更导致漏洞的例子：立法者当初没有疏忽，是生活事实的变化产生了新的规范需要。", "openhidden": "文献上还有若干分类，挑一组对理解填补方法最有用的：明显漏洞与隐藏漏洞。明显漏洞，是法律欠缺积极规定，对应予规范的案型根本未作规范，例如关联公司之间的人格混同，原《公司法》第二十条第三款只规定了股东，对关联公司之间的情形没有任何规定。填补明显漏洞的方法是类推。隐藏漏洞，是法律欠缺对一般规定的限制规定：规定本身涵盖过广，把依规范意旨应作不同处理的案型一并规定了。例如《民法典》第一百六十八条第一款禁止自己代理，文义涵盖了被代理人纯获利益的情形。这种漏洞之所以称为隐藏的，是因为表面上法律有规定，答案似乎是清楚的；只有依规范意旨引入一项区分特征，才能看出法律欠缺一项例外。填补隐藏漏洞的方法是目的性限缩。屏幕下方还有三组分类：有认识与无认识，自始与嗣后，部分与全部。分类的用途在于检验，而不在于命名：一项漏洞同时可以是自始的、部分的、隐藏的；重要的是，每一个分类标准都指向一个须回答的问题。立法者是否已认知？变化是否在法律中有依归？欠缺的是积极规定还是限制规定？回答这些问题的过程，就是漏洞的认定。", "standard": "最后把认定标准归纳一下。只要一个生活事实经正当评价属于法律应予规范的事项，而法律有下列情形之一，就该生活事实法律即有漏洞。第一，对之没有完全的规范，对应残缺式，例如转入是否须登记。第二，对之所作的规范互相矛盾，对应规范矛盾。第三，对与之类似的案型已作规范，对之却根本未作规范，对应类推适用式与目的性扩张式的价值判断矛盾，例如关联公司之间的人格混同、胎儿的必留份。第四，对之作了不妥当的规范，对应目的性限缩式的价值判断矛盾，例如纯获利益的自己代理。第四项要特别小心：不妥当必须达到与法律自身价值判断相矛盾的程度，否则只是立法政策问题，回到第一幕的警示。", "fiveq": "把今天的内容整理为认定漏洞的五个问题，依次回答，任一问得出不构成漏洞的结论，就不必进入下一问。第一问，解释是否已穷尽？文义、历史、体系、目的四种因素都已检验，结论仍不在可能文义之内；解释尚未穷尽的，仍是解释问题。第二问，该事项是否属于法外空间？第三问，沉默是否有意义？列举是否封闭，立法材料中有无否定的意思，是否属于禁止类推的法域。第四问，漏洞属于哪一类型？法内漏洞、有据式体系违反的五种态样，还是无据式体系违反；自始存在，还是嗣后发生。第五问，漏洞违反的是历史计划，还是只违反客观目的？后者须另行证明客观目的已经形成，并且变化在法律中有依归。还要强调一点。中国裁判文书中，法律对此没有明确规定，常被用作径行适用某一规则的引语，紧接着便是参照某某规定或根据某某原则。这一写法省去了认定的第二个问题，即沉默是否违反计划。下一章要讲的指导性案例二百二十八号写得较好：法院先说明现行法律和司法解释对于婚内监护权的行使虽无明确具体规定，再说明双方处于矛盾较易激化的分居状态、须最大限度保护未成年子女的利益，然后才参照适用离婚后子女抚养的规定。它说明了不圆满的存在，也说明了补充的必要，但仍未说明立法者对婚内抚养的沉默不是有意为之。完整的认定，应包含这一步。认定漏洞与填补漏洞是两道接续的操作，填补，是下一章的内容。把五问用于开场的最高额抵押案。第一问：第二百零三条第二款与第二百零九条、第二百零五条都已检验，转入是否须登记，不在任何一条的可能文义之内。第二问：担保范围关系第三人的利益，显然属于法律应予规范的事项。第三问：没有证据表明立法者有意不规定公示要件。第四问：部分残缺。第五问：违反的是历史上立法者的计划，立法者规定了转入，若无疏忽当已规定其公示，论证负担较轻。五问都回答完，才进入填补。", "homework": "课后练习，来自教材第九十五节。夫妻双方在婚姻关系存续期间一致同意实施体外受精—胚胎移植，胚胎冷冻保存；男方死亡后，女方要求医院移植胚胎并生育。现行法对此没有明文规定。请依今天的分类回答三个问题：这一不圆满属于哪种类型？它是否违反历史上立法者的计划？法院若予补充，可资援引的既有规定与法原则有哪些？参考思路如下。第一，若有人主张制定《民法典》时这一问题已可预见、立法者有意不作规定，须以立法材料证明，否则不能认定为有意义的沉默。若立法者未曾考虑，它不违反历史上立法者的计划，而违反法律的客观目的，属于演变式或无据式体系违反，认定漏洞的论证负担较重。第二，可资援引的有：婚姻家庭编解释一第四十条的双方一致同意规则，《民法典》第十六条的胎儿利益保护与第一千一百五十五条，以及人格尊严与自我决定。核心问题是：男方的同意是否以其生存为前提，能否推定其于死后延续？这是意思表示解释与自我决定原则的问题，不能以婚生子女概念直接涵摄。第三，还须审查行政法上关于人类辅助生殖技术的管制规定，是否构成法律已作规定，从而排除法院的补充。写作时请按今天的五问依次作答：先说明解释已经穷尽，再排除法外空间与有意义的沉默，然后确定类型，最后说明它违反的是历史计划还是客观目的。每一问都要写出所依据的规定或材料，不要以法律没有规定一语代替论证。", "end": "全课到此结束。请带走几句话。法律没有规定，本身既不证明漏洞存在，也不证明漏洞不存在。漏洞是违反计划的不圆满性，不圆满性与违反计划性须分别证明；法律规定不合理，不等于法律有漏洞；能否反面解释与能否类推，取决于列举是否封闭这同一个判断。漏洞分为三类：法内漏洞由法律明文授权补充；有据式体系违反有五种态样，都有可资对照的具体规定；无据式体系违反找不到可资对照的规定，论证负担最重。下一章，漏洞的填补。下课。"};
+var deck = document.getElementById('deck'), cap = document.getElementById('cap');
+var i = 0, chunks = [], ci = 0, speaking = false, paused = false, audioMode = false;
+var synth = window.speechSynthesis, voice = null, utter = null, timer = null, watch = null;
+var auto = true, gap = 2000, rate = 1.0, capOn = true;
+var player = new Audio();
+
+/* ---------- 版面缩放 ---------- */
+function fit(){
+  var vp = document.getElementById('viewport');
+  var s = Math.min(vp.clientWidth / 1920, vp.clientHeight / 1080) * 0.962;
+  deck.style.transform = 'scale(' + s + ')';
+}
+addEventListener('resize', fit);
+
+/* ---------- 分句 ---------- */
+function split(t){
+  var raw = t.replace(/\s+/g, '').split(/(?<=[。？！；])/).filter(Boolean);
+  var out = [], buf = '';
+  raw.forEach(function(s){
+    if ((buf + s).length > 56 && buf.length >= 20) { out.push(buf); buf = s; }
+    else buf += s;
+  });
+  if (buf) out.push(buf);
+  return out;
+}
+
+/* ---------- 字幕 ---------- */
+function paintCap(){
+  if (!capOn) { cap.classList.add('off'); return; }
+  cap.classList.remove('off');
+  if (!chunks.length) { cap.innerHTML = '<i>本页无讲解词</i>'; return; }
+  var k = Math.min(ci, chunks.length - 1);
+  cap.innerHTML = '<em>' + (k + 1) + '／' + chunks.length + '</em><b>' + chunks[k] + '</b>';
+}
+
+/* ---------- 语音 ---------- */
+function pickVoices(){
+  var all = synth ? synth.getVoices() : [];
+  var zh = all.filter(function(v){ return /^zh/i.test(v.lang); });
+  var sel = document.getElementById('voice');
+  if (!zh.length) { sel.innerHTML = '<option>未找到中文语音</option>'; return; }
+  zh.sort(function(a, b){
+    var score = function(v){
+      var n = v.name;
+      if (/Natural/i.test(n)) return 0;
+      if (/Online/i.test(n)) return 1;
+      if (/Xiaoxiao|Yunxi|Yunyang|Xiaoyi|晓晓|云希/i.test(n)) return 2;
+      return 3;
+    };
+    return score(a) - score(b);
+  });
+  var keep = voice && voice.name;
+  sel.innerHTML = zh.map(function(v){
+    return '<option value="' + v.name + '">' + v.name.replace(/^Microsoft /, '') + '</option>';
+  }).join('');
+  voice = zh.find(function(v){ return v.name === keep; }) || zh[0];
+  sel.value = voice.name;
+}
+
+function stopAll(){
+  clearTimeout(timer); timer = null;
+  if (synth) synth.cancel();
+  player.pause();
+  speaking = false; paused = false;
+  setPlayLabel();
+}
+
+function speakChunk(){
+  if (!synth || ci >= chunks.length) { finishSlide(); return; }
+  paintCap();
+  utter = new SpeechSynthesisUtterance(chunks[ci]);
+  if (voice) { utter.voice = voice; utter.lang = voice.lang; } else { utter.lang = 'zh-CN'; }
+  utter.rate = rate; utter.pitch = 1;
+  utter.onend = function(){ if (speaking && !paused) { ci++; speakChunk(); } };
+  utter.onerror = function(e){ if (e.error !== 'interrupted' && e.error !== 'canceled') { ci++; speakChunk(); } };
+  synth.speak(utter);
+}
+
+function finishSlide(){
+  speaking = false; setPlayLabel();
+  if (!auto) return;
+  if (i >= SLIDES.length - 1) return;
+  timer = setTimeout(function(){ go(i + 1, true); }, gap);
+}
+
+function play(){
+  if (paused) {                       // 续播
+    paused = false;
+    if (audioMode) player.play(); else synth.resume();
+    speaking = true; setPlayLabel(); return;
+  }
+  stopAll();
+  speaking = true; ci = 0; setPlayLabel();
+  if (audioMode) {
+    player.src = 'audio/' + SLIDES[i].id + '.mp3';
+    player.playbackRate = rate;
+    player.play().catch(function(){ audioMode = false; speakChunk(); });
+    paintCap();
+  } else {
+    speakChunk();
+  }
+}
+player.onended = finishSlide;
+
+function pause(){
+  if (!speaking) return;
+  paused = true;
+  if (audioMode) player.pause(); else synth.pause();
+  setPlayLabel();
+}
+function toggle(){ if (speaking && !paused) pause(); else play(); }
+function setPlayLabel(){
+  document.getElementById('play').textContent = (speaking && !paused) ? '⏸ 暂停' : '▶ 播放';
+}
+
+/* ---------- 翻页 ---------- */
+function go(n, andSpeak){
+  stopAll();
+  i = Math.max(0, Math.min(SLIDES.length - 1, n));
+  var secs = deck.children;
+  for (var k = 0; k < secs.length; k++) secs[k].classList.toggle('on', k === i);
+  chunks = split(NAR[SLIDES[i].id] || ''); ci = 0;
+  paintCap();
+  document.getElementById('pos').textContent = (i + 1) + ' / ' + SLIDES.length;
+  document.querySelector('#prog i').style.width = ((i + 1) / SLIDES.length * 100) + '%';
+  var lis = document.querySelectorAll('#toc li');
+  for (var k = 0; k < lis.length; k++) lis[k].classList.toggle('cur', k === i);
+  if (andSpeak) play();
+}
+
+/* ---------- 控件 ---------- */
+function bind(){
+  document.getElementById('play').onclick = toggle;
+  document.getElementById('prev').onclick = function(){ go(i - 1, speaking || paused); };
+  document.getElementById('next').onclick = function(){ go(i + 1, speaking || paused); };
+  document.getElementById('replay').onclick = function(){ stopAll(); play(); };
+  var a = document.getElementById('auto');
+  a.onclick = function(){ auto = !auto; a.setAttribute('aria-pressed', auto); };
+  var c = document.getElementById('capt');
+  c.onclick = function(){ capOn = !capOn; c.setAttribute('aria-pressed', capOn); paintCap(); };
+  document.getElementById('rate').oninput = function(){
+    rate = +this.value; document.getElementById('rateV').textContent = rate.toFixed(2) + '×';
+    player.playbackRate = rate;
+    if (speaking && !paused && !audioMode) { synth.cancel(); speakChunk(); }
+  };
+  document.getElementById('gap').oninput = function(){
+    gap = +this.value * 1000; document.getElementById('gapV').textContent = this.value + ' 秒';
+  };
+  document.getElementById('voice').onchange = function(){
+    voice = synth.getVoices().find(function(v){ return v.name === this.value; }, this) || voice;
+    if (speaking && !paused && !audioMode) { synth.cancel(); speakChunk(); }
+  };
+  document.getElementById('toclink').onclick = function(){ document.getElementById('toc').classList.add('on'); };
+  document.getElementById('tocX').onclick = function(){ document.getElementById('toc').classList.remove('on'); };
+  document.getElementById('full').onclick = function(){
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen();
+  };
+  addEventListener('keydown', function(e){
+    if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+    if (e.key === ' ') { e.preventDefault(); toggle(); }
+    else if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(i + 1, speaking || paused); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(i - 1, speaking || paused); }
+    else if (e.key === 'Escape') document.getElementById('toc').classList.remove('on');
+    else if (e.key.toLowerCase() === 'f') document.getElementById('full').click();
+    else if (e.key.toLowerCase() === 's') document.getElementById('capt').click();
+    else if (e.key.toLowerCase() === 'r') document.getElementById('replay').click();
+  });
+  // Chrome/Edge 长文本会自行暂停，定时 resume
+  watch = setInterval(function(){
+    if (speaking && !paused && !audioMode && synth && synth.speaking && synth.paused) synth.resume();
+  }, 8000);
+}
+
+/* ---------- 启动 ---------- */
+function boot(){
+  fit(); bind(); pickVoices();
+  if (synth) synth.onvoiceschanged = pickVoices;
+  // 探测 audio/ 目录里是否有预录音频
+  var probe = new Audio('audio/' + SLIDES[0].id + '.mp3');
+  probe.oncanplaythrough = function(){ audioMode = true;
+    document.getElementById('srcnote').textContent = '音源：audio 文件夹中的录音'; };
+  probe.onerror = function(){ audioMode = false; };
+  probe.load();
+  go(0, false);
+  if (!synth) {
+    document.getElementById('nospeech').style.display = 'block';
+  }
+  document.getElementById('start').onclick = function(){
+    document.getElementById('gate').classList.add('off'); go(0, true);
+  };
+  document.getElementById('silent').onclick = function(){
+    document.getElementById('gate').classList.add('off'); auto = false;
+    document.getElementById('auto').setAttribute('aria-pressed', false); go(0, false);
+  };
+}
+if (document.readyState === 'loading') addEventListener('DOMContentLoaded', boot); else boot();
+</script>
+<script>
+document.querySelectorAll('#toc li').forEach(function(li){
+  li.onclick = function(){
+    document.getElementById('toc').classList.remove('on');
+    go(+li.dataset.n, speaking || paused);
+  };
+});
+</script>
+</body>
+</html>

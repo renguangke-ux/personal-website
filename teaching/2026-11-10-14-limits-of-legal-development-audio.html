@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>法续造的界限 · 有声课件 — 任广科</title>
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;background:#0E1A17;overflow:hidden;
+  font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif}
+#wrap{position:fixed;inset:0;display:flex;flex-direction:column}
+#viewport{flex:1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#deck{flex:0 0 auto;width:1920px;height:1080px;position:relative;transform-origin:center center;
+  box-shadow:0 24px 80px rgba(0,0,0,.55);border-radius:4px;overflow:hidden}
+#deck>section{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;
+  opacity:0;visibility:hidden;transition:opacity .28s ease}
+#deck>section.on{opacity:1;visibility:visible}
+#deck aside{display:none}
+#deck h1,#deck h2,#deck h3,#deck h4,#deck p,#deck ul,#deck ol,#deck table{margin:0}
+#deck ul,#deck ol{padding-left:1.4em}
+#deck table{border-collapse:collapse;width:100%}
+#deck th,#deck td{padding:.62rem .8rem;border-bottom:1px solid rgba(0,0,0,.12);text-align:left;vertical-align:top}
+#deck thead th{font-weight:700}
+#deck figcaption{margin-top:.8rem;font-size:24px;opacity:.72}
+#deck hr{border:0;border-top:1px solid currentColor;opacity:.45}
+#deck cite{font-style:italic;opacity:.8}
+
+/* 字幕 */
+#cap{flex:0 0 auto;min-height:74px;display:flex;align-items:center;justify-content:center;
+  padding:12px 42px;background:#0B1714;border-top:1px solid #1D362F;
+  color:#EDF2F0;font-size:20px;line-height:1.62;text-align:center}
+#cap.off{display:none}
+#cap b{font-weight:400}
+#cap i{font-style:normal;color:#6F9A8C;font-size:14px}
+#cap em{font-style:normal;color:#5FB49C;font-variant-numeric:tabular-nums;font-size:13px;
+  margin-right:12px;opacity:.9}
+
+/* 控制条 */
+#bar{flex:0 0 auto;display:flex;align-items:center;gap:14px;padding:10px 18px;
+  background:#132621;border-top:1px solid #23443B;color:#CFE3DC;font-size:13px;flex-wrap:wrap}
+#bar button{appearance:none;border:1px solid #2E6A5C;background:#17302A;color:#DDEBE6;
+  border-radius:8px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:inherit;
+  transition:background .15s,border-color .15s}
+#bar button:hover{background:#1F3F37;border-color:#54917F}
+#bar button.key{background:#2E6A5C;border-color:#49897A;color:#fff;min-width:96px;font-weight:600}
+#bar button.key:hover{background:#38806E}
+#bar button.tog[aria-pressed="true"]{background:#2E6A5C;border-color:#49897A;color:#fff}
+#bar .sp{flex:1}
+#bar label{display:flex;align-items:center;gap:7px;white-space:nowrap;color:#9FBCB2}
+#bar input[type=range]{width:96px;accent-color:#5FB49C}
+#bar select{background:#17302A;color:#DDEBE6;border:1px solid #2E6A5C;border-radius:8px;
+  padding:6px 8px;font-size:13px;max-width:230px;font-family:inherit}
+#pos{font-variant-numeric:tabular-nums;color:#EDF2F0;min-width:74px;text-align:center}
+#prog{position:absolute;left:0;right:0;top:0;height:3px;background:rgba(255,255,255,.08);z-index:5}
+#prog i{display:block;height:100%;background:#5FB49C;width:0;transition:width .3s}
+
+/* 目录 */
+#toc{position:fixed;inset:0;background:rgba(8,18,15,.93);z-index:40;display:none;
+  padding:46px 56px;overflow:auto}
+#toc.on{display:block}
+#toc h3{color:#9EDCC7;font-size:15px;letter-spacing:3px;margin:0 0 16px;font-weight:600}
+#toc ol{list-style:none;margin:0 0 30px;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:8px}
+#toc li{display:flex;gap:11px;align-items:baseline;color:#D8E6E1;padding:9px 12px;
+  border-radius:8px;cursor:pointer;font-size:14px;border:1px solid transparent}
+#toc li:hover{background:#1A322B;border-color:#2E6A5C}
+#toc li.cur{background:#2E6A5C;color:#fff}
+#toc li em{font-style:normal;color:#7FB3A3;font-variant-numeric:tabular-nums;min-width:26px}
+#toc li.cur em{color:#CFEFE3}
+#toc li s{text-decoration:none;margin-left:auto;color:#7FB3A3;font-size:12px}
+#tocX{position:fixed;right:34px;top:30px}
+
+/* 开场遮罩 */
+#gate{position:fixed;inset:0;z-index:60;background:#0E1A17;color:#EDF2F0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  text-align:center;padding:40px}
+#gate.off{display:none}
+#gate h1{font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:46px;margin:0;font-weight:700}
+#gate p{margin:0;max-width:760px;line-height:1.95;color:#9FBCB2;font-size:15px}
+#gate .go{font-size:17px;padding:15px 40px;border-radius:12px;border:1px solid #49897A;
+  background:#2E6A5C;color:#fff;cursor:pointer;font-family:inherit;font-weight:600}
+#gate .go:hover{background:#38806E}
+#gate .alt{background:none;border:0;color:#7FB3A3;cursor:pointer;font-size:13px;
+  text-decoration:underline;font-family:inherit}
+#gate .warn{color:#E0A080;font-size:13px;max-width:700px;line-height:1.8}
+@media (max-width:860px){
+  #bar{font-size:12px;gap:9px;padding:8px 10px}
+  #bar label span{display:none}
+  #bar input[type=range]{width:64px}
+  #toc{padding:30px 20px}
+}
+</style>
+<style>
+html,body{background:#E7E3D8}
+#deck{box-shadow:0 18px 50px rgba(22,48,42,.18)}
+#cap{background:#F6F3EC;border-top:1px solid #DCD8CC;color:#16302A}
+#cap i{color:#6B7A75} #cap em{color:#2E6A5C}
+#bar{background:#EFEBE1;border-top:1px solid #DCD8CC;color:#16302A}
+#bar button{background:#FFFFFF;border-color:#C9D9D2;color:#16302A}
+#bar button:hover{background:#E4EFEA;border-color:#2E6A5C}
+#bar button.key,#bar button.tog[aria-pressed="true"]{background:#2E6A5C;border-color:#2E6A5C;color:#fff}
+#bar label{color:#52605C} #bar select{background:#FFFFFF;color:#16302A;border-color:#C9D9D2}
+#pos{color:#16302A} #prog{background:rgba(22,48,42,.08)} #prog i{background:#2E6A5C}
+#toc{background:rgba(246,243,236,.97)} #toc h3{color:#2E6A5C}
+#toc li{color:#16302A} #toc li:hover{background:#E4EFEA;border-color:#2E6A5C}
+#toc li em,#toc li s{color:#2E6A5C} #toc li.cur{background:#2E6A5C;color:#fff} #toc li.cur em,#toc li.cur s{color:#E4EFEA}
+#gate{background:#F6F3EC;color:#16302A} #gate p{color:#52605C} #gate .alt{color:#2E6A5C} #gate .warn{color:#9E5231}
+#srcnote{color:#52605C!important}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="viewport">
+    <div id="prog"><i></i></div>
+    <div id="deck">
+<section id="cover" data-transition="fade" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:space-between">
+
+<div style="display:flex;flex-direction:column;gap:28px">
+<p style="font-size:30px;color:#2E6A5C;letter-spacing:8px">法 学 方 法 论 · 第 十 四 、十 五 章</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:128px;font-weight:700;line-height:1.08;color:#16302A">法续造的界限</h1>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<hr style="border-top:3px solid #9E5231;width:280px">
+<p style="font-size:40px;line-height:1.5;color:#16302A;width:1600px">法续造在何处丧失正当性？<br>五个审查步骤，四类衡量规则——<b>使法续造可被复核</b>。</p>
+<p style="font-size:30px;color:#2E6A5C">八十分钟 ｜ 四幕 ｜ 以案例讲方法</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#2E6A5C">配套教材《法学方法论—理论与实务》§106–§122</p>
+</section>
+<section id="roadmap" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:68px;font-weight:700;line-height:1.15">今天的八十分钟</h2>
+<div style="display:flex;gap:18px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">开场 ｜ 3 分钟</h3><div style="font-size:27px;line-height:1.55"><b>一团棉纱</b><br>干扰采样案</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">第一幕 ｜ 11 分钟</h3><div style="font-size:27px;line-height:1.55"><b>问题与审查框架</b><br>拒绝续造也须说理；隐蔽性的法续造；五步审查<br>§106–§108</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">第二幕 ｜ 23 分钟</h3><div style="font-size:27px;line-height:1.55"><b>第一至三步</b><br>文义与体系、立法者的回应与沉默、目的；法效果；宪法<br>§109–§113</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">第三幕 ｜ 20 分钟</h3><div style="font-size:27px;line-height:1.55"><b>类推禁止</b><br>从类推制度到罪刑法定；三则刑事指导性案例<br>§114–§116</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">第四幕 ｜ 23 分钟</h3><div style="font-size:27px;line-height:1.55"><b>第四、五步与衡量</b><br>国际条约；法律保留与权限；四类规则；审查清单<br>§117–§122</div></div></div>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:32px;line-height:1.55;color:#16302A">法续造的要求可归结为三句：<b style="color:#2E6A5C">写明自己在做法续造；说明每一步的论据及其分量；为新规则确立可以涵摄的条件。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §106–§122 ｜ 五步审查参照默勒斯《法学方法论》第十三章，第四步按中国法改为国际条约</p>
+</section>
+<section id="hook52" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">开 场 题 ｜ 案例 52（指导性案例 104 号）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:50px;font-weight:700;line-height:1.15">用棉纱堵住采样器，是不是破坏计算机信息系统</h2></div>
+<p style="font-size:27px;line-height:1.6;color:#16302A;width:1664px">西安市长安区环境空气自动监测站是国控站点，监测系统每小时把数据传输至中国环境监测总站，用于编制全国空气质量排名。2016 年 2 月至 3 月，被告人多次进入子站，<b>用棉纱堵塞采样器</b>；PM10、PM2.5 数据在多个时段严重失真，失真数据被用于 74 个重点城市空气质量排名。</p>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:27px;font-weight:700;color:#9E5231;margin-bottom:4px">《刑法》第二百八十六条第一款</h3><p style="font-size:25px;line-height:1.6;margin-top:6px">违反国家规定，对计算机信息系统功能进行删除、修改、增加、干扰，造成计算机信息系统不能正常运行，后果严重的，处五年以下有期徒刑或者拘役；后果特别严重的，处五年以上有期徒刑。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">请你判断</h3><div style="font-size:25px;line-height:1.55">① 用棉纱堵塞采样孔，是不是「对计算机信息系统功能进行……干扰」？<br>② 系统照常采集、处理、传输数据，是不是「造成计算机信息系统不能正常运行」？<br>③ 如果答案是否定的，司法解释能不能补上？</div></div></div>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:32px;line-height:1.55;color:#16302A">行为的社会危害性是确定的。但在刑法上，<b style="color:#2E6A5C">社会危害性能不能回答文义问题？</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">西安市中级人民法院（2016）陕 01 刑初 233 号 ｜ 答案见第三幕 §115</p>
+</section>
+<section id="act1" data-transition="magic" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<p style="font-size:30px;color:#2E6A5C;letter-spacing:8px">第 一 幕 ｜ 十 一 分 钟</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:112px;font-weight:700;line-height:1.1;color:#16302A">问题与审查框架</h1>
+<hr style="border-top:3px solid #9E5231;width:280px">
+<p style="font-size:40px;line-height:1.55;color:#16302A;width:1500px">审查的目的不在于禁止法续造，<b style="color:#2E6A5C">而在于使法续造可被复核。</b></p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">教材 §106–§108</p>
+</section>
+<section id="problem" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§106 ｜ 界 限 问 题</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">一端是受法律约束，一端是禁止拒绝裁判</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">受法律约束</h3><div style="font-size:27px;line-height:1.55">法官不是立法者；越出文义，即可能侵入立法权的领域。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">禁止拒绝裁判</h3><div style="font-size:27px;line-height:1.55">法官不得以法律没有规定为由拒绝裁判；裁判本身即是在既有规则与个案之间作出选择。</div></div></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#9E5231">拒绝续造也是一种选择：案例 50（指导性案例 228 号）的一审</h3><div style="font-size:26px;line-height:1.55">以「没有证据证明李某未抚养保护好」孩子为由驳回，看似中立，实际上维持了一方擅自带走哺乳期子女所造成的事实状态。<br><b>拒绝续造与进行续造一样，都是法院作出的选择，都须说理。</b></div></div>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:28px;line-height:1.55;color:#16302A">「盲飞」：没有可资遵循的审查程序，只能依前理解与对结论的内心确认作出判断。建立审查程序须回答两个问题：<b style="color:#2E6A5C">法续造采取了何种形式？有哪些论证模型支持或反对它，各自分量如何？</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §106</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="hidden" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§107 ｜ 反 对 隐 蔽 性 的 法 续 造（verdeckte Rechtsfortbildung）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:50px;font-weight:700;line-height:1.15">实际上已越出文义，却表述为解释</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:26px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:30%;color:#2E6A5C;text-align:left">表述方式</th><th style="width:40%;color:#2E6A5C;text-align:left">实际做了什么</th><th style="width:30%;color:#2E6A5C;text-align:left">例</th></tr><tr><td style="color:#2E6A5C;font-weight:700">「不宜作狭义解释」「应作广义理解」</td><td>以解释的语汇表述越出文义的结论</td><td>（2025）鲁民终 1383 号；案例 29 若已越出文义</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">「根据立法精神」「符合立法宗旨」</td><td>以未经证成的目的命题代替漏洞认定</td><td>——</td></tr><tr><td style="color:#2E6A5C;font-weight:700">「综合考虑」「依据公平原则」</td><td>以一般条款或法原则直接得出法效果，省去具体化的中间步骤</td><td>——</td></tr></table>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:31px;line-height:1.55;color:#16302A">三种方式的共同效果：<b style="color:#2E6A5C">把法续造较重的论证负担，换成了解释较轻的论证负担。</b>在德国法上，仅从法治国家原则的角度说，隐蔽性的法续造就不能被接受。</p></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">空白公式（Leerformel）</h3><div style="font-size:25px;line-height:1.55">「实现公平正义」「兼顾各方利益」「事物的本质」——可以支持任何结论，因而不能支持任何特定结论。援引时须出示从公式到法效果的中间步骤：哪一项法原则、哪一个法制度、哪些类似构成要件的条件。<b>缺少中间步骤的援引，在形式上即构成不正当的法续造。</b></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §107</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="case1383" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:14px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§107 ｜（2025）鲁 民 终 1383 号</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:54px;font-weight:700;line-height:1.15">运费请求，能否「参照」一年的短期时效</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">《最高人民法院关于如何确定沿海、内河货物运输赔偿请求权时效期间问题的批复》（法释〔2001〕18 号）</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">根据《中华人民共和国海商法》第二百五十七条第一款规定的精神，结合审判实践，托运人、收货人就沿海、内河货物运输合同向承运人要求<b>赔偿</b>的请求权，或者承运人就沿海、内河货物运输向托运人、收货人要求<b>赔偿</b>的请求权，时效期间为一年，自承运人交付或者应当交付货物之日起计算。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:14px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第一百九十七条第一款</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">诉讼时效的期间、计算方法以及中止、中断的事由由法律规定，当事人约定无效。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#9E5231">二审</h3><div style="font-size:23px;line-height:1.55">该用语「从法律规范发展的历史，以及体系解释的角度」<b>「应作广义理解」</b>，既包括支付运费的请求权，也包括侵权赔偿请求权，据此「参照」批复适用一年时效。</div></div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:21px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:12%;color:#2E6A5C;text-align:left">检验</th><th style="width:88%;color:#2E6A5C;text-align:left">结论</th></tr><tr><td style="color:#2E6A5C;font-weight:700">文义</td><td>承运人请求支付运费，是合同上的<b>原给付请求</b>，不是损害赔偿请求；依法学专业用语优先，「要求赔偿的请求权」不及于运费</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">目的</td><td>一年短期时效源自《海牙规则》，理由在于货物交付时的状况难以长期保存证据；运费的数额与履行可依合同、运单与结算记录证明，<b>不存在证据湮灭的风险</b></td></tr><tr><td style="color:#2E6A5C;font-weight:700">定性</td><td>判决所称的历史与体系论据均未展开；「参照」二字表明法院并未把运费请求置于批复的文义之内——<b>实质上是类推，却以解释的语汇表述</b></td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">分量</td><td>诉讼时效期间由法律规定；以续造缩短时效期间，须承担更重的论证负担（§118）</td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §107 ｜ 《海商法》（1992 年）第二百五十七条第一款</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="redefine" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§108 ｜ 概 念 的 重 新 界 定</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:54px;font-weight:700;line-height:1.15">四点界定，使法续造的概念可以用于审查</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">① 通常越出文义</h3><div style="font-size:25px;line-height:1.55">法解释在文义界限之内；法续造的结论不再为文义所涵盖。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">② 具体化原则上不是法续造</h3><div style="font-size:25px;line-height:1.55">例外：在具体化框架内发展出新的案例类型，可例外地称为法续造。</div></div></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">③ 判例变更是法续造的另一种典型</h3><div style="font-size:25px;line-height:1.55">未必越出文义，但当事人可能对既有判例存在信赖。<br>中国法：指导性案例被宣布不再参照，或法院不参照而作出不同裁判，都具有判例变更的性质。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">④ 「违法」是审查的结论，不是出发点</h3><div style="font-size:25px;line-height:1.55">越出文义、背离立法计划，并不当然违法；只有在各项论证模型权衡之后，反对的论据占据决定性优势时，才称为违法的法续造。</div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §108</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="fivesteps" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§108 ｜ 审 查 框 架</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">五个审查步骤，再加一次衡量</h2></div>
+<div style="display:flex;flex-direction:column;gap:12px"><div style="display:flex;gap:22px;align-items:center;background:#FFFFFF;border:1px solid #DCD8CC;border-left:10px solid #2E6A5C;border-radius:12px;padding:16px 26px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:46px;color:#2E6A5C;min-width:44px">1</b><b style="font-size:29px;min-width:250px">经典的论证模型</b><span style="font-size:24px;flex:1">文义的明确性与开放性 · 体系的封闭与开放 · 立法者的意图、回应与沉默 · 目的</span><span style="font-size:22px;color:#52605C">§109—§111</span></div><div style="display:flex;gap:22px;align-items:center;background:#FFFFFF;border:1px solid #DCD8CC;border-left:10px solid #2E6A5C;border-radius:12px;padding:16px 26px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:46px;color:#2E6A5C;min-width:44px">2</b><b style="font-size:29px;min-width:250px">法效果</b><span style="font-size:24px;flex:1">明显的法律保护漏洞 · 立法者的不作为 · 其他保护途径 · 共识、比较法 · 可用性</span><span style="font-size:22px;color:#52605C">§112</span></div><div style="display:flex;gap:22px;align-items:center;background:#FFFFFF;border:1px solid #DCD8CC;border-left:10px solid #9E5231;border-radius:12px;padding:16px 26px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:46px;color:#9E5231;min-width:44px">3</b><b style="font-size:29px;min-width:250px">宪法</b><span style="font-size:24px;flex:1">基本权利的保护与干预 · 信赖与判例变更 · 罪刑法定</span><span style="font-size:22px;color:#52605C">§113—§116</span></div><div style="display:flex;gap:22px;align-items:center;background:#FFFFFF;border:1px solid #DCD8CC;border-left:10px solid #9E5231;border-radius:12px;padding:16px 26px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:46px;color:#9E5231;min-width:44px">4</b><b style="font-size:29px;min-width:250px">国际条约</b><span style="font-size:24px;flex:1">条约优先适用 · 合条约的续造及其界限</span><span style="font-size:22px;color:#52605C">§117</span></div><div style="display:flex;gap:22px;align-items:center;background:#FFFFFF;border:1px solid #DCD8CC;border-left:10px solid #9E5231;border-radius:12px;padding:16px 26px"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:46px;color:#9E5231;min-width:44px">5</b><b style="font-size:29px;min-width:250px">权限</b><span style="font-size:24px;flex:1">法律保留 · 司法解释机关的权限 · 立法权与审判权 · 法院之间的权限</span><span style="font-size:22px;color:#52605C">§118—§120</span></div></div>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:27px;line-height:1.55;color:#16302A">衡量：优先规则 · 推定规则 · 论证负担规则 · 衡量规则（§121）。<b style="color:#2E6A5C">第一、二步主要收集一般论据；第三至五步多涉及上位法与权限，其论据常具优先性，可阻却衡量。</b>中国法院不享有违宪审查权，第三步中的宪法论据只能作为说理论据。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §108 ｜ 图 10</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="act2" data-transition="magic" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<p style="font-size:30px;color:#2E6A5C;letter-spacing:8px">第 二 幕 ｜ 二 十 三 分 钟</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:112px;font-weight:700;line-height:1.1;color:#16302A">第一至三步</h1>
+<hr style="border-top:3px solid #9E5231;width:280px">
+<p style="font-size:40px;line-height:1.55;color:#16302A;width:1500px">审查从萨维尼的解释因素开始：问题不再是「文义是什么意思」，<b style="color:#2E6A5C">而是「文义在多大程度上阻却法续造」。</b></p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">教材 §109–§113</p>
+</section>
+<section id="wording" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§109 ｜ 第 一 步（一）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:52px;font-weight:700;line-height:1.15">文义越确定，阻力越大；体系封闭的，阻却续造</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">文义的明确性</h3><div style="font-size:24px;line-height:1.55">数额、期限、列举式的构成要件：立法者表达决定的确定性最高，越出它们的法续造须克服最强的阻力。<br>例：《专利法》第十一条「专利权被授予后……不得……使用」——高度确定的时间标准，案例 51 对它的目的性限缩须承担较重的论证负担。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">封闭体系</h3><div style="font-size:24px;line-height:1.55">立法者有意把规范列举穷尽，类推被禁止，反面解释成为有效规则。<br>例：刑法上不利于行为人的方向（§114）；物权法定（《民法典》第一百一十六条）。</div></div></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">开放体系须有依归</h3><div style="font-size:24px;line-height:1.55">仅指出体系开放还不够，还须证明法律容许这一发展：<b>发生改变的生活情势须能在法律中找到依归</b>。<br>案例 48：婚姻法保护婚生子女利益的价值与意思表示的约束力。<br>案例 50：「最有利于未成年子女」原则。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">不得修改立法者的基本理念</h3><div style="font-size:24px;line-height:1.55">法人独立人格与股东有限责任是公司法的基本理念。案例 49 的横向人格否认没有修改它，而是在理念被滥用时作出例外——判决强调「违背了法人制度设立的宗旨」。<b>法续造服务于基本理念，而不是推翻它。</b></div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §109</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="history" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§110 ｜ 第 一 步（二）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">历史要素：立法者在续造之后怎样回应</h2></div>
+<p style="font-size:27px;line-height:1.6;color:#16302A;width:1664px">在法续造的审查中，历史要素不仅追问立法时的意图，也追问立法者在法续造作出之后的<b>回应与沉默</b>。立法材料表明立法者有意排除某一案型的，法续造须克服的不仅是文义，还有立法者明示的决定。</p>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:29px;font-weight:700;color:#2E6A5C">吸收</h3><div style="font-size:27px;line-height:1.55">立法者认可了续造的结论；此后问题转化为新法的解释问题。<br><b>沿革 5：横向人格否认</b></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:29px;font-weight:700;color:#9E5231">否定</h3><div style="font-size:27px;line-height:1.55">立法者以明文排除了续造的结论。<br><b>沿革 6：夫妻共同债务</b></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:29px;font-weight:700;color:#2E6A5C">修正</h3><div style="font-size:27px;line-height:1.55">吸收的同时调整其适用范围。<br><b>沿革 7：情势变更</b></div></div></div>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:30px;line-height:1.55;color:#16302A">立法者的回应虽然发生在法续造之后，却为评价法续造的正当性提供了事后的检验：<b style="color:#2E6A5C">被吸收的法续造，至少表明它没有违反立法者的基本理念。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §110 一、二</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">1 min</p>
+</section>
+<section id="rev5" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§110 ｜ 沿 革 5 ｜ 吸 收</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:54px;font-weight:700;line-height:1.15">横向人格否认：从指导性案例到《公司法》</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:23px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:10%;color:#2E6A5C;text-align:left">年份</th><th style="width:30%;color:#2E6A5C;text-align:left">规范</th><th style="width:60%;color:#2E6A5C;text-align:left">内容</th></tr><tr><td style="color:#2E6A5C;font-weight:700">2013</td><td>指导性案例 15 号（案例 49）</td><td>「参照」原《公司法》第二十条第三款，令人格混同的关联公司相互之间对外部债务承担连带责任；实际控制人王永礼并非被判令承担责任的一方</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">2019</td><td>《全国法院民商事审判工作会议纪要》第 11 条第二款</td><td>「控制股东或实际控制人控制多个子公司或者关联公司，滥用控制权使多个子公司或者关联公司财产边界不清、财务混同……可以综合案件事实，否认子公司或者关联公司法人人格，判令承担连带责任。」</td></tr><tr><td style="color:#2E6A5C;font-weight:700">2023</td><td>《公司法》第二十三条第二款</td><td>「股东利用其控制的两个以上公司实施前款规定行为的，各公司应当对任一公司的债务承担连带责任。」（2024 年 7 月 1 日施行）</td></tr></table>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:28px;line-height:1.55;color:#16302A">立法者吸收了法效果，又以「股东利用其控制的」限定了适用范围——会议纪要所列的「实际控制人」未被写入。<b style="color:#2E6A5C">非股东的实际控制人控制两个以上公司，能否适用本款？</b>这一沉默是有意义的，还是无关紧要的？须以立法材料判断。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §110 ｜ 沿革 5</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="rev6" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§110 ｜ 沿 革 6 ｜ 否 定</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">夫妻共同债务：从推定到「共债共签」</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:23px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:9%;color:#2E6A5C;text-align:left">年份</th><th style="width:25%;color:#2E6A5C;text-align:left">规范</th><th style="width:48%;color:#2E6A5C;text-align:left">要件</th><th style="width:18%;color:#2E6A5C;text-align:left">证明负担</th></tr><tr><td style="color:#2E6A5C;font-weight:700">2001</td><td>《婚姻法》第四十一条</td><td>「为夫妻共同生活所负的债务」——<b>债务的用途</b></td><td>依一般规则</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">2003</td><td>婚姻法解释（二）第二十四条</td><td>婚姻关系存续期间夫妻一方以个人名义所负债务，<b>按夫妻共同债务处理</b>；能证明明确约定为个人债务，或属约定分别财产且第三人知道的除外</td><td>举债人的配偶</td></tr><tr><td style="color:#2E6A5C;font-weight:700">2018</td><td>夫妻债务解释（法释〔2018〕2 号）</td><td>改以共同意思表示与「家庭日常生活需要」为界；与此前司法解释相抵触的，以本解释为准</td><td>——</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">2021</td><td>《民法典》第一千零六十四条</td><td>共同意思表示所负、家庭日常生活需要所负 → 共同债务；超出日常生活需要所负 → 原则上非共同债务</td><td>债权人</td></tr></table>
+<div style="background:#E4EFEA;padding:22px 34px;border-radius:16px"><p style="font-size:26px;line-height:1.55;color:#16302A">2003 年的规定在形式上是证明责任规则，在实质上把共同债务的范围扩及法条文义之外——<b style="color:#2E6A5C">法续造</b>。《民法典》第一千零六十四条第二款以明文排除了这一推定——<b style="color:#2E6A5C">立法者的否定</b>。须注意：最高人民法院先以 2018 年解释改变了立场，司法机关的自我修正可以先于立法者的回应。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §110 ｜ 沿革 6 ｜ 图 11</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="rev7" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§110 ｜ 沿 革 7 ｜ 修 正</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">情势变更：从司法解释到《民法典》</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:23px;font-weight:700;color:#9E5231;margin-bottom:4px">合同法解释（二）第二十六条（法释〔2009〕5 号）</h3><p style="font-size:21px;line-height:1.6;margin-top:6px">合同成立以后客观情况发生了当事人在订立合同时无法预见的、非不可抗力造成的不属于商业风险的重大变化，继续履行合同对于一方当事人明显不公平或者不能实现合同目的，当事人请求人民法院变更或者解除合同的，人民法院应当根据公平原则，并结合案件的实际情况确定是否变更或者解除。</p></div><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:23px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第五百三十三条</h3><p style="font-size:21px;line-height:1.6;margin-top:6px">合同成立后，合同的基础条件发生了当事人在订立合同时无法预见的、不属于商业风险的重大变化，继续履行合同对于当事人一方明显不公平的，受不利影响的当事人可以与对方重新协商；在合理期限内协商不成的，当事人可以请求人民法院或者仲裁机构变更或者解除合同。</p><p style="font-size:21px;line-height:1.6;margin-top:6px">人民法院或者仲裁机构应当结合案件的实际情况，根据公平原则变更或者解除合同。</p></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:23px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:20%;color:#2E6A5C;text-align:left">修正</th><th style="width:80%;color:#2E6A5C;text-align:left">内容</th></tr><tr><td style="color:#2E6A5C;font-weight:700">对象</td><td>「客观情况」→「合同的基础条件」</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">与不可抗力</td><td>删去「非不可抗力造成」：二者不再相互排斥</td></tr><tr><td style="color:#2E6A5C;font-weight:700">要件</td><td>删去「不能实现合同目的」，只保留「明显不公平」</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">程序</td><td>增加再协商；仲裁机构与法院并列</td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §110 ｜ 沿革 7 ｜ 1999 年《合同法》未规定情势变更；2009 年的规定属超越法律的法续造</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="silence3" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§110 三 ｜ 立 法 者 的 沉 默</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">沉默的三种含义，各有其证明要求</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:25px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:18%;color:#2E6A5C;text-align:left">含义</th><th style="width:30%;color:#2E6A5C;text-align:left">内容</th><th style="width:36%;color:#2E6A5C;text-align:left">证明要求</th><th style="width:16%;color:#2E6A5C;text-align:left">效果</th></tr><tr><td style="color:#2E6A5C;font-weight:700">一、有意义的沉默</td><td>立法者有意不采纳具体的立法建议</td><td>出示立法者曾考虑并拒绝某一方案的材料</td><td>阻却续造</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">二、认可</td><td>立法者历经多年对特定的、持续性的判例保持沉默</td><td>判例特定；持续有效；立法者在此期间修改过相关法律而未改变判例的结论</td><td>支持续造</td></tr><tr><td style="color:#2E6A5C;font-weight:700">三、无关紧要</td><td>前两种情况都不存在</td><td>——</td><td>沉默不具论证价值</td></tr></table>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">检验：案例 51（指导性案例 20 号）</h3><div style="font-size:24px;line-height:1.55">2016 年专利权纠纷解释（二）第十八条第三款附条件吸收其结论；2020 年修正该解释时保留；同年《专利法》第四次修正未对临时保护期产品的后续实施作出规定。<br>持续有效的是<b>司法解释的规则</b>，不是指导性案例。若把司法解释的规则视同持续性的判例，可作为第二种含义的论据；若不作此种视同，至多是第三种含义。</div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §110 三</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="purpose" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§111 ｜ 第 一 步（三）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">目的是法续造的主要正当化理由</h2></div>
+<p style="font-size:28px;line-height:1.6;color:#16302A;width:1664px">类推、目的性限缩与目的性扩张，都以规范目的为依据。目的论据推翻文义的能力，等于它为自己的目的命题所提供的论据的强度。</p>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">① 须是被续造规范自身的目的</h3><div style="font-size:25px;line-height:1.55">援引法秩序的一般目的，已进入超越法律的法续造，须满足第二至五步的更严格要求。<br>案例 51 以《专利法》第十一条自身的意旨（以公开换保护）为依据 → 法律内的法续造。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">② 改变的事实本身不是目的论据</h3><div style="font-size:25px;line-height:1.55">须说明改变后的情势如何使规范目的要求不同的适用。<br>案例 48：「人工授精已经普及」不足以支持新规则；须指出婚生子女保护与意思表示约束力这两项依归。</div></div></div>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:28px;line-height:1.55;color:#16302A">案例 29 的追问：法院援引的「防止保护期被变相延长」，是第七十五条第五项（行政审批例外）的典型理由，<b style="color:#2E6A5C">并非第四项（科研例外）自身的目的</b>——借自邻近条款的目的，论证负担最重。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §111 ｜ 参见 §53、案例 29・反思</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="effects" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§112 ｜ 第 二 步</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">比较「为」与「不为」的法效果</h2></div>
+<div style="display:flex;gap:20px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">明显的法律保护漏洞</h3><div style="font-size:24px;line-height:1.55">能否通过续造消除现有的弊端？<br>例：德国法上一般人格权与精神损害赔偿（索拉雅案）。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">立法者的不作为</h3><div style="font-size:24px;line-height:1.55">立法者知道问题存在而<b>未能</b>行动 → 支持续造。<br>区别于有意义的沉默：知道而<b>决定不</b>规范 → 阻却续造。<br>区分的依据仍是立法材料。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">不存在其他保护途径</h3><div style="font-size:24px;line-height:1.55">现行法已有适当保护途径的，不得以存在漏洞为由续造。<br><b>第二步中约束力较强的一项要求。</b></div></div></div>
+<div style="display:flex;gap:20px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">共识与比较法</h3><div style="font-size:24px;line-height:1.55">缺乏一般的法确信，难以续造；但不是决定性的。<br>外国判例可作「法认知源」：案例 49 可参照「单一经济体」「企业集团责任」的讨论，须说明公司法基本理念是否可比。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">可用性：类似构成要件的条件</h3><div style="font-size:24px;line-height:1.55">案例 49 的裁判要点：人员、业务、财务交叉或混同，导致各自财产无法区分；严重损害债权人利益。<br>案例 50 的裁判要点：「分居期间」「暂时确定」「协助义务」。<br><b>新方案若导致不明确的结论，即不具可用性。</b></div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §112</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="constitution" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§113 ｜ 第 三 步</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">宪法上的权利：保护与干预的双重作用</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">保护</h3><div style="font-size:25px;line-height:1.55">国家对基本权利负有保护义务；法院在立法者不作为时进行法续造，可以是履行保护义务的方式。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">干预</h3><div style="font-size:25px;line-height:1.55">法续造为一方创设权利，往往同时为另一方创设义务；干预越深，越需要法律的明文依据（§118）。</div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:38%;color:#2E6A5C;text-align:left">比例原则</th><th style="width:62%;color:#2E6A5C;text-align:left">案例 50（指导性案例 228 号）</th></tr><tr><td style="color:#2E6A5C;font-weight:700">适当性：手段有助于目的的实现</td><td>由母亲直接抚养哺乳期子女，有助于「最大限度保护未成年子女的利益」</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">必要性：同样有效的手段中，选择限制最小者</td><td>没有变更父母双方的监护权，只「暂时」确定直接抚养，并课以协助探望的义务</td></tr><tr><td style="color:#2E6A5C;font-weight:700">狭义比例性：限制的程度与目的的分量相称</td><td>父亲的直接抚养地位受到限制，但探望得到保障；与哺乳期子女得到母亲照顾的利益相比，并不失衡</td></tr></table>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:29px;line-height:1.55;color:#16302A">中国法院不享有违宪审查权，但合宪性考量是解释与续造的一般要求；宪法所保障的权利与原则<b style="color:#2E6A5C">可以作为支持或反对法续造的论据</b>。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §113 一 ｜ 本书采比例原则三项说</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="trust" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:30px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§113 二、三 ｜ 信 赖 保 护</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">信赖的对象：法律的文义，以及稳定的判例</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">判例变更</h3><div style="font-size:25px;line-height:1.55">当事人可能已依既有判例安排其行为；新见解溯及适用于既往的行为，即可能使其遭受不可预见的不利。<br>中国法：新规定的施行日期；「本规定施行后尚未终审的案件」之类的过渡规则；不参照指导性案例而作出不同裁判的，须说明理由——<b>说理义务本身就是对信赖的尊重</b>。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#9E5231">罪刑法定：最严格的信赖保护</h3><div style="font-size:25px;line-height:1.55">「民众合理信赖的表达」：民众必须能够从法律中预见其行为入罪的可能性及其刑罚。<br>由此产生不利于行为人的类推禁止。<br>根据：《刑法》第三条与《立法法》第十一条第四项。</div></div></div>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:32px;line-height:1.55;color:#16302A">第三幕专门讨论罪刑法定：<b style="color:#2E6A5C">它是信赖保护在刑法上最严格的形态。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §113 二、三</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="act3" data-transition="magic" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<p style="font-size:30px;color:#2E6A5C;letter-spacing:8px">第 三 幕 ｜ 二 十 分 钟</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:112px;font-weight:700;line-height:1.1;color:#16302A">类推禁止</h1>
+<hr style="border-top:3px solid #9E5231;width:280px">
+<p style="font-size:40px;line-height:1.55;color:#16302A;width:1500px">在不利于行为人的方向上，类推一旦被称为类推就被禁止；<b style="color:#2E6A5C">所以刑法上的越界几乎总以解释的面目出现。</b></p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">教材 §114–§116</p>
+</section>
+<section id="rev8" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§114 ｜ 沿 革 8</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">从类推制度到罪刑法定</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:29px;font-weight:700;color:#9E5231;margin-bottom:4px">1979 年《刑法》第七十九条</h3><p style="font-size:27px;line-height:1.6;margin-top:6px">本法分则没有明文规定的犯罪，可以比照本法分则最相类似的条文定罪判刑，但是应当报请最高人民法院核准。</p></div><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:29px;font-weight:700;color:#9E5231;margin-bottom:4px">1997 年《刑法》第三条</h3><p style="font-size:27px;line-height:1.6;margin-top:6px">法律明文规定为犯罪行为的，依照法律定罪处刑；法律没有明文规定为犯罪行为的，不得定罪处刑。</p></div></div>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:30px;line-height:1.55;color:#16302A">旧法的类推制度以「最相类似的条文」为出发点，在结构上正是具体类推，只是方向不利于行为人。新法第三条后段是对这一制度的<b style="color:#2E6A5C">明示否定</b>：不是沉默，而是明文。在不利于行为人的方向上，封闭体系的论据具有决定性的分量，<b style="color:#2E6A5C">不需要与其他论据衡量——它是一条优先规则。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §114 ｜ 沿革 8</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="scope" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§114 ｜ 根 据 与 射 程</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">禁止什么、禁止谁、界线在哪里</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">根据一：民主原则</h3><div style="font-size:24px;line-height:1.55">犯罪与刑罚只能由立法机关以法律规定（《立法法》第十一条第四项）。<br>→ 决定禁止的<b>对象</b>：不只法院，司法解释同样不得创设新的犯罪或加重刑罚。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">根据二：预见可能性</h3><div style="font-size:24px;line-height:1.55">民众必须能从法律中预见其行为入罪的可能性。<br>→ 决定禁止的<b>界线</b>：可能文义，因为民众只能依法律的语言预见其行为的法律后果。</div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:23px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:16%;color:#2E6A5C;text-align:left">射程</th><th style="width:84%;color:#2E6A5C;text-align:left">内容</th></tr><tr><td style="color:#2E6A5C;font-weight:700">方向</td><td>只禁止不利于行为人的类推。有利于行为人的类推、目的性限缩与超法规的违法阻却事由不受禁止。例：案例 19（指导性案例 97 号，王力军案）以「严重扰乱市场秩序」为独立要件，把未严重扰乱市场秩序的经营行为排除于非法经营罪之外</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">对象</td><td>及于构成要件与法效果两方面：既不得把文义未涵盖的行为纳入构成要件，也不得把文义未规定的刑罚档次适用于行为人（案例 54）</td></tr><tr><td style="color:#2E6A5C;font-weight:700">与解释的分界</td><td>不禁止扩张解释；分界即在可能文义。<b>刑法上审查的第一个问题总是定性问题</b></td></tr></table>
+<div style="background:#E4EFEA;padding:20px 34px;border-radius:16px"><p style="font-size:27px;line-height:1.55;color:#16302A">警示：「实质解释」「法益保护的需要」「行为的社会危害性相当」都是目的论据。<b style="color:#2E6A5C">审查刑法判决时，须先撇开目的论据，单独回答文义问题。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §114</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="answer52" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">开 场 题 的 答 案 ｜ 案例 52（指导性案例 104 号）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:54px;font-weight:700;line-height:1.15">判决：构成破坏计算机信息系统罪</h2></div>
+<p style="font-size:25px;line-height:1.6;color:#16302A;width:1664px">五被告人被判处有期徒刑一年三个月至一年十个月不等。理由：依两高危害计算机信息系统安全刑事解释第十一条，计算机信息系统包括「自动化控制设备」；依 2016 年环境污染刑事解释第十条第一款，「干扰环境质量监测系统的采样，致使监测数据严重失真的行为，属于破坏计算机信息系统」；堵塞采样孔「属于对计算机信息系统功能进行干扰，造成计算机信息系统不能正常运行的行为」。</p>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:23px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:28%;color:#2E6A5C;text-align:left">要素</th><th style="width:72%;color:#2E6A5C;text-align:left">检验</th></tr><tr><td style="color:#2E6A5C;font-weight:700">「对计算机信息系统功能进行干扰」</td><td>采样是监测系统的功能之一，堵塞采样孔使采样器内气流场改变，可以说是对采样功能的干扰。<b>文义较为开放，判决的论证可以成立</b></td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">「造成计算机信息系统不能正常运行」</td><td>系统照常采集、处理、传输数据，软件与硬件均未被删除、修改或增加；失真的是系统所测量的对象，而不是系统的运行。若「输出失真数据」即等于「不能正常运行」，在温度传感器旁放置冰块也将落入本罪。<b>判决以一句话同时处理两个要素，未对这一要素单独论证</b></td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">西安市中级人民法院（2016）陕 01 刑初 233 号 ｜ 教材 §115</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="answer52b" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§115 ｜ 案 例 52 的 方 法 论 解 读</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">司法解释能不能补上？</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">注意规定，还是拟制？</h3><div style="font-size:24px;line-height:1.55">若是对第二百八十六条的解释（注意规定）：其正当性完全取决于文义检验能否通过。<br>若是在第二百八十六条之外增设一种行为类型（拟制）：由司法解释创设拟制，本身就触及「犯罪和刑罚」的法律保留（§118）。<br><b>判决没有讨论这一问题，直接把司法解释当作大前提。</b></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">教材的结论</h3><div style="font-size:24px;line-height:1.55">本案处于可能文义的边缘。认为「不能正常运行」包括「不能正常地完成其监测功能」的，可认为结论仍在文义之内；认为它指系统本身的运行状态的，会认为结论已越出文义，属不利于行为人的类推。<br><b>正因为两种读法都有其根据，判决负有说明自己采取哪一种读法及其理由的义务。</b></div></div></div>
+<div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:27px;font-weight:700;color:#9E5231;margin-bottom:4px">后续：环境污染刑事解释（法释〔2023〕7 号）第十一条第一款第（二）项</h3><p style="font-size:25px;line-height:1.6;margin-top:6px">干扰系统采样，致使监测数据<b>因系统不能正常运行而</b>严重失真的</p></div>
+<div style="background:#E4EFEA;padding:20px 34px;border-radius:16px"><p style="font-size:26px;line-height:1.55;color:#16302A">「系统不能正常运行」成为须单独认定的中间环节——<b style="color:#2E6A5C">判决未单独论证的第二个要素，在司法解释的文本中得到了明示。</b>社会危害性是目的论据，不能回答文义问题；若文义问题的答案是否定的，填补这一处罚漏洞的权限属于立法者。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §115 ｜ 原环境污染刑事解释（法释〔2016〕29 号）已被法释〔2023〕7 号第二十条废止</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="case53" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§115 ｜ 案例 53（指导性案例 145 号）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">修改了数据，系统却照常运行</h2></div>
+<p style="font-size:26px;line-height:1.6;color:#16302A;width:1664px">被告人为赚取赌博网站广告费，在境外对存在防护漏洞的服务器植入木马程序，获取后台浏览、增加、删除、修改等操作权限，上传添加了赌博关键字并设置自动跳转的静态网页，以提高被搜索引擎命中的几率；共链接被植入木马的服务器 113 台。公诉机关以破坏计算机信息系统罪起诉。</p>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">《刑法》第二百八十五条第二款（节录）</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">违反国家规定，侵入前款规定以外的计算机信息系统或者采用其他技术手段，获取该计算机信息系统中存储、处理或者传输的数据，或者对该计算机信息系统实施非法控制，情节严重的，处三年以下有期徒刑或者拘役，并处或者单处罚金；情节特别严重的，处三年以上七年以下有期徒刑，并处罚金。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">判决：非法控制计算机信息系统罪</h3><div style="font-size:23px;line-height:1.55">被告人虽修改、增加了数据，「但未造成该信息系统功能实质性的破坏，或不能正常运行」。<br>裁判要点：修改、增加数据实施非法控制，<b>但未造成系统功能实质性破坏或者不能正常运行的，不应当认定为破坏计算机信息系统罪</b>。</div></div></div>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:27px;line-height:1.55;color:#16302A">本案为第二百八十六条的「不能正常运行」划定了下限。对照案例 52：监测系统的软件与硬件均未被改动，系统照常采集、处理、传输数据。<b style="color:#2E6A5C">两案若要协调，须把案例 52 读作「监测功能」意义上的不能正常运行，并说明理由。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">南京市鼓楼区人民法院（2018）苏 0106 刑初 487 号；南京市中级人民法院（2019）苏 01 刑终 768 号 ｜ 教材 §115</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="case54" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:12px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§116 ｜ 案例 54（指导性案例 61 号）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:50px;font-weight:700;line-height:1.15">「依照第一款的规定处罚」：包括「情节特别严重」吗</h2></div>
+<p style="font-size:24px;line-height:1.6;color:#16302A;width:1664px">基金经理马乐利用未公开信息，操作自己控制的三个账户，先于、同期或稍晚于其管理的基金账户买卖相同股票 76 只，累计成交额 10.5 亿余元，非法获利 1912 万余元；马乐投案自首。</p>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:22px;font-weight:700;color:#9E5231;margin-bottom:4px">《刑法》第一百八十条</h3><p style="font-size:20px;line-height:1.6;margin-top:6px">第一款：……情节严重的，处五年以下有期徒刑或者拘役，并处或者单处违法所得一倍以上五倍以下罚金；<b>情节特别严重的</b>，处五年以上十年以下有期徒刑，并处违法所得一倍以上五倍以下罚金。</p><p style="font-size:20px;line-height:1.6;margin-top:6px">第四款：……利用因职务便利获取的内幕信息以外的其他未公开的信息，违反规定，从事与该信息相关的证券、期货交易活动，或者明示、暗示他人从事相关交易活动，<b>情节严重的，依照第一款的规定处罚</b>。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:14px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #52605C;border-radius:14px"><h3 style="font-size:24px;font-weight:700;color:#52605C">一审、二审</h3><div style="font-size:23px;line-height:1.55">刑法「并未对利用未公开信息交易罪规定『情节特别严重』的情形」，只能认定为情节严重：有期徒刑三年、缓刑五年。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:24px;font-weight:700;color:#2E6A5C">最高人民法院（2015）刑抗字第 1 号</h3><div style="font-size:23px;line-height:1.55">第四款援引法定刑，是对第一款<b>全部法定刑</b>的引用：改判有期徒刑三年（不再适用缓刑），并处罚金 1913 万元。</div></div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:21px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:72%;color:#2E6A5C;text-align:left">最高人民法院的三项理由</th><th style="width:28%;color:#2E6A5C;text-align:left">性质</th></tr><tr><td style="color:#2E6A5C;font-weight:700">两罪规定在同一法条中，「违法与责任程度相当」</td><td>目的论据</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">刑法中兼具入罪与量刑性质的「情节严重」，「无一例外均在其后列明了具体的法定刑」；第四款的「情节严重」只是入罪条款</td><td>体系论据——论证力较强</td></tr><tr><td style="color:#2E6A5C;font-weight:700">援引法定刑的目的在于避免重复，「并不属于法律规定不明确的情形」</td><td>立法技术</td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">深圳市中级人民法院；广东省高级人民法院 ｜ 教材 §116</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="case54b" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§116 ｜ 两 案 对 照</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">争议在于选择，还是在于可能</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">案例 54：在文义之内选择</h3><div style="font-size:25px;line-height:1.55">「第一款的规定」在语言上可以指第一款的全部处罚规定，也可以指与「情节严重」对应的那一部分——<b>两种读法都在可能文义之内</b>。<br>→ 解释问题，类推禁止不被触发；目的与体系论据可以发挥作用。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#9E5231">案例 52：是否越出文义</h3><div style="font-size:25px;line-height:1.55">争议在于其中一种读法是否<b>语言上可能</b>。<br>→ 若越出文义，类推禁止是优先规则，目的论据再强也不能改变结论。</div></div></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">一审、二审的读法错在哪里</h3><div style="font-size:25px;line-height:1.55">以罪刑法定的明确性要求选择读法。但明确性原则是对<b>立法者</b>的要求，不是在两种文义上可能的读法之间作选择的规则；「存疑时有利于被告」处理的是<b>事实</b>的疑问，不是法律解释的疑问。在文义之内的选择上，刑法与其他法领域适用相同的解释规则。</div></div>
+<div style="background:#E4EFEA;padding:20px 34px;border-radius:16px"><p style="font-size:27px;line-height:1.55;color:#16302A">后续：两高利用未公开信息交易解释（法释〔2019〕10 号）第七条第一款明确「依照第一款的规定处罚」包括「情节特别严重」的情形。<b style="color:#2E6A5C">指导性案例 61 号的读法由此被司法解释吸收。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §116</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="crimproc" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:30px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§116 ｜ 归 纳</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">刑法上法续造审查的四步</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:25px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:14%;color:#2E6A5C;text-align:left">步骤</th><th style="width:58%;color:#2E6A5C;text-align:left">内容</th><th style="width:28%;color:#2E6A5C;text-align:left">本幕例证</th></tr><tr><td style="color:#2E6A5C;font-weight:700">一、定性</td><td>结论是否仍在可能文义之内？须单独回答，<b>不得以目的论据代替文义论据</b></td><td>案例 52：「不能正常运行」</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">二、文义之内</td><td>依第四至八章的解释规则选择读法；方向不利于行为人这一事实本身，不改变解释规则</td><td>案例 54</td></tr><tr><td style="color:#2E6A5C;font-weight:700">三、文义之外</td><td>不利于行为人的：<b>审查终结，结论不能成立</b>。有利于行为人的：依五步审查进行，论证负担较民法上的同类续造为轻</td><td>案例 19（指导性案例 97 号）</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">四、司法解释</td><td>司法解释的规定须同样经受第一步的检验；<b>不因其形式而免于这一检验</b></td><td>2016 年环境污染刑事解释第十条第一款</td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §116</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">1 min</p>
+</section>
+<section id="act4" data-transition="magic" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<p style="font-size:30px;color:#2E6A5C;letter-spacing:8px">第 四 幕 ｜ 二 十 三 分 钟</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:112px;font-weight:700;line-height:1.1;color:#16302A">第四、五步与衡量</h1>
+<hr style="border-top:3px solid #9E5231;width:280px">
+<p style="font-size:40px;line-height:1.55;color:#16302A;width:1500px">确定界限是否被违反的关键，<b style="color:#2E6A5C">通常在上位法与权限。</b></p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">教材 §117–§122</p>
+</section>
+<section id="treaty" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§117 ｜ 第 四 步</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">国际条约：适用的选择，与合条约的续造</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:25px;font-weight:700;color:#9E5231;margin-bottom:4px">《海商法》（2025 年修订）第三百零七条第一款</h3><p style="font-size:23px;line-height:1.6;margin-top:6px">中华人民共和国缔结或者参加的国际条约与本法有不同规定的，适用国际条约的规定；但是，中华人民共和国声明保留的条款除外。</p></div><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">涉外民商事案件适用国际条约和国际惯例解释（法释〔2023〕15 号）第一条第二款</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">人民法院审理上述法律调整范围之外的其他涉外民商事案件，涉及适用国际条约的，参照上述法律的规定。国际条约与中华人民共和国法律有不同规定的，适用国际条约的规定，但中华人民共和国声明保留的条款除外。</p></div></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">两个方向</h3><div style="font-size:23px;line-height:1.55">① 条约与法律有不同规定 → 依条约优先条款直接适用条约：<b>适用规范的选择，不是续造</b>。<br>② 法律未作规定或有数种可能解释，而属条约调整范围 → 以条约为取向解释或填补：<b>合条约的续造</b>。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#9E5231">界限</h3><div style="font-size:23px;line-height:1.55">条约须对我国生效，案件属其适用范围；声明保留除外 · 损害国家主权、安全和社会公共利益的不予适用 · 立法者有意作出与条约不同的规定的，不得推翻 · 不能为法律保留事项提供续造依据</div></div></div>
+<div style="background:#E4EFEA;padding:20px 34px;border-radius:16px"><p style="font-size:26px;line-height:1.55;color:#16302A">回到（2025）鲁民终 1383 号：一年短期时效源自《海牙规则》，而<b style="color:#2E6A5C">我国并未加入该公约</b>，国内水路货物运输更不在其调整范围之内——公约只能作为比较法论据，不能支持把一年时效扩及运费请求。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §117 ｜ 另见《对外关系法》第三十条、第三十一条</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="reservation" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§118 ｜ 第 五 步（一）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">法律保留：只能由法律规定的事项</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">《立法法》（2023 年修正）第十一条（节录）</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">下列事项只能制定法律：</p><p style="font-size:22px;line-height:1.6;margin-top:6px">……（四）犯罪和刑罚；</p><p style="font-size:22px;line-height:1.6;margin-top:6px">（五）对公民政治权利的剥夺、限制人身自由的强制措施和处罚；</p><p style="font-size:22px;line-height:1.6;margin-top:6px">（六）税种的设立、税率的确定和税收征收管理等税收基本制度；</p><p style="font-size:22px;line-height:1.6;margin-top:6px">（七）对非国有财产的征收、征用；</p><p style="font-size:22px;line-height:1.6;margin-top:6px">（八）民事基本制度；</p><p style="font-size:22px;line-height:1.6;margin-top:6px">……（十）诉讼制度和仲裁基本制度；……</p></div><div style="flex:1;display:flex;flex-direction:column;gap:16px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">对法续造的意义</h3><div style="font-size:24px;line-height:1.55">凡属只能由法律规定的事项，法院与司法解释机关不得以续造的方式创设规则，否则即以司法权替代了立法权。<br>第十二条但书所列事项（犯罪和刑罚等）构成<b>绝对保留</b>——刑法上类推禁止在立法法上的依据。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">「民事基本制度」须限缩理解</h3><div style="font-size:24px;line-height:1.55">指物权种类、婚姻、继承等制度的基本框架，而不是民法上的一切规则。<br>民法上的漏洞填补<b>原则上不受法律保留的阻却</b>——否则等于把风险留给偶然承担它的一方。<br>但创设新的物权种类、新的身份关系或改变继承顺序的续造，须由法律规定。</div></div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §118 ｜ 中国法上的根据：《宪法》第五十八条、第一百三十一条；重要性理论是德国法上的学说，我国法未采用</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="transfer" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§118 ｜ 物 权 法 定 的 界 限</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">让与担保：约定有效，优先受偿从何而来</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:28px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第一百一十六条</h3><p style="font-size:26px;line-height:1.6;margin-top:6px">物权的种类和内容，由法律规定。</p></div><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:26px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第三百八十八条第一款（节录）</h3><p style="font-size:24px;line-height:1.6;margin-top:6px">设立担保物权，应当依照本法和其他法律的规定订立担保合同。担保合同包括抵押合同、质押合同和其他具有担保功能的合同。……</p></div></div>
+<div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:25px;font-weight:700;color:#9E5231;margin-bottom:4px">担保制度解释第六十八条第一款</h3><p style="font-size:23px;line-height:1.6;margin-top:6px">债务人或者第三人与债权人约定将财产形式上转移至债权人名下，债务人不履行到期债务，债权人有权对财产折价或者以拍卖、变卖该财产所得价款偿还债务的，人民法院应当认定该约定有效。当事人已经完成财产权利变动的公示，债务人不履行到期债务，债权人请求<b>参照民法典关于担保物权的有关规定就该财产优先受偿</b>的，人民法院应予支持。</p></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:24%;color:#2E6A5C;text-align:left"></th><th style="width:76%;color:#2E6A5C;text-align:left">检验</th></tr><tr><td style="color:#2E6A5C;font-weight:700">约定的效力</td><td>可以攀附第三百八十八条第一款所称「其他具有担保功能的合同」</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">优先受偿</td><td>是物权效力；以「参照」之名作出的是一次<b>自主类推</b>，使一种法律未规定的担保形式取得担保物权的效力</td></tr><tr><td style="color:#2E6A5C;font-weight:700">是否触及「民事基本制度」</td><td>取决于把让与担保看作<b>新的物权种类</b>（须由法律规定），还是看作既有担保物权规则在另一种公示形式上的适用</td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §118 ｜ 《最高人民法院关于适用〈中华人民共和国民法典〉有关担保制度的解释》（法释〔2020〕28 号）</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="sjpower" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§118 ｜ 司 法 解 释 的 权 限</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">司法解释只能解释，不能续造</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:25px;font-weight:700;color:#9E5231;margin-bottom:4px">《立法法》第四十八条第二款</h3><p style="font-size:23px;line-height:1.6;margin-top:6px">法律有以下情况之一的，由全国人民代表大会常务委员会解释：</p><p style="font-size:23px;line-height:1.6;margin-top:6px">（一）法律的规定需要进一步明确具体含义的；</p><p style="font-size:23px;line-height:1.6;margin-top:6px">（二）法律制定后出现新的情况，需要明确适用法律依据的。</p></div><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">《立法法》第一百一十九条第一款</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">最高人民法院、最高人民检察院作出的属于审判、检察工作中具体应用法律的解释，应当主要针对具体的法律条文，并符合立法的目的、原则和原意。遇有本法第四十八条第二款规定情况的，应当向全国人民代表大会常务委员会提出法律解释的要求或者提出制定、修改有关法律的议案。</p></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:22px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:22%;color:#2E6A5C;text-align:left">三点结论</th><th style="width:78%;color:#2E6A5C;text-align:left">内容</th></tr><tr><td style="color:#2E6A5C;font-weight:700">权限止于可能文义</td><td>「主要针对具体的法律条文」排除无所攀附的创制性补充；「符合立法的目的、原则和原意」排除与立法者明示意图相反的续造。需要续造时，法定途径是提请法律解释或提出修法议案</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">个案续造</td><td>不受第一百一十九条的程序约束，但受其实体标准约束。例：人工授精子女的地位是「法律制定后出现新的情况」——个案法院依复函裁判属审判权的行使；以司法解释作出的抽象规则，其权限依据成问题</td></tr><tr><td style="color:#2E6A5C;font-weight:700">司法解释须受第一至三步审查</td><td>案例 52：2016 年环境污染刑事解释第十条第一款若越出《刑法》第二百八十六条的可能文义，既违反罪刑法定，也逾越本条所划的权限。法院无权宣告司法解释无效，但可以作合于法律的解释</td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §118 ｜ 第四十八条第二款第二项在方法论上描述的正是嗣后漏洞（§95）</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="restraint" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§119 ｜ 第 五 步（二）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">立法权与审判权的划分</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">司法自我克制</h3><div style="font-size:24px;line-height:1.55">确定规范的具体目标是立法机关的任务；法官擅自进行主动的「社会型构」，即越过正当界限。<br><b>自我克制是论证负担的分配规则，不是拒绝法续造的理由。</b></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">具体化中的法续造</h3><div style="font-size:24px;line-height:1.55">五个审查步骤同样适用于具体化的领域；<b>只依赖空白公式或放弃中间步骤的，在形式上即构成不正当的法续造</b>——不须先判断结论是否妥当，只须检查是否出示了中间步骤。</div></div></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">补充性的法续造</h3><div style="font-size:24px;line-height:1.55">立法者始终无所作为、存在法律保护漏洞之虞时，可例外地进行。例：索拉雅案。<br>中国法：指导性案例或复函作出续造 → 司法解释或会议纪要整理 → 立法者吸收并修正。<br><b>被吸收不能使当初越界的续造变得正当</b>：作出时是否越界，依作出时的法状态判断。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">针对立法者的造法</h3><div style="font-size:24px;line-height:1.55">在立法者已经作出决定的领域，以自己的判断替代立法者的判断——原则上不正当。立法者的决定违反上位法的，由有权机关以合宪性审查纠正；这一权限属于全国人民代表大会及其常务委员会，不属于法院。</div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §119 ｜ 《宪法》第一百三十一条：「依照法律规定」既是独立的条件，也是界限</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="courts" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:30px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§120 ｜ 第 五 步（三）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">法院之间的权限：三个层面</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:25px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:26%;color:#2E6A5C;text-align:left">层面</th><th style="width:74%;color:#2E6A5C;text-align:left">内容</th></tr><tr><td style="color:#2E6A5C;font-weight:700">全国人大常委会与最高人民法院</td><td>法律解释权属于全国人大常委会；最高人民法院的解释权限于「审判工作中具体应用法律」的问题。嗣后漏洞在抽象层面的填补，属于全国人大常委会的权限（《立法法》第四十八条）</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">最高人民法院与地方各级人民法院</td><td>依《立法法》第一百一十九条，两高以外的审判机关不得作出具体应用法律的解释。地方法院在个案中可以填补漏洞，但<b>不能以规范性文件的形式为辖区内的同类案件创设续造规则</b>——高级人民法院的「指导意见」「审理指南」须从这一角度审查</td></tr><tr><td style="color:#2E6A5C;font-weight:700">审级之间的统一</td><td>最高人民法院知识产权法庭使专利等技术类案件的二审集中于同一法院，续造规则能在全国统一（案例 29 即是这一机制下的产物）。代价：最高审级的续造越界，下级法院缺乏纠正途径——<b>续造越具普遍效力，越须满足可用性与说理的要求</b></td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §120 ｜ 《中华人民共和国人民法院组织法》第十八条第一款</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="weighing" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§121 ｜ 论 证 模 型 的 衡 量</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">优先、推定、论证负担、衡量</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:16%;color:#2E6A5C;text-align:left">规则</th><th style="width:36%;color:#2E6A5C;text-align:left">作用</th><th style="width:48%;color:#2E6A5C;text-align:left">例证</th></tr><tr><td style="color:#2E6A5C;font-weight:700">优先规则</td><td>某一论据一旦成立，即决定结论，不再与其他论据衡量</td><td>刑法上不利于行为人的类推禁止；《立法法》第十二条但书的绝对保留；1997 年《刑法》第三条（沿革 8）</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">推定规则</td><td>某一论据被推定成立，主张相反者须推翻推定</td><td>立法者意图的推定效力；判决先例正确性的推定；明确的文义推定为立法者的决定</td></tr><tr><td style="color:#2E6A5C;font-weight:700">论证负担规则</td><td>确定由谁承担说理义务，以及义务的轻重</td><td>主张法续造者承担；越偏离文义核心与立法计划，负担越重；有利于关系人的类推负担较轻（案例 17）</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">衡量规则</td><td>无优先规则时，比较支持与反对论据的分量</td><td>保护漏洞的明显程度与其他保护途径之有无；对第三人权利的干预深度；规则的可用性</td></tr></table>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">案例 52</h3><div style="font-size:25px;line-height:1.55">若认定结论越出文义，第三步的类推禁止即构成优先规则，<b>审查终结，无须衡量社会危害性</b>。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">案例 50</h3><div style="font-size:25px;line-height:1.55">第一步：文义（「离婚后」）反对，目的与「最有利于未成年子女」支持；第二步：保护漏洞明显且无其他途径；第三步：比例原则经「暂时」满足——<b>衡量的结果是续造正当</b>。</div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §121 ｜ 次序不是位阶：第一步的论据若足够强，同样可以构成优先规则</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="checklist" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§122 ｜ 漏 洞 填 补 与 法 续 造 的 审 查 清 单</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">十五问：第十二至十五章</h2></div>
+<div style="display:flex;gap:30px"><div style="flex:1;display:flex;flex-direction:column"><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#2E6A5C;min-width:40px">01</b><b style="font-size:22px;min-width:330px">结论是否已越出可能文义？</b><span style="font-size:20px;color:#52605C">先单独回答文义问题；越出者，写明自己在做法续造</span></div><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#2E6A5C;min-width:40px">02</b><b style="font-size:22px;min-width:330px">是否存在不圆满性？</b><span style="font-size:20px;color:#52605C">「答案不合理」不等于「没有答案」</span></div><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#2E6A5C;min-width:40px">03</b><b style="font-size:22px;min-width:330px">是否违反计划？</b><span style="font-size:20px;color:#52605C">法外空间、有意义的沉默；沉默属三种含义中的哪一种</span></div><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#2E6A5C;min-width:40px">04</b><b style="font-size:22px;min-width:330px">漏洞属于哪一类型？</b><span style="font-size:20px;color:#52605C">法内、有据式五种、无据式；自始抑或嗣后</span></div><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#2E6A5C;min-width:40px">05</b><b style="font-size:22px;min-width:330px">以何种方法、依何种法理填补？</b><span style="font-size:20px;color:#52605C">类推、目的性限缩、目的性扩张、创制性补充</span></div><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#2E6A5C;min-width:40px">06</b><b style="font-size:22px;min-width:330px">类推的两步是否都已完成？</b><span style="font-size:20px;color:#52605C">类似性：利益冲突；相容性：制度定位，必要时限定</span></div><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#2E6A5C;min-width:40px">07</b><b style="font-size:22px;min-width:330px">支持续造的目的是谁的目的？</b><span style="font-size:20px;color:#52605C">须是被续造规范自身的目的</span></div><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#2E6A5C;min-width:40px">08</b><b style="font-size:22px;min-width:330px">拒绝续造的后果？有无其他保护途径？</b><span style="font-size:20px;color:#52605C">比较「为」与「不为」</span></div></div><div style="flex:1;display:flex;flex-direction:column"><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#9E5231;min-width:40px">09</b><b style="font-size:22px;min-width:330px">新规则是否具有可用性？</b><span style="font-size:20px;color:#52605C">类似构成要件的条件</span></div><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#9E5231;min-width:40px">10</b><b style="font-size:22px;min-width:330px">是否涉及宪法上的权利与信赖？</b><span style="font-size:20px;color:#52605C">保护了谁，限制了谁；判例变更</span></div><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#9E5231;min-width:40px">11</b><b style="font-size:22px;min-width:330px">是否为刑法上不利于行为人的方向？</b><span style="font-size:20px;color:#52605C">是且越出文义的，审查终结</span></div><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#9E5231;min-width:40px">12</b><b style="font-size:22px;min-width:330px">是否涉及国际条约？</b><span style="font-size:20px;color:#52605C">条约优先不属续造；合条约续造的界限</span></div><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#9E5231;min-width:40px">13</b><b style="font-size:22px;min-width:330px">是否触及法律保留与立法者的权限？</b><span style="font-size:20px;color:#52605C">绝对保留；民事基本制度；司法解释的权限</span></div><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#9E5231;min-width:40px">14</b><b style="font-size:22px;min-width:330px">作出续造的机关是否有此权限？</b><span style="font-size:20px;color:#52605C">地方法院不得以规范性文件创设续造规则</span></div><div style="display:flex;gap:14px;align-items:baseline;padding:6px 0;border-bottom:1px solid #DCD8CC"><b style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:26px;color:#9E5231;min-width:40px">15</b><b style="font-size:22px;min-width:330px">论据如何权衡？</b><span style="font-size:20px;color:#52605C">先优先规则，再推定与论证负担，最后衡量；写进理由</span></div></div></div>
+<div style="background:#E4EFEA;padding:20px 36px;border-radius:16px"><p style="font-size:28px;line-height:1.55;color:#16302A">第 01—05 项对应漏洞的认定与填补方法；<b style="color:#2E6A5C">第 06—15 项对应法续造的界限审查。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §122</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="homework" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">课 后 练 习</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">两道题：一道刑法，一道民法</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">一 · 案例 52 · 练习（§115）</h3><div style="font-size:25px;line-height:1.55">（1）指导性案例 145 号认为，修改、增加数据但「未造成系统功能实质性破坏或者不能正常运行的，不应当认定为破坏计算机信息系统罪」。这一要点与指导性案例 104 号的结论是否协调？<br>（2）若立法者希望处罚干扰环境监测的行为，在第二百八十六条中增设一款，与在妨害社会管理秩序罪一章中增设独立罪名，各有何利弊？</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">二 · 沿革 5（§110）</h3><div style="font-size:25px;line-height:1.55">非股东的实际控制人控制两个以上公司、使其人格混同，债权人请求各公司对任一公司的债务承担连带责任。<br>（1）《公司法》第二十三条第二款对「实际控制人」的沉默，属于三种含义中的哪一种？须出示什么材料？<br>（2）若认定存在漏洞，类推的类似性与相容性如何论证？<br>（3）依十五问清单，还须审查哪几项？</div></div></div>
+<p style="font-size:28px;line-height:1.6;color:#16302A">写作要求：逐项写出所处的审查步骤与论据的性质（优先、推定、论证负担或衡量）。</p>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §110、§115、§122</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="end" data-transition="fade" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:74px;font-weight:700;line-height:1.25;color:#16302A;width:1660px">写明自己在做法续造；<br>说明每一步的论据及其分量；<br>为新规则确立可以涵摄的条件</h2>
+<hr style="border-top:3px solid #9E5231;width:280px">
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:30px;font-weight:700;color:#2E6A5C">审查</h3><p style="font-size:27px;line-height:1.65;color:#16302A">五步：经典论证模型、法效果、宪法、国际条约、权限。<br>四类规则：优先、推定、论证负担、衡量。<br>拒绝续造也须说理。</p></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:30px;font-weight:700;color:#2E6A5C">刑法与司法解释</h3><p style="font-size:27px;line-height:1.65;color:#16302A">先单独回答文义问题，不以目的论据代替。<br>不利于行为人而越出文义的，审查终结。<br>司法解释只能解释，不能续造；它同样须受文义检验。</p></div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#2E6A5C">配套阅读：《法学方法论—理论与实务》§106–§122 ｜ 案例 52、53、54 ｜ 沿革 5—8</p>
+</section>
+    </div>
+  </div>
+  <div id="cap"></div>
+  <div id="bar">
+    <button id="prev" title="上一页（←）">◀ 上一页</button>
+    <button id="play" class="key" title="播放／暂停（空格）">▶ 播放</button>
+    <button id="next" title="下一页（→）">下一页 ▶</button>
+    <button id="replay" title="重读本页（R）">↺ 重读</button>
+    <span id="pos">1 / 40</span>
+    <button id="auto" class="tog" aria-pressed="true" title="讲完自动翻到下一页">自动播放</button>
+    <label><span>停顿</span><input id="gap" type="range" min="0" max="8" step="1" value="2"><b id="gapV">2 秒</b></label>
+    <label><span>语速</span><input id="rate" type="range" min="0.6" max="1.6" step="0.05" value="1"><b id="rateV">1.00×</b></label>
+    <label><span>语音</span><select id="voice"></select></label>
+    <button id="capt" class="tog" aria-pressed="true" title="显示／隐藏讲稿字幕（S）">字幕</button>
+    <span class="sp"></span>
+    <span id="srcnote" style="color:#6F9A8C"></span>
+    <button id="toclink">目录</button>
+    <button id="full" title="全屏（F）">全屏</button>
+  </div>
+</div>
+
+<div id="toc">
+  <button id="tocX">关闭 ✕</button>
+  <h3>目　录</h3>
+  <ol><li data-n="0"><em>1</em><span>法续造的界限</span><s>开场</s></li><li data-n="1"><em>2</em><span>今天的八十分钟</span><s>1 min</s></li><li data-n="2"><em>3</em><span>一团棉纱</span><s>2 min</s></li><li data-n="3"><em>4</em><span>问题与审查框架</span><s>第一幕　问题与审查框架</s></li><li data-n="4"><em>5</em><span>两端：受法律约束与禁止拒绝裁判</span><s>2 min</s></li><li data-n="5"><em>6</em><span>隐蔽性的法续造</span><s>2 min</s></li><li data-n="6"><em>7</em><span>运费请求适用一年时效吗</span><s>3 min</s></li><li data-n="7"><em>8</em><span>「违法的法续造」是审查的结论</span><s>2 min</s></li><li data-n="8"><em>9</em><span>五步审查</span><s>2 min</s></li><li data-n="9"><em>10</em><span>第一至三步</span><s>第二幕　第一至三步</s></li><li data-n="10"><em>11</em><span>第一步：文义与体系</span><s>3 min</s></li><li data-n="11"><em>12</em><span>第一步：立法者的回应</span><s>1 min</s></li><li data-n="12"><em>13</em><span>沿革 5：横向人格否认</span><s>3 min</s></li><li data-n="13"><em>14</em><span>沿革 6：夫妻共同债务</span><s>3 min</s></li><li data-n="14"><em>15</em><span>沿革 7：情势变更</span><s>2 min</s></li><li data-n="15"><em>16</em><span>立法者沉默的三种含义</span><s>2 min</s></li><li data-n="16"><em>17</em><span>第一步：目的</span><s>2 min</s></li><li data-n="17"><em>18</em><span>第二步：法效果</span><s>3 min</s></li><li data-n="18"><em>19</em><span>第三步：宪法与比例原则</span><s>2 min</s></li><li data-n="19"><em>20</em><span>信赖与判例变更</span><s>2 min</s></li><li data-n="20"><em>21</em><span>类推禁止</span><s>第三幕　类推禁止</s></li><li data-n="21"><em>22</em><span>沿革 8：从类推制度到罪刑法定</span><s>2 min</s></li><li data-n="22"><em>23</em><span>类推禁止的根据与射程</span><s>3 min</s></li><li data-n="23"><em>24</em><span>回到干扰采样案：两个要素</span><s>3 min</s></li><li data-n="24"><em>25</em><span>干扰采样案：司法解释的作用与评价</span><s>3 min</s></li><li data-n="25"><em>26</em><span>案例 53：植入木马、上传网页</span><s>3 min</s></li><li data-n="26"><em>27</em><span>案例 54：马乐案</span><s>3 min</s></li><li data-n="27"><em>28</em><span>马乐案与干扰采样案：根本区别</span><s>2 min</s></li><li data-n="28"><em>29</em><span>刑法上法续造审查的程序</span><s>1 min</s></li><li data-n="29"><em>30</em><span>第四、五步与衡量</span><s>第四幕　第四、五步与衡量</s></li><li data-n="30"><em>31</em><span>第四步：国际条约</span><s>3 min</s></li><li data-n="31"><em>32</em><span>第五步：法律保留</span><s>3 min</s></li><li data-n="32"><em>33</em><span>物权法定：让与担保</span><s>2 min</s></li><li data-n="33"><em>34</em><span>司法解释机关的续造权限</span><s>3 min</s></li><li data-n="34"><em>35</em><span>自我克制与补充性续造</span><s>3 min</s></li><li data-n="35"><em>36</em><span>法院之间的权限</span><s>2 min</s></li><li data-n="36"><em>37</em><span>四类衡量规则</span><s>3 min</s></li><li data-n="37"><em>38</em><span>审查清单</span><s>2 min</s></li><li data-n="38"><em>39</em><span>课后练习</span><s>2 min</s></li><li data-n="39"><em>40</em><span>写明自己在做法续造</span><s>第四幕　第四、五步与衡量</s></li></ol>
+</div>
+
+<div id="gate">
+  <h1>法续造的界限</h1>
+  <p><a href="../teaching.html" style="color:#8FC4B4">← 返回教学栏目</a></p>
+  <p>40 页，语音讲解约八十分钟（法学方法论第十四、十五章，教材 §106–§122）。<br>
+     讲完一页停两秒自动翻到下一页；随时可用 <b>空格</b> 暂停、<b>←</b> <b>→</b> 手动翻页、<b>R</b> 重读本页、<b>F</b> 全屏。<br>
+     语速、停顿时长与朗读语音都可以在下方控制条里调。</p>
+  <p class="warn" id="nospeech" style="display:none">
+     这个浏览器不支持语音合成，页面仍可正常翻页阅读；或把录音放进同目录的 audio 文件夹（文件名与页面 id 同名的 mp3）。</p>
+  <p class="warn">建议用 <b>Microsoft Edge</b> 打开：它自带「晓晓」「云希」等中文神经语音，听感最接近真人。<br>
+     Chrome 下会退到系统自带的中文语音。若控制条里「语音」是空的，请在系统设置中安装中文语音包。</p>
+  <button class="go" id="start">▶ 开始讲解</button>
+  <button class="alt" id="silent">只看幻灯片，不要语音</button>
+</div>
+
+<script>
+var SLIDES = [{"id": "cover", "title": "法续造的界限", "min": 0, "act": "开场"}, {"id": "roadmap", "title": "今天的八十分钟", "min": 1, "act": "开场"}, {"id": "hook52", "title": "一团棉纱", "min": 2, "act": "开场"}, {"id": "act1", "title": "问题与审查框架", "min": 0, "act": "第一幕　问题与审查框架"}, {"id": "problem", "title": "两端：受法律约束与禁止拒绝裁判", "min": 2, "act": "第一幕　问题与审查框架"}, {"id": "hidden", "title": "隐蔽性的法续造", "min": 2, "act": "第一幕　问题与审查框架"}, {"id": "case1383", "title": "运费请求适用一年时效吗", "min": 3, "act": "第一幕　问题与审查框架"}, {"id": "redefine", "title": "「违法的法续造」是审查的结论", "min": 2, "act": "第一幕　问题与审查框架"}, {"id": "fivesteps", "title": "五步审查", "min": 2, "act": "第一幕　问题与审查框架"}, {"id": "act2", "title": "第一至三步", "min": 0, "act": "第二幕　第一至三步"}, {"id": "wording", "title": "第一步：文义与体系", "min": 3, "act": "第二幕　第一至三步"}, {"id": "history", "title": "第一步：立法者的回应", "min": 1, "act": "第二幕　第一至三步"}, {"id": "rev5", "title": "沿革 5：横向人格否认", "min": 3, "act": "第二幕　第一至三步"}, {"id": "rev6", "title": "沿革 6：夫妻共同债务", "min": 3, "act": "第二幕　第一至三步"}, {"id": "rev7", "title": "沿革 7：情势变更", "min": 2, "act": "第二幕　第一至三步"}, {"id": "silence3", "title": "立法者沉默的三种含义", "min": 2, "act": "第二幕　第一至三步"}, {"id": "purpose", "title": "第一步：目的", "min": 2, "act": "第二幕　第一至三步"}, {"id": "effects", "title": "第二步：法效果", "min": 3, "act": "第二幕　第一至三步"}, {"id": "constitution", "title": "第三步：宪法与比例原则", "min": 2, "act": "第二幕　第一至三步"}, {"id": "trust", "title": "信赖与判例变更", "min": 2, "act": "第二幕　第一至三步"}, {"id": "act3", "title": "类推禁止", "min": 0, "act": "第三幕　类推禁止"}, {"id": "rev8", "title": "沿革 8：从类推制度到罪刑法定", "min": 2, "act": "第三幕　类推禁止"}, {"id": "scope", "title": "类推禁止的根据与射程", "min": 3, "act": "第三幕　类推禁止"}, {"id": "answer52", "title": "回到干扰采样案：两个要素", "min": 3, "act": "第三幕　类推禁止"}, {"id": "answer52b", "title": "干扰采样案：司法解释的作用与评价", "min": 3, "act": "第三幕　类推禁止"}, {"id": "case53", "title": "案例 53：植入木马、上传网页", "min": 3, "act": "第三幕　类推禁止"}, {"id": "case54", "title": "案例 54：马乐案", "min": 3, "act": "第三幕　类推禁止"}, {"id": "case54b", "title": "马乐案与干扰采样案：根本区别", "min": 2, "act": "第三幕　类推禁止"}, {"id": "crimproc", "title": "刑法上法续造审查的程序", "min": 1, "act": "第三幕　类推禁止"}, {"id": "act4", "title": "第四、五步与衡量", "min": 0, "act": "第四幕　第四、五步与衡量"}, {"id": "treaty", "title": "第四步：国际条约", "min": 3, "act": "第四幕　第四、五步与衡量"}, {"id": "reservation", "title": "第五步：法律保留", "min": 3, "act": "第四幕　第四、五步与衡量"}, {"id": "transfer", "title": "物权法定：让与担保", "min": 2, "act": "第四幕　第四、五步与衡量"}, {"id": "sjpower", "title": "司法解释机关的续造权限", "min": 3, "act": "第四幕　第四、五步与衡量"}, {"id": "restraint", "title": "自我克制与补充性续造", "min": 3, "act": "第四幕　第四、五步与衡量"}, {"id": "courts", "title": "法院之间的权限", "min": 2, "act": "第四幕　第四、五步与衡量"}, {"id": "weighing", "title": "四类衡量规则", "min": 3, "act": "第四幕　第四、五步与衡量"}, {"id": "checklist", "title": "审查清单", "min": 2, "act": "第四幕　第四、五步与衡量"}, {"id": "homework", "title": "课后练习", "min": 2, "act": "第四幕　第四、五步与衡量"}, {"id": "end", "title": "写明自己在做法续造", "min": 0, "act": "第四幕　第四、五步与衡量"}];
+var NAR = {"cover": "欢迎来到法学方法论第十四、十五章，法续造的界限。前两章回答了何时有漏洞、以何种方法填补；这两章回答另一个问题：法续造在何处丧失正当性。教材以五个审查步骤收集支持与反对法续造的论据，再以四类规则加以权衡。审查的目的不在于禁止法续造，而在于使法续造可被复核。全课八十分钟，分四幕，以一件环境监测数据造假的刑事案件开场，并贯穿全课。", "roadmap": "先交代路线。开场三分钟，看一件刑事案件：用一团棉纱堵住空气监测站的采样器。第一幕十一分钟，提出问题，讲隐蔽性的法续造，并介绍五个审查步骤。第二幕二十三分钟，讲第一至三步：文义与体系、立法者的回应与沉默、目的；法效果；宪法。这里有三则沿革，展示立法者怎样回应法院的续造。第三幕二十分钟，讲刑法上的类推禁止，三则刑事指导性案例，开场题在这里作答。第四幕二十三分钟，讲第四步国际条约、第五步法律保留与权限，以及论据的衡量，最后给出一份十五项的审查清单。请先记住全课的结论，它只有三句话：写明自己在做法续造；说明每一步的论据及其分量；为新规则确立可以涵摄的条件。", "hook52": "开场先看一件刑事案件，教材案例五十二，指导性案例一百零四号。西安市长安区环境空气自动监测站是国控空气站点之一，监测系统采集、处理监测数据，每小时传输至中国环境监测总站，实时向社会公布，并用于编制全国空气质量月报、季报。二零一六年二月至三月间，被告人多次进入子站，用棉纱堵塞采样器，干扰系统的数据采集；站点负责人明知而没有阻止，只要求把空气污染数值降下来。子站的PM十与PM二点五数据在多个时段严重失真，失真数据被用于七十四个重点城市空气质量排名。看《刑法》第二百八十六条第一款：违反国家规定，对计算机信息系统功能进行删除、修改、增加、干扰，造成计算机信息系统不能正常运行，后果严重的，处五年以下有期徒刑或者拘役。请你暂停，判断三个问题。第一，用棉纱堵塞采样孔，是不是对计算机信息系统功能进行干扰？第二，系统照常采集、处理、传输数据，只是测到的空气被改变了，这是不是造成计算机信息系统不能正常运行？第三，如果答案是否定的，司法解释能不能把这一行为补进去？行为的社会危害性是确定的。但请想一想：在刑法上，社会危害性能不能回答文义问题？第三幕回答。", "act1": "第一幕，问题与审查框架。我们先说明为什么法续造的界限难以确定，再说明最常见的越界方式，即隐蔽性的法续造，最后介绍五个审查步骤。", "problem": "法续造的正当界限是法学方法论上长久的争论。争论的一端是法官受法律约束的要求：法官不是立法者，越出文义即可能侵入立法权的领域。另一端是禁止拒绝裁判的要求：法官不得以法律没有规定为由拒绝裁判，而裁判本身就是在既有规则与个案之间作出选择。这一争论之所以长期无法终结，是因为双方都诉诸抽象的原则，比如法的安定性与实质正义，而原则须经具体化方能适用。法续造的正当与否，不只是理论问题。不正当的法续造侵入立法权，使当事人受到不可预见的法效果的约束；但拒绝正当的法续造同样有其后果。上一讲的指导性案例二百二十八号，一审以没有证据证明李某未抚养保护好孩子为由驳回，看似中立，实际上维持了一方擅自带走哺乳期子女所造成的事实状态。拒绝续造与进行续造一样，都是法院作出的选择，都须说理。如果法官进行法续造，却没有可资遵循的审查程序，只能依前理解与对结论的内心确认作出判断，这种状态被形象地称为盲飞。建立审查程序须回答两个问题：其一，法续造采取了何种形式，因为不同形式意味着不同程度的论证负担；其二，有哪些论证模型支持或反对这一法续造，它们各自的分量如何。本讲依次回答。", "hidden": "最常见的越界方式，是隐蔽性的法续造：法院实际上已越出文义，却把结论表述为解释，或者以空白公式掩盖价值判断。它有三种常见的表述方式。第一种是不宜作狭义解释、应作广义理解，以解释的语汇表述越出文义的结论。第二种是根据立法精神、符合立法宗旨，以未经证成的目的命题代替漏洞认定。第三种是综合考虑、依据公平原则，以一般条款或法原则直接得出法效果，省去具体化的中间步骤。三种方式的共同效果，是把法续造较重的论证负担，换成了解释较轻的论证负担。在德国法上，仅从法治国家原则的角度说，隐蔽性的法续造就不能被接受。与之相关的是空白公式：实现公平正义、兼顾各方利益、事物的本质，这些表述可以支持任何结论，因而不能支持任何特定结论。它们并非没有意义，但它们处于法理念的层级，不能直接适用于个案。在法续造中援引空白公式，须同时出示从公式到法效果之间的中间步骤：哪一项法原则、哪一个法制度、哪些类似构成要件的条件。缺少中间步骤的援引，在形式上即构成不正当的法续造。下一页看第一种表述方式的一则实例。", "case1383": "看一则二零二五年的判决，山东省高级人民法院鲁民终一三八三号，水路货物运输合同纠纷。最高人民法院二零零一年的一份批复规定：根据《海商法》第二百五十七条第一款规定的精神，托运人、收货人就沿海、内河货物运输合同向承运人要求赔偿的请求权，或者承运人就沿海、内河货物运输向托运人、收货人要求赔偿的请求权，时效期间为一年。本案中，承运人请求托运人支付运费及利息，托运人以超过一年时效抗辩。二审判决称，从法律规范发展的历史，以及体系解释的角度，要求赔偿的请求权应作广义理解，既包括支付运费的请求权，也包括基于侵权的赔偿请求权，并据此参照批复适用一年时效。逐项检验。文义：承运人请求支付运费，是合同上的原给付请求，而不是损害赔偿请求；运费利息从属于运费请求。依法学专业用语优先的次序，要求赔偿的请求权不及于运费请求。目的：一年短期时效源自《海牙规则》，理由主要在于货物交付时的状况难以长期保存证据，须尽快终结纠纷；运费的数额与履行事实可以依合同、运单与结算记录证明，不存在货物状况那样的证据湮灭风险，短期时效的规范目的也不及于此。定性：判决所称的历史与体系论据都没有展开；参照二字则表明，法院并没有把运费请求置于批复的文义之内。结论实质上是类推适用，却以解释的语汇表述，正是第一种隐蔽性的法续造。分量：《民法典》第一百九十七条第一款规定，诉讼时效的期间、计算方法以及中止、中断的事由由法律规定。以续造缩短时效期间，须承担更重的论证负担，第五步还会回到这个案件。", "redefine": "在介绍审查步骤之前，教材对法续造的概念作了四点重新界定，使它可以用于审查。第一，法续造通常意味着越出文义界限。法解释是文义界限之内的工作，法续造的结论则不再为规范的文义所涵盖。第二，具体化原则上不是法续造。对一般条款与不确定概念的具体化，本身仍属文义界限之内的活动，只是文义的框架难以确定。但有一个例外：在具体化的框架内，法律人若进行创造性的活动，发展出新的案例类型，亦可例外地称为法续造。第三，判例变更是法续造的另一种典型。判例变更未必越出文义，但当事人可能对既有判例存在信赖，变更因此须面对更高的论证负担。在中国法上，指导性案例因新的法律、司法解释而不再参照，或者法院不参照指导性案例而作出不同裁判，都具有判例变更的性质。第四，违法的法续造应当限于法续造无一例外地丧失其正当性的情形。越出文义、背离立法计划，并不当然违法；只有在各项论证模型权衡之后，反对的论据占据决定性优势时，才应称之为违法的法续造。违法与否，是审查的结论，不是审查的出发点。", "fivesteps": "现在看审查框架。第一步，经典的论证模型：文义的明确性与开放性，体系的封闭与开放，历史要素，也就是立法者的意图、立法者对判例的回应与立法者的沉默，以及规范目的。第二步，法效果的考量：明显的法律保护漏洞，立法者的不作为，有没有其他法律保护的途径，共识与比较法，以及新规则的可用性。第三步，作为上位法的宪法：受害人基本权利的保护与对第三人基本权利的影响，值得保护的信赖与判例变更，以及罪刑法定。第四步，国际条约：在德国法上这一步处理欧盟法，教材按中国法的结构改为我国缔结或者参加的国际条约。第五步，权限界限：法律保留与立法权限，司法解释机关的续造权限，立法权与审判权的划分，法院之间的权限。五步之后，依优先规则、推定规则、论证负担规则与衡量规则对所收集的论据进行权衡。请注意图中的颜色：第一、二步主要收集支持或反对法续造的一般论据，须经衡量；第三至五步多涉及上位法与权限，其中的论据常具有优先性，可以阻却衡量。确定界限是否被违反的关键，通常在上位法与权限。还要说明一点：中国法院不享有违宪审查权，第三步中的宪法论据在中国法上只能作为说理论据，不构成优先规则。", "act2": "第二幕，第一至三步。第一步从经典的解释因素开始。第四至八章问的是文义是什么意思；这里问的是：文义、体系、历史与目的，在多大程度上阻却或支持法续造。", "wording": "第一步的第一项，文义的明确性与开放性。法律的文义规定得越具体，法续造的阻力就越大，论证负担也越高；文义越是开放，法续造的可能性就越大。在法续造的审查中，文义的明确程度衡量的是立法者以多大的确定性表达了他的决定。数额、期限、列举式的构成要件，表达的确定性最高，越出它们的法续造须克服最强的阻力；一般条款与不确定概念的确定性最低。例如《专利法》第十一条的专利权被授予后不得使用，是高度确定的时间标准，指导性案例二十号对它的目的性限缩因此须承担较重的论证负担，判决的两项理由正是为此而设。第二项，体系。若相关法领域构成封闭的体系，这一论据就构成反对法续造的理由。封闭体系的典型是刑法上不利于行为人的方向与物权法定，《民法典》第一百一十六条规定物权的种类和内容由法律规定。在这些领域，立法者有意把规范列举穷尽，类推被禁止，反面解释成为有效的规则。体系开放的，仅指出这一点还不够，还须证明法律容许这一发展：发生改变的生活情势须能在法律中找到依归，这样才能避免盲目地依据法官的前理解裁判。指导性案例五十号中人工授精子女的地位，依归在于婚姻法保护婚生子女利益的价值与意思表示的约束力原则；指导性案例二百二十八号中分居期间的抚养安排，依归在于最有利于未成年子女原则。依归不明的，开放体系的论据不能成立。此外，法续造不得对立法者的基本理念作不当的修改。法人独立人格与股东有限责任是公司法的基本理念；指导性案例十五号的横向人格否认并没有修改这一理念，而是在理念被滥用时作出例外，判决因此强调违背了法人制度设立的宗旨。法续造服务于基本理念，而不是推翻它。", "history": "第一步的第三项，历史要素。在法续造的审查中，历史要素所考察的对象不限于立法材料，它不仅追问立法时的意图，也追问立法者在法续造作出之后的回应与沉默。先说立法时的意图：若规范明确无疑义且至今仍然有效，立法者颁布规范之初的主观意图就有更强的分量；立法材料表明立法者有意排除某一案型的，法续造须克服的不仅是文义，还有立法者明示的决定。再说事后的回应。法续造作出之后，立法者可能以三种方式回应：吸收，即认可续造的结论，此后问题转化为新法的解释问题；否定，即以明文排除续造的结论；修正，即在吸收的同时调整其适用范围。立法者的回应虽然发生在法续造之后，却为评价法续造的正当性提供了事后的检验：被吸收的法续造，至少表明它没有违反立法者的基本理念。中国法上，三种回应各有一则沿革，下面逐一看。", "rev5": "沿革五，吸收：横向人格否认。二零一三年，指导性案例十五号参照原《公司法》第二十条第三款，令人格混同的关联公司相互之间对外部债务承担连带责任。请注意，责任的连结点是关联公司之间的人格混同，实际控制人王永礼并非被判令承担责任的一方。二零一九年，《全国法院民商事审判工作会议纪要》第十一条规定过度支配与控制：控制股东或实际控制人控制多个子公司或者关联公司，滥用控制权使多个子公司或者关联公司财产边界不清、财务混同，利益相互输送，丧失人格独立性的，可以综合案件事实，否认子公司或者关联公司法人人格，判令承担连带责任。二零二三年，修订后的《公司法》第二十三条第二款规定：股东利用其控制的两个以上公司实施前款规定行为的，各公司应当对任一公司的债务承担连带责任。立法者吸收了横向人格否认的法效果，各公司对任一公司的债务承担连带责任，这与指导性案例十五号的裁判要点一致。但立法者以股东利用其控制的限定了适用范围：滥用的主体是股东，会议纪要所列的实际控制人没有被写入。由此产生一个新的问题：非股东的实际控制人控制两个以上公司、使其人格混同的，而这恰恰是指导性案例十五号的事实结构，能否适用第二十三条第二款？立法者对实际控制人的沉默，是有意义的沉默，还是无关紧要的沉默？这须以立法材料是否显示立法者曾考虑并拒绝了实际控制人的方案来判断。一项法续造被立法吸收之后，围绕新法条的法续造问题随之重新开始。", "rev6": "沿革六，否定：夫妻共同债务。二零零一年《婚姻法》第四十一条规定，离婚时，原为夫妻共同生活所负的债务，应当共同偿还。要件是债务的用途。二零零三年，婚姻法解释二第二十四条规定：债权人就婚姻关系存续期间夫妻一方以个人名义所负债务主张权利的，应当按夫妻共同债务处理；但夫妻一方能够证明债权人与债务人明确约定为个人债务，或者能够证明属于约定分别财产且第三人知道的情形的除外。它不问债务的用途，凡婚姻关系存续期间以个人名义所负的债务，即按共同债务处理，并把证明负担转给举债人的配偶。这一规定在形式上是证明责任规则，在实质上把共同债务的范围扩及法条文义之外，属于法续造。二零一八年，最高人民法院以新的夫妻债务解释改以共同意思表示与家庭日常生活需要为界，并规定此前的司法解释与之相抵触的，以新解释为准。二零二零年，《民法典》第一千零六十四条规定：夫妻双方共同签名或者夫妻一方事后追认等共同意思表示所负的债务，以及夫妻一方在婚姻关系存续期间以个人名义为家庭日常生活需要所负的债务，属于夫妻共同债务；超出家庭日常生活需要所负的债务，不属于夫妻共同债务，但是债权人能够证明该债务用于夫妻共同生活、共同生产经营或者基于夫妻双方共同意思表示的除外。这是立法者的否定：超出家庭日常生活需要的债务，原则上不属于共同债务，证明负担回到债权人。须注意的是，否定并非由立法者首先作出。最高人民法院先以二零一八年的解释改变了立场，立法者随后采纳；司法机关的自我修正可以先于立法者的回应。", "rev7": "沿革七，修正：情势变更。一九九九年《合同法》没有规定情势变更。二零零九年，合同法解释二第二十六条依公平原则创设了情势变更规则：合同成立以后客观情况发生了当事人在订立合同时无法预见的、非不可抗力造成的不属于商业风险的重大变化，继续履行合同对于一方当事人明显不公平或者不能实现合同目的，当事人请求变更或者解除合同的，人民法院应当根据公平原则，并结合案件的实际情况确定是否变更或者解除。在《合同法》未作规定的情况下作出这一规定，属于超越法律的法续造。《民法典》第五百三十三条吸收了这一制度，同时作了几处修正：客观情况改为合同的基础条件；删去非不可抗力造成，情势变更与不可抗力不再相互排斥；删去不能实现合同目的这一选择性要件，只保留明显不公平；增加再协商，受不利影响的一方可以先与对方重新协商，协商不成才请求变更或者解除；并把仲裁机构列为与人民法院并列的变更、解除主体。这是立法者的修正。修正之后，第五百三十三条的解释须以新文本为准，二零零九年的规定只作为规范前身，在历史解释中参考。", "silence3": "立法者也可能根本不回应。立法者的沉默可以区分为三种含义。第一种，立法者有意不采纳具体的立法建议，其沉默意味着否认漏洞的存在，这是有意义的沉默，可以阻却法续造。第二种，立法者历经多年对特定的、持续性的判例保持沉默，则可以认为立法者宽宥了法院的法续造，并给予了认可。第三种，只有在前两种明显情况都不存在时，沉默才不具论证价值，可以称为无关紧要的沉默。这一三分法给立法者的沉默加上了证明要求。主张第一种含义的人，须出示立法者曾考虑并拒绝某一方案的材料；主张第二种含义的人，须证明判例是特定的、持续的，并且立法者在此期间曾修改相关法律而未改变判例的结论。用指导性案例二十号检验。该案二零一三年发布；二零一六年施行的专利权纠纷解释二第十八条第三款吸收了它的结论，并附加了支付适当费用的条件；二零二零年修正该解释时保留了这一款；同年《专利法》第四次修正，没有对临时保护期产品的后续实施作出规定；随后最高人民法院宣布指导性案例二十号不再参照。在这一过程中，持续有效的是司法解释的规则，而不是指导性案例。若把司法解释的规则视同持续性的判例，立法者修法而未改变其结论，可以作为第二种含义的论据；指导性案例被撤回参照并不否定这一点，因为被撤回的是未附条件的旧规则。若不作此种视同，这一沉默至多是第三种含义。", "purpose": "第一步的最后一项，目的。在具体类推的情形，规范的文义可能与案件事实不相匹配，而规范目的则可能与案件事实相符，此时须对文义加以更正，以顾及规范的理性。所以目的是法续造的主要正当化理由，类推、目的性限缩与目的性扩张，都以规范目的为依据。但目的在法续造中的分量，取决于它被证成的程度：目的论据推翻文义的能力，等于它为自己的目的命题所提供的论据的强度。法续造的审查对此有两点补充。第一，用以支持法续造的目的，须是被续造规范自身的目的，而不是法秩序的一般目的；援引后者，已进入超越法律的法续造，须满足第二至五步的更严格要求。指导性案例二十号以《专利法》第十一条自身的意旨，即以公开换保护为依据，因而属于法律内的法续造。第二，生活情势的改变对判例有意义，但改变的事实本身不是目的论据；须说明改变后的情势如何使规范目的要求不同的适用。指导性案例五十号中，单凭人工授精已经普及这一社会事实，不足以支持新规则，须指出婚生子女保护与意思表示约束力这两项依归。用第一项要求检验案例二十九：法院援引的防止专利保护期被变相延长，是第七十五条第五项行政审批例外的典型理由，并不是第四项科研例外自身的目的。以邻近条款的目的扩张本项，论证负担最重，而且与明示其一即排除其他的形式论据正面冲突，须有强于该论据的材料方可成立。", "effects": "第二步，法效果的考量。在法解释中，法效果的考量只用来补强结论；在法续造中，它是审查的必要环节。法续造既已越出文义，其正当性不能仅凭文义与体系说明，还须比较续造与不续造各自导致的法效果。具体有五项。第一，明显的法律保护漏洞：能否通过续造消除现有的弊端。上一讲的索拉雅案就是以此为主要理由的法续造。第二，立法者的不作为：法律保护漏洞明显存在，立法者长期知悉而不作为，是续造的又一正当化理由。它要与有意义的沉默区分：前者是立法者知道问题存在而未能行动，后者是立法者知道问题存在而决定不规范；前者支持续造，后者阻却续造，区分的依据仍是立法材料。第三，不存在其他法律保护途径。现行法已为当事人提供适当保护途径的，不得以存在法律漏洞为由进行法续造。这使法续造处于补充性的地位，是第二步中约束力较强的一项要求。第四，共识与比较法：缺乏一般的法确信，则难以进行法续造，但这一步不是决定性的；外国判例没有约束力，但结论之间具有可比性时，可以作为法认知源。指导性案例十五号的横向人格否认，在比较法上有单一经济体或企业集团责任之类的讨论可资参照，但引用者须说明所比较的法秩序在公司法基本理念上是否可比。第五，可用性与法的安宁性。法续造是对文义的偏离，有损于法的安宁性；所以法院不仅要续造法制度，还应尝试为其确立类似构成要件的条件。新的方案若可能导致不明确的结论，即不具可用性。可用性可以直接检验指导性案例的裁判要点：指导性案例十五号列出了人员、业务、财务交叉或混同，导致各自财产无法区分，以及严重损害债权人利益；指导性案例二百二十八号以分居期间、暂时确定、协助义务三项限定了参照的范围与法效果。两则都具备类似构成要件的形态。", "constitution": "第三步，作为上位法的宪法。中国的法院不享有违宪审查权，但这不意味着宪法在法续造的审查中没有作用：合宪性考量是解释与续造的一般要求，宪法所保障的权利与原则，可以作为支持或反对法续造的论据。宪法上的权利在法续造中有双重作用。一方面，国家对基本权利负有保护义务，法院在立法者不作为时进行法续造，可以是履行这一保护义务的方式。另一方面，法续造为一方创设权利，往往同时为另一方创设义务或限制，对第三人的权利构成干预；干预越深，越需要法律的明文依据。所以审查须同时看两方：法续造保护了谁的什么权利，又限制了谁的什么自由。用来检验限制是否正当的工具，是比例原则。教材采三项说：适当性，手段须有助于目的的实现；必要性，在同样有效的手段中，须选择对权利限制最小的一种；狭义比例性，限制的程度须与目的的分量相称。前一项不满足的，无须审查后一项。用指导性案例二百二十八号检验。适当性：由母亲直接抚养尚在哺乳期的子女，有助于实现最大限度保护未成年子女的利益这一目的。必要性：法院没有变更父母双方的监护权，只暂时确定直接抚养，并课以协助探望的义务，对父亲权利的限制以达成目的所需为限。狭义比例性：父亲在分居期间的直接抚养地位受到限制，但探望得到保障，与哺乳期子女得到母亲照顾的利益相比，并不失衡。暂时二字，在这里是比例原则在法续造中的体现。", "trust": "第三步的后两项，信赖保护。当事人对现行法状态的信赖，是反对法续造的重要论据。信赖的对象可以是法律的文义，也可以是稳定的判例。判例变更时，当事人可能已依既有判例安排其行为；新的见解若溯及适用于既往的行为，就可能使当事人遭受不可预见的不利。比较法上为此有预告判例变更、限制变更的溯及效力等处理方式。中国法上，指导性案例与司法解释的变更，常以新规定的施行日期与本规定施行后尚未终审的案件之类的过渡规则处理信赖问题；法院在个案中不参照指导性案例而作出不同裁判的，须说明理由，这一说理义务本身就是对信赖的尊重。在信赖保护的诸形态中，罪刑法定是最严格的一种。它是民众合理信赖的表达：民众必须能够从法律中预见其行为入罪的可能性及其刑罚，由此产生不利于行为人的类推禁止。在中国法上，罪刑法定的根据不在宪法，而在《刑法》第三条与《立法法》第十一条第四项。教材仍在第三步讨论它，因为它是信赖保护在刑法上最严格的形态。第三幕专门讲它。", "act3": "第三幕，类推禁止。法续造的审查在刑法上受类推禁止的约束。我们先看中国刑法从类推制度到罪刑法定的转变，再看类推禁止的射程，然后用三则刑事指导性案例检验，开场题在这里作答。", "rev8": "先看沿革八。一九七九年《刑法》第七十九条规定：本法分则没有明文规定的犯罪，可以比照本法分则最相类似的条文定罪判刑，但是应当报请最高人民法院核准。一九九七年修订的《刑法》删除了类推制度，第三条规定：法律明文规定为犯罪行为的，依照法律定罪处刑；法律没有明文规定为犯罪行为的，不得定罪处刑。旧法的类推制度以最相类似的条文为出发点，以最高人民法院核准为程序控制，在结构上正是教材所说的具体类推，只是方向不利于行为人。新法第三条后段是对这一制度的明示否定：立法者不是对不利类推保持沉默，而是以明文排除了它。这是最强意义上的有意义的沉默，甚至不是沉默，而是明文。因此，在刑法上不利于行为人的方向上，封闭体系的论据具有决定性的分量，不需要与其他论据衡量；用本讲最后要讲的术语，它是一条优先规则。", "scope": "罪刑法定在刑法上产生不利于行为人的类推禁止。它的根据有二。其一，民主原则：犯罪与刑罚只能由立法机关以法律规定，《立法法》第十一条第四项把犯罪和刑罚列为只能制定法律的事项。这一根据决定了禁止的对象：不只法院，司法解释同样不得创设新的犯罪或加重刑罚。其二，信赖保护与预见可能性：民众必须能从法律中预见其行为入罪的可能性。这一根据决定了禁止的界线：界线在可能文义，因为民众只能依法律的语言预见其行为的法律后果。类推禁止的射程有三点。第一，方向：禁止的只是不利于行为人的类推。有利于行为人的类推、目的性限缩与超法规的违法阻却事由，不受禁止。指导性案例九十七号王力军案，以严重扰乱市场秩序为独立的判断要件，把虽违反行政管理规定、但尚未严重扰乱市场秩序的经营行为排除于非法经营罪之外，就是有利于行为人的限缩。第二，对象：禁止及于构成要件与法效果两方面，既不得把文义未涵盖的行为纳入构成要件，也不得把文义未规定的刑罚档次适用于行为人。第三，与解释的分界：类推禁止不禁止扩张解释，扩张解释与类推的分界就在可能文义。所以刑法上法续造审查的第一个问题总是定性问题：结论是否仍在可能文义之内？是，则依普通的解释规则处理，目的论据可以发挥作用；否，且方向不利于行为人，则审查到此结束，无须进入衡量。最后一项警示：在不利于行为人的方向上，法续造无法以法续造的名义出现，因为它一旦被称为类推，就被禁止。所以刑法上的越界几乎总以解释的面目出现，以实质解释、法益保护的需要、行为的社会危害性相当来论证。这些都是目的论据。目的解释有权推翻文义明确这一论据，无权移动可能文义的射程这一界限。审查刑法判决时，须先撇开目的论据，单独回答文义问题。", "answer52": "现在回到开场题。西安市中级人民法院判决五名被告人构成破坏计算机信息系统罪，判处有期徒刑一年三个月至一年十个月不等。理由是：依两高关于危害计算机信息系统安全刑事案件的解释第十一条，计算机信息系统包括自动化控制设备等具备自动处理数据功能的系统；依二零一六年的环境污染刑事解释第十条第一款，干扰环境质量监测系统的采样，致使监测数据严重失真的行为，属于破坏计算机信息系统；空气采样器是监测系统的重要组成部分，堵塞采样孔必然造成采样器内部气流场的改变，造成监测数据失真，属于对计算机信息系统功能进行干扰，造成计算机信息系统不能正常运行的行为。用第三幕的方法，先回答定性问题：结论是否仍在第二百八十六条第一款的可能文义之内？须分别检验两个要素。第一个要素，对计算机信息系统功能进行干扰。采样是监测系统的功能之一，堵塞采样孔使采样器内的气流场改变，可以说是对采样功能的干扰。这一要素的文义较为开放，判决的论证可以成立。第二个要素，造成计算机信息系统不能正常运行，问题较大。系统在整个期间照常采集、处理、传输数据，它的软件与硬件均未被删除、修改或增加任何内容；失真的是系统所测量的对象，也就是进入采样器的空气，而不是系统的运行。若把输出了失真的数据等同于不能正常运行，那么一切通过操纵输入而使自动化系统得出错误结果的行为，比如在温度传感器旁放置冰块，都将落入本罪。判决以一句话同时处理了两个要素，没有对第二个要素单独论证。", "answer52b": "本案结论的直接依据，是环境污染刑事解释第十条第一款把干扰采样、致使监测数据严重失真规定为属于破坏计算机信息系统。这一规定的性质须加判断。它是对第二百八十六条的解释，也就是注意规定，还是在第二百八十六条之外增设一种行为类型，也就是拟制？若是注意规定，其正当性完全取决于刚才的文义检验能否通过；若是拟制，由司法解释在刑法上创设拟制，本身就触及犯罪和刑罚的法律保留，它的效力本身成问题。判决没有讨论这一问题，直接把司法解释当作大前提。教材的结论是：本案处于可能文义的边缘。认为不能正常运行包括不能正常地完成其监测功能的读者，可以认为结论仍在文义之内；认为它指系统本身的运行状态的读者，会认为结论已越出文义，属于不利于行为人的类推。两种读法都有其根据，正因为如此，判决负有说明自己采取哪一种读法及其理由的义务。行为的社会危害性，即数据被用于全国城市排名并上报，是确定的；但它属于目的论据，不能回答文义问题。若文义问题的答案是否定的，填补这一处罚漏洞的权限属于立法者。后续的发展很能说明问题。二零二三年，两高新的环境污染刑事解释废止了旧解释，新解释第十一条第一款第二项改为：干扰系统采样，致使监测数据因系统不能正常运行而严重失真的。依新文本，系统不能正常运行成为须单独认定的中间环节，数据失真须由此所致；仅证明数据失真，已不足以适用该项。判决没有单独论证的第二个要素，由此在司法解释的文本中得到了明示。", "case53": "把案例五十二与另一则指导性案例对照，教材案例五十三，指导性案例一百四十五号。从二零一七年七月起，几名被告人为赚取赌博网站的广告费用，在马来西亚吉隆坡的租住处相互配合，对存在防护漏洞的目标服务器进行检索、筛查，向其植入木马程序，获取服务器后台浏览、增加、删除、修改等操作权限，再把添加了赌博关键字并设置自动跳转功能的静态网页上传到服务器上，以提高赌博网站广告被搜索引擎命中的几率。截至九月底，共链接被植入木马程序的服务器一百一十三台。公诉机关以破坏计算机信息系统罪起诉。法院判决构成非法控制计算机信息系统罪，即《刑法》第二百八十五条第二款。理由是：被告人虽然对服务器数据实施了修改、增加，但没有造成该信息系统功能实质性的破坏，或者不能正常运行，也没有对系统内有价值的数据进行增加、删改。裁判要点第二项说：通过修改、增加计算机信息系统数据，对该计算机信息系统实施非法控制，但未造成系统功能实质性破坏或者不能正常运行的，不应当认定为破坏计算机信息系统罪。本案为第二百八十六条的不能正常运行划定了下限：修改、增加数据本身不足以构成破坏，须造成系统功能实质性破坏或者不能正常运行。回看案例五十二：监测系统的软件与硬件均未被改动，系统照常采集、处理、传输数据。两案若要协调，须把案例五十二理解为监测功能意义上的不能正常运行，并说明环境监测系统的功能就在于输出真实的数据。这正是刚才所说的文义边缘的读法，须由裁判说明理由。二零二三年的新解释增加因系统不能正常运行而的限定之后，两案的标准在司法解释的文本上趋于一致。", "case54": "第三则刑事案例，方向同样不利于被告人，教材案例五十四，指导性案例六十一号，马乐案。马乐任基金经理期间，利用其掌握的未公开信息，操作自己控制的三个账户，先于、同期或稍晚于其管理的基金账户买卖相同股票七十六只，累计成交额十点五亿余元，非法获利一千九百一十二万余元。马乐投案自首。看《刑法》第一百八十条。第一款对内幕交易罪规定了两个量刑档次：情节严重的，处五年以下有期徒刑或者拘役；情节特别严重的，处五年以上十年以下有期徒刑。第四款规定利用未公开信息交易，情节严重的，依照第一款的规定处罚。问题是：第四款只写了情节严重，是否援引第一款的两个档次？一审、二审认为，刑法并未对利用未公开信息交易罪规定情节特别严重的情形，只能认定为情节严重，判处有期徒刑三年、缓刑五年。最高人民检察院提出抗诉，最高人民法院改判有期徒刑三年，不再适用缓刑，并处罚金一千九百一十三万元。裁判要点是：第四款援引法定刑，是对第一款全部法定刑的引用，利用未公开信息交易罪应有情节严重、情节特别严重两种情形和两个量刑档次。理由有三。第一，两罪规定在同一法条中，说明两罪的违法与责任程度相当，这是目的论据。第二，刑法中兼具入罪与量刑两种性质的情节严重，无一例外均在其后列明了具体的法定刑；第四款的情节严重后面没有列明，所以只是入罪条款，这是体系论据，论证力较强。第三，援引法定刑的目的在于避免重复，并不属于法律规定不明确的情形。", "case54b": "马乐案的方向不利于被告人，审查须从定性开始：援引第一百八十条第一款情节特别严重的档次，是在第四款的文义之内，还是越出文义的类推？关键在依照第一款的规定处罚一语。第一款的规定，在语言上可以指第一款的全部处罚规定，也可以指与情节严重对应的那一部分；两种读法都在可能文义之内。既然如此，本案是解释问题，不是法续造问题，类推禁止不被触发。这就是马乐案与干扰采样案的根本区别：马乐案的两种读法都是语言上可能的，争议在于选择；干扰采样案的争议在于其中一种读法是否语言上可能。在文义之内作选择时，目的论据与体系论据可以发挥作用，最高人民法院的三项理由正是在此意义上成立的。一审、二审的读法也有其根据：第四款只写情节严重，依罪刑法定的明确性要求，未写明的档次不应适用。但这一论证把明确性当作选择读法的规则。明确性原则是对立法者的要求，不是在两种文义上可能的读法之间作选择的规则；存疑时有利于被告处理的是事实的疑问，不是法律解释的疑问。在文义之内的解释选择上，刑法与其他法领域适用相同的解释规则，只是在越出文义时，刑法另有一道其他法领域所没有的界限。后续：二零一九年两高关于利用未公开信息交易刑事案件的解释第七条第一款明确，依照第一款的规定处罚包括情节特别严重的情形，指导性案例六十一号的读法由此被司法解释吸收。", "crimproc": "把三则案例合在一起，可以得出刑法上法续造审查的程序，共四步。第一步，定性：结论是否仍在可能文义之内，须单独回答，且不得以目的论据代替文义论据。干扰采样案的不能正常运行，就要在这一步单独回答。第二步，若在文义之内，依第四至八章的解释规则选择读法；方向不利于行为人这一事实本身，不改变解释规则。马乐案就停在这一步。第三步，若越出文义：方向不利于行为人的，审查终结，结论不能成立；方向有利于行为人的，依五步审查进行，而且因其不涉及类推禁止与法律保留，论证负担较民法上的同类法续造为轻，王力军案即是一例。第四步，司法解释的规定须同样经受第一步的检验；司法解释不因其形式而免于这一检验。二零一六年环境污染刑事解释第十条第一款就是须接受检验的对象。", "act4": "第四幕，第四、五步与衡量。第四步处理国际条约，第五步处理法律保留与权限。最后讲如何权衡五步收集的论据，并给出一份十五项的审查清单。", "treaty": "第四步，国际条约。在德国法上，这一步处理欧盟法；中国法上没有超国家法秩序，与之结构相当的，是我国缔结或者参加的国际条约。《海商法》第三百零七条第一款规定，国际条约与本法有不同规定的，适用国际条约的规定，但是中华人民共和国声明保留的条款除外；《票据法》《民用航空法》《海上交通安全法》设有同样的条款。二零二三年的涉外民商事案件适用国际条约和国际惯例的解释第一条第二款，把这一规则扩及上述法律调整范围之外的涉外民商事案件，规定参照上述法律的规定。这一填补由若干法律的同类条款归纳出一般规则，属于以司法解释作出的整体类推，其权限问题见第五步。条约对法续造的作用有两个方向，须加区分。其一，条约与法律有不同规定的，依条约优先条款直接适用条约，这是适用规范的选择，不是续造。其二，法律对某一问题未作规定，或者有数种可能的解释，而该问题属于条约的调整范围时，条约的规定可以作为解释与续造的取向，这才是合条约的续造。在知识产权法上，《与贸易有关的知识产权协定》等条约对国内法的解释与续造就具有这种作用。合条约的续造有四项界限：条约须对我国生效，且案件属于条约的适用范围，声明保留的条款不在其内；适用条约损害国家主权、安全和社会公共利益的，不予适用；立法者在制定或者修改法律时有意作出与条约不同规定的，法院不得借合条约的续造推翻这一选择；条约不能为法律保留事项提供续造的依据。回到第一幕的鲁民终一三八三号。一年的短期时效源自《海牙规则》，而我国并未加入该公约，《海商法》只是借鉴了它的规定，国内水路货物运输更不在其调整范围之内。公约的规定在此只能作为比较法论据，不能作为合条约续造的依据，更不能支持把一年时效扩及运费请求。", "reservation": "第五步，权限界限，先讲法律保留。法院作出裁判的同时也在立法，这可能侵入立法机关制定法律的权力。在德国法上，法律保留以权力分立原则为根据；中国法上，相应的根据是宪法对国家机关职权的划分：全国人民代表大会和全国人民代表大会常务委员会行使国家立法权，人民法院依照法律规定独立行使审判权；只能由法律规定的事项，由《立法法》第十一条、第十二条列举。第十一条列举的事项包括：犯罪和刑罚；对公民政治权利的剥夺、限制人身自由的强制措施和处罚；税收基本制度；对非国有财产的征收、征用；民事基本制度；诉讼制度和仲裁基本制度等。第十二条但书所列的事项，如犯罪和刑罚，构成绝对保留，这是刑法上类推禁止在立法法上的依据。法律保留首先约束立法权在立法机关与行政机关之间的分配，但它对法续造同样有意义：凡属只能由法律规定的事项，法院与司法解释机关不得以续造的方式创设规则，否则即以司法权替代了立法权。较为困难的是民事基本制度。在民法领域一般地确立法律保留原则的主张应予拒绝：民法上的法续造通常是在平等主体之间分配风险，法院若因法律保留而拒绝续造，等于把风险留给偶然承担它的一方。所以民事基本制度须限缩理解，它指的是物权种类、婚姻、继承等制度的基本框架，而不是民法上的一切规则。依此理解，法院在民法上的漏洞填补原则上不受法律保留的阻却；但创设新的物权种类、新的身份关系或者改变继承顺序这类续造，触及民事基本制度，须由法律规定。下一页看一个物权法定的例子。", "transfer": "物权法定，是法律保留在合同类司法解释中最常遇到的界限。《民法典》第一百一十六条规定，物权的种类和内容，由法律规定。看担保制度解释第六十八条第一款：债务人或者第三人与债权人约定将财产形式上转移至债权人名下，债务人不履行到期债务，债权人有权对财产折价或者以拍卖、变卖该财产所得价款偿还债务的，人民法院应当认定该约定有效；当事人已经完成财产权利变动的公示，债务人不履行到期债务，债权人请求参照民法典关于担保物权的有关规定就该财产优先受偿的，人民法院应予支持。这就是所谓让与担保。分两层检验。约定本身的效力，可以攀附《民法典》第三百八十八条第一款所称其他具有担保功能的合同，没有问题。优先受偿却是物权效力，而物权的种类和内容由法律规定。该款以参照之名作出的，是一次自主类推，其结果是使一种法律未规定的担保形式取得担保物权的效力。它是否触及民事基本制度，取决于怎样看待让与担保：若把它看作一种新的物权种类，依物权法定，它须由法律规定；若把它看作既有担保物权规则在另一种公示形式上的适用，论证负担则较轻。司法解释应当说明自己采取哪一种理解及其理由。", "sjpower": "法律保留在中国法上还有一个特殊的适用场合：司法解释机关的续造权限。司法解释在事实上承担了大量的抽象法续造，它与法律之间的位阶，决定了这些续造的正当界限。看《立法法》两条。第四十八条第二款规定，法律的规定需要进一步明确具体含义的，或者法律制定后出现新的情况、需要明确适用法律依据的，由全国人民代表大会常务委员会解释。第二项在方法论上描述的正是嗣后漏洞。第一百一十九条第一款规定，两高作出的属于审判、检察工作中具体应用法律的解释，应当主要针对具体的法律条文，并符合立法的目的、原则和原意；遇有第四十八条第二款规定情况的，应当向全国人民代表大会常务委员会提出法律解释的要求或者提出制定、修改有关法律的议案。由此得出三点。第一，司法解释的权限止于可能文义。主要针对具体的法律条文，排除了无所攀附的创制性补充；符合立法的目的、原则和原意，排除了与立法者明示意图相反的续造。越出被解释法条可能文义的规定，都不在第一百一十九条的授权之内；需要续造时，法定的途径是提请法律解释或者提出修法议案。第二，个案中的法续造不受第一百一十九条的程序约束，但受其实体标准的约束。指导性案例五十号中人工授精子女的地位，严格说来正是法律制定后出现新的情况：个案法院依复函与意思表示的约束力原则作出裁判，属于审判权的行使；而以司法解释作出的抽象规则，其权限依据成问题。第三，司法解释本身须受第一步至第三步的审查。干扰采样案中，环境污染刑事解释第十条第一款若越出了《刑法》第二百八十六条的可能文义，它就不仅违反了罪刑法定，也逾越了第一百一十九条所划定的权限。法院在个案中无权宣告司法解释无效，但可以在适用时作合于法律的解释，并在裁判理由中说明其理解。", "restraint": "第五步的第二项，立法权与审判权的划分。法官受法律的约束，立法者享有优先性并非没有原因：对前景不明确的风险性决定，立法者与行政机关往往更有优势；法院通常缺乏专家委员会之类的机制，也无法制定抽象一般的规则，只能就个案裁判。由此产生司法自我克制的要求：确定法律的具体目标是立法机关的任务，法官若擅自进行主动的社会型构，即越过法续造的正当界限。但要注意，自我克制是论证负担的分配规则，不是拒绝法续造的理由；它要求主张续造的一方承担更重的说理义务，而不是免除法院审查续造是否正当的义务。第二，具体化中的法续造。五个审查步骤也适用于具体化的领域；只依赖空白公式或放弃必要的中间步骤的，在形式上即构成不正当的法续造。这把第一幕的警示转化为一项形式标准：判断一项具体化是否正当，不须先判断其结论是否妥当，只须检查它是否出示了中间步骤。第三，补充性的法续造。法续造原则上是候补的，立法者一旦作出规定，续造即应让位。但立法者始终无所作为、存在法律保护漏洞之虞时，可以例外地进行补充法律的续造，索拉雅案即是典型。中国法上的典型过程，是指导性案例或复函作出续造，司法解释或会议纪要加以整理，立法者最终吸收并修正。在这一过程中，法续造的正当性部分来自它被吸收的事实，但只是部分：被吸收不能使当初越界的续造变得正当，它在作出时是否越过了权限界限，仍须依作出时的法状态判断。第四，针对立法者的造法，即在立法者已经作出决定的领域，以自己的判断替代立法者的判断。补充性的续造填补立法者的不作为，针对立法者的造法推翻立法者的作为，后者原则上不正当；纠正立法者的决定，在中国法上属于全国人民代表大会及其常务委员会的权限，不属于法院。", "courts": "第五步的第三项，法院之间的权限。法院若擅自行使与其他法院相比不具备的权限，也可能构成违法的法续造。德国法上的讨论涉及联邦宪法法院与专业法院、欧盟法院等关系，与中国法没有直接的对应；但这一审查角度在中国法上同样适用，表现为三个层面。第一，全国人民代表大会常务委员会与最高人民法院：法律解释权属于全国人大常委会，最高人民法院的解释权限于审判工作中具体应用法律的问题；嗣后漏洞在抽象层面的填补，依《立法法》第四十八条属于全国人大常委会的权限。第二，最高人民法院与地方各级人民法院：依《立法法》第一百一十九条，两高以外的审判机关和检察机关不得作出具体应用法律的解释。地方法院在个案中可以填补漏洞，但不能以规范性文件的形式为辖区内的同类案件创设续造规则；高级人民法院发布的指导意见、审理指南中，凡越出法律与司法解释、为同类案件创设新规则的部分，都须从这一角度审查。第三，审级之间的统一：最高人民法院知识产权法庭的设立，使专利等技术类案件的二审集中于同一法院，法续造的规则因此能在全国范围内统一，农药登记试验案就是这一机制下的产物。但统一的代价是，一旦最高审级的续造越界，下级法院缺乏纠正的途径。所以法院之间的权限分配，也是对最高审级自身的约束：它的续造越具有普遍效力，越须满足可用性与说理的要求。", "weighing": "五步体系的第一层是收集论证模型，第二层是对它们进行权衡。各种论据的权重不同，依其适用的规则分为四类。优先规则：某一论据一旦成立，即决定结论，不再与其他论据衡量。刑法上不利于行为人的类推禁止、《立法法》第十二条但书的绝对保留、一九九七年《刑法》第三条对类推制度的明文排除，都是优先规则。推定规则：某一论据被推定成立，主张相反者须推翻推定。立法者意图的推定效力、判决先例正确性的推定、明确的文义推定为立法者的决定，都属此类。论证负担规则：确定由谁承担说理义务，以及义务的轻重。主张法续造者承担论证负担；越偏离文义核心与立法计划，负担越重；有利于关系人的类推，负担较轻。衡量规则：在没有优先规则时，比较支持与反对论据的分量，例如保护漏洞的明显程度与其他保护途径之有无、对第三人权利的干预深度、规则的可用性。五步体系与衡量规则的关系是：五步体系规定了收集论据的次序，衡量规则规定了评价论据的方法。次序本身已包含部分评价，第一步从文义开始，表明文义是推定的出发点；但次序不是位阶，第一步的论据若足够强，比如立法者以明文排除了某一续造，同样可以构成优先规则。用两则案例检验。干扰采样案中，若认定结论越出文义，第三步的类推禁止即构成优先规则，审查终结，无须衡量社会危害性。指导性案例二百二十八号中，第一步的文义论据，即离婚后，反对续造，目的论据与最有利于未成年子女原则支持续造；第二步的保护漏洞明显且没有其他保护途径；第三步的比例原则通过暂时二字得到满足；衡量的结果是续造正当。", "checklist": "最后是教材第一百二十二节的审查清单，覆盖第十二至十五章，共十五问。第一问，结论是否已越出可能文义？先单独回答文义问题，越出者，写明自己在做法续造。第二问，是否存在不圆满性？答案不合理不等于没有答案。第三问，是否违反计划？排除法外空间与有意义的沉默，判断立法者的沉默属于三种含义中的哪一种。第四问，漏洞属于哪一类型？第五问，以何种方法、依何种法理填补？前五问对应第十二、十三章。第六问，类推的两步是否都已完成？第七问，支持续造的目的是谁的目的？须是被续造规范自身的目的。第八问，拒绝续造的后果是什么，有没有其他保护途径？第九问，新规则是否具有可用性，是否确立了类似构成要件的条件？第十问，是否涉及宪法上的权利与信赖，续造保护了谁、限制了谁，是否变更了既有判例？第十一问，是否为刑法上不利于行为人的方向？是，且越出文义的，审查终结。第十二问，是否涉及国际条约？第十三问，是否触及法律保留与立法者的权限？第十四问，作出续造的机关是否有此权限？第十五问，论据如何权衡？先检查优先规则，再确定推定与论证负担的起点，最后衡量，并把衡量过程写进理由。", "homework": "课后练习两题。第一题，来自教材案例五十二的练习：指导性案例一百四十五号认为，修改、增加计算机信息系统数据，但未造成系统功能实质性破坏或者不能正常运行的，不应当认定为破坏计算机信息系统罪。这一要点与指导性案例一百零四号的结论是否协调？若立法者希望处罚干扰环境监测的行为，在第二百八十六条中增设一款，与在妨害社会管理秩序罪一章中增设独立罪名，各有何利弊？提示：前者体系位置不变，但会把本罪的保护范围由系统安全延伸到数据真实；后者可以直接描述干扰采样的行为，保护对象明确，也便于配置相称的法定刑。第二题，回到沿革五：非股东的实际控制人控制两个以上公司、使其人格混同，债权人请求各公司对任一公司的债务承担连带责任。请回答：《公司法》第二十三条第二款对实际控制人的沉默，属于三种含义中的哪一种，须出示什么材料？若认定存在漏洞，类推的类似性与相容性如何论证？依十五问清单，还须审查哪几项？写作时，请逐项写出所处的审查步骤，以及每一项论据的性质：它是优先规则、推定规则、论证负担规则，还是衡量规则。", "end": "全课到此结束，第四部分也到此结束。请带走三句话：写明自己在做法续造；说明每一步的论据及其分量；为新规则确立可以涵摄的条件。审查法续造，依五个步骤收集论据：经典论证模型、法效果、宪法、国际条约与权限；再依优先、推定、论证负担与衡量四类规则权衡。拒绝续造与进行续造一样，都须说理。在刑法上，先单独回答文义问题，不以目的论据代替；不利于行为人而越出文义的，审查终结。司法解释只能解释，不能续造，它同样须受文义的检验。配套阅读是教材第一百零六节到第一百二十二节。下课。"};
+var deck = document.getElementById('deck'), cap = document.getElementById('cap');
+var i = 0, chunks = [], ci = 0, speaking = false, paused = false, audioMode = false;
+var synth = window.speechSynthesis, voice = null, utter = null, timer = null, watch = null;
+var auto = true, gap = 2000, rate = 1.0, capOn = true;
+var player = new Audio();
+
+/* ---------- 版面缩放 ---------- */
+function fit(){
+  var vp = document.getElementById('viewport');
+  var s = Math.min(vp.clientWidth / 1920, vp.clientHeight / 1080) * 0.962;
+  deck.style.transform = 'scale(' + s + ')';
+}
+addEventListener('resize', fit);
+
+/* ---------- 分句 ---------- */
+function split(t){
+  var raw = t.replace(/\s+/g, '').split(/(?<=[。？！；])/).filter(Boolean);
+  var out = [], buf = '';
+  raw.forEach(function(s){
+    if ((buf + s).length > 56 && buf.length >= 20) { out.push(buf); buf = s; }
+    else buf += s;
+  });
+  if (buf) out.push(buf);
+  return out;
+}
+
+/* ---------- 字幕 ---------- */
+function paintCap(){
+  if (!capOn) { cap.classList.add('off'); return; }
+  cap.classList.remove('off');
+  if (!chunks.length) { cap.innerHTML = '<i>本页无讲解词</i>'; return; }
+  var k = Math.min(ci, chunks.length - 1);
+  cap.innerHTML = '<em>' + (k + 1) + '／' + chunks.length + '</em><b>' + chunks[k] + '</b>';
+}
+
+/* ---------- 语音 ---------- */
+function pickVoices(){
+  var all = synth ? synth.getVoices() : [];
+  var zh = all.filter(function(v){ return /^zh/i.test(v.lang); });
+  var sel = document.getElementById('voice');
+  if (!zh.length) { sel.innerHTML = '<option>未找到中文语音</option>'; return; }
+  zh.sort(function(a, b){
+    var score = function(v){
+      var n = v.name;
+      if (/Natural/i.test(n)) return 0;
+      if (/Online/i.test(n)) return 1;
+      if (/Xiaoxiao|Yunxi|Yunyang|Xiaoyi|晓晓|云希/i.test(n)) return 2;
+      return 3;
+    };
+    return score(a) - score(b);
+  });
+  var keep = voice && voice.name;
+  sel.innerHTML = zh.map(function(v){
+    return '<option value="' + v.name + '">' + v.name.replace(/^Microsoft /, '') + '</option>';
+  }).join('');
+  voice = zh.find(function(v){ return v.name === keep; }) || zh[0];
+  sel.value = voice.name;
+}
+
+function stopAll(){
+  clearTimeout(timer); timer = null;
+  if (synth) synth.cancel();
+  player.pause();
+  speaking = false; paused = false;
+  setPlayLabel();
+}
+
+function speakChunk(){
+  if (!synth || ci >= chunks.length) { finishSlide(); return; }
+  paintCap();
+  utter = new SpeechSynthesisUtterance(chunks[ci]);
+  if (voice) { utter.voice = voice; utter.lang = voice.lang; } else { utter.lang = 'zh-CN'; }
+  utter.rate = rate; utter.pitch = 1;
+  utter.onend = function(){ if (speaking && !paused) { ci++; speakChunk(); } };
+  utter.onerror = function(e){ if (e.error !== 'interrupted' && e.error !== 'canceled') { ci++; speakChunk(); } };
+  synth.speak(utter);
+}
+
+function finishSlide(){
+  speaking = false; setPlayLabel();
+  if (!auto) return;
+  if (i >= SLIDES.length - 1) return;
+  timer = setTimeout(function(){ go(i + 1, true); }, gap);
+}
+
+function play(){
+  if (paused) {                       // 续播
+    paused = false;
+    if (audioMode) player.play(); else synth.resume();
+    speaking = true; setPlayLabel(); return;
+  }
+  stopAll();
+  speaking = true; ci = 0; setPlayLabel();
+  if (audioMode) {
+    player.src = 'audio/' + SLIDES[i].id + '.mp3';
+    player.playbackRate = rate;
+    player.play().catch(function(){ audioMode = false; speakChunk(); });
+    paintCap();
+  } else {
+    speakChunk();
+  }
+}
+player.onended = finishSlide;
+
+function pause(){
+  if (!speaking) return;
+  paused = true;
+  if (audioMode) player.pause(); else synth.pause();
+  setPlayLabel();
+}
+function toggle(){ if (speaking && !paused) pause(); else play(); }
+function setPlayLabel(){
+  document.getElementById('play').textContent = (speaking && !paused) ? '⏸ 暂停' : '▶ 播放';
+}
+
+/* ---------- 翻页 ---------- */
+function go(n, andSpeak){
+  stopAll();
+  i = Math.max(0, Math.min(SLIDES.length - 1, n));
+  var secs = deck.children;
+  for (var k = 0; k < secs.length; k++) secs[k].classList.toggle('on', k === i);
+  chunks = split(NAR[SLIDES[i].id] || ''); ci = 0;
+  paintCap();
+  document.getElementById('pos').textContent = (i + 1) + ' / ' + SLIDES.length;
+  document.querySelector('#prog i').style.width = ((i + 1) / SLIDES.length * 100) + '%';
+  var lis = document.querySelectorAll('#toc li');
+  for (var k = 0; k < lis.length; k++) lis[k].classList.toggle('cur', k === i);
+  if (andSpeak) play();
+}
+
+/* ---------- 控件 ---------- */
+function bind(){
+  document.getElementById('play').onclick = toggle;
+  document.getElementById('prev').onclick = function(){ go(i - 1, speaking || paused); };
+  document.getElementById('next').onclick = function(){ go(i + 1, speaking || paused); };
+  document.getElementById('replay').onclick = function(){ stopAll(); play(); };
+  var a = document.getElementById('auto');
+  a.onclick = function(){ auto = !auto; a.setAttribute('aria-pressed', auto); };
+  var c = document.getElementById('capt');
+  c.onclick = function(){ capOn = !capOn; c.setAttribute('aria-pressed', capOn); paintCap(); };
+  document.getElementById('rate').oninput = function(){
+    rate = +this.value; document.getElementById('rateV').textContent = rate.toFixed(2) + '×';
+    player.playbackRate = rate;
+    if (speaking && !paused && !audioMode) { synth.cancel(); speakChunk(); }
+  };
+  document.getElementById('gap').oninput = function(){
+    gap = +this.value * 1000; document.getElementById('gapV').textContent = this.value + ' 秒';
+  };
+  document.getElementById('voice').onchange = function(){
+    voice = synth.getVoices().find(function(v){ return v.name === this.value; }, this) || voice;
+    if (speaking && !paused && !audioMode) { synth.cancel(); speakChunk(); }
+  };
+  document.getElementById('toclink').onclick = function(){ document.getElementById('toc').classList.add('on'); };
+  document.getElementById('tocX').onclick = function(){ document.getElementById('toc').classList.remove('on'); };
+  document.getElementById('full').onclick = function(){
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen();
+  };
+  addEventListener('keydown', function(e){
+    if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+    if (e.key === ' ') { e.preventDefault(); toggle(); }
+    else if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(i + 1, speaking || paused); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(i - 1, speaking || paused); }
+    else if (e.key === 'Escape') document.getElementById('toc').classList.remove('on');
+    else if (e.key.toLowerCase() === 'f') document.getElementById('full').click();
+    else if (e.key.toLowerCase() === 's') document.getElementById('capt').click();
+    else if (e.key.toLowerCase() === 'r') document.getElementById('replay').click();
+  });
+  // Chrome/Edge 长文本会自行暂停，定时 resume
+  watch = setInterval(function(){
+    if (speaking && !paused && !audioMode && synth && synth.speaking && synth.paused) synth.resume();
+  }, 8000);
+}
+
+/* ---------- 启动 ---------- */
+function boot(){
+  fit(); bind(); pickVoices();
+  if (synth) synth.onvoiceschanged = pickVoices;
+  // 探测 audio/ 目录里是否有预录音频
+  var probe = new Audio('audio/' + SLIDES[0].id + '.mp3');
+  probe.oncanplaythrough = function(){ audioMode = true;
+    document.getElementById('srcnote').textContent = '音源：audio 文件夹中的录音'; };
+  probe.onerror = function(){ audioMode = false; };
+  probe.load();
+  go(0, false);
+  if (!synth) {
+    document.getElementById('nospeech').style.display = 'block';
+  }
+  document.getElementById('start').onclick = function(){
+    document.getElementById('gate').classList.add('off'); go(0, true);
+  };
+  document.getElementById('silent').onclick = function(){
+    document.getElementById('gate').classList.add('off'); auto = false;
+    document.getElementById('auto').setAttribute('aria-pressed', false); go(0, false);
+  };
+}
+if (document.readyState === 'loading') addEventListener('DOMContentLoaded', boot); else boot();
+</script>
+<script>
+document.querySelectorAll('#toc li').forEach(function(li){
+  li.onclick = function(){
+    document.getElementById('toc').classList.remove('on');
+    go(+li.dataset.n, speaking || paused);
+  };
+});
+</script>
+</body>
+</html>

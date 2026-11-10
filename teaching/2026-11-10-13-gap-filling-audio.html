@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>漏洞的填补 · 有声课件 — 任广科</title>
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;background:#0E1A17;overflow:hidden;
+  font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif}
+#wrap{position:fixed;inset:0;display:flex;flex-direction:column}
+#viewport{flex:1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#deck{flex:0 0 auto;width:1920px;height:1080px;position:relative;transform-origin:center center;
+  box-shadow:0 24px 80px rgba(0,0,0,.55);border-radius:4px;overflow:hidden}
+#deck>section{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;
+  opacity:0;visibility:hidden;transition:opacity .28s ease}
+#deck>section.on{opacity:1;visibility:visible}
+#deck aside{display:none}
+#deck h1,#deck h2,#deck h3,#deck h4,#deck p,#deck ul,#deck ol,#deck table{margin:0}
+#deck ul,#deck ol{padding-left:1.4em}
+#deck table{border-collapse:collapse;width:100%}
+#deck th,#deck td{padding:.62rem .8rem;border-bottom:1px solid rgba(0,0,0,.12);text-align:left;vertical-align:top}
+#deck thead th{font-weight:700}
+#deck figcaption{margin-top:.8rem;font-size:24px;opacity:.72}
+#deck hr{border:0;border-top:1px solid currentColor;opacity:.45}
+#deck cite{font-style:italic;opacity:.8}
+
+/* 字幕 */
+#cap{flex:0 0 auto;min-height:74px;display:flex;align-items:center;justify-content:center;
+  padding:12px 42px;background:#0B1714;border-top:1px solid #1D362F;
+  color:#EDF2F0;font-size:20px;line-height:1.62;text-align:center}
+#cap.off{display:none}
+#cap b{font-weight:400}
+#cap i{font-style:normal;color:#6F9A8C;font-size:14px}
+#cap em{font-style:normal;color:#5FB49C;font-variant-numeric:tabular-nums;font-size:13px;
+  margin-right:12px;opacity:.9}
+
+/* 控制条 */
+#bar{flex:0 0 auto;display:flex;align-items:center;gap:14px;padding:10px 18px;
+  background:#132621;border-top:1px solid #23443B;color:#CFE3DC;font-size:13px;flex-wrap:wrap}
+#bar button{appearance:none;border:1px solid #2E6A5C;background:#17302A;color:#DDEBE6;
+  border-radius:8px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:inherit;
+  transition:background .15s,border-color .15s}
+#bar button:hover{background:#1F3F37;border-color:#54917F}
+#bar button.key{background:#2E6A5C;border-color:#49897A;color:#fff;min-width:96px;font-weight:600}
+#bar button.key:hover{background:#38806E}
+#bar button.tog[aria-pressed="true"]{background:#2E6A5C;border-color:#49897A;color:#fff}
+#bar .sp{flex:1}
+#bar label{display:flex;align-items:center;gap:7px;white-space:nowrap;color:#9FBCB2}
+#bar input[type=range]{width:96px;accent-color:#5FB49C}
+#bar select{background:#17302A;color:#DDEBE6;border:1px solid #2E6A5C;border-radius:8px;
+  padding:6px 8px;font-size:13px;max-width:230px;font-family:inherit}
+#pos{font-variant-numeric:tabular-nums;color:#EDF2F0;min-width:74px;text-align:center}
+#prog{position:absolute;left:0;right:0;top:0;height:3px;background:rgba(255,255,255,.08);z-index:5}
+#prog i{display:block;height:100%;background:#5FB49C;width:0;transition:width .3s}
+
+/* 目录 */
+#toc{position:fixed;inset:0;background:rgba(8,18,15,.93);z-index:40;display:none;
+  padding:46px 56px;overflow:auto}
+#toc.on{display:block}
+#toc h3{color:#9EDCC7;font-size:15px;letter-spacing:3px;margin:0 0 16px;font-weight:600}
+#toc ol{list-style:none;margin:0 0 30px;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:8px}
+#toc li{display:flex;gap:11px;align-items:baseline;color:#D8E6E1;padding:9px 12px;
+  border-radius:8px;cursor:pointer;font-size:14px;border:1px solid transparent}
+#toc li:hover{background:#1A322B;border-color:#2E6A5C}
+#toc li.cur{background:#2E6A5C;color:#fff}
+#toc li em{font-style:normal;color:#7FB3A3;font-variant-numeric:tabular-nums;min-width:26px}
+#toc li.cur em{color:#CFEFE3}
+#toc li s{text-decoration:none;margin-left:auto;color:#7FB3A3;font-size:12px}
+#tocX{position:fixed;right:34px;top:30px}
+
+/* 开场遮罩 */
+#gate{position:fixed;inset:0;z-index:60;background:#0E1A17;color:#EDF2F0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  text-align:center;padding:40px}
+#gate.off{display:none}
+#gate h1{font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:46px;margin:0;font-weight:700}
+#gate p{margin:0;max-width:760px;line-height:1.95;color:#9FBCB2;font-size:15px}
+#gate .go{font-size:17px;padding:15px 40px;border-radius:12px;border:1px solid #49897A;
+  background:#2E6A5C;color:#fff;cursor:pointer;font-family:inherit;font-weight:600}
+#gate .go:hover{background:#38806E}
+#gate .alt{background:none;border:0;color:#7FB3A3;cursor:pointer;font-size:13px;
+  text-decoration:underline;font-family:inherit}
+#gate .warn{color:#E0A080;font-size:13px;max-width:700px;line-height:1.8}
+@media (max-width:860px){
+  #bar{font-size:12px;gap:9px;padding:8px 10px}
+  #bar label span{display:none}
+  #bar input[type=range]{width:64px}
+  #toc{padding:30px 20px}
+}
+</style>
+<style>
+html,body{background:#E7E3D8}
+#deck{box-shadow:0 18px 50px rgba(22,48,42,.18)}
+#cap{background:#F6F3EC;border-top:1px solid #DCD8CC;color:#16302A}
+#cap i{color:#6B7A75} #cap em{color:#2E6A5C}
+#bar{background:#EFEBE1;border-top:1px solid #DCD8CC;color:#16302A}
+#bar button{background:#FFFFFF;border-color:#C9D9D2;color:#16302A}
+#bar button:hover{background:#E4EFEA;border-color:#2E6A5C}
+#bar button.key,#bar button.tog[aria-pressed="true"]{background:#2E6A5C;border-color:#2E6A5C;color:#fff}
+#bar label{color:#52605C} #bar select{background:#FFFFFF;color:#16302A;border-color:#C9D9D2}
+#pos{color:#16302A} #prog{background:rgba(22,48,42,.08)} #prog i{background:#2E6A5C}
+#toc{background:rgba(246,243,236,.97)} #toc h3{color:#2E6A5C}
+#toc li{color:#16302A} #toc li:hover{background:#E4EFEA;border-color:#2E6A5C}
+#toc li em,#toc li s{color:#2E6A5C} #toc li.cur{background:#2E6A5C;color:#fff} #toc li.cur em,#toc li.cur s{color:#E4EFEA}
+#gate{background:#F6F3EC;color:#16302A} #gate p{color:#52605C} #gate .alt{color:#2E6A5C} #gate .warn{color:#9E5231}
+#srcnote{color:#52605C!important}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="viewport">
+    <div id="prog"><i></i></div>
+    <div id="deck">
+<section id="cover" data-transition="fade" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:space-between">
+
+<div style="display:flex;flex-direction:column;gap:28px">
+<p style="font-size:30px;color:#2E6A5C;letter-spacing:8px">法 学 方 法 论 · 第 十 三 章</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:128px;font-weight:700;line-height:1.08;color:#16302A">漏洞的填补</h1>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<hr style="border-top:3px solid #9E5231;width:280px">
+<p style="font-size:40px;line-height:1.5;color:#16302A;width:1600px">漏洞认定之后：<b>以何种方法、依何种法理</b>补上法律所欠缺的答案？</p>
+<p style="font-size:30px;color:#2E6A5C">六十分钟 ｜ 三幕 ｜ 以案例讲方法</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#2E6A5C">配套教材《法学方法论—理论与实务》§99–§105</p>
+</section>
+<section id="roadmap" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:68px;font-weight:700;line-height:1.15">今天的六十分钟</h2>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">开场 ｜ 3 分钟</h3><div style="font-size:28px;line-height:1.55"><b>分居期间，孩子由谁抚养</b></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">第一幕 ｜ 9 分钟</h3><div style="font-size:28px;line-height:1.55"><b>填补的性质与法理</b><br>造法的尝试；法院的权限；法理的四种态样<br>§99–§100</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">第二幕 ｜ 35 分钟</h3><div style="font-size:28px;line-height:1.55"><b>四种填补方法</b><br>类推适用、目的性限缩、目的性扩张、创制性补充<br>§101–§104</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">第三幕 ｜ 13 分钟</h3><div style="font-size:28px;line-height:1.55"><b>知识产权法上的例证</b><br>临时保护期产品的后续实施<br>§105</div></div></div>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:32px;line-height:1.55;color:#16302A">贯穿全课的一句话：<b style="color:#2E6A5C">写明自己在做法续造。</b>裁判文书多以「参照」指称类推，读者须自行判断：它是授权式类推，还是无授权的类推？</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §99–§105</p>
+</section>
+<section id="hook50" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">开 场 题 ｜ 案例 50（指导性案例 228 号）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">分居期间，哺乳期的孩子由谁抚养</h2></div>
+<p style="font-size:28px;line-height:1.6;color:#52605C;width:1664px">张某与李某婚后生育一女。双方分居，协议离婚未果，法院判决不准离婚。分居期间，李某与其母刘某未经张某同意，将<b>尚在哺乳期</b>的孩子带回老家，此后拒绝张某探望。张某起诉，请求将孩子送回，由其继续行使监护权。</p>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:25px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第一千零八十四条第三款</h3><p style="font-size:23px;line-height:1.6;margin-top:6px">离婚后，不满两周岁的子女，以由母亲直接抚养为原则。已满两周岁的子女，父母双方对抚养问题协议不成的，由人民法院根据双方的具体情况，按照最有利于未成年子女的原则判决。子女已满八周岁的，应当尊重其真实意愿。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:16px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #52605C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#52605C">一审（定州市人民法院）</h3><div style="font-size:25px;line-height:1.55">驳回诉讼请求：张某「没有证据证明李某未抚养保护好」孩子。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">二审（保定市中级人民法院）</h3><div style="font-size:25px;line-height:1.55"><b style='font-size:44px;color:#9E5231'>？</b></div></div></div></div>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:32px;line-height:1.55;color:#16302A">第一千零八十四条写的是「离婚后」。双方没有离婚。<b style="color:#2E6A5C">这一条能不能用？如果能用，以什么名义、用到什么程度？</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">答案见第二幕 §101</p>
+</section>
+<section id="act1" data-transition="magic" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<p style="font-size:30px;color:#2E6A5C;letter-spacing:8px">第 一 幕 ｜ 九 分 钟</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:112px;font-weight:700;line-height:1.1;color:#16302A">填补的性质与法理</h1>
+<hr style="border-top:3px solid #9E5231;width:280px">
+<p style="font-size:40px;line-height:1.55;color:#16302A;width:1500px">漏洞填补是解释活动的继续，其性质是<b style="color:#2E6A5C">造法的尝试，而非终局地制定法律。</b></p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">教材 §99–§100</p>
+</section>
+<section id="nature" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§99 ｜ 填 补 的 性 质</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">造法的尝试，而非终局地制定法律</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">解释与补充：法的萃取的两个阶段</h3><div style="font-size:26px;line-height:1.55">任务相同，都含有评价性选择。<br>区别：解释在可能文义<b>之内</b>；漏洞填补（法内漏洞除外）在可能文义<b>之外</b>。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">判决先例的效力</h3><div style="font-size:26px;line-height:1.55">后来的法院负<b>斟酌的义务</b>而非遵守的义务：不采先例见解的，就其为何不采负有论辩的负担；采之者可推定其正确。</div></div></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">中国法：指导性案例「应当参照」</h3><div style="font-size:25px;line-height:1.55">依《最高人民法院关于案例指导工作的规定》第七条，各级人民法院审判类似案例时应当参照；不能作为裁判依据援引，只在裁判理由中援引。<br>「应当参照」比斟酌的义务更强：不参照者须说明本案与指导性案例在基本案情上的区别。<br>指导性案例中的法续造因此处于<b>「造法的尝试」与「法源」之间</b>：它可能被立法吸收（沿革 5、案例 48、案例 54），也可能被宣布不再参照（案例 51）。</div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §99 一、二</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="power" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§99 三 ｜ 法 院 的 补 充 权 限</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">候补的、针对个案的</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">① 基本权利与法律保留</h3><div style="font-size:25px;line-height:1.55">有利于关系人的类推不带来不测的不利法效果，补充权限可以扩张；<b>不利于关系人、涉及法律保留事项的补充，受到严格限制</b>（§114、§118）。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">② 权力区分</h3><div style="font-size:25px;line-height:1.55">立法机关享有优先的立法权。法院的补充权限：<br><b>候补的</b>——只在立法者未作规定时发动；<br><b>针对个案的</b>——只为解决系争案件而作。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">③ 中国法的两处差别</h3><div style="font-size:25px;line-height:1.55">法院不享有违宪审查权，只能作合宪性考量。<br>司法解释是抽象的、针对类案的规范：「候补性」依然成立，<b>「个案性」不再成立</b>——其续造须接受更严格的审查（§118）。</div></div></div>
+<div style="background:#E4EFEA;padding:24px 38px;border-radius:16px"><p style="font-size:29px;line-height:1.55;color:#16302A">例：案例 17（指导性案例 244 号）把一条刑事赔偿司法解释类推适用于诈骗罪罪名未撤销、刑期大幅降低的情形——<b style="color:#2E6A5C">有利于公民、不利于国家</b>，国家赔偿法领域没有类推禁止，补充权限在此可以扩张。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §99 三、§101</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="legalreason" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:16px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§100 ｜ 填 补 的 法 源</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">法理：须以成文原则为连结点</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#52605C">台湾地区「民法」第一条</h3><div style="font-size:27px;line-height:1.55">民事，法律所未规定者，依习惯；无习惯者，<b>依法理</b>。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">《民法典》第十条</h3><div style="font-size:27px;line-height:1.55">处理民事纠纷，应当依照法律；法律没有规定的，可以适用习惯，但是不得违背公序良俗。<br><b>未列法理。</b></div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:25px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:22%;color:#2E6A5C;text-align:left">法理的态样</th><th style="width:46%;color:#2E6A5C;text-align:left">内容</th><th style="width:32%;color:#2E6A5C;text-align:left">对应的填补方法</th></tr><tr><td style="color:#2E6A5C;font-weight:700">平等原则</td><td>相同者相同处理；不同者不同处理</td><td>类推适用；反面解释与目的性限缩</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">立法意旨</td><td>法律基础的客观目的；由多数规定归纳的共同意旨</td><td>目的性扩张；整体类推</td></tr><tr><td style="color:#2E6A5C;font-weight:700">法理念</td><td>正义、合目的性、法安定性——不能直接适用</td><td>创制性补充的出发点</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">事物的本质（事理）</td><td>须说明是哪一种事理、从何种生活关系的结构中得出</td><td>创制性补充</td></tr></table>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:28px;line-height:1.55;color:#16302A">中国法上，平等、自愿、公平、诚信等原则已经成文化，在填补中承担法理的功能。<b style="color:#2E6A5C">不能连结到任何成文原则的「法理」，没有明文的法源地位，援引须承担更重的论证负担。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §100</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="act2" data-transition="magic" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<p style="font-size:30px;color:#2E6A5C;letter-spacing:8px">第 二 幕 ｜ 三 十 五 分 钟</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:112px;font-weight:700;line-height:1.1;color:#16302A">四种填补方法</h1>
+<hr style="border-top:3px solid #9E5231;width:280px">
+<p style="font-size:40px;line-height:1.55;color:#16302A;width:1500px">前三种以具体规定为出发点，属法律内的法续造；<b style="color:#2E6A5C">创制性补充以法秩序整体为出发点，属超越法律的法续造。</b></p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">教材 §101–§104</p>
+</section>
+<section id="methods" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§101 ｜ 对 照</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:62px;font-weight:700;line-height:1.15">四种填补方法</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:27px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:16%;color:#2E6A5C;text-align:left">方法</th><th style="width:32%;color:#2E6A5C;text-align:left">与文义的关系</th><th style="width:24%;color:#2E6A5C;text-align:left">法理基础</th><th style="width:28%;color:#2E6A5C;text-align:left">论证的重心</th></tr><tr><td style="color:#2E6A5C;font-weight:700">类推适用</td><td>文义未涵盖，延及之</td><td>平等原则：相同者相同处理</td><td>类似性与相容性</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">目的性限缩</td><td>文义已涵盖，排除之；已压缩文义核心</td><td>平等原则：不同者不同处理</td><td>依规范意旨须引入的区分特征</td></tr><tr><td style="color:#2E6A5C;font-weight:700">目的性扩张</td><td>文义未涵盖，且无规范意义下的类似性，延及之</td><td>立法意旨</td><td>规定选取的类型过于具体，须提高抽象程度</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">创制性补充</td><td>无可资攀附的规定</td><td>法理念与事理</td><td>规范必要性、可用性与权限</td></tr></table>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:31px;line-height:1.55;color:#16302A">类推的类似性<b style="color:#2E6A5C">不是事实层面的相似，而是评价层面的相同</b>：哪些特征在规范评价上有意义，须先探求被类推规定的规范意旨才能认定。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §101 ｜ 前三种属法律内的法续造，第四种属超越法律的法续造</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="analogy" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§101 ｜ 类 推 适 用（Analogie）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:54px;font-weight:700;line-height:1.15">类推的两步，以及裁判文书中的「参照」</h2></div>
+<div style="display:flex;gap:26px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">第一步：类似性</h3><div style="font-size:27px;line-height:1.55">比较的是被参照规范所处理的<b>利益冲突</b>，而不是两种法律关系的名称或标的。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:28px;font-weight:700;color:#2E6A5C">第二步：相容性</h3><div style="font-size:27px;line-height:1.55">移入的法效果须与待处理关系的<b>制度定位</b>相容，必要时加以限定。</div></div></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">具体类推（Gesetzesanalogie）</h3><div style="font-size:25px;line-height:1.55">由单个规范的理由延及类似情形。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">整体类推（Rechtsanalogie）</h3><div style="font-size:25px;line-height:1.55">由若干规范归纳出一般原则，再将原则适用于未规定的情形；原则若已超出个别法律的计划，即接近超越法律的法续造。</div></div></div>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:28px;line-height:1.55;color:#16302A">「类推」一词在中国法上带有 1979 年《刑法》类推制度的历史含义，民事裁判多以「参照」指称类推。<b style="color:#2E6A5C">授权式类推：漏洞由授权规范预设。无授权的类推：漏洞须由法院论证。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §101 ｜ 参见 §41、§93</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="case49" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§101 ｜ 案例 49（指导性案例 15 号）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">三家公司，一个实际控制人</h2></div>
+<p style="font-size:26px;line-height:1.6;color:#16302A;width:1664px">川交工贸公司拖欠徐工机械公司货款一千余万元。川交工贸、川交机械、瑞路三公司的实际控制人均为王永礼；三公司经理、财务负责人、出纳会计、工商手续经办人均相同，共用销售手册与经销协议，使用共同账户、以王永礼签字为用款依据，与徐工机械公司的债权债务、业绩、账务及返利均计算在川交工贸公司名下。</p>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:27px;font-weight:700;color:#9E5231;margin-bottom:4px">《公司法》（2018 年修正）第二十条第三款</h3><p style="font-size:25px;line-height:1.6;margin-top:6px">公司股东滥用公司法人独立地位和股东有限责任，逃避债务，严重损害公司债权人利益的，应当对公司债务承担连带责任。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">江苏省高级人民法院（2011）苏商终字第 0107 号</h3><div style="font-size:24px;line-height:1.55">三公司人员、业务、财务混同，「导致各自财产无法区分，已丧失独立人格，构成人格混同」；其行为「本质和危害结果与《公司法》第二十条第三款规定的情形相当，故<b>参照</b>《公司法》第二十条第三款的规定」，川交机械公司、瑞路公司承担连带清偿责任。</div></div></div>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:29px;line-height:1.55;color:#16302A">第二十条第三款的责任主体是「股东」。川交机械公司、瑞路公司不是川交工贸公司的股东，而是与之并列的关联公司——<b style="color:#2E6A5C">这是一次无授权的具体类推。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">徐州市中级人民法院（2009）徐民二初字第 0065 号 ｜ 教材 §101</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="case49b" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§101 ｜ 案例 49 的 方 法 论 解 读</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">漏洞、类似性、相容性</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:16%;color:#2E6A5C;text-align:left">步骤</th><th style="width:52%;color:#2E6A5C;text-align:left">判决做了什么</th><th style="width:32%;color:#2E6A5C;text-align:left">评价</th></tr><tr><td style="color:#2E6A5C;font-weight:700">漏洞的认定</td><td>「横向」人格否认不在第二十条第三款的可能文义之内；依其防止以法人独立地位为工具逃避债务的意旨，属于应予规范的事项</td><td>类推适用式的价值判断矛盾（§94）</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">类似性</td><td>以「行为本质和危害结果……相当」为判断：独立人格被滥用，债权人无从就特定法人的财产获得清偿</td><td>比较的是利益冲突，方向正确</td></tr><tr><td style="color:#2E6A5C;font-weight:700">相容性</td><td>未单独检验。纵向否认：股东对公司债务负责；横向否认：关联公司<b>相互之间</b>负责——责任方向不同</td><td>依规范意旨调整了法效果，接近目的性扩张</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">论证路线</td><td>同时援引诚实信用原则</td><td>类推与整体类推交织；分开写更清楚</td></tr></table>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#9E5231">练习：若三公司人员、业务混同，但财务记录各自独立、可以区分，类推是否仍然成立？</h3><div style="font-size:24px;line-height:1.55">类似性：债权人仍可就各公司的财产分别受偿，有决定意义的特征不具备，类似性不成立或显著减弱。相容性：连带责任以财产边界不清为正当化根据。<b>「财产无法区分」同时承担了类似性与相容性两步的功能。</b></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §101 ｜ 后续见沿革 5：《公司法》（2023 年修订）第二十三条第二款</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="answer50" data-transition="push" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">开 场 题 的 答 案 ｜ 案例 50（指导性案例 228 号）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:54px;font-weight:700;line-height:1.15">参照离婚后的规定，暂时确定抚养</h2></div>
+<p style="font-size:26px;line-height:1.6;color:#16302A;width:1664px">保定市中级人民法院撤销一审判决：孩子暂由张某直接抚养，李某可以探望，张某应予协助。「现行法律和司法解释对于婚内监护权的行使虽无明确具体规定」，考虑双方正处于矛盾较易激化的分居状态，为最大限度保护未成年子女的利益，参照第一千零八十四条处理。</p>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:18%;color:#2E6A5C;text-align:left">步骤</th><th style="width:82%;color:#2E6A5C;text-align:left">内容</th></tr><tr><td style="color:#2E6A5C;font-weight:700">漏洞的认定</td><td>第一千零八十四条限于「离婚后」；第一千零五十八条只规定夫妻平等享有抚养子女的权利。立法者预设婚姻存续期间父母共同生活、共同抚养，分居使预设落空——<b>难以认为是有意否定，更可能是未予考虑</b></td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">类似性</td><td>第一千零八十四条处理的利益冲突：父母不再共同生活时子女由谁直接抚养。「离婚」在规范评价上并无决定意义；有决定意义的是「不再共同生活」与「最有利于未成年子女」</td></tr><tr><td style="color:#2E6A5C;font-weight:700">相容性</td><td>「<b>暂时</b>」：婚姻仍然存续，双方的监护权未因分居而改变，直接抚养只能是临时安排；同时参照第一千零八十六条课以协助探望的义务</td></tr></table>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:28px;line-height:1.55;color:#16302A">一审以「没有证据证明李某未抚养保护好」驳回，把问题处理为证明问题，回避了漏洞。<b style="color:#2E6A5C">拒绝法续造并非中立的选择</b>：它使擅自带走子女的一方取得事实上的抚养地位。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §101 ｜ 裁判要点第 2 项：可以参照适用离婚后子女抚养的有关规定，暂时确定未成年子女的抚养事宜</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">4 min</p>
+</section>
+<section id="reduction" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§102 ｜ 目 的 性 限 缩（teleologische Reduktion）｜ 设 例 7</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:52px;font-weight:700;line-height:1.15">父亲以子女的名义，把房屋赠与子女</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:26px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第一百六十八条</h3><p style="font-size:24px;line-height:1.6;margin-top:6px">代理人不得以被代理人的名义与自己实施民事法律行为，但是被代理人同意或者追认的除外。</p><p style="font-size:24px;line-height:1.6;margin-top:6px">代理人不得以被代理人的名义与自己同时代理的其他人实施民事法律行为，但是被代理的双方同意或者追认的除外。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#9E5231">设例</h3><div style="font-size:25px;line-height:1.55">父亲作为未成年子女的法定代理人，以子女的名义与自己订立赠与合同，将一套无负担的房屋赠与子女。<br>依文义：自己代理，须经被代理人同意或追认——子女不能有效同意，追认只能待其成年。</div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:25px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:20%;color:#2E6A5C;text-align:left">步骤</th><th style="width:80%;color:#2E6A5C;text-align:left">内容</th></tr><tr><td style="color:#2E6A5C;font-weight:700">规范意旨</td><td>防止代理人利用双方地位损害被代理人的利益</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">引入区分特征</td><td>是否存在利益冲突：被代理人纯获法律上利益的，不存在利益冲突</td></tr><tr><td style="color:#2E6A5C;font-weight:700">结论</td><td>依「不同者不同处理」，纯获利益的自己代理排除于第一百六十八条第一款的适用范围之外</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">定性</td><td>父亲以子女名义与自己订约，正是该款描写的典型情形——<b>已压缩文义核心，是目的性限缩，不是限缩解释</b></td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §102 ｜ 德国联邦最高法院对《德国民法典》第 181 条作了同样的限缩</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="case15" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§102 ｜ 重 读 案 例 15（指 导 性 案 例 67 号）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:50px;font-weight:700;line-height:1.15">拒绝适用分期付款解除规则：哪一种法续造</h2></div>
+<p style="font-size:26px;line-height:1.6;color:#16302A;width:1664px">最高人民法院拒绝将原《合同法》第一百六十七条（分期付款买卖的出卖人在买受人未付价款达全部价款五分之一时可以解除）适用于分期付款的股权转让。先问：股权转让是否在第一百六十七条的文义之内？</p>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">读法一：股权转让属于「买卖合同」</h3><div style="font-size:24px;line-height:1.55">拒绝适用 = 对第一百六十七条的<b>目的性限缩</b>。<br>须证明其规范意旨（保护价款回收风险中的出卖人、抑制消费者信贷的滥用）要求引入「标的为有体物、交易发生于经营者与消费者之间」这一区分特征。<br><b>论证负担：须推翻文义。</b></div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">读法二：股权转让不在「买卖合同」之内</h3><div style="font-size:24px;line-height:1.55">第一百六十七条只能经第一百七十四条「参照」适用于有偿的权利转让。<br>拒绝适用 = 授权式类推中<b>相容性审查</b>得出否定结论。<br><b>论证负担：只须说明价值安排不可移入。</b></div></div></div>
+<div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:26px;font-weight:700;color:#9E5231;margin-bottom:4px">《合同法》（已废止）第一百七十四条</h3><p style="font-size:24px;line-height:1.6;margin-top:6px">法律对其他有偿合同有规定的，依照其规定；没有规定的，参照买卖合同的有关规定。</p></div>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:30px;line-height:1.55;color:#16302A"><b style="color:#2E6A5C">定性先于论证。</b>教材采读法二；判决对定性未作交代。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §102 ｜ 现为《民法典》第六百三十四条、第六百四十六条</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="extension" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§103 ｜ 目 的 性 扩 张（teleologische Extension）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:58px;font-weight:700;line-height:1.15">立法者选取的类型过于具体</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">定义</h3><div style="font-size:25px;line-height:1.55">法律文义所涵盖的案型，衡诸立法意旨显然过狭；为贯彻该意旨，将适用范围扩张至文义原不包括的类型。<br>与类推的区别：扩张后的类型与明文规定者之间<b>没有规范意义下的类似性</b>；须提高类型化特征的抽象程度。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">案例 29（（2023）最高法知民终 1511 号）</h3><div style="font-size:25px;line-height:1.55">《专利法》第七十五条第四项：「专为科学研究和实验而使用有关专利的」不视为侵权。<br>为申请农药登记而进行的试验，以专利技术为取得行政许可的手段，而不以其为研究对象。<br>法院以规范目的界定「科学研究和实验」的射程，将其纳入。</div></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:25px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:38%;color:#2E6A5C;text-align:left">表述方式</th><th style="width:62%;color:#2E6A5C;text-align:left">效果</th></tr><tr><td style="color:#2E6A5C;font-weight:700">以「类推」的名义</td><td>至少承认了越出文义</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">以「不宜作狭义解释」「应作广义理解」的名义</td><td>把法续造表述为解释——若登记试验已越出可能文义，即属此种情形（§107：隐蔽性的法续造）</td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §103 ｜ 参见 §94</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="case29" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§103 ｜ 案例 29（（2023）最高法知民终 1511 号）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:52px;font-weight:700;line-height:1.15">农药登记试验是不是「科学研究和实验」</h2></div>
+<p style="font-size:26px;line-height:1.6;color:#16302A;width:1664px">农药仿制企业为向主管部门申请农药登记，制造并使用落入专利保护范围的产品以取得必需的试验数据；还向案外人提供该农药进行登记试验，并有许诺销售行为。</p>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:23px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:16%;color:#2E6A5C;text-align:left"></th><th style="width:84%;color:#2E6A5C;text-align:left">内容</th></tr><tr><td style="color:#2E6A5C;font-weight:700">裁判</td><td>为取得登记所必需的试验数据，<b>有限地</b>制造、使用，没有对专利权的正常利用和专利权人的合法权益产生不合理的损害的，可以构成「科研例外」；向案外人提供、许诺销售，构成侵权</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">目的命题</td><td>若禁止在专利期内完成登记试验，专利到期后仿制产品仍长期不能上市，专利保护期被「变相延长」</td></tr><tr><td style="color:#2E6A5C;font-weight:700">形式论据</td><td>2008 年新增第七十五条第五项（Bolar 例外）只为药品与医疗器械设例外，未及农药——依「明示其一即排除其他」，本可反推农药登记试验不在豁免之列</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">限定条件</td><td>「为自己取得行政许可所必需」「有限地」「不产生不合理的损害」——使射程不至溢出</td></tr></table>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:27px;line-height:1.55;color:#16302A">教材的判断：登记试验以专利技术为<b style="color:#2E6A5C">取得行政许可的手段</b>，而不以其为研究对象；若它不能被容纳于「科学研究和实验」的可能文义之内，本案已越出解释，<b style="color:#2E6A5C">应依目的性扩张的标准审查</b>。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §43、§103</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="creative" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§104 ｜ 创 制 性 补 充</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">没有可供攀附的规定，须自行拟定规范</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">定义与对象</h3><div style="font-size:25px;line-height:1.55">依法理念与事理有加以规范的必要，经类推或目的性扩张仍找不到规范依据时，法院自行拟定裁判所需的规范。<br>主要填补演变式与无据式体系违反；属<b>超越法律的法续造</b>。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:27px;font-weight:700;color:#2E6A5C">三项要求</h3><div style="font-size:25px;line-height:1.55">① <b>必要性</b>：不存在其他法律保护的途径<br>② <b>可用性</b>：为新规则确立类似构成要件的条件<br>③ <b>权限</b>：法院有权作出这一补充<br>（第十四章第二步、第十五章第五步）</div></div></div>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:26px;font-weight:700;color:#9E5231;margin-bottom:4px">《民法典》第四百六十五条第二款</h3><p style="font-size:24px;line-height:1.6;margin-top:6px">依法成立的合同，仅对当事人具有法律约束力，但是法律另有规定的除外。</p></div><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">建设工程施工合同解释（一）第四十三条第二款</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">实际施工人以发包人为被告主张权利的，人民法院应当追加转包人或者违法分包人为本案第三人，在查明发包人欠付转包人或者违法分包人建设工程价款的数额后，判决发包人在欠付建设工程价款范围内对实际施工人承担责任。</p></div></div>
+<div style="background:#E4EFEA;padding:22px 34px;border-radius:16px"><p style="font-size:26px;line-height:1.55;color:#16302A">实际施工人与发包人之间并无合同关系。第四百六十五条第二款的但书以「法律」另有规定为条件；第五百三十五条的代位权以「怠于行使」为要件，同一解释第四十四条已另就代位权作出规定。<b style="color:#2E6A5C">第四十三条第二款在实证法上找不到可以攀附的构成要件——无所攀附的创制性补充。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §104 ｜ 《最高人民法院关于审理建设工程施工合同纠纷案件适用法律问题的解释（一）》（法释〔2020〕25 号）</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="soraya" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§104 ｜ 比 较 法 上 的 创 制 性 补 充</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">一般人格权与精神损害的金钱赔偿</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:25px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:20%;color:#2E6A5C;text-align:left"></th><th style="width:80%;color:#2E6A5C;text-align:left">内容</th></tr><tr><td style="color:#2E6A5C;font-weight:700">法律状态</td><td>《德国民法典》第 253 条：非财产损害仅在法律规定的情形下才能请求金钱赔偿；法典未把一般人格权列为受保护的法益</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">法续造</td><td>1950 年代，德国联邦最高法院先后承认一般人格权，并对严重的人格权侵害判给金钱赔偿——直接越过第 253 条的文义</td></tr><tr><td style="color:#2E6A5C;font-weight:700">认可</td><td>1973 年索拉雅案：德国联邦宪法法院认可这一法续造。理由之一：《德意志联邦共和国基本法》第一条、第二条保障人格尊严与人格自由发展，法院不能容忍人格权受侵害而无有效救济；立法者长期未作规定</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">方法论上的位置</td><td>「明显的法律保护漏洞」与「立法者不作为」的典型（第十四章 §112、第十五章 §119）</td></tr></table>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:29px;line-height:1.55;color:#16302A">中国法：精神损害赔偿已由《民法典》第一千一百八十三条明文规定，<b style="color:#2E6A5C">这一漏洞在中国法上不存在</b>；本例只用于说明创制性补充须证明的必要性与权限。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §104</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="creative2" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§104 ｜ 司 法 解 释 中 的 创 制 性 补 充</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:52px;font-weight:700;line-height:1.15">多重买卖的排序，以及一项已经退出的规则</h2></div>
+<div style="display:flex;gap:22px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#2E6A5C">多重买卖（买卖合同解释第六条、第七条）</h3><div style="font-size:23px;line-height:1.55">各买卖合同均有效时，各买受人的履行请求权地位平等，民法典对其先后未作规定。<br>普通动产：先受领交付 → 先支付价款 → 合同成立在先。<br>特殊动产：已受领交付的买受人，可以请求将所有权登记在自己名下，即使出卖人已为他人办理了转移登记（第七条第四项）——须与《民法典》第二百二十五条「未经登记，不得对抗善意第三人」相协调，论证负担更重。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#9E5231">惩罚性赔偿（商品房买卖解释第八条、第九条，2003 年）</h3><div style="font-size:23px;line-height:1.55">出卖人订约后将房屋另行抵押或另行出卖，或故意隐瞒未取得预售许可等事实，买受人「可以请求出卖人承担不超过已付购房款一倍的赔偿责任」——法律未作规定时创设的惩罚性赔偿。<br><b>退出：</b>《民法典》第一百七十九条第二款「法律规定惩罚性赔偿的，依照其规定」，把它保留给法律；2020 年修正后的解释已不再含有这两条。</div></div></div>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:27px;line-height:1.55;color:#16302A">先穷尽法律内的途径：合同编通则解释第五十一条第一款对加入债务的第三人的追偿，没有另行创设追偿权，而是指引「依照民法典关于不当得利等的规定」。<b style="color:#2E6A5C">这正是创制性补充的前提要求。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §104 ｜ 买卖合同解释：法释〔2012〕8 号（2020 年修正）；商品房买卖解释：法释〔2003〕7 号；合同编通则解释：法释〔2023〕13 号</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="contract27" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§104 ｜ 合 同 编 通 则 解 释</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:54px;font-weight:700;line-height:1.15">带有创制成分的条文：先问法律内的途径</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">合同编通则解释第二十七条第二款</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">债务人或者第三人履行以物抵债协议后，人民法院应当认定相应的原债务同时消灭；债务人或者第三人未按照约定履行以物抵债协议，经催告后在合理期限内仍不履行，债权人选择请求履行原债务或者以物抵债协议的，人民法院应予支持，但是法律另有规定或者当事人另有约定的除外。</p></div><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">合同编通则解释第三十一条第二款（节录）</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">当事人一方起诉请求对方履行债务，被告依据民法典第五百二十五条的规定主张双方同时履行的抗辩且抗辩成立，被告未提起反诉的，人民法院应当判决被告在原告履行债务的同时履行自己的债务，并在判项中明确原告申请强制执行的，人民法院应当在原告履行自己的债务后对被告采取执行行为；……</p></div></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:24px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:20%;color:#2E6A5C;text-align:left">条文</th><th style="width:40%;color:#2E6A5C;text-align:left">法律未作规定的问题</th><th style="width:40%;color:#2E6A5C;text-align:left">解释所作的安排</th></tr><tr><td style="color:#2E6A5C;font-weight:700">第二十七条第二款</td><td>以物抵债协议不履行时，债权人能否回到原债务</td><td>为债权人拟定在原债务与以物抵债协议之间的<b>选择权</b></td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">第三十一条第二款</td><td>同时履行抗辩成立时，法院如何判决</td><td>作出<b>同时履行的判决</b>，并在判项中写明执行条件</td></tr><tr><td style="color:#2E6A5C;font-weight:700">第五十一条第一款</td><td>加入债务的第三人能否向债务人追偿</td><td>不另行创设追偿权，<b>指引不当得利等规定</b></td></tr></table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §104 ｜ 这些规定的正当性，须依第十五章第五步审查（§118）</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="act3" data-transition="magic" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<p style="font-size:30px;color:#2E6A5C;letter-spacing:8px">第 三 幕 ｜ 十 三 分 钟</p>
+<h1 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:112px;font-weight:700;line-height:1.1;color:#16302A">知识产权法上的例证</h1>
+<hr style="border-top:3px solid #9E5231;width:280px">
+<p style="font-size:40px;line-height:1.55;color:#16302A;width:1500px">专有权与例外都采列举式规定，技术发展又不断制造立法者未曾预见的案型——<b style="color:#2E6A5C">知识产权法是漏洞填补的高发领域。</b></p>
+<p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">教材 §105</p>
+</section>
+<section id="case51" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:22px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§105 ｜ 案例 51（指导性案例 20 号，已不再参照）</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:52px;font-weight:700;line-height:1.15">授权前买下的设备，授权后还能继续用吗</h2></div>
+<p style="font-size:25px;line-height:1.6;color:#16302A;width:1664px">斯瑞曼公司 2006 年 1 月申请「制备高纯度二氧化氯的设备」发明专利，同年 7 月公开，<b>2009 年 1 月 21 日授权</b>。坑梓自来水公司 2008 年 10 月向康泰蓝公司购买二氧化氯发生器一套，康泰蓝公司于 <b>2008 年 12 月 30 日</b>开具发票——在临时保护期内完成销售。授权后，坑梓自来水公司继续使用，康泰蓝公司提供售后服务。斯瑞曼公司诉请停止侵权、赔偿损失。</p>
+<div style="display:flex;gap:22px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">《专利法》第十一条第一款</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">发明和实用新型专利权被授予后，除本法另有规定的以外，任何单位或者个人未经专利权人许可，都不得实施其专利，即不得为生产经营目的制造、使用、许诺销售、销售、进口其专利产品，或者使用其专利方法以及使用、许诺销售、销售、进口依照该专利方法直接获得的产品。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:14px"><div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:24px;font-weight:700;color:#9E5231;margin-bottom:4px">《专利法》第十三条</h3><p style="font-size:22px;line-height:1.6;margin-top:6px">发明专利申请公布后，申请人可以要求实施其发明的单位或者个人支付适当的费用。</p></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #52605C;border-radius:14px"><h3 style="font-size:24px;font-weight:700;color:#52605C">一审、二审</h3><div style="font-size:23px;line-height:1.55">深圳市中级人民法院判决停止侵权、连带赔偿 8 万元；广东省高级人民法院维持。</div></div></div></div>
+<div style="background:#E4EFEA;padding:22px 36px;border-radius:16px"><p style="font-size:30px;line-height:1.55;color:#16302A">授权后、为生产经营目的、使用、专利产品——<b style="color:#2E6A5C">每一个要素都在第十一条第一款文义的核心。</b>最高人民法院会怎么判？</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §105 ｜ 最高人民法院（2011）民提字第 259 号</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="case51b" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§105 ｜ 案例 51 的 方 法 论 解 读</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:56px;font-weight:700;line-height:1.15">一次没有说出名字的目的性限缩</h2></div>
+<p style="font-size:26px;line-height:1.6;color:#16302A;width:1664px">最高人民法院撤销原判、驳回诉讼请求：临时保护期内的实施「不属于专利法禁止的行为」，其后续的使用、许诺销售、销售「即使未经专利权人许可，也<b>应当得到允许</b>」。</p>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:22px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:22%;color:#2E6A5C;text-align:left"></th><th style="width:78%;color:#2E6A5C;text-align:left">内容</th></tr><tr><td style="color:#2E6A5C;font-weight:700">定性</td><td>已压缩第十一条第一款的文义核心——<b>目的性限缩</b>，而不是限缩解释；判决未用「限缩」一词</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">第一项理由</td><td>「以公开换保护」：专利法没有禁止授权前的实施，授权前制造的产品的后续实施也不构成侵权，否则「为尚未公开或者授权的技术方案提供了保护」——依规范意旨引入区分特征：<b>产品是否在授权前合法地进入流通</b></td></tr><tr><td style="color:#2E6A5C;font-weight:700">漏洞的类型</td><td>隐藏漏洞：第十一条欠缺的不是积极规定，而是一项限制规定；第七十五条列举了权利用尽与先用权，未规定临时保护期产品的后续实施</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">第二项理由</td><td>先用权条款只规定「继续制造、使用」；若后续实施构成侵权，「先用权没有任何意义」——以禁止赘余为据，对第七十五条第二项的目的性扩张</td></tr><tr><td style="color:#2E6A5C;font-weight:700">与「列举式例外受反面解释约束」</td><td>第一项理由限缩的是第十一条的禁止范围，未扩张例外清单，不冲突；第二项是使已列举的先用权不致落空所必需，不是在清单之外增补新的例外</td></tr></table>
+<div style="background:#E4EFEA;padding:20px 36px;border-radius:16px"><p style="font-size:29px;line-height:1.55;color:#16302A"><b style="color:#2E6A5C">写明自己在做法续造，是法续造的第一项要求。</b>本案以「应当得到允许」表述结论，未明示越出文义。</p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §105</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">4 min</p>
+</section>
+<section id="case51c" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">§105 ｜ 后 续</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">附条件的吸收，以及不再参照</h2></div>
+<div style="flex:1;background:#FFFFFF;padding:26px 32px;border-left:8px solid #9E5231;border-radius:12px"><h3 style="font-size:26px;font-weight:700;color:#9E5231;margin-bottom:4px">专利权纠纷解释（二）第十八条第三款</h3><p style="font-size:24px;line-height:1.6;margin-top:6px">发明专利公告授权后，未经专利权人许可，为生产经营目的使用、许诺销售、销售在本条第一款所称期间内已由他人制造、销售、进口的产品，且该他人<b>已支付或者书面承诺支付专利法第十三条规定的适当费用的</b>，对于权利人关于上述使用、许诺销售、销售行为侵犯专利权的主张，人民法院不予支持。</p></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">修正了什么</h3><div style="font-size:24px;line-height:1.55">案例 51 的区分特征：产品是否在授权前合法地进入流通。<br>司法解释的区分特征：申请人是否已经或者将要依第十三条<b>获得补偿</b>。<br>依该款，案例 51 的事实（康泰蓝公司未支付，斯瑞曼公司亦未请求）不再当然得出不侵权的结论。</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">不再参照</h3><div style="font-size:24px;line-height:1.55">2016 年 4 月 1 日解释施行；2020 年 12 月 23 日修正时保留本款；12 月 29 日，法〔2020〕343 号通知宣布指导性案例 20 号自 2021 年 1 月 1 日起不再参照。<br>通知未说明理由。不再参照<b>不影响本案裁判及此前参照本案作出的裁判的效力</b>。</div></div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §105 ｜ 《最高人民法院关于审理侵犯专利权纠纷案件应用法律若干问题的解释（二）》（法释〔2016〕1 号，2020 年修正）</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">3 min</p>
+</section>
+<section id="review" data-transition="fade" style="background:#F1EEE6;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:26px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">回 顾</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">本课案例一览：方法，以及是否写明</h2></div>
+<table style="font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;font-size:23px;color:#16302A;border:1px solid #DCD8CC;background:#FFFFFF"><tr style="background:#E4EFEA"><th style="width:26%;color:#2E6A5C;text-align:left">案例</th><th style="width:28%;color:#2E6A5C;text-align:left">填补方法</th><th style="width:22%;color:#2E6A5C;text-align:left">判决的表述</th><th style="width:24%;color:#2E6A5C;text-align:left">是否写明越出文义</th></tr><tr><td style="color:#2E6A5C;font-weight:700">案例 49（指导性案例 15 号）</td><td>无授权的具体类推；法效果调整接近目的性扩张</td><td>「参照」</td><td>部分：称参照，未单独检验相容性</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">案例 50（指导性案例 228 号）</td><td>无授权的具体类推</td><td>「无明确具体规定」「参照」「暂时」</td><td>是：写明了不圆满与相容性限定</td></tr><tr><td style="color:#2E6A5C;font-weight:700">案例 17（指导性案例 244 号）</td><td>有利于公民的具体类推</td><td>「参照适用」</td><td>是</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">案例 15（指导性案例 67 号）</td><td>目的性限缩，或授权式类推的相容性否定</td><td>拒绝适用</td><td>否：定性未作交代</td></tr><tr><td style="color:#2E6A5C;font-weight:700">案例 29</td><td>目的性扩张（若越出文义）</td><td>以规范目的界定射程</td><td>否</td></tr><tr style="background:#F1EEE6"><td style="color:#2E6A5C;font-weight:700">案例 51（指导性案例 20 号）</td><td>目的性限缩＋对先用权条款的目的性扩张</td><td>「应当得到允许」</td><td>否</td></tr><tr><td style="color:#2E6A5C;font-weight:700">建设工程施工合同解释（一）第四十三条第二款</td><td>创制性补充</td><td>以司法解释规定</td><td>—（权限问题见第十五章）</td></tr></table>
+<div style="background:#E4EFEA;padding:32px 44px;border-radius:16px"><p style="font-size:30px;line-height:1.55;color:#16302A">七则例证中，写明自己在做法续造的只有两三则。<b style="color:#2E6A5C">这正是第十四章要讨论的问题：隐蔽性的法续造。</b></p></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §101—§105</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="homework" data-transition="fade" style="background:#FAF8F3;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+
+<div style="display:flex;flex-direction:column;gap:10px"><p style="font-size:24px;color:#2E6A5C;letter-spacing:4px">课 后 练 习</p><h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:60px;font-weight:700;line-height:1.15">两道题，各用上今天的一种方法</h2></div>
+<div style="display:flex;gap:24px"><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #2E6A5C;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">一 · 第十八条第三款能否作反面解释（§105）</h3><div style="font-size:25px;line-height:1.55">在临时保护期内销售产品的一方，既未支付也未书面承诺支付适当费用；授权后，买受人继续使用该产品。<br>（1）能否依第十八条第三款的反面解释，认定授权后的使用构成侵权？<br>（2）此时还能否以指导性案例 20 号的理由得出不侵权的结论？</div></div><div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border-left:8px solid #9E5231;border-radius:14px"><h3 style="font-size:25px;font-weight:700;color:#9E5231">参考思路</h3><div style="font-size:23px;line-height:1.55">反面解释须先证明该条件是穷尽的。该条件的意旨在于保障申请人依第十三条获得补偿：权利人仍可向临时保护期内的实施者请求适当费用的，后续使用者不承担侵权责任与权利人获得补偿并不冲突，反面解释的前提难以成立；补偿已无从实现的，反面解释有其依据。本案理由可作参考，但须与该款的条件相协调。</div></div></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFFFF;padding:34px;border:1px solid #DCD8CC;border-radius:14px"><h3 style="font-size:26px;font-weight:700;color:#2E6A5C">二 · 类推的两步（§101）</h3><div style="font-size:25px;line-height:1.55">指导性案例 228 号参照离婚后子女抚养的规定。若孩子已满八周岁，分居期间由谁直接抚养？请依类似性与相容性两步说明：第一千零八十四条第三款「子女已满八周岁的，应当尊重其真实意愿」能否一并参照？「暂时」的限定是否仍然需要？</div></div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#52605C">教材 §101、§105 练习</p><p style="position:absolute;right:128px;bottom:64px;font-size:24px;color:#2E6A5C">2 min</p>
+</section>
+<section id="end" data-transition="fade" style="background:#E4EFEA;color:#16302A;font-family:'Noto Sans SC','Microsoft YaHei','微软雅黑','PingFang SC','Hiragino Sans GB',Arial,sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px;justify-content:center">
+
+<h2 style="font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,serif;font-size:74px;font-weight:700;line-height:1.25;color:#16302A;width:1660px">写明自己在做法续造</h2>
+<hr style="border-top:3px solid #9E5231;width:280px">
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:30px;font-weight:700;color:#2E6A5C">四种方法</h3><p style="font-size:27px;line-height:1.65;color:#16302A">类推：类似性是评价层面的相同；相容性须单独检验。<br>目的性限缩：已压缩文义核心，须引入区分特征。<br>目的性扩张：提高类型化特征的抽象程度。<br>创制性补充：必要性、可用性、权限。</p></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:30px;font-weight:700;color:#2E6A5C">读判决</h3><p style="font-size:27px;line-height:1.65;color:#16302A">「参照」：授权式类推，还是无授权的类推？<br>定性先于论证：不同定性，论证负担不同。<br>「应当得到允许」「应作广义理解」：是否把法续造表述为解释？</p></div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#2E6A5C">配套阅读：《法学方法论—理论与实务》§99–§105 ｜ 案例 49、50、51 ｜ 设例 7</p>
+</section>
+    </div>
+  </div>
+  <div id="cap"></div>
+  <div id="bar">
+    <button id="prev" title="上一页（←）">◀ 上一页</button>
+    <button id="play" class="key" title="播放／暂停（空格）">▶ 播放</button>
+    <button id="next" title="下一页（→）">下一页 ▶</button>
+    <button id="replay" title="重读本页（R）">↺ 重读</button>
+    <span id="pos">1 / 28</span>
+    <button id="auto" class="tog" aria-pressed="true" title="讲完自动翻到下一页">自动播放</button>
+    <label><span>停顿</span><input id="gap" type="range" min="0" max="8" step="1" value="2"><b id="gapV">2 秒</b></label>
+    <label><span>语速</span><input id="rate" type="range" min="0.6" max="1.6" step="0.05" value="1"><b id="rateV">1.00×</b></label>
+    <label><span>语音</span><select id="voice"></select></label>
+    <button id="capt" class="tog" aria-pressed="true" title="显示／隐藏讲稿字幕（S）">字幕</button>
+    <span class="sp"></span>
+    <span id="srcnote" style="color:#6F9A8C"></span>
+    <button id="toclink">目录</button>
+    <button id="full" title="全屏（F）">全屏</button>
+  </div>
+</div>
+
+<div id="toc">
+  <button id="tocX">关闭 ✕</button>
+  <h3>目　录</h3>
+  <ol><li data-n="0"><em>1</em><span>漏洞的填补</span><s>开场</s></li><li data-n="1"><em>2</em><span>今天的六十分钟</span><s>1 min</s></li><li data-n="2"><em>3</em><span>分居期间，孩子由谁抚养</span><s>2 min</s></li><li data-n="3"><em>4</em><span>填补的性质与法理</span><s>第一幕　填补的性质与法理</s></li><li data-n="4"><em>5</em><span>造法的尝试</span><s>3 min</s></li><li data-n="5"><em>6</em><span>法院的补充权限</span><s>3 min</s></li><li data-n="6"><em>7</em><span>法理在中国法上的位置</span><s>3 min</s></li><li data-n="7"><em>8</em><span>四种填补方法</span><s>第二幕　四种填补方法</s></li><li data-n="8"><em>9</em><span>四种方法的对照</span><s>2 min</s></li><li data-n="9"><em>10</em><span>类推：两步与「参照」</span><s>2 min</s></li><li data-n="10"><em>11</em><span>案例 49：三家公司，一个老板</span><s>3 min</s></li><li data-n="11"><em>12</em><span>案例 49：两步检验</span><s>3 min</s></li><li data-n="12"><em>13</em><span>案例 50：暂时由母亲抚养</span><s>4 min</s></li><li data-n="13"><em>14</em><span>目的性限缩：设例 7</span><s>3 min</s></li><li data-n="14"><em>15</em><span>定性先于论证：指导性案例 67 号</span><s>2 min</s></li><li data-n="15"><em>16</em><span>目的性扩张：农药登记试验</span><s>3 min</s></li><li data-n="16"><em>17</em><span>案例 29：农药登记试验</span><s>3 min</s></li><li data-n="17"><em>18</em><span>创制性补充</span><s>3 min</s></li><li data-n="18"><em>19</em><span>比较法：索拉雅案</span><s>2 min</s></li><li data-n="19"><em>20</em><span>创制性补充：多重买卖与惩罚性赔偿</span><s>3 min</s></li><li data-n="20"><em>21</em><span>合同编通则解释中的创制成分</span><s>2 min</s></li><li data-n="21"><em>22</em><span>知识产权法上的例证</span><s>第三幕　知识产权法上的例证</s></li><li data-n="22"><em>23</em><span>案例 51：授权前买的设备，授权后还能用吗</span><s>2 min</s></li><li data-n="23"><em>24</em><span>案例 51：一次没有说出名字的目的性限缩</span><s>4 min</s></li><li data-n="24"><em>25</em><span>案例 51：司法解释的吸收与修正</span><s>3 min</s></li><li data-n="25"><em>26</em><span>本课案例一览</span><s>2 min</s></li><li data-n="26"><em>27</em><span>课后练习</span><s>2 min</s></li><li data-n="27"><em>28</em><span>写明自己在做法续造</span><s>第三幕　知识产权法上的例证</s></li></ol>
+</div>
+
+<div id="gate">
+  <h1>漏洞的填补</h1>
+  <p><a href="../teaching.html" style="color:#8FC4B4">← 返回教学栏目</a></p>
+  <p>28 页，语音讲解约六十分钟（法学方法论第十三章，教材 §99–§105）。<br>
+     讲完一页停两秒自动翻到下一页；随时可用 <b>空格</b> 暂停、<b>←</b> <b>→</b> 手动翻页、<b>R</b> 重读本页、<b>F</b> 全屏。<br>
+     语速、停顿时长与朗读语音都可以在下方控制条里调。</p>
+  <p class="warn" id="nospeech" style="display:none">
+     这个浏览器不支持语音合成，页面仍可正常翻页阅读；或把录音放进同目录的 audio 文件夹（文件名与页面 id 同名的 mp3）。</p>
+  <p class="warn">建议用 <b>Microsoft Edge</b> 打开：它自带「晓晓」「云希」等中文神经语音，听感最接近真人。<br>
+     Chrome 下会退到系统自带的中文语音。若控制条里「语音」是空的，请在系统设置中安装中文语音包。</p>
+  <button class="go" id="start">▶ 开始讲解</button>
+  <button class="alt" id="silent">只看幻灯片，不要语音</button>
+</div>
+
+<script>
+var SLIDES = [{"id": "cover", "title": "漏洞的填补", "min": 0, "act": "开场"}, {"id": "roadmap", "title": "今天的六十分钟", "min": 1, "act": "开场"}, {"id": "hook50", "title": "分居期间，孩子由谁抚养", "min": 2, "act": "开场"}, {"id": "act1", "title": "填补的性质与法理", "min": 0, "act": "第一幕　填补的性质与法理"}, {"id": "nature", "title": "造法的尝试", "min": 3, "act": "第一幕　填补的性质与法理"}, {"id": "power", "title": "法院的补充权限", "min": 3, "act": "第一幕　填补的性质与法理"}, {"id": "legalreason", "title": "法理在中国法上的位置", "min": 3, "act": "第一幕　填补的性质与法理"}, {"id": "act2", "title": "四种填补方法", "min": 0, "act": "第二幕　四种填补方法"}, {"id": "methods", "title": "四种方法的对照", "min": 2, "act": "第二幕　四种填补方法"}, {"id": "analogy", "title": "类推：两步与「参照」", "min": 2, "act": "第二幕　四种填补方法"}, {"id": "case49", "title": "案例 49：三家公司，一个老板", "min": 3, "act": "第二幕　四种填补方法"}, {"id": "case49b", "title": "案例 49：两步检验", "min": 3, "act": "第二幕　四种填补方法"}, {"id": "answer50", "title": "案例 50：暂时由母亲抚养", "min": 4, "act": "第二幕　四种填补方法"}, {"id": "reduction", "title": "目的性限缩：设例 7", "min": 3, "act": "第二幕　四种填补方法"}, {"id": "case15", "title": "定性先于论证：指导性案例 67 号", "min": 2, "act": "第二幕　四种填补方法"}, {"id": "extension", "title": "目的性扩张：农药登记试验", "min": 3, "act": "第二幕　四种填补方法"}, {"id": "case29", "title": "案例 29：农药登记试验", "min": 3, "act": "第二幕　四种填补方法"}, {"id": "creative", "title": "创制性补充", "min": 3, "act": "第二幕　四种填补方法"}, {"id": "soraya", "title": "比较法：索拉雅案", "min": 2, "act": "第二幕　四种填补方法"}, {"id": "creative2", "title": "创制性补充：多重买卖与惩罚性赔偿", "min": 3, "act": "第二幕　四种填补方法"}, {"id": "contract27", "title": "合同编通则解释中的创制成分", "min": 2, "act": "第二幕　四种填补方法"}, {"id": "act3", "title": "知识产权法上的例证", "min": 0, "act": "第三幕　知识产权法上的例证"}, {"id": "case51", "title": "案例 51：授权前买的设备，授权后还能用吗", "min": 2, "act": "第三幕　知识产权法上的例证"}, {"id": "case51b", "title": "案例 51：一次没有说出名字的目的性限缩", "min": 4, "act": "第三幕　知识产权法上的例证"}, {"id": "case51c", "title": "案例 51：司法解释的吸收与修正", "min": 3, "act": "第三幕　知识产权法上的例证"}, {"id": "review", "title": "本课案例一览", "min": 2, "act": "第三幕　知识产权法上的例证"}, {"id": "homework", "title": "课后练习", "min": 2, "act": "第三幕　知识产权法上的例证"}, {"id": "end", "title": "写明自己在做法续造", "min": 0, "act": "第三幕　知识产权法上的例证"}];
+var NAR = {"cover": "欢迎来到法学方法论第十三章，漏洞的填补。上一章回答了何时有漏洞；这一章回答漏洞认定之后，法院以何种方法、依何种法理补上法律所欠缺的答案。全课六十分钟，分三幕：先讲填补的性质与法理，再讲类推适用、目的性限缩、目的性扩张与创制性补充四种方法，最后以知识产权法上的一则指导性案例作为例证。每一种方法都配一则案例。", "roadmap": "先交代路线。开场三分钟，看一件分居期间争夺子女抚养的案件。第一幕九分钟，讲填补的性质与法院的权限，以及法理在中国法上的位置。第二幕三十五分钟，逐一讲四种填补方法：类推适用以两则指导性案例说明，目的性限缩以一个设例和一则指导性案例说明，目的性扩张以专利法上的农药登记试验说明，创制性补充以几条司法解释说明。第三幕十三分钟，以指导性案例二十号说明知识产权法上的目的性限缩。请先记住贯穿全课的一句话：写明自己在做法续造。中国裁判文书多以参照二字指称类推，读者须自行判断它是立法者授权的类推，还是法院自己作出的类推。", "hook50": "开场先看一件案件，教材案例五十，指导性案例二百二十八号。张某与李某婚后生育一个女儿。双方分居，协议离婚没有成功，法院也判决不准离婚。分居期间，李某和她的母亲刘某未经张某同意，把尚在哺乳期的孩子带回老家，此后拒绝张某探望。张某以监护权纠纷起诉，请求把孩子送回，由她继续行使监护权。一审法院驳回了诉讼请求，理由是张某没有证据证明李某未抚养保护好孩子。请看屏幕左侧的《民法典》第一千零八十四条第三款：离婚后，不满两周岁的子女，以由母亲直接抚养为原则。问题在于，这一条写的是离婚后，而双方并没有离婚。法律对婚姻关系存续期间、夫妻分居时子女由谁直接抚养，没有明确规定。请你暂停，判断三件事：第一，这里有没有漏洞？第二，第一千零八十四条能不能用于分居期间？第三，如果能用，以什么名义用，用到什么程度？第二幕讲类推时，我们回到这个案件。这道题的难点不在情感，而在方法。一审法院找到了一个看似稳妥的出路：既然法律没有规定婚内抚养，就按侵权纠纷审查，张某举不出证据证明孩子受到伤害，就驳回。请先想一想，这个出路真的中立吗？", "act1": "第一幕，填补的性质与法理。我们回答三个问题：法院填补漏洞是在做什么；法院有多大的补充权限；填补时依据的法理从哪里来。", "nature": "先说填补的性质。漏洞填补是法律解释活动的继续。法院的任务在于探求法律的意旨，并把它适用于具体案件；这一探求活动可以区分为法律解释与法律补充两个阶段。两者任务相同，也都含有以评价性选择为基础的意志因素；区别在于：解释只在可能的文义范围之内进行，漏洞填补，除了法内漏洞，在可能的文义范围之外进行。法院补充法律的活动，其性质充其量只是造法的尝试，而不是终局地制定法律。法院在判决中表示其法律见解，这一见解将来可能被普遍接受，也可能或迟或早地被变更或抛弃。判决先例对后来的法院，产生的是斟酌的义务，而不是遵守的义务：有相同案型的先例而不采其见解，须就为何不采承担论辩的负担；采先例的见解，则可推定其正确，不必详细说理。中国法上的指导性案例比这更强。依《最高人民法院关于案例指导工作的规定》第七条，各级人民法院审判类似案例时应当参照；但它不能作为裁判依据援引，只在裁判理由中援引。应当参照意味着，不参照者不只负论辩的负担，还须说明本案与指导性案例在基本案情上的区别。所以指导性案例中的法续造，处于造法的尝试与法源之间：它的规则可以被立法或司法解释吸收，比如横向人格否认被《公司法》吸收；也可以因法律变动或最高人民法院的通知而不再参照，比如第三幕要讲的指导性案例二十号。对学生而言，这一段有一个直接的用处：读一则指导性案例时，不要只看裁判要点，还要追问它后来怎样了，是被立法吸收了，被司法解释修正了，还是被宣布不再参照了。一则已被修正的规则，不能再原样援引。", "power": "法院有多大的补充权限？可以从三个方面讨论。第一，基本权利与法律保留。类推适用的意旨在于贯彻平等原则，有利于关系人的类推，不会给关系人带来不测的不利法效果，法院的补充权限在此限度内可以扩张；反之，不利于关系人、涉及法律保留事项的补充，受到严格限制，刑法就是典型，第十五章专门讨论。第二，权力区分。立法机关享有优先的立法权；法院的补充权限有两个特征：它是候补的，只在立法者未作规定时才发动；它是针对个案的，只为解决系争案件而作。第三，移用于中国法须注意两处差别。中国的人民法院不享有违宪审查权，只能在解释与续造中作合宪性考量。更重要的是，最高人民法院的司法解释是抽象的、针对类案的规范，不是针对个案的补充；候补性在司法解释上依然成立，个案性则不再成立。所以司法解释所作的法续造，须接受更严格的审查。举一个有利类推的例子，教材案例十七，指导性案例二百四十四号。一条刑事赔偿司法解释的文义是部分罪名不成立；该案的诈骗罪罪名仍然成立，只是主要事实被撤销、刑期大幅降低，被告人实际服刑超出了再审判决确定的刑期。法院把这条司法解释类推适用于该案。规范评价上有决定意义的特征是超期羁押本身，而不是羁押的原因，两者的利益冲突同型。这一类推有利于公民、不利于国家；国家赔偿法领域没有类推禁止，国家作为赔偿义务机关也不享有基本权利意义上的信赖保护，补充权限在此可以扩张。把这三点合起来，可以得到一个简单的判断次序：先看续造对谁有利、对谁不利；再看它是不是在立法者未作规定时才发动；最后看它是个案中的补充，还是以司法解释形式作出的抽象规则。越是不利于一方、越是抽象，越须承担更重的论证负担。", "legalreason": "填补漏洞须以法源为依据。台湾地区民法第一条规定：民事，法律所未规定者，依习惯；无习惯者，依法理。法理由此取得补充性法源的明文地位。《民法典》第十条只规定法律没有规定的，可以适用习惯，没有列法理。这并不意味着中国法上的法院在法律与习惯均无答案时只能驳回请求：《民法典》总则编第一章把平等、自愿、公平、诚信、守法与公序良俗、绿色诸原则成文化，这些原则在漏洞填补中承担了法理的功能。差别在于：中国法上的法院援引法理，须以某一成文原则为连结点；不能连结到任何成文原则的法理，没有明文的法源地位，援引它须承担更重的论证负担。法理有四种存在态样，分别是不同填补方法的基础。第一，平等原则：相同者相同处理，导出类推适用；不同者不同处理，导出反面解释与目的性限缩。第二，立法意旨：存在于法律基础的客观目的，是目的性扩张的主要基础；由多数规定归纳而得的共同意旨，则是整体类推的基础。第三，法理念：正义、合目的性与法安定性。它是创制性补充的出发点，但本身不能直接适用；援引法理念而不经中间步骤，就是第十四章所说的空白公式。第四，事物的本质，也称事理。它常被用作表面理由；援引事理的裁判，须说明它是哪一种事理、从何种生活关系的结构中得出。最后，填补的取向：法续造的每一步都须可验证。仅强调价值而不说明如何经由法律制度贯彻，价值就沦为口号；在个案中引用情理而不体系地贯彻，所谓个案情况的考虑往往沦为恣意的借口。举一个对照。指导性案例十五号在参照公司法的同时援引了诚实信用原则，这一原则是《民法典》第七条明文规定的，连结点清楚；而如果一份判决只写依据法理，或者依据情理，却说不出连结到哪一项成文原则，它的说理就缺了一环。", "act2": "第二幕，四种填补方法。前三种在实证法上都有具体规定作为出发点；创制性补充没有可供援引的具体规定，须由法律适用者依法理念与事理为待处理的案型创制规范。", "methods": "先看四种方法的对照。类推适用：文义没有涵盖待处理的案型，依平等原则，相同者相同处理，把规定延及它；论证的重心是类似性与相容性。目的性限缩：文义已经涵盖待处理的案型，并且已压缩文义核心，依平等原则，不同者不同处理，把它排除出去；论证的重心是依规范意旨须引入的区分特征。目的性扩张：文义没有涵盖，而且与已规定的案型之间没有规范意义下的类似性，但依立法意旨同样应受规范；论证的重心是说明法律选取的类型过于具体，须提高其抽象程度。创制性补充：没有可资攀附的规定，依法理念与事理创制规范；论证的重心是规范的必要性、可用性与法院的权限。前三种属于法律内的法续造，第四种属于超越法律的法续造。请特别记住：类推中最易引起争执的问题，是待处理案型与法律明文规定的案型，所具有的规范上有意义的特征是否相同。类似性因此不是事实层面的相似，而是评价层面的相同；为认识哪些特征具有规范评价上的意义，必须求助于被类推规定的立法目的。用一个简单的办法记住四种方法：问两个问题。第一，待处理的案型在不在文义之内？在而要排除，是目的性限缩；不在而要纳入，是类推或目的性扩张。第二，有没有一条可以攀附的具体规定？有，是前三种；没有，是创制性补充。", "analogy": "类推适用，是把法律明文的规定，适用于该规定未直接规定、但其规范上的重要特征与之相同的案型。教材把它分解为两步。第一步，类似性：比较的是被参照规范所处理的利益冲突，而不是两种法律关系的名称或标的。第二步，相容性：移入的规则须与待处理关系的制度定位相容，必要时加以限定。类推又分为具体类推与整体类推。具体类推由单个规范的理由延及类似情形；整体类推由若干规范归纳出一般原则，再把原则适用于未规定的情形。整体类推所归纳的原则若已超出个别法律的计划，就接近超越法律的法续造，论证负担随之加重。还要注意中国裁判文书的用语。类推一词在中国法上带有一九七九年《刑法》类推制度的历史含义，法院在民事裁判中多以参照、参照适用指称类推，即使所参照的规定并没有授权规范。所以读到参照二字，须先判断：它是立法者授权的类推，还是无授权的类推？前者的漏洞由授权规范预设，后者的漏洞须由法院论证。下面两则指导性案例都使用了参照，请注意它们完成了哪几步。还要补充一点：类推不是比较两个案件的表面相似。分期付款买卖与分期付款的股权转让，名称和付款方式都相似，却因为价值安排不同而不能类推；离婚后的抚养与分居期间的抚养，名称不同，却因为利益冲突相同而可以类推。决定性的，始终是被参照规范所要解决的那个利益冲突。", "case49": "第一则，教材案例四十九，指导性案例十五号。川交工贸公司拖欠徐工机械公司货款一千余万元。川交工贸、川交机械、瑞路三家公司的实际控制人都是王永礼；三家公司的经理、财务负责人、出纳会计、工商手续经办人都相同，共用销售手册与经销协议，使用共同账户，以王永礼签字作为用款依据，与徐工机械公司之间的债权债务、业绩、账务及返利，都计算在川交工贸公司名下。徐工机械公司起诉，请求川交机械公司、瑞路公司对川交工贸公司的债务承担连带责任。看原《公司法》第二十条第三款：公司股东滥用公司法人独立地位和股东有限责任，逃避债务，严重损害公司债权人利益的，应当对公司债务承担连带责任。责任主体是股东。川交机械公司、瑞路公司不是川交工贸公司的股东，而是与之并列的关联公司。一审、二审都判决两家公司承担连带清偿责任。二审认为，三家公司人员、业务、财务混同，导致各自财产无法区分，已丧失独立人格，构成人格混同；三家公司的行为违背了法人制度设立的宗旨，违背了诚实信用原则，其行为本质和危害结果与第二十条第三款规定的情形相当，故参照第二十条第三款的规定处理。这里的参照，并没有授权规范，是一次无授权的具体类推。下一页逐步检验。在进入检验之前，请先注意判决用词的变化：一审、二审都没有说类推，而说参照；裁判要点则把结论表述为关联公司相互之间对外部债务承担连带责任。用词本身不决定性质，性质要看它做了什么。", "case49b": "用两步检验这个判决。先看漏洞的认定：第二十条第三款的文义以股东为责任主体，关联公司之间的横向人格否认不在可能文义之内；法律对这一案型没有规定，而依该款防止以法人独立地位为工具逃避债务的意旨，它属于应予规范的事项。这是上一章所说的类推适用式价值判断矛盾。第一步，类似性。判决以行为本质和危害结果相当作为判断，比较的是被参照规范所处理的利益冲突：独立人格被滥用，致使债权人无从就特定法人的财产获得清偿。方向正确。第二步，相容性。判决没有单独检验。纵向否认的法效果是股东对公司债务承担责任，横向否认的法效果是关联公司相互之间承担责任，两者的责任方向不同。判决的裁判要点把法效果改写为相互之间对外部债务承担连带责任，实际上已不是单纯移入第二十条第三款的法效果，而是依其规范意旨对法效果作了调整，这一步接近目的性扩张。此外，判决同时援引了诚实信用原则，使类推的论证与整体类推交织在一起；两条路线若能分开写，说理会更清楚。请做屏幕下方的练习：如果三家公司人员、业务混同，但财务记录各自独立、可以区分，类推是否仍然成立？类似性方面，债权人仍可就各公司的财产分别受偿，对评价有决定意义的特征不具备，类似性不成立或显著减弱。相容性方面，连带责任以财产边界不清为正当化根据，财产可以区分而仍令各公司连带，法效果超出了被参照规范意旨所能支持的范围。可见，财产无法区分这一事实，在类似性一步承担连结功能，同时在相容性一步支撑法效果的移入。二零二三年修订的《公司法》第二十三条第二款后来吸收了这一规则，第十四章再讲。这则案例还提示了一个写作上的问题：判决同时使用了参照某条与违背诚实信用原则两种论证。前者是具体类推，后者是由原则得出法效果。两条路线的论证负担不同，混在一起，读者就无从判断哪一条是决定性的。", "answer50": "现在回答开场题。保定市中级人民法院撤销一审判决，判决孩子暂由张某直接抚养，李某可以探望，张某应予协助。二审认为，李某、刘某的行为侵害了张某因履行监护职责所产生的权利；现行法律和司法解释对于婚内监护权的行使虽无明确具体规定，考虑双方正处于矛盾较易激化的分居状态，为最大限度保护未成年子女的利益，参照第一千零八十四条关于不满两周岁的子女以由母亲直接抚养为原则的规定，孩子暂由张某直接抚养为宜。这则案例的结构比上一则清楚。漏洞的认定：第一千零八十四条的文义限于离婚后，第一千零五十八条只规定夫妻平等享有抚养子女的权利，没有规定双方意见冲突、事实上分居时由谁直接抚养。法院明确写出了无明确具体规定。是否违反计划？立法者规定离婚后的抚养，是因为离婚后父母不再共同生活、须确定一方直接抚养；婚姻存续期间，立法者预设父母共同生活、共同抚养。分居使这一预设落空，而立法者对此未作规定，难以认为是有意否定，更可能是未予考虑。类似性：第一千零八十四条处理的利益冲突，是父母不再共同生活时子女由谁直接抚养；分居期间的利益冲突与之相同。离婚这一特征在规范评价上并无决定意义，有决定意义的是不再共同生活，以及最有利于未成年子女。相容性：法院以暂时二字限定了法效果，并同时参照第一千零八十六条课以协助探望的义务。暂时二字正是相容性审查的结果：婚姻关系仍然存续，父母双方的监护权并未因分居而改变，直接抚养的确定只能是临时性的安排。最后看一审。一审以张某没有证据证明李某未抚养保护好孩子为由驳回，把问题处理为证明问题，回避了漏洞。拒绝法续造在这里并不是中立的选择：它使擅自带走子女的一方取得事实上的抚养地位，母亲与哺乳期子女的分离状态得以继续。拒绝续造与进行续造一样，都是法院作出的选择，都须说理。把两则类推的案例放在一起比较：指导性案例十五号完成了类似性，没有单独检验相容性；指导性案例二百二十八号两步都完成了，而且以暂时二字明确写出了相容性审查的结果。这就是两则判决在方法上的差距。", "reduction": "第二种方法，目的性限缩：基于立法意旨，将原为法律文义所涵盖的案型，排除于该法律的适用范围之外。因为它把文义所涵盖者排除出去，其性质属于漏洞填补，而不是解释。它所填补的是隐藏漏洞：法律欠缺的不是积极规定，而是对一般规定的限制规定。看设例七。《民法典》第一百六十八条第一款规定，代理人不得以被代理人的名义与自己实施民事法律行为，但是被代理人同意或者追认的除外。设父亲作为未成年子女的法定代理人，以子女的名义与自己订立赠与合同，把一套无负担的房屋赠与子女。依文义，这是以被代理人的名义与自己实施民事法律行为，属于自己代理，须经被代理人同意或追认；而未成年子女不能有效地同意，追认只能等到成年。这一结论与规范意旨相悖。禁止自己代理，意旨在于防止代理人利用双方地位损害被代理人的利益；被代理人纯获法律上利益的行为，不存在利益冲突。依规范意旨引入是否存在利益冲突这一区分特征之后，纯获利益的自己代理与通常的自己代理成为不同的类型，依不同者不同处理，应把前者排除于第一百六十八条第一款的适用范围之外。德国联邦最高法院对《德国民法典》第一百八十一条作了同样的限缩，德国方法论文献以之为目的性限缩的范例。最后定性：父亲以子女名义与自己订约，正是该款所描写的典型情形，这一限缩已压缩了文义核心，所以是目的性限缩，而不是限缩解释。目的性限缩在中国法上并不罕见，只是很少以这个名称出现。法院常常写作该条的立法本意并不包括某某情形，或者某某情形不属于该条的规制对象。读到这类表述，请先检查：被排除的案型是不是处在文义的核心？如果是，它就是目的性限缩，须承担法续造的论证负担。", "case15": "再用目的性限缩的眼光重读前面讲过的指导性案例六十七号，教材案例十五。最高人民法院拒绝将原《合同法》第一百六十七条，即分期付款买卖中买受人未支付到期价款达全部价款五分之一时出卖人可以解除合同的规则，适用于分期付款的股权转让。须先回答一个问题：股权转让是否在第一百六十七条的文义之内？有两种读法。读法一：股权转让合同属于买卖合同。那么拒绝适用，就是对第一百六十七条的目的性限缩，法院须证明该条的规范意旨，即保护处于价款回收风险的出卖人、抑制消费者信贷的滥用，要求引入标的为有体物、交易发生于经营者与消费者之间这一区分特征。这须推翻文义，论证负担较重。读法二：股权转让不在买卖合同的文义之内，第一百六十七条只能经由第一百七十四条，即法律对其他有偿合同没有规定的，参照买卖合同的有关规定，参照适用于有偿的权利转让。那么拒绝适用，是授权式类推中的相容性审查得出了否定结论，不是目的性限缩。这只须说明价值安排不可移入，论证负担较轻。教材采后一种定性。这则案例要说明的是：定性先于论证。两种定性的论证负担不同，判决对此未作交代。这一点对写作业同样重要：讨论一则判决之前，先写出你认为它在做什么，是解释、类推、目的性限缩还是相容性审查，再评价它做得好不好。定性不同，评价的标准就不同。", "extension": "第三种方法，目的性扩张：法律文义所涵盖的案型，衡诸立法意旨显然过狭，以致不能贯彻规范意旨；为贯彻该意旨，将其适用范围扩张至文义原不包括的类型。它与目的性限缩的共同点是，二者都以立法意旨作为调整适用范围的依据。它与类推的不同在于：经目的性扩张处理的类型，与法律明文规定者之间没有规范意义下的类似性。原因在于法律明文选取的类型过于具体，为贯彻立法意旨，须提高据以类型化的特征的抽象程度，以兼容其他适当的案型。上一章已经指出，目的性扩张与类推的区别是相对的。看案例二十九。《专利法》第七十五条第四项把专为科学研究和实验而使用有关专利列为不视为侵权的情形。为申请农药登记而进行的试验，以专利技术作为取得行政许可的手段，而不是以专利技术本身为研究对象，它是否在科学研究和实验的可能文义之内，存有疑问。法院以防止专利保护期被变相延长的意旨，界定了科学研究和实验的射程，把登记试验纳入其中。请注意表述方式。目的性扩张在实务上常以两种面目出现：一是以类推的名义出现，这至少承认了越出文义；二是以不宜作狭义解释、应作广义理解的名义出现，这就把法续造表述为解释了。该案法院既没有称类推，也没有称扩张，而是以规范目的界定射程；若登记试验已越出该项的可能文义，这一处理就属于后一种情形。这种表述是否妥当，第十四章讨论隐蔽性的法续造时再回答。", "case29": "把案例二十九展开看。涉案专利是一种杀虫剂化合物的发明专利。农药仿制企业为了向农药行政主管部门申请农药登记，制造并使用落入专利保护范围的产品，以取得所必需的试验数据；此外，它还向案外人提供该农药进行登记试验，并有许诺销售的行为。最高人民法院知识产权法庭认定：为提供申请农药登记所必需的试验数据，有限地制造、使用被诉侵权产品，没有对专利权的正常利用和专利权人的合法权益产生不合理的损害的，可以构成科研例外；但向案外人提供农药进行登记试验、许诺销售，均构成侵权。法院的目的命题是：若禁止仿制企业在专利期内完成必需的登记试验，专利到期后相当长的时期内仿制产品仍然不能合法上市，专利权保护期就被不合理地变相延长。反对的形式论据也很有力：二零零八年修正《专利法》时新增了第七十五条第五项，只为药品与医疗器械规定了行政审批例外，没有包括农药；依明示其一即排除其他，本可反推农药登记试验不在豁免之列。法院以限定条件约束了射程：为自己取得行政许可所必需，有限地，不产生不合理的损害；越出此限，即回落到侵权。教材的判断是：登记试验是把专利技术用作取得行政许可的手段，而不是以专利技术为研究对象。如果它不能被容纳于科学研究和实验的可能文义之内，本案就已越出解释而属于法续造，应当依目的性扩张的标准审查，也就是须正面说明为什么立法者选取的类型过于具体，以及扩张后的射程到哪里为止。", "creative": "第四种方法，创制性补充。待处理的案型依法理念及其蕴涵的事理有加以规范的必要，而实证法上即使经由类推或目的性扩张仍找不到规范依据时，法院须以法理念与事理为依据，自行拟定裁判所需的规范。所以称为创制，是因为拟用以补充漏洞的规定，在实证法上找不到已具构成要件形式的规范可供攀附援引。它所填补的主要是演变式与无据式体系违反，属于超越法律的法续造，论证负担最重。它须满足三项要求：证明规范的必要性，即不存在其他法律保护的途径；为新规则确立类似构成要件的条件，即可用性；还须说明法院有权作出这一补充。中国法上的创制性补充大多由司法解释完成。典型例子是建设工程施工合同解释一第四十三条第二款：实际施工人以发包人为被告主张权利的，人民法院应当追加转包人或者违法分包人为第三人，判决发包人在欠付建设工程价款范围内对实际施工人承担责任。实际施工人与发包人之间并没有合同关系。依《民法典》第四百六十五条第二款，依法成立的合同仅对当事人具有法律约束力，但是法律另有规定的除外；这一但书以法律另有规定为条件，司法解释不在其内。第五百三十五条的代位权以债务人怠于行使其债权为要件，第四十三条第二款不以此为要件，同一解释第四十四条又另就代位权作出了规定。两条并列，显示第四十三条第二款是在法律内的途径之外另行拟定的规则。它属于无所攀附的创制性补充，其权限问题，第十五章再讨论。为什么这条规则须单独讨论？因为它直接改变了合同相对性：实际施工人与发包人之间没有合同，却可以直接请求发包人付款。这一结果在政策上或许有理由，比如保护农民工的工资；但理由越是政策性的，越须说明法院为什么有权作出这样的规定，而不是由立法者作出。", "soraya": "比较法上创制性补充的典型，是德国法对一般人格权及其侵害的金钱赔偿的承认。《德国民法典》第二百五十三条规定，非财产损害仅在法律规定的情形下才能请求金钱赔偿；而该法典没有把一般人格权列为受保护的法益。二十世纪五十年代，德国联邦最高法院先后承认了一般人格权，并对严重的人格权侵害判给金钱赔偿，直接越过了第二百五十三条的文义。一九七三年，德国联邦宪法法院在索拉雅案中认可了这一法续造，理由之一是：《德意志联邦共和国基本法》第一条与第二条对人格尊严与人格自由发展的保障，使法院不能容忍人格权受侵害而没有有效救济；而立法者长期没有对此作出规定。这类案件在法续造界限的讨论中，被作为明显的法律保护漏洞与立法者不作为的典型，第十四章还会用到。请注意，在中国法上，精神损害赔偿已由《民法典》第一千一百八十三条明文规定，这一漏洞并不存在。举这个例子，只是为了说明创制性补充须证明的两件事：规范的必要性，即不存在其他保护途径；以及法院的权限。", "creative2": "再看两组司法解释中的创制性补充。第一组是多重买卖。出卖人就同一动产订立多份买卖合同，各合同均有效时，各买受人的履行请求权地位平等，民法典对其先后没有规定。买卖合同解释第六条为普通动产排定了顺序：先受领交付的买受人优先；均未受领交付的，先支付价款者优先；均未支付价款的，合同成立在先者优先。这一排序不是从某一条文推出的，而是依各买受人给付状态与信赖程度的差别拟定的。第七条第四项走得更远：特殊动产已受领交付的买受人，可以请求将所有权登记在自己名下，即使出卖人已经为其他买受人办理了所有权转移登记。这一结论须与《民法典》第二百二十五条，即船舶、航空器和机动车等的物权变动，未经登记，不得对抗善意第三人，相协调，论证负担因此更重。第二组是一项已经退出的规则。二零零三年的商品房买卖解释第八条、第九条规定，出卖人在订立合同后将房屋另行抵押或另行出卖，或者在订约时故意隐瞒未取得预售许可、房屋已经抵押或者已经出卖的事实，买受人可以请求出卖人承担不超过已付购房款一倍的赔偿责任。这是在法律未作规定时创设的惩罚性赔偿。《民法典》第一百七十九条第二款规定，法律规定惩罚性赔偿的，依照其规定，把惩罚性赔偿保留给了法律；二零二零年修正后的该解释已不再含有这两条。创制性补充也可能在法律保留明文化之后退出。最后看一个正面的例子。合同编通则解释第五十一条第一款处理加入债务的第三人能否向债务人追偿，《民法典》第五百五十二条对此未作规定。该款没有为此创设一项追偿权，而是规定没有约定追偿权的第三人，依照民法典关于不当得利等的规定请求债务人履行。这正是创制性补充的前提要求：先穷尽法律内的途径，确认其中确无规范依据，才进入创制。", "contract27": "再看合同编通则解释中带有创制成分的条文，它们集中在法律未设规定的交易类型与程序问题上。第二十七条第二款处理以物抵债协议：债务人或者第三人未按照约定履行以物抵债协议，经催告后在合理期限内仍不履行的，债权人可以选择请求履行原债务，或者请求履行以物抵债协议。法律对以物抵债没有规定，这一选择权是解释为债权人拟定的。第三十一条第二款处理同时履行抗辩：被告主张同时履行抗辩且抗辩成立的，法院应当判决被告在原告履行债务的同时履行自己的债务，并在判项中明确执行的条件。这是为法律未作规定的判决方式拟定的规则。与之相对，第五十一条第一款面对加入债务的第三人能否追偿的问题，没有另行创设追偿权，而是指引不当得利等既有规定。三条放在一起看，可以得出一个检验方法：面对法律未作规定的问题，先问法律内有没有可以攀附的途径；有，就走法律内的途径；确实没有，才进入创制，并且须说明权限。这些规定的正当性，第十五章第五步还会审查。", "act3": "第三幕，知识产权法上的例证。知识产权是法定权利，其保护范围与例外都由法律逐项列举，列举的封闭程度直接决定能否类推；技术发展又不断制造立法者未曾预见的案型。所以知识产权法是漏洞填补的高发领域。我们以指导性案例二十号为例。", "case51": "看教材案例五十一，指导性案例二十号。斯瑞曼公司于二零零六年一月申请制备高纯度二氧化氯的设备发明专利，同年七月公开，二零零九年一月二十一日授权公告。二零零八年十月，坑梓自来水公司向康泰蓝公司购买二氧化氯发生器一套，康泰蓝公司于二零零八年十二月三十日开具发票，也就是在临时保护期内完成了销售。专利授权之后，坑梓自来水公司继续使用这套设备，康泰蓝公司提供售后服务。斯瑞曼公司起诉，请求停止侵权、赔偿损失，没有请求支付临时保护期的使用费。看《专利法》第十一条第一款：发明专利权被授予后，任何单位或者个人未经专利权人许可，都不得为生产经营目的制造、使用、许诺销售、销售、进口其专利产品。第十三条规定：发明专利申请公布后，申请人可以要求实施其发明的单位或者个人支付适当的费用。一审、二审判决停止侵权、连带赔偿八万元。请注意，坑梓自来水公司在授权后为生产经营目的使用专利产品：时间上在专利权被授予后，行为上是使用，对象是专利产品，每一个要素都处在第十一条第一款文义的核心。最高人民法院会怎么判？在看判决之前，请先用今天的方法预判：如果法院判不侵权，它做的会是哪一种法续造？需要引入什么样的区分特征？", "case51b": "最高人民法院撤销原判，驳回诉讼请求。理由是：专利法对于临时保护期内实施其发明的行为并不享有请求停止实施的权利，临时保护期内的实施不属于专利法禁止的行为；在此情况下，其后续的使用、许诺销售、销售，即使未经专利权人许可，也应当得到允许。用本章的方法拆解。第一，定性。坑梓自来水公司的使用正处于第十一条第一款文义的核心，法院将其排除在适用范围之外，已压缩文义核心，属于目的性限缩，而不是限缩解释。判决没有使用限缩一词，而是以应当得到允许表述结论。第二，第一项理由是目的性限缩的标准论证。专利制度以公开换保护，授权后才能请求保护；专利法没有禁止授权前的实施，授权前制造出来的产品的后续实施也不构成侵权，否则就违背了专利法的立法初衷，为尚未公开或者授权的技术方案提供了保护。这是依规范意旨引入了一项未明文规定的区分特征：产品是否在授权前合法地进入流通。引入之后，授权后使用授权前的产品，与授权后使用授权后的产品，成为不同的类型。第三，漏洞的类型是隐藏漏洞。第十一条欠缺的不是积极规定，而是一项限制规定；立法者在第七十五条列举了权利用尽与先用权，却没有规定临时保护期产品的后续实施。第四，第二项理由的性质不同。先用权条款只规定先用权人在原有范围内继续制造、使用不视为侵权，没有规定其产品的后续实施；若把后续实施认定为侵权，先用权就没有任何意义。这是以禁止赘余为依据，对第七十五条第二项所作的目的性扩张。它与列举式例外受反面解释约束的规则是否冲突？不冲突：第一项理由限缩的是第十一条的禁止范围，没有扩张例外清单；第二项理由是使已列举的先用权不致落空所必需，而不是在清单之外增补一项新的例外。最后请记住本章的结论：写明自己在做法续造，是法续造的第一项要求。本案以应当得到允许表述结论，没有明示越出文义。还可以用这则案例复习两种方法的区别：第一项理由是目的性限缩，它把文义已经涵盖的使用行为排除出去；第二项理由是目的性扩张，它把先用权条款没有写到的后续实施纳入进来。同一个判决，同时用了两种方法，方向相反，却都以规范意旨为依据。", "case51c": "这则案例的后续，展示了一项法续造如何被修正。二零一六年施行的专利权纠纷解释二第十八条第三款吸收了本案的结论，但附加了一项条件：在临时保护期内制造、销售、进口该产品的他人，已支付或者书面承诺支付专利法第十三条规定的适当费用的，授权后的使用、许诺销售、销售才不侵权。本案引入的区分特征是产品是否在授权前合法地进入流通；司法解释把它改为：申请人是否已经或者将要依第十三条获得补偿。这一修正与本案第一项理由的意旨一致：第十三条使临时保护期内的实施负担支付适当费用的义务；授权后的后续实施不受第十一条禁止，是因为申请人对这批产品的利益已经或者将要通过适当费用得到补偿。未支付也未承诺支付时，限缩的理由就不完整。依该款，本案的事实，即康泰蓝公司未支付适当费用、斯瑞曼公司也未请求支付，不再当然得出不侵权的结论。二零二零年十二月二十三日，最高人民法院修正该解释时保留了这一款；六天后发出的法〔2020〕343号通知，宣布指导性案例二十号自二零二一年一月一日起不再参照。通知只写了根据民法典等有关法律规定和审判实际，没有就本案规则作具体说明。司法解释以附加条件的方式限定了本案规则的适用范围，这可能是不再参照的原因之一，但通知本身没有这样说。不再参照，不影响本案裁判以及此前参照本案作出的裁判的效力。此后同类案件的裁判依据，是第十八条第三款。这一过程也说明了指导性案例与司法解释的关系：司法解释并没有否定指导性案例二十号的方向，而是为它加上了一个条件，使规则与专利法第十三条的补偿机制衔接起来。读者若只看指导性案例而不看后来的司法解释，就会遗漏这个条件。", "review": "把本课的案例放在一张表上回顾。指导性案例十五号：无授权的具体类推，法效果的调整接近目的性扩张；判决称参照，但没有单独检验相容性。指导性案例二百二十八号：无授权的具体类推；判决写明了无明确具体规定，写明了参照，也以暂时二字写明了相容性的限定。指导性案例二百四十四号：有利于公民的具体类推，判决写明了参照适用。指导性案例六十七号：可能是目的性限缩，也可能是授权式类推中相容性的否定，判决对定性没有交代。案例二十九：若登记试验越出了文义，就是目的性扩张，判决以规范目的界定射程，没有说明自己越出了文义。指导性案例二十号：目的性限缩，加上对先用权条款的目的性扩张，判决以应当得到允许表述结论。建设工程施工合同解释一第四十三条第二款：创制性补充，以司法解释的形式作出。七则例证中，明确写出自己在做法续造的只有两三则。其余的，或者以参照代替论证，或者以解释的语汇表述越出文义的结论。这正是下一讲第十四章要讨论的问题：隐蔽性的法续造，以及法续造的正当界限。", "homework": "课后练习两题。第一题，来自教材第一百零五节：在临时保护期内销售产品的一方，既未支付也未书面承诺支付适当费用；授权后，买受人继续使用该产品。能否依专利权纠纷解释二第十八条第三款的反面解释，认定授权后的使用构成侵权？此时还能否以指导性案例二十号的理由得出不侵权的结论？参考思路是：反面解释须先证明该条件是穷尽的。该条件的意旨在于保障申请人依第十三条获得补偿；若权利人仍可依第十三条向临时保护期内的实施者请求适当费用，后续使用者不承担侵权责任与权利人获得补偿并不冲突，反面解释的前提难以成立；若补偿已无从实现，反面解释才有其依据。本案的理由可以作为说理的参考，但须与第十八条第三款的条件相协调，不能径行援引而得出无条件的不侵权结论。第二题，练习类推的两步：指导性案例二百二十八号参照了离婚后子女抚养的规定。如果孩子已满八周岁，分居期间由谁直接抚养？请依类似性与相容性两步说明：第一千零八十四条第三款中子女已满八周岁的，应当尊重其真实意愿，能否一并参照？暂时的限定是否仍然需要？写作时，第一题请先写出反面解释成立须满足什么前提，再判断本题是否满足；第二题请分别写出类似性与相容性两步各自的结论，不要合在一句话里。", "end": "全课到此结束。请带走几句话。四种填补方法：类推的类似性是评价层面的相同，相容性须单独检验；目的性限缩已压缩文义核心，须依规范意旨引入区分特征；目的性扩张须提高类型化特征的抽象程度；创制性补充须满足必要性、可用性与权限三项要求。读判决时：看到参照二字，先判断是授权式类推还是无授权的类推；定性先于论证；看到应当得到允许、应作广义理解这类表述，问一问它是否把法续造表述为解释。写明自己在做法续造，是法续造的第一项要求。下一讲，法续造的界限。下课。"};
+var deck = document.getElementById('deck'), cap = document.getElementById('cap');
+var i = 0, chunks = [], ci = 0, speaking = false, paused = false, audioMode = false;
+var synth = window.speechSynthesis, voice = null, utter = null, timer = null, watch = null;
+var auto = true, gap = 2000, rate = 1.0, capOn = true;
+var player = new Audio();
+
+/* ---------- 版面缩放 ---------- */
+function fit(){
+  var vp = document.getElementById('viewport');
+  var s = Math.min(vp.clientWidth / 1920, vp.clientHeight / 1080) * 0.962;
+  deck.style.transform = 'scale(' + s + ')';
+}
+addEventListener('resize', fit);
+
+/* ---------- 分句 ---------- */
+function split(t){
+  var raw = t.replace(/\s+/g, '').split(/(?<=[。？！；])/).filter(Boolean);
+  var out = [], buf = '';
+  raw.forEach(function(s){
+    if ((buf + s).length > 56 && buf.length >= 20) { out.push(buf); buf = s; }
+    else buf += s;
+  });
+  if (buf) out.push(buf);
+  return out;
+}
+
+/* ---------- 字幕 ---------- */
+function paintCap(){
+  if (!capOn) { cap.classList.add('off'); return; }
+  cap.classList.remove('off');
+  if (!chunks.length) { cap.innerHTML = '<i>本页无讲解词</i>'; return; }
+  var k = Math.min(ci, chunks.length - 1);
+  cap.innerHTML = '<em>' + (k + 1) + '／' + chunks.length + '</em><b>' + chunks[k] + '</b>';
+}
+
+/* ---------- 语音 ---------- */
+function pickVoices(){
+  var all = synth ? synth.getVoices() : [];
+  var zh = all.filter(function(v){ return /^zh/i.test(v.lang); });
+  var sel = document.getElementById('voice');
+  if (!zh.length) { sel.innerHTML = '<option>未找到中文语音</option>'; return; }
+  zh.sort(function(a, b){
+    var score = function(v){
+      var n = v.name;
+      if (/Natural/i.test(n)) return 0;
+      if (/Online/i.test(n)) return 1;
+      if (/Xiaoxiao|Yunxi|Yunyang|Xiaoyi|晓晓|云希/i.test(n)) return 2;
+      return 3;
+    };
+    return score(a) - score(b);
+  });
+  var keep = voice && voice.name;
+  sel.innerHTML = zh.map(function(v){
+    return '<option value="' + v.name + '">' + v.name.replace(/^Microsoft /, '') + '</option>';
+  }).join('');
+  voice = zh.find(function(v){ return v.name === keep; }) || zh[0];
+  sel.value = voice.name;
+}
+
+function stopAll(){
+  clearTimeout(timer); timer = null;
+  if (synth) synth.cancel();
+  player.pause();
+  speaking = false; paused = false;
+  setPlayLabel();
+}
+
+function speakChunk(){
+  if (!synth || ci >= chunks.length) { finishSlide(); return; }
+  paintCap();
+  utter = new SpeechSynthesisUtterance(chunks[ci]);
+  if (voice) { utter.voice = voice; utter.lang = voice.lang; } else { utter.lang = 'zh-CN'; }
+  utter.rate = rate; utter.pitch = 1;
+  utter.onend = function(){ if (speaking && !paused) { ci++; speakChunk(); } };
+  utter.onerror = function(e){ if (e.error !== 'interrupted' && e.error !== 'canceled') { ci++; speakChunk(); } };
+  synth.speak(utter);
+}
+
+function finishSlide(){
+  speaking = false; setPlayLabel();
+  if (!auto) return;
+  if (i >= SLIDES.length - 1) return;
+  timer = setTimeout(function(){ go(i + 1, true); }, gap);
+}
+
+function play(){
+  if (paused) {                       // 续播
+    paused = false;
+    if (audioMode) player.play(); else synth.resume();
+    speaking = true; setPlayLabel(); return;
+  }
+  stopAll();
+  speaking = true; ci = 0; setPlayLabel();
+  if (audioMode) {
+    player.src = 'audio/' + SLIDES[i].id + '.mp3';
+    player.playbackRate = rate;
+    player.play().catch(function(){ audioMode = false; speakChunk(); });
+    paintCap();
+  } else {
+    speakChunk();
+  }
+}
+player.onended = finishSlide;
+
+function pause(){
+  if (!speaking) return;
+  paused = true;
+  if (audioMode) player.pause(); else synth.pause();
+  setPlayLabel();
+}
+function toggle(){ if (speaking && !paused) pause(); else play(); }
+function setPlayLabel(){
+  document.getElementById('play').textContent = (speaking && !paused) ? '⏸ 暂停' : '▶ 播放';
+}
+
+/* ---------- 翻页 ---------- */
+function go(n, andSpeak){
+  stopAll();
+  i = Math.max(0, Math.min(SLIDES.length - 1, n));
+  var secs = deck.children;
+  for (var k = 0; k < secs.length; k++) secs[k].classList.toggle('on', k === i);
+  chunks = split(NAR[SLIDES[i].id] || ''); ci = 0;
+  paintCap();
+  document.getElementById('pos').textContent = (i + 1) + ' / ' + SLIDES.length;
+  document.querySelector('#prog i').style.width = ((i + 1) / SLIDES.length * 100) + '%';
+  var lis = document.querySelectorAll('#toc li');
+  for (var k = 0; k < lis.length; k++) lis[k].classList.toggle('cur', k === i);
+  if (andSpeak) play();
+}
+
+/* ---------- 控件 ---------- */
+function bind(){
+  document.getElementById('play').onclick = toggle;
+  document.getElementById('prev').onclick = function(){ go(i - 1, speaking || paused); };
+  document.getElementById('next').onclick = function(){ go(i + 1, speaking || paused); };
+  document.getElementById('replay').onclick = function(){ stopAll(); play(); };
+  var a = document.getElementById('auto');
+  a.onclick = function(){ auto = !auto; a.setAttribute('aria-pressed', auto); };
+  var c = document.getElementById('capt');
+  c.onclick = function(){ capOn = !capOn; c.setAttribute('aria-pressed', capOn); paintCap(); };
+  document.getElementById('rate').oninput = function(){
+    rate = +this.value; document.getElementById('rateV').textContent = rate.toFixed(2) + '×';
+    player.playbackRate = rate;
+    if (speaking && !paused && !audioMode) { synth.cancel(); speakChunk(); }
+  };
+  document.getElementById('gap').oninput = function(){
+    gap = +this.value * 1000; document.getElementById('gapV').textContent = this.value + ' 秒';
+  };
+  document.getElementById('voice').onchange = function(){
+    voice = synth.getVoices().find(function(v){ return v.name === this.value; }, this) || voice;
+    if (speaking && !paused && !audioMode) { synth.cancel(); speakChunk(); }
+  };
+  document.getElementById('toclink').onclick = function(){ document.getElementById('toc').classList.add('on'); };
+  document.getElementById('tocX').onclick = function(){ document.getElementById('toc').classList.remove('on'); };
+  document.getElementById('full').onclick = function(){
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen();
+  };
+  addEventListener('keydown', function(e){
+    if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+    if (e.key === ' ') { e.preventDefault(); toggle(); }
+    else if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(i + 1, speaking || paused); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(i - 1, speaking || paused); }
+    else if (e.key === 'Escape') document.getElementById('toc').classList.remove('on');
+    else if (e.key.toLowerCase() === 'f') document.getElementById('full').click();
+    else if (e.key.toLowerCase() === 's') document.getElementById('capt').click();
+    else if (e.key.toLowerCase() === 'r') document.getElementById('replay').click();
+  });
+  // Chrome/Edge 长文本会自行暂停，定时 resume
+  watch = setInterval(function(){
+    if (speaking && !paused && !audioMode && synth && synth.speaking && synth.paused) synth.resume();
+  }, 8000);
+}
+
+/* ---------- 启动 ---------- */
+function boot(){
+  fit(); bind(); pickVoices();
+  if (synth) synth.onvoiceschanged = pickVoices;
+  // 探测 audio/ 目录里是否有预录音频
+  var probe = new Audio('audio/' + SLIDES[0].id + '.mp3');
+  probe.oncanplaythrough = function(){ audioMode = true;
+    document.getElementById('srcnote').textContent = '音源：audio 文件夹中的录音'; };
+  probe.onerror = function(){ audioMode = false; };
+  probe.load();
+  go(0, false);
+  if (!synth) {
+    document.getElementById('nospeech').style.display = 'block';
+  }
+  document.getElementById('start').onclick = function(){
+    document.getElementById('gate').classList.add('off'); go(0, true);
+  };
+  document.getElementById('silent').onclick = function(){
+    document.getElementById('gate').classList.add('off'); auto = false;
+    document.getElementById('auto').setAttribute('aria-pressed', false); go(0, false);
+  };
+}
+if (document.readyState === 'loading') addEventListener('DOMContentLoaded', boot); else boot();
+</script>
+<script>
+document.querySelectorAll('#toc li').forEach(function(li){
+  li.onclick = function(){
+    document.getElementById('toc').classList.remove('on');
+    go(+li.dataset.n, speaking || paused);
+  };
+});
+</script>
+</body>
+</html>
